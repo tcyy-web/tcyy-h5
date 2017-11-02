@@ -1,0 +1,14 @@
+{
+	"html/login/main.html": {
+		"refer": [
+			"html/login/setting.html"
+		]
+	},
+	"html/login/login.html": {
+		"refer": [
+			"html/login/main.html",
+			"html/login/reg.html",
+			"html/login/unlock.html"
+		]
+	}
+}
