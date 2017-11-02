@@ -280,18 +280,32 @@
 	      "priority": 0
 	    },
 	    "html/login/main.html": {
-	      "resources": [],
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "js/mui.min.js",
+	        "js/app.js"
+	      ],
 	      "refer": [
 	        "html/login/setting.html"
 	      ],
 	      "priority": 0
 	    },
 	    "html/login/login.html": {
-	      "resources": [],
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "js/mui.min.js",
+	        "js/mui.enterfocus.js",
+	        "js/app.js"
+	      ],
 	      "refer": [
 	        "html/login/main.html",
 	        "html/login/reg.html",
-	        "html/login/unlock.html"
+	        "html/login/unlock.html",
+	        "html/shop/list.html",
+	        "html/login/forget_password.html"
 	      ],
 	      "priority": 0
 	    },
@@ -301,14 +315,56 @@
 	        "css/mui.min.css",
 	        "fonts/mui.ttf",
 	        "js/app.js",
-	        "js/mui.min.js"
+	        "js/mui.min.js",
+	        "css/style.css"
 	      ],
 	      "refer": []
+	    },
+	    "html/shop/list.html": {
+	      "href": "html/shop/list.html",
+	      "priority": 0
+	    },
+	    "html/login/setting.html": {
+	      "href": "html/login/setting.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "js/mui.view.js",
+	        "libs/easymob-webim-sdk/jquery-1.11.1.js",
+	        "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
+	        "libs/easymob-webim-sdk/json2.js",
+	        "libs/easymob-webim-sdk/easemob.im-1.0.5.js",
+	        "js/feedback.js",
+	        "js/feedback-page.js",
+	        "js/mui.locker.js",
+	        "js/app.js",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/feedback-page.css",
+	        "images/iconfont-tianjia.png"
+	      ],
+	      "refer": [
+	        "html/login/login.html"
+	      ],
+	      "priority": 2
+	    },
+	    "html/login/unlock.html": {
+	      "href": "html/login/unlock.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "js/mui.min.js",
+	        "js/mui.locker.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "html/login/login.html",
+	        "html/login/main.html"
+	      ],
+	      "priority": 3
 	    }
 	  },
 	  "idle": {
 	    "resources": [
-	      "js/service.js",
 	      "libs/easymob-webim-sdk/quickstart.md",
 	      "images/user-photo.png",
 	      "README.md"
