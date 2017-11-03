@@ -260,7 +260,7 @@
 					}, false);
 					regButton.addEventListener('tap', function(event) {
 						$.openWindow({
-							url: 'reg.html',
+							url: '../home/index.html',
 							id: 'reg',
 							preload: true,
 							show: {
@@ -273,6 +273,20 @@
 								autoShow: false
 							}
 						});
+//						$.openWindow({
+//							url: 'reg.html',
+//							id: 'reg',
+//							preload: true,
+//							show: {
+//								aniShow: 'pop-in'
+//							},
+//							styles: {
+//								popGesture: 'hide'
+//							},
+//							waiting: {
+//								autoShow: false
+//							}
+//						});
 					}, false);
 					forgetButton.addEventListener('tap', function(event) {
 						$.openWindow({
