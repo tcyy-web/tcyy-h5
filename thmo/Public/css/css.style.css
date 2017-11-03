@@ -1,0 +1,26 @@
+.bar{
+	background-color:rgb(70,0,140);
+}
+.bar .title{color:white;}
+.bar .button-link{color:white;}
+
+
+.row .video{
+	font-size: 17px;
+    display: inline-block;
+    margin-right: -4px;
+    padding: 10px 0 0 14px;
+    text-align: center;
+    vertical-align: middle;
+}
+.video img{width: 100%;height:auto;vertical-align:middle;}
+
+.video .video_title{font-size:13px;line-height:25px}
+
+.video .img-box{
+	       height: 30vw;
+			text-align: center;
+			overflow: hidden;
+			position: relative;
+	//background: rgba(220, 220, 220, 0.4) url(/Application/App/View/Public/images/play.png) center center/ 60px auto no-repeat;
+}
