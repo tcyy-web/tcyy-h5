@@ -4,15 +4,22 @@ body {
 	height: 100%;
 	margin: 0px;
 	padding: 0px;
-	background-color: #ffffff;
+	background-color: #f1f1f1;
 }
 .mui-content{
 	height: 100%;
-	background-color: #ffffff;
+	background-color: #f1f1f1;
 }
 * {
 	padding: 0px;
 	margin: 0px;
+}
+/*头部*/
+.mui-bar {
+	background-color: #765fc3;
+}
+.mui-title {
+	color: #ffffff;
 }
 /**下拉刷新**/
 .mui-bar~.mui-content .mui-fullscreen {
@@ -52,7 +59,7 @@ body {
 	/*-webkit-backface-visibility: hidden;
 	-webkit-transition-duration: 400ms;
 	transition-duration: 400ms;*/
-	
+
 	margin: 0;
 }
 .mui-pull-top-wrapper .mui-icon,

@@ -4,11 +4,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title></title>
+		<title>沟通</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/style.css" rel="stylesheet" />
 		<script src="../../js/mui.min.js"></script>
-		
+
 <style>
 			.goutong-row {
 				display: -webkit-flex;
@@ -34,14 +34,9 @@
 			.goutong-row .gr-item .gr-img .img-box {
 				width: 60px;
 				height: 60px;
-				border: 1px solid #252a47;
-				-webkit-border-radius: 50%;
-				-moz-border-radius: 50%;
-				border-radius: 50%;
 				-webkit-box-sizing: border-box;
 				-moz-box-sizing: border-box;
 				box-sizing: border-box;
-				background-color: #fffff;
 				overflow: hidden;
 			}
 			.goutong-row .gr-item .gr-img .img-box  img {
@@ -119,13 +114,13 @@
 		<script type="text/javascript">
 			(function() {
 				mui.init({
-					swipeBack: true //启用右滑关闭功能
+					swipeBack: false //启用右滑关闭功能
 				});
 				mui.plusReady(function() {
 					var self = plus.webview.currentWebview(),
 						leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
 
-					/**	
+					/**
 					 * drawNativeIcon 绘制带边框的半圆，
 					 * 实现原理：
 					 *   id为bg的tag 创建带边框的圆
@@ -228,15 +223,15 @@
 					// 创建子webview窗口 并初始化
 					var aniShow = {};
 					util.initSubpage(aniShow);
-					
+
 					var 	nview = plus.nativeObj.View.getViewById('tabBar'),
 						activePage = plus.webview.currentWebview(),
 						targetPage,
 						subpages = util.options.subpages,
 						pageW = window.innerWidth,
 						currIndex = 0;
-					
-						
+
+
 					/**
 					 * 根据判断view控件点击位置判断切换的tab
 					 */
@@ -251,7 +246,7 @@
 						} else {
 							currIndex = 3;
 						}
-						// 匹配对应tab窗口	
+						// 匹配对应tab窗口
 						if(currIndex > 0) {
 							targetPage = plus.webview.getWebviewById(subpages[currIndex - 1]);
 						} else {
@@ -262,7 +257,7 @@
 							return;
 						}
 
-						if(currIndex !== 3) { 
+						if(currIndex !== 3) {
 							//底部选项卡切换
 							util.toggleNview(currIndex);
 							// 子页面切换
