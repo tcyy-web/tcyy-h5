@@ -5,30 +5,113 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
-		<script src="../../js/mui.min.js"></script>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<style>
-			html,
-			body {
-				background-color: #efeff4;
+		<link href="../../css/style.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		
+<style>
+			.goutong-row {
+				display: -webkit-flex;
+				display: flex;
+				padding: 20px 0;
 			}
-			
-			.title {
-				margin: 20px 15px 10px;
-				color: #6d6d72;
-				font-size: 15px;
-				padding-bottom: 51px;
+			.goutong-row .gr-item {
+				flex: 1;
+				-webkit-flex: 1;
+				display: -webkit-flex;
+				display: flex;
+	    	flex-direction: column;
+	    	-webkit-flex-direction: column;
+	    	text-align: center;
+			}
+			.goutong-row .gr-item .gr-img {
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-pack: center;
+	    	-ms-flex-pack: center;
+	    	justify-content: center;
+			}
+			.goutong-row .gr-item .gr-img .img-box {
+				width: 60px;
+				height: 60px;
+				border: 1px solid #252a47;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				border-radius: 50%;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				background-color: #fffff;
+				overflow: hidden;
+			}
+			.goutong-row .gr-item .gr-img .img-box  img {
+				width: 100%;
+				height: 100%;
+			}
+			.goutong-row .gr-item p {
+				margin-bottom: 0;
+				font-size: 18px;
+				margin-top: 5px;
 			}
 		</style>
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">沟通</h1>
 		</header>
 		<div class="mui-content">
-			<div class="title">
+			<div class="goutong-row">
+				<div class="gr-item">
+					<div class="gr-img">
+						<div class="img-box">
+							<img src="../../images/tab-goutong/img1.png" />
+						</div>
+					</div>
+					<p>视频</p>
+				</div>
+				<div class="gr-item">
+					<div class="gr-img">
+						<div class="img-box">
+<img src="../../images/tab-goutong/img2.png" />
+						</div>
+					</div>
+					<p>图片</p>
+				</div>
+				<div class="gr-item">
+					<div class="gr-img">
+						<div class="img-box">
+<img src="../../images/tab-goutong/img3.png" />
+						</div>
+					</div>
+					<p>演示</p>
+				</div>
+			</div>
+			<div class="goutong-row">
+				<div class="gr-item">
+					<div class="gr-img">
+						<div class="img-box">
+<img src="../../images/tab-goutong/img4.png" />
+						</div>
+					</div>
+					<p>3D</p>
+				</div>
+				<div class="gr-item">
+					<div class="gr-img">
+						<div class="img-box">
+<img src="../../images/tab-goutong/img5.png" />
+						</div>
+					</div>
+					<p>预约</p>
+				</div>
+				<div class="gr-item">
+					<div class="gr-img">
+						<div class="img-box">
+<img src="../../images/tab-goutong/img6.png" />
+						</div>
+					</div>
+					<p>项目</p>
+				</div>
 			</div>
 		</div>
 
