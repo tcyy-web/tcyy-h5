@@ -68,7 +68,7 @@
 				height: 50px !important;
 			}
 			.mui-icon-clear {
-				top: 14px !important;
+				top: 16px !important;
 				color: #ffffff !important;
 			}
 			::-moz-placeholder {
@@ -293,40 +293,6 @@
 								autoShow: false
 							}
 						});
-//						$.openWindow({
-//							url: 'reg.html',
-//							id: 'reg',
-//							preload: true,
-//							show: {
-//								aniShow: 'pop-in'
-//							},
-//							styles: {
-//								popGesture: 'hide'
-//							},
-//							waiting: {
-//								autoShow: false
-//							}
-//						});
-					}, false);
-					forgetButton.addEventListener('tap', function(event) {
-						$.openWindow({
-							url: 'forget_password.html',
-							id: 'forget_password',
-							preload: true,
-							show: {
-								aniShow: 'pop-in'
-							},
-							styles: {
-								popGesture: 'hide'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
-					}, false);
-					//
-					window.addEventListener('resize', function() {
-						oauthArea.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
 					}, false);
 					//
 					var backButtonPress = 0;
