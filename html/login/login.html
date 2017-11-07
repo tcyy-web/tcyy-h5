@@ -17,6 +17,7 @@
 			}
 			.mui-content {
 				background-color: #765fc3;
+				overflow: auto;
 			}
 			.mui-content .login-title {
 				font-size: 18px;
@@ -85,53 +86,52 @@
 			}
 
 			.mui-content-padded {
-				margin-top: 25px;
+				margin: 70px 30px 60px 30px;
 			}
 
 			.mui-btn {
-				padding: 10px;
-			}
-
-			.link-area {
-				display: block;
-				margin-top: 25px;
-				text-align: center;
-			}
-
-			.spliter {
-				color: #bbb;
-				padding: 0px 8px;
+				padding: 0;
+				border: 0;
+				margin-bottom: 0;
+				font-size: 18px;
+				background-color: #6b51c1;
+				line-height: 60px;
+				-webkit-border-radius: 60px;
+				-moz-border-radius: 60px;
+				border-radius: 60px;
 			}
 
 			.oauth-area {
-				position: absolute;
-				bottom: 20px;
-				left: 0px;
 				text-align: center;
 				width: 100%;
-				padding: 0px;
-				margin: 0px;
+				margin-bottom: 100px;
 			}
 
 			.oauth-area .oauth-btn {
 				display: inline-block;
-				width: 50px;
-				height: 50px;
-				background-size: 30px 30px;
-				background-position: center center;
-				background-repeat: no-repeat;
-				margin: 0px 20px;
-				/*-webkit-filter: grayscale(100%); */
-				border: solid 1px #ddd;
-				border-radius: 25px;
+				width: 40px;
+				height: 40px;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				border-radius: 50%;
+				overflow: hidden;
+			}
+			.oauth-area .oauth-btn:first-child {
+				margin-right: 20px;
+			}
+			.oauth-area .oauth-btn img {
+				border: 0;
+				width: 100%;
+				height: 100%;
 			}
 
-			.oauth-area .oauth-btn:active {
-				border: solid 1px #aaa;
+			.link-area p {
+				text-align: center;
+				color: #ffffff;
 			}
-
-			.oauth-area .oauth-btn.disabled {
-				background-color: #ddd;
+			.link-area p a {
+				color: #5438af;
+				margin-left: 5px;
 			}
 		</style>
 
@@ -150,23 +150,19 @@
 					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
 				</div>
 			</form>
-			<form class="mui-input-group">
-				<ul class="mui-table-view mui-table-view-chevron">
-					<li class="mui-table-view-cell">
-						自动登录
-						<div id="autoLogin" class="mui-switch">
-							<div class="mui-switch-handle"></div>
-						</div>
-					</li>
-				</ul>
-			</form>
 			<div class="mui-content-padded">
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
-				<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+			</div>
+			<div class="oauth-area">
+				<div class="oauth-btn">
+					<img src="../../images/login/qq.png"/>
+				</div>
+				<div class="oauth-btn">
+					<img src="../../images/login/wx.png"/>
 				</div>
 			</div>
-			<div class="mui-content-padded oauth-area">
-
+			<div class="link-area">
+				<p>还没有账号？<a id='reg'>注册账号</a></p>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -179,8 +175,8 @@
 				});
 				$.plusReady(function() {
 					plus.screen.lockOrientation("portrait-primary");
-					var settings = app.getSettings();
-					var state = app.getState();
+					var settings = login.getSettings();
+					var state = login.getState();
 					var mainPage = plus.webview.getWebviewById("main");
 					var main_loaded_flag = false;
 					if(!mainPage){
@@ -206,39 +202,27 @@
 							}
 						},20);
 					};
-					//检查 "登录状态/锁屏状态" 开始
-					if (settings.autoLogin && state.token && settings.gestures) {
-						$.openWindow({
-							url: 'unlock.html',
-							id: 'unlock',
-							show: {
-								aniShow: 'pop-in'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
-					} else if (settings.autoLogin && state.token) {
+					if (settings.autoLogin && state.token) {
 						toMain();
 					} else {
-						app.setState(null);
+						login.setState(null);
 						//第三方登录
-						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录
+						var authBtns = ['weixin', 'sinaweibo']; //配置业务支持的第三方登录
 						var auths = {};
 						var oauthArea = doc.querySelector('.oauth-area');
 						plus.oauth.getServices(function(services) {
 							for (var i in services) {
 								var service = services[i];
 								auths[service.id] = service;
-								if (~authBtns.indexOf(service.id)) {
-									var isInstalled = app.isInstalled(service.id);
-									var btn = document.createElement('div');
-									//如果微信未安装，则为不启用状态
-									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
-									btn.authId = service.id;
-									btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
-									oauthArea.appendChild(btn);
-								}
+//								if (~authBtns.indexOf(service.id)) {
+//									var isInstalled = login.isInstalled(service.id);
+//									var btn = document.createElement('div');
+//									//如果微信未安装，则为不启用状态
+//									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
+//									btn.authId = service.id;
+//									btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
+//									oauthArea.appendChild(btn);
+//								}
 							}
 							$(oauthArea).on('tap', '.oauth-btn', function() {
 								if (this.classList.contains('disabled')) {
@@ -253,7 +237,7 @@
 									auth.getUserInfo(function() {
 										plus.nativeUI.toast("获取用户信息成功");
 										var name = auth.userInfo.nickname || auth.userInfo.name;
-										app.createState(name, function() {
+										login.createState(name, function() {
 											toMain();
 										});
 									}, function(e) {
@@ -286,7 +270,7 @@
 							account: accountBox.value,
 							password: passwordBox.value
 						};
-						app.login(loginInfo, function(err) {
+						login.login(loginInfo, function(err) {
 							if (err) {
 								plus.nativeUI.toast(err);
 								return;
@@ -302,7 +286,7 @@
 						setTimeout(function() {
 							var isActive = event.detail.isActive;
 							settings.autoLogin = isActive;
-							app.setSettings(settings);
+							login.setSettings(settings);
 						}, 50);
 					}, false);
 					regButton.addEventListener('tap', function(event) {
