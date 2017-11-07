@@ -258,10 +258,7 @@
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
 				"permissions": ["<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>"]
 			},
-			"orientation": [
-				"portrait-primary",
-				"portrait-secondary"
-			],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
+			"orientation": ["portrait-primary","portrait-secondary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
 				"ios": {
 					"prerendered": true, /*应用图标是否已经高亮处理，在iOS6及以下设备上有效*/
@@ -524,6 +521,61 @@
 	        "html/home/tab-webview-kuozhan.html",
 	        "html/home/tab-webview-yanshi.html"
 	      ]
+	    },
+	    "html/home/tab-webview-kuozhan.html": {
+	      "href": "html/home/tab-webview-kuozhan.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "images/tab-kuozhan/bingli.png",
+	        "images/tab-kuozhan/zhishiku.png",
+	        "images/tab-kuozhan/shebei.png",
+	        "images/tab-kuozhan/cailiao.png",
+	        "images/tab-kuozhan/jiagong.png",
+	        "images/tab-kuozhan/chuangyisheji.png",
+	        "images/tab-kuozhan/zhuangshisheji.png",
+	        "images/tab-kuozhan/juhui.png",
+	        "images/tab-kuozhan/nianhui.png",
+	        "images/tab-kuozhan/zhanhui.png",
+	        "images/tab-kuozhan/zaixianketang.png",
+	        "images/tab-kuozhan/peixun.png",
+	        "images/tab-kuozhan/dushuhui.png"
+	      ],
+	      "priority": 0
+	    },
+	    "html/home/tab-webview-yanshi.html": {
+	      "href": "html/home/tab-webview-yanshi.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "js/mui.min.js"
+	      ],
+	      "priority": 1
+	    },
+	    "html/home/tab-webview-goutong.html": {
+	      "href": "html/home/tab-webview-goutong.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "js/mui.min.js",
+	        "js/business/home-tab.js",
+	        "images/tab-goutong/img1.png",
+	        "images/tab-goutong/img2.png",
+	        "images/tab-goutong/img3.png",
+	        "images/tab-goutong/img4.png",
+	        "images/tab-goutong/img5.png",
+	        "images/tab-goutong/img6.png"
+	      ],
+	      "refer": [
+	        "html/home/tab-webview-kuozhan.html",
+	        "html/home/tab-webview-yanshi.html",
+	        "html/login/login.html"
+	      ],
+	      "priority": 0
 	    }
 	  },
 	  "idle": {
@@ -602,6 +654,7 @@
 	      "static-demo/项目/img/line.png",
 	      "static-demo/口腔人才/公司端发布简历/img/sc12.png",
 	      "thmo/Public/master/tooth/14.png",
+	      "images/login/qq.png",
 	      "static-demo/口腔人才/公司端发布简历/img/sc233.jpg",
 	      "static-demo/口腔人才/公司端发布简历/css/kqrc.css",
 	      "static-demo/css/mui.css",
@@ -610,7 +663,6 @@
 	      "thmo/Public/master/models/18.obj",
 	      "static-demo/个人中心/手机验证/JHyz.css",
 	      "static-demo/首页/i.HTML",
-	      "images/user-photo.png",
 	      "static-demo/口腔人才/公司端发布简历/img/fl.png",
 	      "static-demo/项目/img/img.png",
 	      "static-demo/知识进阶/img/yj.png",
@@ -745,6 +797,7 @@
 	      "static-demo/img/sc3.jpg",
 	      "static-demo/口腔人才/我的简历-添加求职状态.html",
 	      "static-demo/图片/img/bg1.png",
+	      "images/tab-vedio/sc10.png",
 	      "static-demo/知识进阶/病例秀主页篇/xm.HTML",
 	      "thmo/Public/fonts/iconfont.ttf",
 	      "thmo/Public/master/js/bootstrap.js",
@@ -792,6 +845,7 @@
 	      "static-demo/登陆注册/logo.css",
 	      "static-demo/个人中心/粉丝/fs.css",
 	      "static-demo/口腔人才/焦点关注-口腔人招聘列表-公司简介.html",
+	      "images/tab-vedio/bg1.png",
 	      "thmo/Public/master/models/11.obj",
 	      "static-demo/设计分类/img/footer2.png",
 	      "static-demo/项目/img/formleft.png",
@@ -815,6 +869,7 @@
 	      "thmo/Public/master/tooth/36.png",
 	      "static-demo/登陆注册/reg.css",
 	      "static-demo/培训天地/课程.html",
+	      "js/mui.pullToRefresh.material.js",
 	      "static-demo/个人中心/img/f1.png",
 	      "js/immersed.js",
 	      "thmo/Public/master/models/33.mtl",
@@ -866,6 +921,7 @@
 	      "static-demo/项目/fs.css",
 	      "thmo/Public/master/models/46.mtl",
 	      "thmo/Public/master/models/23.obj",
+	      "images/tab-vedio/sc11.png",
 	      "static-demo/首页/img/img3.png",
 	      "static-demo/培训天地/课程详情 - 课程安排.html",
 	      "static-demo/口腔人才/公司端发布简历/职位-教育经历.html",
@@ -895,7 +951,9 @@
 	      "static-demo/知识进阶/img/zsk.png",
 	      "static-demo/img/kcico3.png",
 	      "static-demo/首页/img/img5.png",
+	      "js/mui.pullToRefresh.js",
 	      "images/footer/f2.png",
+	      "images/login/wx.png",
 	      "thmo/Public/master/models/47.obj",
 	      "thmo/Public/fonts/iconfont.css",
 	      "static-demo/口腔人才/公司端发布简历/img/kcico1.png",
@@ -910,6 +968,7 @@
 	      "static-demo/项目/img/bg.png",
 	      "static-demo/口腔人才/我的简历-添加男女.html",
 	      "thmo/Public/master/models/32.mtl",
+	      "html/home/vedio.html",
 	      "static-demo/口腔人才/公司端发布简历/img/sc26.jpg",
 	      "static-demo/专业网站/img/tx.png",
 	      "static-demo/img/sc20.jpg",
@@ -939,6 +998,7 @@
 	      "static-demo/个人中心/img/dingdan.png",
 	      "static-demo/img/sc23.jpg",
 	      "static-demo/图片/img/bg.png",
+	      "images/tab-vedio/bg.png",
 	      "static-demo/个人中心/积分兑换/jfdh.html",
 	      "thmo/Public/master/models/17.obj",
 	      "static-demo/img/fh.jpg",
@@ -949,6 +1009,7 @@
 	      "thmo/Public/fonts/mui-icons-extra.ttf",
 	      "thmo/Public/master/models/35.obj",
 	      "static-demo/3D/f2.png",
+	      "html/home/pictrue.html",
 	      "thmo/Public/master/models/28.obj",
 	      "static-demo/口腔人才/公司端发布简历/img/sc1.jpg",
 	      "thmo/Public/master/models/26.mtl",
@@ -964,7 +1025,8 @@
 	      "static-demo/知识进阶/img/file-img.png",
 	      "thmo/Public/master/images/logo.png",
 	      "static-demo/个人中心/粉丝/fszreo.html",
-	      "static-demo/知识进阶/知识库详情/xm.css"
+	      "static-demo/知识进阶/知识库详情/xm.css",
+	      "js/business/login-reg.js"
 	    ]
 	  }
 	},

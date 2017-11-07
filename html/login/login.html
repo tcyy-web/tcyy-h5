@@ -261,9 +261,7 @@
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
-					var autoLoginButton = doc.getElementById("autoLogin");
 					var regButton = doc.getElementById('reg');
-					var forgetButton = doc.getElementById('forgetPassword');
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
 							account: accountBox.value,
@@ -280,17 +278,9 @@
 					$.enterfocus('#login-form input', function() {
 						$.trigger(loginButton, 'tap');
 					});
-					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('mui-active')
-					autoLoginButton.addEventListener('toggle', function(event) {
-						setTimeout(function() {
-							var isActive = event.detail.isActive;
-							settings.autoLogin = isActive;
-							login.setSettings(settings);
-						}, 50);
-					}, false);
 					regButton.addEventListener('tap', function(event) {
 						$.openWindow({
-							url: '../home/index.html',
+							url: 'reg.html',
 							id: 'reg',
 							preload: true,
 							show: {

@@ -141,10 +141,10 @@
 				</div>
 			</form>
 			<div class="mui-content-padded">
-				<button id='login' class="btn-reg">注册</button>
+				<button id='reg' class="btn-reg">注册</button>
 			</div>
 			<div class="link-area">
-				<p>已经有账号？<a id='reg'>立即登录</a></p>
+				<p>已经有账号？<a id='login'>立即登录</a></p>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -153,12 +153,11 @@
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-					var settings = app.getSettings();
+					var settings = login.getSettings();
 					var regButton = doc.getElementById('reg');
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
-					var passwordConfirmBox = doc.getElementById('password_confirm');
-					var emailBox = doc.getElementById('email');
+					var loginButton = doc.getElementById('login');
 					regButton.addEventListener('tap', function(event) {
 						var regInfo = {
 							account: accountBox.value,
@@ -170,7 +169,7 @@
 							plus.nativeUI.toast('密码两次输入不一致');
 							return;
 						}
-						app.reg(regInfo, function(err) {
+						login.reg(regInfo, function(err) {
 							if (err) {
 								plus.nativeUI.toast(err);
 								return;
@@ -184,14 +183,15 @@
 							plus.webview.getLaunchWebview().show("pop-in",200,function () {
 								plus.webview.currentWebview().close("none");
 							});
-							//若启动页不是登录页，则需通过如下方式打开登录页
-//							$.openWindow({
-//								url: 'login.html',
-//								id: 'login',
-//								show: {
-//									aniShow: 'pop-in'
-//								}
-//							});
+						});
+					});
+					loginButton.addEventListener('tap', function(event) {
+						$.openWindow({
+							url: 'login.html',
+							id: 'login',
+							show: {
+								aniShow: 'pop-in'
+							}
 						});
 					});
 				});
