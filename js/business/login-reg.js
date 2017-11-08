@@ -7,11 +7,11 @@
 		loginInfo = loginInfo || {};
 		loginInfo.account = loginInfo.account || '';
 		loginInfo.password = loginInfo.password || '';
-		if (loginInfo.account.length < 5) {
-			return callback('账号最短为 5 个字符');
+		if (loginInfo.account.trim() === '') {
+			return callback('请输入注册手机');
 		}
-		if (loginInfo.password.length < 6) {
-			return callback('密码最短为 6 个字符');
+		if (loginInfo.password.trim() === '') {
+			return callback('请输入密码');
 		}
 		var users = JSON.parse(localStorage.getItem('$users') || '[]');
 		var authed = users.some(function(user) {

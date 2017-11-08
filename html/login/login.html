@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title></title>
+		<title>登录</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
@@ -18,6 +18,26 @@
 			.mui-content {
 				background-color: #765fc3;
 				overflow: auto;
+			}
+			.history-back {
+				position: absolute;
+				left: 10px;
+				top: 0;
+				margin-right: -10px;
+		    margin-left: -10px;
+		    padding: 16px 10px 10px 10px;
+				color: #ffffff;
+				font-family: Muiicons;
+		    font-size: 24px;
+		    font-weight: 400;
+		    font-style: normal;
+		    line-height: 1;
+		    display: inline-block;
+		    text-decoration: none;
+		    -webkit-font-smoothing: antialiased;
+			}
+			.history-back:before {
+				content: '\e471';
 			}
 			.mui-content .login-title {
 				font-size: 18px;
@@ -68,7 +88,7 @@
 				height: 50px !important;
 			}
 			.mui-icon-clear {
-				top: 14px !important;
+				top: 16px !important;
 				color: #ffffff !important;
 			}
 			::-moz-placeholder {
@@ -80,16 +100,15 @@
 			::-webkit-input-placeholder {
 				color: #ffffff;
 			}
-			.mui-checkbox input[type=checkbox],
-			.mui-radio input[type=radio] {
-				top: 6px;
-			}
 
 			.mui-content-padded {
 				margin: 70px 30px 60px 30px;
 			}
 
-			.mui-btn {
+			.btn-login {
+				display: block;
+				width: 100%;
+				color: #ffffff;
 				padding: 0;
 				border: 0;
 				margin-bottom: 0;
@@ -139,6 +158,7 @@
 
 	<body>
 		<div class="mui-content">
+			<i class="history-back"></i>
 			<h1 class="login-title">登录</h1>
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
@@ -151,7 +171,7 @@
 				</div>
 			</form>
 			<div class="mui-content-padded">
-				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+				<button id='login' class="btn-login">登录</button>
 			</div>
 			<div class="oauth-area">
 				<div class="oauth-btn">
@@ -262,9 +282,7 @@
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
-					var autoLoginButton = doc.getElementById("autoLogin");
 					var regButton = doc.getElementById('reg');
-					var forgetButton = doc.getElementById('forgetPassword');
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
 							account: accountBox.value,
@@ -281,17 +299,9 @@
 					$.enterfocus('#login-form input', function() {
 						$.trigger(loginButton, 'tap');
 					});
-					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('mui-active')
-					autoLoginButton.addEventListener('toggle', function(event) {
-						setTimeout(function() {
-							var isActive = event.detail.isActive;
-							settings.autoLogin = isActive;
-							login.setSettings(settings);
-						}, 50);
-					}, false);
 					regButton.addEventListener('tap', function(event) {
 						$.openWindow({
-							url: '../home/index.html',
+							url: 'reg.html',
 							id: 'reg',
 							preload: true,
 							show: {
@@ -304,40 +314,6 @@
 								autoShow: false
 							}
 						});
-//						$.openWindow({
-//							url: 'reg.html',
-//							id: 'reg',
-//							preload: true,
-//							show: {
-//								aniShow: 'pop-in'
-//							},
-//							styles: {
-//								popGesture: 'hide'
-//							},
-//							waiting: {
-//								autoShow: false
-//							}
-//						});
-					}, false);
-					forgetButton.addEventListener('tap', function(event) {
-						$.openWindow({
-							url: 'forget_password.html',
-							id: 'forget_password',
-							preload: true,
-							show: {
-								aniShow: 'pop-in'
-							},
-							styles: {
-								popGesture: 'hide'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
-					}, false);
-					//
-					window.addEventListener('resize', function() {
-						oauthArea.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
 					}, false);
 					//
 					var backButtonPress = 0;
