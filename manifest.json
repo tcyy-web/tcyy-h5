@@ -543,7 +543,8 @@
 	        "images/tab-kuozhan/peixun.png",
 	        "images/tab-kuozhan/dushuhui.png"
 	      ],
-	      "priority": 0
+	      "priority": 0,
+	      "refer": []
 	    },
 	    "html/home/tab-webview-yanshi.html": {
 	      "href": "html/home/tab-webview-yanshi.html",
@@ -553,7 +554,8 @@
 	        "css/style.css",
 	        "js/mui.min.js"
 	      ],
-	      "priority": 1
+	      "priority": 1,
+	      "refer": []
 	    },
 	    "html/home/tab-webview-goutong.html": {
 	      "href": "html/home/tab-webview-goutong.html",
@@ -573,7 +575,26 @@
 	      "refer": [
 	        "html/home/tab-webview-kuozhan.html",
 	        "html/home/tab-webview-yanshi.html",
-	        "html/login/login.html"
+	        "html/home/tab-webview-wode.html"
+	      ],
+	      "priority": 0
+	    },
+	    "html/home/tab-webview-wode.html": {
+	      "href": "html/home/tab-webview-wode.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "js/mui.min.js",
+	        "images/tab-wode/yqm.png",
+	        "images/tab-wode/jhm.png",
+	        "images/tab-wode/wdblx.png",
+	        "images/tab-wode/bdblx.png",
+	        "images/tab-wode/tk.png",
+	        "images/tab-wode/fk.png",
+	        "images/tab-wode/gy.png",
+	        "images/tab-wode/msg.png",
+	        "images/tab-wode/user_default.png"
 	      ],
 	      "priority": 0
 	    }
@@ -724,6 +745,7 @@
 	      "thmo/Public/master/tooth/38.png",
 	      "static-demo/知识进阶/img/pltx1.png",
 	      "static-demo/口腔人才/我的简历 - 2.html",
+	      "html/video/vedio-list.html",
 	      "static-demo/img/sc15.png",
 	      "static-demo/public/js/jquery-3.1.1.min.js",
 	      "static-demo/img/sc5.png",
@@ -966,9 +988,9 @@
 	      "static-demo/知识进阶/img/img3.png",
 	      "thmo/Public/master/tooth/37.png",
 	      "static-demo/项目/img/bg.png",
+	      "html/picture/picture-list.html",
 	      "static-demo/口腔人才/我的简历-添加男女.html",
 	      "thmo/Public/master/models/32.mtl",
-	      "html/home/vedio.html",
 	      "static-demo/口腔人才/公司端发布简历/img/sc26.jpg",
 	      "static-demo/专业网站/img/tx.png",
 	      "static-demo/img/sc20.jpg",
@@ -1009,7 +1031,6 @@
 	      "thmo/Public/fonts/mui-icons-extra.ttf",
 	      "thmo/Public/master/models/35.obj",
 	      "static-demo/3D/f2.png",
-	      "html/home/pictrue.html",
 	      "thmo/Public/master/models/28.obj",
 	      "static-demo/口腔人才/公司端发布简历/img/sc1.jpg",
 	      "thmo/Public/master/models/26.mtl",

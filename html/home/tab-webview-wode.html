@@ -108,13 +108,15 @@
 						<img src="../../images/tab-wode/msg.png" />
 					</div>
 				</div>
-				<div class="user-info flex">
-					<div class="img flex flex-col-center">
-						<img src="../../images/tab-wode/user_default.png" />
-					</div>
-					<div class="info flex-1">
-						<p>游客身份</p>
-						<p>立即登录</p>
+				<div class="user-info">
+					<div id="login" class="flex">
+						<div class="img flex flex-col-center">
+							<img src="../../images/tab-wode/user_default.png" />
+						</div>
+						<div class="info flex-1">
+							<p>游客身份</p>
+							<p>立即登录</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -184,9 +186,30 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script>
-			mui.init({
-				swipeBack: false,
-			});
+			(function($, doc) {
+				$.init({
+					swipeBack: false
+				});
+				$.plusReady(function() {
+					var loginButton = doc.getElementById('login');
+					loginButton.addEventListener('tap', function(event) {
+						$.openWindow({
+							url: '../login/login.html',
+							id: 'login',
+							preload: true,
+							show: {
+								aniShow: 'pop-in'
+							},
+							styles: {
+								popGesture: 'hide'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					}, false);
+				});
+			}(mui, document));
 		</script>
 	</body>
 

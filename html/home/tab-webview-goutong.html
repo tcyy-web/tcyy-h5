@@ -7,9 +7,8 @@
 		<title>沟通</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/style.css" rel="stylesheet" />
-		<script src="../../js/mui.min.js"></script>
 
-<style>
+		<style>
 			.goutong-row {
 				padding: 20px 0;
 			}
@@ -94,13 +93,11 @@
 				</div>
 			</div>
 		</div>
-
+		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/business/home-tab.js"></script>
 		<script type="text/javascript">
 			(function() {
-				mui.init({
-					swipeBack: false //启用右滑关闭功能
-				});
+				mui.init({});
 				mui.plusReady(function() {
 					var self = plus.webview.currentWebview(),
 						leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
@@ -241,18 +238,12 @@
 						if(targetPage == activePage) {
 							return;
 						}
-
-						if(currIndex !== 3) {
-							//底部选项卡切换
-							util.toggleNview(currIndex);
-							// 子页面切换
-							util.changeSubpage(targetPage, activePage, aniShow);
-							//更新当前活跃的页面
-							activePage = targetPage;
-						} else {
-							//第四个tab 打开新窗口
-							plus.webview.open('../login/login.html', 'new', {}, 'slide-in-right', 200);
-						}
+						//底部选项卡切换
+						util.toggleNview(currIndex);
+						// 子页面切换
+						util.changeSubpage(targetPage, activePage, aniShow);
+						//更新当前活跃的页面
+						activePage = targetPage;
 					});
 				});
 			})();
