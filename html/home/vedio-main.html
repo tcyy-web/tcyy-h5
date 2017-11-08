@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">视频</h1>
+</header>
+<div class="mui-content">
+	<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+		<div class="mui-scroll">
+			<a class="mui-control-item mui-active" href="1">
+				儿童牙科
+
+			</a>
+			<a class="mui-control-item" href="2">
+				口保健
+
+			</a>
+			<a class="mui-control-item" href="3">
+				口美容
+
+			</a>
+			<a class="mui-control-item" href="4">
+				口内科
+			</a>
+
+		</div>
+	</div>
+
+</div>
+<script src="../../js/mui.min.js"></script>
+<script>
+mui.init({
+	subpages:[{
+		url:'vedio-center.html',
+		id:'vedioCenter',
+		styles:{
+			top: '86px',
+			bottom: '0px',
+		}
+	}]
+});
+
+
+mui("body").on('tap','.mui-control-item',function(){
+	var id = this.getAttribute("href");
+	frames["vedioCenter"].loadData( id )
+}) 
+</script>
+</body>
+
+</html>
