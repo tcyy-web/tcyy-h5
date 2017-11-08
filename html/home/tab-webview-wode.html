@@ -10,22 +10,177 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
-			.header-icon {
-				position: absolute !important;
-				right: 10px;
-				top: 0;
+			p {
+				text-align: center;
+				margin: 0;
+			}
+			body,
+			.mui-content {
+				background-color: #eaeaea;
+			}
+			.wode-header {
+				position: relative;
+				background-color: #765fc3;
+				text-align: center;
+			}
+			.wode-header .wh-title p {
 				color: #ffffff;
+				height: 50px;
+				line-height: 50px;
+				font-size: 18px;
+			}
+			.wode-header .msg{
+				position: absolute;
+				right: 0;
+				top: 5px;
+				padding: 10px;
+			}
+			.wode-header .msg img{
+				width: 20px;
+			}
+			.wode-header .user-info {
+				padding: 0 10px 40px 10px;
+			}
+			.wode-header .user-info .img {
+				width: 60px;
+				height: 60px;
+				margin-right: 20px;
+			}
+			.wode-header .user-info .img img {
+				width: 100%;
+			}
+			.wode-header .user-info .info {
+				padding-top: 4px;
+			}
+			.wode-header .user-info .info p{
+				font-size: 18px;
+				color: #ffffff;
+				text-align: left;
+				margin-top: 5px;
+			}
+
+			.count {
+				padding: 10px 0;
+				background-color: #ffffff;
+				color: #303030;
+				margin-bottom: 10px;
+			}
+			.count .flex-1 p:first-child {
+				color: #7c7c7c;
+			}
+			.count p {
+				height: 20px;
+				line-height: 20px;
+			}
+
+			.mui-table-view {
+				margin-bottom: 10px;
+			}
+			.mui-ios .mui-table-view-cell {
+				font-size: 14px !important;
+				padding: 14px 15px 14px 40px !important;
+			}
+			.mui-table-view-cell>a:not(.mui-btn) {
+			    margin: -14px -15px -14px -40px !important;
+			}
+			.mui-ios .mui-table-view-cell a {
+				color: #303030 !important;
+			}
+			.mui-table-view-cell img {
+				position: absolute;
+				left: 7px;
+				top: 12px;
+				width: 25px;
+				height: 25px;
+			}
+			.mui-table-view-cell:after {
+				left: 40px !important;
 			}
 		</style>
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">我的</h1>
-			<span class="header-icon mui-icon mui-icon-chat"></span>
-		</header>
 		<div class="mui-content">
-			我的
+			<div class="wode-header">
+				<div class="wh-title">
+					<p>我的</p>
+					<div class="msg">
+						<img src="../../images/tab-wode/msg.png" />
+					</div>
+				</div>
+				<div class="user-info flex">
+					<div class="img flex flex-col-center">
+						<img src="../../images/tab-wode/user_default.png" />
+					</div>
+					<div class="info flex-1">
+						<p>游客身份</p>
+						<p>立即登录</p>
+					</div>
+				</div>
+			</div>
+			<div class="count flex">
+				<div class="flex-1">
+					<p>收藏</p>
+					<p>0</p>
+				</div>
+				<div class="flex-1">
+					<p>积分</p>
+					<p>0</p>
+				</div>
+				<div class="flex-1">
+					<p>签到</p>
+					<p>0</p>
+				</div>
+			</div>
+
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					<img src="../../images/tab-wode/yqm.png"/>
+					<a class="mui-navigate-right" href="#">
+						我的邀请码
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<img src="../../images/tab-wode/jhm.png"/>
+					<a class="mui-navigate-right" href="#">
+						我的激活码
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<img src="../../images/tab-wode/wdblx.png"/>
+					<a class="mui-navigate-right" href="#">
+						我的病例秀
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<img src="../../images/tab-wode/bdblx.png"/>
+					<a class="mui-navigate-right" href="#">
+						本地病例秀
+					</a>
+				</li>
+			</ul>
+
+			<ul class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					<img src="../../images/tab-wode/tk.png"/>
+					<a class="mui-navigate-right" href="#">
+						本地图库
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<img src="../../images/tab-wode/fk.png"/>
+					<a class="mui-navigate-right" href="#">
+						意见反馈
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<img src="../../images/tab-wode/gy.png"/>
+					<a class="mui-navigate-right" href="#">
+						关于我们
+					</a>
+				</li>
+			</ul>
+
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script>
