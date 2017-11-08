@@ -24,6 +24,7 @@ ul,ol,li{ padding: 0; margin: 0; list-style: none;}
 }
 .mui-title {
 	color: #ffffff;
+	font-size: 18px;
 }
 /*公共*/
 img {
