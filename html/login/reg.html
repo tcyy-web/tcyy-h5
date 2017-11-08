@@ -19,6 +19,26 @@
 				background-color: #765fc3;
 				overflow: auto;
 			}
+			.history-back {
+				position: absolute;
+				left: 10px;
+				top: 0;
+				margin-right: -10px;
+		    margin-left: -10px;
+		    padding: 16px 10px 10px 10px;
+				color: #ffffff;
+				font-family: Muiicons;
+		    font-size: 24px;
+		    font-weight: 400;
+		    font-style: normal;
+		    line-height: 1;
+		    display: inline-block;
+		    text-decoration: none;
+		    -webkit-font-smoothing: antialiased;
+			}
+			.history-back:before {
+				content: '\e471';
+			}
 			.mui-content .login-title {
 				font-size: 18px;
 				color: #ffffff;
@@ -41,7 +61,7 @@
 			}
 
 			.mui-input-group label {
-				width: 25%;
+				width: 23%;
 				color: #ffffff;
 			}
 			.mui-input-group .mui-input-row {
@@ -53,7 +73,7 @@
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 75%;
+				width: 77%;
 			}
 			.mui-input-row label {
 				padding: 0 15px;
@@ -128,6 +148,7 @@
 
 	<body>
 		<div class="mui-content">
+			<i class="history-back"></i>
 			<h1 class="login-title">注册</h1>
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
