@@ -1,3 +1,6 @@
+html {
+	height: 100%;
+}
 body {
 	width: 100%;
 	height: 100%;
@@ -21,6 +24,29 @@ ul,ol,li{ padding: 0; margin: 0; list-style: none;}
 }
 .mui-title {
 	color: #ffffff;
+	font-size: 18px;
+}
+/*公共*/
+img {
+	border: 0;
+	vertical-align: middle;
+}
+.flex {
+	display: -webkit-flex;
+	display: flex;
+}
+.flex-1 {
+	flex: 1;
+	-webkit-flex: 1;
+}
+.flex-col {
+	flex-direction: column;
+	-webkit-flex-direction: column;
+}
+.flex-col-center {
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
 }
 /**下拉刷新**/
 .mui-bar~.mui-content .mui-fullscreen {

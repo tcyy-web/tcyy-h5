@@ -2,7 +2,7 @@ var util = {
 	options: {
 		ACTIVE_COLOR: "#007aff",
 		NORMAL_COLOR: "#000",
-		subpages: ["tab-webview-yanshi.html", "tab-webview-kuozhan.html"]
+		subpages: ["tab-webview-yanshi.html", "tab-webview-kuozhan.html", "tab-webview-wode.html"]
 	},
 	/**
 	 *  简单封装了绘制原生view控件的方法
