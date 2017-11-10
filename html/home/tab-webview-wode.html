@@ -189,6 +189,7 @@
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
+					var self = plus.webview.currentWebview();
 					var loginButton = doc.getElementById('login');
 					loginButton.addEventListener('tap', function(event) {
 						$.openWindow({
