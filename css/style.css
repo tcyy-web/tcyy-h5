@@ -52,6 +52,10 @@ img {
 	-ms-flex-pack: center;
 	justify-content: center;
 }
+.flex-row-center {
+	align-items: center;
+	-webkit-align-items: center;
+}
 /**下拉刷新**/
 .mui-bar~.mui-content .mui-fullscreen {
 	top: 44px;

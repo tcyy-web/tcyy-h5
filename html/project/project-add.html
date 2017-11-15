@@ -10,23 +10,76 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
-			.mui-content .bg {
-				width: 100%;
-				height: 100%;
+			::-moz-placeholder {
+				color: #000000;
+			}
+			:-ms-input-placeholder {
+				color: #000000;
+			}
+			::-webkit-input-placeholder {
+				color: #000000;
 			}
 			.mui-content {
-				position: relative;
+				padding-bottom: 60px;
 			}
-			.mui-content .info-box {
+			.btn-save {
 				position: absolute;
-				top: 100px;
+				bottom: 0;
 				left: 0;
+				background-color: #765fc3;
+				font-size: 18px;
+				color: #ffffff;
+				text-align: center;
+				height: 60px;
+				line-height: 60px;
+				border: 0;
+				padding: 0;
 				width: 100%;
 			}
-			.mui-content .info-box input {
-				background-color: transparent;
+			.form-item {
+				background-color: #ffffff;
+				border-bottom: 1px solid #d6d6d6;
+				height: 50px;
+				line-height: 49px;
+			}
+			.form-item label {
+				width: 90px;
+				font-size: 14px;
+				text-align: center;
+			}
+			.form-item input {
 				border: 0;
-				border-bottom: 1px solid #ffffff;
+				padding: 0;
+				margin: 0;
+				height: 100%;
+				color: #000000;
+				font-size: 14px;
+				background-color: transparent;
+			}
+			.add-pic {
+				margin-top: 10px;
+				background-color: #ffffff;
+				padding: 30px;
+				border-top: 1px solid #d6d6d6;
+				border-bottom: 1px solid #d6d6d6;
+				text-align: center;
+			}
+			.add-box {
+				display: inline-block;
+				text-align: center;
+			}
+			.add-box p {
+				color: #b3b3b3;
+				font-size: 14px;
+				margin-top: 5px;
+			}
+			.add-box .ap-jia{
+				border: 1px dotted #d2d2d2;
+				width: 40px;
+				height: 40px;
+				-webkit-border-radius: 5px;
+				-moz-border-radius: 5px;
+				border-radius: 5px;
 			}
 		</style>
 	</head>
@@ -37,6 +90,31 @@
 			<h1 class="mui-title">新增项目</h1>
 		</header>
 		<div class="mui-content">
+			<form>
+				<div class="flex form-item">
+					<label>编号：</label>
+					<input class="flex-1" type="text" placeholder="请输入编号" />
+				</div>
+				<div class="flex form-item">
+					<label>项目：</label>
+					<input class="flex-1" type="text" placeholder="请输入项目名称" />
+				</div>
+				<div class="flex form-item">
+					<label>金额：</label>
+					<input class="flex-1" type="number" placeholder="请输入金额" />
+				</div>
+			</form>
+			<div class="add-pic">
+				<div class="add-box">
+					<div style="display: inline-block;">
+						<div class="ap-jia flex flex-col-center flex-row-center">
+							<img src="../../images/project/jia.png" />
+						</div>
+					</div>
+					<p>上传图片</p>
+				</div>
+			</div>
+			<button class="btn-save">保存</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script>

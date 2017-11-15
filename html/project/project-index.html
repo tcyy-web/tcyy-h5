@@ -23,10 +23,45 @@
 				left: 0;
 				width: 100%;
 			}
+			.mui-content .info-box .input-box {
+				border-bottom: 1px solid #a1aae1;
+				width: 70%;
+				padding-bottom: 10px;
+			}
 			.mui-content .info-box input {
 				background-color: transparent;
 				border: 0;
-				border-bottom: 1px solid #ffffff;
+				padding: 0;
+				margin: 0;
+				height: 20px;
+				color: #765fc3;
+				text-align: center;
+				width: 100%;
+			}
+			::-moz-placeholder {
+				color: #765fc3;
+			}
+			:-ms-input-placeholder {
+				color: #765fc3;
+			}
+			::-webkit-input-placeholder {
+				color: #765fc3;
+			}
+
+			.mui-content .icon-box {
+				position: absolute;
+				top: 150px;
+				left: calc(50% - 15px);
+				left: -webkit-calc(50% - 15px);
+				width: 30px;
+				height: 30px;
+				border: 2px solid #765fc3;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				border-radius: 50%;
+			}
+			.mui-content .icon-box img {
+				height: 18px;
 			}
 		</style>
 	</head>
@@ -39,7 +74,12 @@
 		<div class="mui-content">
 			<img class="bg" src="../../images/project/body-bg.png" />
 			<div class="info-box flex flex-col-center">
-				<input />
+				<div class="input-box">
+					<input type="text" placeholder="请输入项目名称" />
+				</div>
+			</div>
+			<div class="icon-box flex flex-col-center flex-row-center">
+				<img src="../../images/project/formleft.png"/>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
