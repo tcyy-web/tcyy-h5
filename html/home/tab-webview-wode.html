@@ -187,27 +187,19 @@
 		<script src="../../js/mui.min.js"></script>
 		<script>
 			(function($, doc) {
-				$.init({
-					swipeBack: false
-				});
+				$.init();
 				$.plusReady(function() {
+					var self = plus.webview.currentWebview();
 					var loginButton = doc.getElementById('login');
 					loginButton.addEventListener('tap', function(event) {
 						$.openWindow({
 							url: '../login/login.html',
 							id: 'login',
-							preload: true,
 							show: {
 								aniShow: 'pop-in'
-							},
-							styles: {
-								popGesture: 'hide'
-							},
-							waiting: {
-								autoShow: false
 							}
 						});
-					}, false);
+					});
 				});
 			}(mui, document));
 		</script>

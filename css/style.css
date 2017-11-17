@@ -8,8 +8,9 @@ body {
 	padding: 0px;
 	background-color: #f1f1f1;
 	font-size: 14px;
+	box-sizing: border-box;
 }
-ul,ol,li{ padding: 0; margin: 0; list-style: none;}
+body,div,p,span,h1,h2,h3,h4,h5,ul,li,dl,dd,dt,a,from,input,div,menu,ol{ border:0; margin:0; padding:0; text-decoration:none; list-style:none;}
 .mui-content{
 	height: 100%;
 	background-color: #f1f1f1;
@@ -21,6 +22,9 @@ ul,ol,li{ padding: 0; margin: 0; list-style: none;}
 /*头部*/
 .mui-bar {
 	background-color: #765fc3;
+}
+.mui-bar .mui-pull-left {
+	color: #ffffff !important;
 }
 .mui-title {
 	color: #ffffff;
@@ -47,6 +51,10 @@ img {
 	-webkit-box-pack: center;
 	-ms-flex-pack: center;
 	justify-content: center;
+}
+.flex-row-center {
+	align-items: center;
+	-webkit-align-items: center;
 }
 /**下拉刷新**/
 .mui-bar~.mui-content .mui-fullscreen {

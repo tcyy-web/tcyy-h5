@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="ui-page-my">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+.order-no{
+	height:45px;
+	line-height:45px;
+	padding:0 10px;
+	font-size:14px;
+	color:#7c7c7c;
+}		
+.main{
+	border-top: 1px solid #d6d6d6;
+}
+
+.main ul li{
+	height:80px;
+	padding:15px 10px;
+	border-bottom: 1px solid #d6d6d6;
+	background:#ffffff;
+	position: relative;
+}
+
+.main ul li img{
+	height:100%;
+	float:left;
+	padding-right:10px;
+}
+
+.main ul li p{
+	font-size:12px;
+	color:#484848;
+	line-height:1.5;
+}
+
+.main ul li span{
+	font-size:12px;
+	color:#848484;
+
+}
+
+.main ul li ins{
+	display: block;
+	position: absolute;
+	right:15px;
+	top:10px;
+	font-size:12px;
+	color:#000000;
+	text-decoration: none;
+}
+
+.main ul li b{
+	position: absolute;
+	font-size:12px;
+	color:#848484;
+	font-weight: normal;
+	right:15px;
+	top:40px;
+}
+
+.opt{
+	height:45px;
+	line-height:45px;
+	font-size:14px;
+	color:#765fc3;
+	background:white;
+	padding:0 10px;
+	border-bottom: 1px solid #d6d6d6;
+}
+
+.opt span{
+	color:#ff0000;
+	float:right;
+	font-size:12px;
+}
+
+.noorder-box{
+	width:100px;
+	height:120px;
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+	font-size:12px;
+	color:#8b8b8b;
+	text-align: center;
+	line-height: 30px;
+}
+
+.noorder{
+	width:100px;
+	height:100px;
+	background:url(../../images/my/fszreo.png) center center no-repeat;
+	background-size: cover;
+	
+}
+
+		
+	</style>
+
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">我的订单</h1>
+</header>
+<div class="mui-content">
+	<div class="order-no">订单号：E2015012541448 &nbsp;&nbsp; 2015-04-14</div>
+	<div class="main">
+		<ul>
+			<li>
+				<img src="../../images/my/dingdan.png"/>
+				<p>天使心语 天使心</p>
+				<p>语胎心仪 黄色（心形） 115*96*59mm</p>
+				<span>规格：黑色</span>
+				<ins>￥499</ins>
+				<b>x2</b>
+			</li>
+			<li>
+				<img src="../../images/my/dingdan.png"/>
+				<p>天使心语 天使心</p>
+				<p>语胎心仪 黄色（心形） 115*96*59mm</p>
+				<span>规格：黑色</span>
+				<ins>￥499</ins>
+				<b>x2</b>
+			</li>
+		</ul>
+		<div class="opt">
+			总价：1500
+			<span>删除</span>
+		</div>
+	</div>
+	<div class="noorder-box">
+		<div class="noorder"></div>
+		<span class="txt">暂无订单</span>
+	</div>
+</div>
+<script src="../../js/mui.min.js"></script>
+
+</body>
+
+</html>

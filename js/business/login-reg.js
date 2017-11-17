@@ -13,22 +13,11 @@
 		if (loginInfo.password.trim() === '') {
 			return callback('请输入密码');
 		}
-		var users = JSON.parse(localStorage.getItem('$users') || '[]');
-		var authed = users.some(function(user) {
-			return loginInfo.account == user.account && loginInfo.password == user.password;
-		});
-		if (authed) {
-			return owner.createState(loginInfo.account, callback);
-		} else {
-			return callback('用户名或密码错误');
-		}
-	};
-
-	owner.createState = function(name, callback) {
-		var state = owner.getState();
-		state.account = name;
-		state.token = "token123456789";
-		owner.setState(state);
+		// TODO 调用登录接口
+		var user = {
+			username: 'mumu'
+		};
+		owner.setUserInfo(user);
 		return callback();
 	};
 
@@ -39,75 +28,41 @@
 		callback = callback || $.noop;
 		regInfo = regInfo || {};
 		regInfo.account = regInfo.account || '';
-		regInfo.password = regInfo.password || '';
-		if (regInfo.account.length < 5) {
-			return callback('用户名最短需要 5 个字符');
+		regInfo.verify = regInfo.verify || '';
+		if (regInfo.account.trim() === '') {
+			return callback('请输入手机号');
 		}
-		if (regInfo.password.length < 6) {
-			return callback('密码最短需要 6 个字符');
+		if (regInfo.verify.trim() === '') {
+			return callback('请输入验证码');
 		}
-		if (!checkEmail(regInfo.email)) {
-			return callback('邮箱地址不合法');
-		}
-		var users = JSON.parse(localStorage.getItem('$users') || '[]');
-		users.push(regInfo);
-		localStorage.setItem('$users', JSON.stringify(users));
+    // TODO 调用服务器注册逻辑
 		return callback();
 	};
 
 	/**
-	 * 获取当前状态
+	 * 获取用户
 	 **/
-	owner.getState = function() {
-		var stateText = localStorage.getItem('$state') || "{}";
+	owner.getUserInfo = function() {
+		var stateText = localStorage.getItem('$user') || "{}";
 		return JSON.parse(stateText);
 	};
-
 	/**
-	 * 设置当前状态
+	 * 设置用户
 	 **/
-	owner.setState = function(state) {
+	owner.setUserInfo = function(state) {
 		state = state || {};
-		localStorage.setItem('$state', JSON.stringify(state));
-		//var settings = owner.getSettings();
-		//settings.gestures = '';
-		//owner.setSettings(settings);
+		localStorage.setItem('$user', JSON.stringify(state));
 	};
-
-	var checkEmail = function(email) {
-		email = email || '';
-		return (email.length > 3 && email.indexOf('@') > -1);
-	};
-
 	/**
-	 * 找回密码
-	 **/
-	owner.forgetPassword = function(email, callback) {
-		callback = callback || $.noop;
-		if (!checkEmail(email)) {
-			return callback('邮箱地址不合法');
-		}
-		return callback(null, '新的随机密码已经发送到您的邮箱，请查收邮件。');
-	};
-
-	/**
-	 * 获取应用本地配置
-	 **/
-	owner.setSettings = function(settings) {
-		settings = settings || {};
-		localStorage.setItem('$settings', JSON.stringify(settings));
+	 * 判断是否登录
+	 */
+	owner.checkLogin = function () {
+		// TODO 检查逻辑
+		return true;
 	}
-
 	/**
-	 * 设置应用本地配置
+	 * 获取本地是否安装客户端
 	 **/
-	owner.getSettings = function() {
-			var settingsText = localStorage.getItem('$settings') || "{}";
-			return JSON.parse(settingsText);
-		}
-		/**
-		 * 获取本地是否安装客户端
-		 **/
 	owner.isInstalled = function(id) {
 		if (id === 'qihoo' && mui.os.plus) {
 			return true;

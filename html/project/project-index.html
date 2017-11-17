@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>项目</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+			.mui-content .bg {
+				width: 100%;
+				height: 100%;
+			}
+			.mui-content {
+				position: relative;
+			}
+			.mui-content .info-box {
+				position: absolute;
+				top: 100px;
+				left: 0;
+				width: 100%;
+			}
+			.mui-content .info-box .input-box {
+				border-bottom: 1px solid #a1aae1;
+				width: 70%;
+				padding-bottom: 10px;
+			}
+			.mui-content .info-box input {
+				background-color: transparent;
+				border: 0;
+				padding: 0;
+				margin: 0;
+				height: 20px;
+				color: #765fc3;
+				text-align: center;
+				width: 100%;
+			}
+			::-moz-placeholder {
+				color: #765fc3;
+			}
+			:-ms-input-placeholder {
+				color: #765fc3;
+			}
+			::-webkit-input-placeholder {
+				color: #765fc3;
+			}
+
+			.mui-content .icon-box {
+				position: absolute;
+				top: 150px;
+				left: calc(50% - 15px);
+				left: -webkit-calc(50% - 15px);
+				width: 30px;
+				height: 30px;
+				border: 2px solid #765fc3;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				border-radius: 50%;
+			}
+			.mui-content .icon-box img {
+				height: 18px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">项目</h1>
+		</header>
+		<div class="mui-content">
+			<img class="bg" src="../../images/project/body-bg.png" />
+			<div class="info-box flex flex-col-center">
+				<div class="input-box">
+					<input type="text" placeholder="请输入项目名称" />
+				</div>
+			</div>
+			<div class="icon-box flex flex-col-center flex-row-center">
+				<img src="../../images/project/formleft.png"/>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>
