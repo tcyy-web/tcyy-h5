@@ -10,7 +10,168 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
+			.mui-content {
+				height: auto;
+				padding-bottom: 60px;
+			}
+			.banner img {
+				width: 100%;
+			}
+			.bill {
+				min-height: 60px;
+				position: relative;
+			}
+			.bill .bill-add {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				width: 40px;
+				height: 40px;
+				background-color: #765fc3;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				border-radius: 50%;
+				cursor: pointer;
+			}
+			.bill .bill-add img {
+				width: 20px;
+			}
+			.bill-item {
+				padding-left: 10px;
+				padding-right: 60px;
+				border-bottom: 1px solid #d6d6d6;
+				background-color: #ffffff;
+			}
+			.bill-item .flex p {
+				width: 100px;
+				padding: 5px 0;
+				height: 30px;
+				line-height: 30px;
+				position: relative;
+				font-size: 14px;
+				color: #292929;
+			}
+			.bill-item .flex p:first-child:before {
+				position: absolute;
+				right: 0;
+				top: 15px;
+				content: '';
+				width: 1px;
+				height: 10px;
+				background-color: #d6d6d6;
+			}
+			.bill-item .flex p:last-child {
+				padding-left: 10px;
+			}
+			.bill-item > p{
+				padding: 5px 0;
+				text-align: left;
+				font-size: 18px;
+				color: #f34336;
+			}
+			.bill-item > p span {
+				font-size: 14px;
+				color: #bbbbbb;
+			}
+			form {
+				margin-top: 10px;
+				margin-bottom: 10px;
+				border-top: 1px solid #d6d6d6;
+			}
+			.form-item {
+				padding:0 10px;
+				background-color: #ffffff;
+				border-bottom: 1px solid #d6d6d6;
+				height: 50px;
+				line-height: 49px;
+			}
+			.form-item label {
+				width: 60px;
+				font-size: 14px;
+				text-align: left;
+			}
+			.form-item input {
+				border: 0;
+				padding: 0;
+				margin: 0;
+				height: 100%;
+				color: #000000;
+				font-size: 14px;
+				background-color: transparent;
+			}
 
+			.bill-total {
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				padding: 0 10px;
+				background-color: #3f4249;
+				height: 60px;
+				color: #d7dadf;
+			}
+			.bill-total > p {
+				font-size: 18px;
+			}
+			.tools {
+				width: 110px;
+				margin: 0 10px;
+			}
+			.tools > p {
+				font-size: 16px;
+				color: #fefefe;
+				text-align: center;
+			}
+			.tools .item {
+				position: relative;
+				width: 30px;
+				height: 30px;
+				border: 1px solid #5c5d5f;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				border-radius: 50%;
+			}
+			.tools .item.item-jia:before,
+			.tools .item.item-jia:after,
+			.tools .item.item-jian:before {
+				position: absolute;
+				content: '';
+			}
+			.tools .item.item-jian:before {
+				top: 13px;
+				left: 7px;
+				width: 14px;
+				height: 2px;
+				background-color: #5c5d5f;
+			}
+			.tools .item.item-jian.active {
+				border-color: #ffffff;
+			}
+			.tools .item.item-jian.active:before {
+				background-color: #ffffff;
+			}
+
+			.tools .item.item-jia:before {
+				top: 13px;
+				left: 7px;
+				width: 14px;
+				height: 2px;
+				background-color: #5c5d5f;
+			}
+			.tools .item.item-jia:after {
+				top: 7px;
+				left: 13px;
+				width: 2px;
+				height: 14px;
+				background-color: #5c5d5f;
+			}
+			.tools .item.item-jia.active {
+				border-color: #ffffff;
+			}
+			.tools .item.item-jia.active:before,
+			.tools .item.item-jia.active:after{
+				background-color: #ffffff;
+			}
 		</style>
 	</head>
 
@@ -20,6 +181,65 @@
 			<h1 class="mui-title">详情</h1>
 		</header>
 		<div class="mui-content">
+			<div class="banner">
+				<img src="../../images/project/banner.png" />
+			</div>
+			<div class="bill">
+				<div class="bill-add flex flex-col-center flex-row-center">
+					<img src="../../images/project/jiafooter.png" />
+				</div>
+				<div class="bill-item">
+					<div class="flex">
+						<p>编号：01by</p>
+						<p class="flex-1">牙齿修复</p>
+					</div>
+					<p>￥318<span>元</span></p>
+				</div>
+				<div class="bill-item">
+					<div class="flex">
+						<p>编号：01by</p>
+						<p class="flex-1">牙齿修复</p>
+					</div>
+					<p>￥318<span>元</span></p>
+				</div>
+			</div>
+
+			<form>
+				<div class="flex form-item">
+					<label>姓名：</label>
+					<input class="flex-1" type="text" placeholder="请输入编号" />
+				</div>
+				<div class="flex form-item">
+					<label>性别：</label>
+					<input class="flex-1" type="text" placeholder="请选择性别" />
+				</div>
+				<div class="flex form-item">
+					<label>年龄：</label>
+					<input class="flex-1" type="number" placeholder="请输入金额" />
+				</div>
+				<div class="flex form-item">
+					<label>电话：</label>
+					<input class="flex-1" type="number" placeholder="请输入电话额" />
+				</div>
+				<div class="flex form-item">
+					<label>预约：</label>
+					<input class="flex-1" type="date" placeholder="请选择预约时间" />
+				</div>
+			</form>
+
+			<div class="bill-total flex flex-row-center">
+				<div class="flex-1">
+					<p>合计：490元</p>
+				</div>
+				<div class="tools flex flex-row-center">
+					<div class="item item-jian active"></div>
+					<p class="flex-1">100%</p>
+					<div class="item item-jia"></div>
+				</div>
+				<div class="flex-1">
+					<p>优惠后：490元</p>
+				</div>
+			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script>
