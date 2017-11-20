@@ -56,6 +56,11 @@ img {
 	align-items: center;
 	-webkit-align-items: center;
 }
+.text-ellipsis{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
 /**下拉刷新**/
 .mui-bar~.mui-content .mui-fullscreen {
 	top: 44px;
