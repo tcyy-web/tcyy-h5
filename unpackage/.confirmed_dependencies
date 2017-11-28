@@ -1,0 +1,213 @@
+{
+  "html/shop/list.html": {
+    "href": "html/shop/list.html",
+    "priority": 0,
+    "resources": [],
+    "refer": []
+  },
+  "html/login/forget_password.html": {
+    "href": "html/login/forget_password.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/app.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/login/setting.html": {
+    "href": "html/login/setting.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.view.js",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
+      "libs/easymob-webim-sdk/json2.js",
+      "libs/easymob-webim-sdk/easemob.im-1.0.5.js",
+      "js/feedback.js",
+      "js/feedback-page.js",
+      "js/mui.locker.js",
+      "js/app.js",
+      "css/mui.min.css",
+      "css/feedback-page.css"
+    ],
+    "refer": [
+      "html/login/login.html"
+    ],
+    "priority": 0
+  },
+  "html/login/main.html": {
+    "href": "html/login/main.html",
+    "resources": [
+      "css/mui.min.css",
+      "js/mui.min.js",
+      "js/app.js"
+    ],
+    "refer": [
+      "html/login/setting.html"
+    ],
+    "priority": 0
+  },
+  "html/login/unlock.html": {
+    "href": "html/login/unlock.html",
+    "resources": [
+      "css/mui.min.css",
+      "js/mui.min.js",
+      "js/mui.locker.js",
+      "js/app.js"
+    ],
+    "refer": [
+      "html/login/login.html",
+      "html/login/main.html"
+    ],
+    "priority": 0
+  },
+  "html/login/login.html": {
+    "href": "html/login/login.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.enterfocus.js",
+      "js/app.js",
+      "js/business/login-reg.js",
+      "images/login/qq.png",
+      "images/login/wx.png"
+    ],
+    "refer": [
+      "html/shop/list.html",
+      "html/login/forget_password.html",
+      "html/login/main.html",
+      "html/login/unlock.html",
+      "html/home/index.html",
+      "html/login/reg.html"
+    ],
+    "priority": 0
+  },
+  "html/home/index.html": {
+    "href": "html/home/index.html",
+    "resources": [
+      "js/home/tab.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "html/home/tab-webview-yanshi.html"
+    ],
+    "refer": [
+      "html/home/tab-webview-yanshi.html",
+      "html/home/tab-webview-kuozhan.html"
+    ],
+    "priority": 0
+  },
+  "html/home/tab-webview-kuozhan.html": {
+    "href": "html/home/tab-webview-kuozhan.html",
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "images/tab-kuozhan/bingli.png",
+      "images/tab-kuozhan/zhishiku.png",
+      "images/tab-kuozhan/shebei.png",
+      "images/tab-kuozhan/cailiao.png",
+      "images/tab-kuozhan/jiagong.png",
+      "images/tab-kuozhan/chuangyisheji.png",
+      "images/tab-kuozhan/zhuangshisheji.png",
+      "images/tab-kuozhan/juhui.png",
+      "images/tab-kuozhan/nianhui.png",
+      "images/tab-kuozhan/zhanhui.png",
+      "images/tab-kuozhan/zaixianketang.png",
+      "images/tab-kuozhan/peixun.png",
+      "images/tab-kuozhan/dushuhui.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/home/tab-webview-yanshi.html": {
+    "href": "html/home/tab-webview-yanshi.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/home/tab-webview-goutong.html": {
+    "href": "html/home/tab-webview-goutong.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/business/home-tab.js",
+      "images/tab-goutong/img1.png",
+      "images/tab-goutong/img2.png",
+      "images/tab-goutong/img3.png",
+      "images/tab-goutong/img4.png",
+      "images/tab-goutong/img5.png",
+      "images/tab-goutong/img6.png",
+      "fonts/iconfont.ttf",
+      "html/home/tab-webview-yanshi.html"
+    ],
+    "refer": [
+      "html/home/tab-webview-kuozhan.html",
+      "html/home/tab-webview-yanshi.html",
+      "html/login/login.html",
+      "html/home/tab-webview-wode.html",
+      "html/video/vedio-list.html",
+      "html/project/project-list.html",
+      "html/video/video-list.html"
+    ],
+    "priority": 0
+  },
+  "html/home/tab-webview-wode.html": {
+    "href": "html/home/tab-webview-wode.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "images/tab-wode/yqm.png",
+      "images/tab-wode/jhm.png",
+      "images/tab-wode/wdblx.png",
+      "images/tab-wode/bdblx.png",
+      "images/tab-wode/tk.png",
+      "images/tab-wode/fk.png",
+      "images/tab-wode/gy.png",
+      "images/tab-wode/msg.png",
+      "images/tab-wode/user_default.png"
+    ],
+    "refer": [
+      "html/login/login.html"
+    ],
+    "priority": 0
+  },
+  "html/login/reg.html": {
+    "href": "html/login/reg.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/business/login-reg.js"
+    ],
+    "refer": [
+      "html/login/login.html"
+    ],
+    "priority": 0
+  },
+  "html/video/vedio-list.html": {
+    "refer": [
+      "html/home/tab-webview-goutong.html"
+    ],
+    "resources": []
+  },
+  "html/project/project-list.html": {
+    "href": "html/project/project-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js"
+    ],
+    "refer": [],
+    "priority": 0
+  }
+}

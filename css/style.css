@@ -32,6 +32,13 @@ body,div,p,span,h1,h2,h3,h4,h5,ul,li,dl,dd,dt,a,from,input,div,menu,ol{ border:0
 	color: #ffffff;
 	font-size: 18px;
 }
+/*android 问题*/
+.mui-android .mui-bar {
+	top: 25px;
+}
+.mui-android .mui-bar-nav~.mui-content {
+	padding-top: 69px;
+}
 /*公共*/
 img {
 	border: 0;
@@ -57,6 +64,25 @@ img {
 .flex-row-center {
 	align-items: center;
 	-webkit-align-items: center;
+}
+.text-ellipsis{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+/*按钮*/
+.mui-btn.mui-active:enabled,
+.mui-btn:enabled:active,
+button.mui-active:enabled,
+button:enabled:active,
+input[type=button].mui-active:enabled,
+input[type=button]:enabled:active,
+input[type=reset].mui-active:enabled,
+input[type=reset]:enabled:active,
+input[type=submit].mui-active:enabled,
+input[type=submit]:enabled:active {
+	background-color: #6b51c1;
+	opacity: 0.8;
 }
 /**下拉刷新**/
 .mui-bar~.mui-content .mui-fullscreen {
