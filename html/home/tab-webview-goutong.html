@@ -152,13 +152,13 @@
 								height: '50px'
 							},
 							rectStyles: {
-								color: '#d74b28',
+								color: '#765fc3',
 								radius: '50%'
 							}
 						}, {
 							tag: 'font',
 							id: 'icon',
-							text: '\ue600', //此为字体图标Unicode码'\e600'转换为'\ue600'
+							text: '3D', //此为字体图标Unicode码'\e600'转换为'\ue600'
 							position: {
 								top: '0px',
 								left: '5px',
@@ -166,10 +166,9 @@
 								height: '100%'
 							},
 							textStyles: {
-								fontSrc: '_www/fonts/iconfont.ttf',
 								align: 'center',
 								color: '#fff',
-								size: '30px'
+								size: '25px'
 							}
 						}]);
 						// append 到父webview中
@@ -178,22 +177,19 @@
 						//自定义监听图标点击事件
 						var active_color = '#fff';
 						drawNativeIcon.addEventListener('click', function(e) {
-							$.alert('你点击了图标，你在此可以打开摄像头或者新窗口等自定义点击事件。', '悬浮球点击事件');
 							// 重绘字体颜色
 							if(active_color == '#fff') {
-								drawNativeIcon.drawText('\ue600', {}, {
-									fontSrc: '_www/fonts/iconfont.ttf',
+								drawNativeIcon.drawText('3D', {}, {
 									align: 'center',
 									color: '#000',
-									size: '30px'
+									size: '25px'
 								}, 'icon');
 								active_color = '#000';
 							} else {
-								drawNativeIcon.drawText('\ue600', {}, {
-									fontSrc: '_www/fonts/iconfont.ttf',
+								drawNativeIcon.drawText('3D', {}, {
 									align: 'center',
 									color: '#fff',
-									size: '30px'
+									size: '25px'
 								}, 'icon');
 								active_color = '#fff';
 							}

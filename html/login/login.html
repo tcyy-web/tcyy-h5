@@ -167,28 +167,28 @@
 				$.init({});
 				$.plusReady(function() {
 					var self = plus.webview.currentWebview();
-					var mainPage = plus.webview.getWebviewById("main");
-					var main_loaded_flag = false;
-					if(!mainPage){
-						mainPage = $.preload({
-							"id": 'main',
-							"url": 'main.html'
-						});
-					}else{
-						main_loaded_flag = true;
-					}
-					mainPage.addEventListener("loaded",function () {
-						main_loaded_flag = true;
-					});
-					var toMain = function() {
-						var id = setInterval(function () {
-							if(main_loaded_flag){
-								clearInterval(id);
-								$.fire(mainPage, 'show', null);
-								mainPage.show("pop-in");
-							}
-						},20);
-					};
+//					var mainPage = plus.webview.getWebviewById("main");
+//					var main_loaded_flag = false;
+//					if(!mainPage){
+//						mainPage = $.preload({
+//							"id": 'main',
+//							"url": 'main.html'
+//						});
+//					}else{
+//						main_loaded_flag = true;
+//					}
+//					mainPage.addEventListener("loaded",function () {
+//						main_loaded_flag = true;
+//					});
+//					var toMain = function() {
+//						var id = setInterval(function () {
+//							if(main_loaded_flag){
+//								clearInterval(id);
+//								$.fire(mainPage, 'show', null);
+//								mainPage.show("pop-in");
+//							}
+//						},20);
+//					};
 
 					//第三方登录
 					var authBtns = ['weixin', 'sinaweibo']; //配置业务支持的第三方登录
@@ -245,7 +245,6 @@
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
 					var regButton = doc.getElementById('reg');
-					var backBtn = doc.getElementById('history-back');
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
 							account: accountBox.value,
@@ -277,9 +276,7 @@
 								autoShow: false
 							}
 						});
-					}, false);
-					backBtn.addEventListener('tap', function(event) {
-					});
+					}, false);ß
 				});
 			}(mui, document));
 		</script>
