@@ -1,1 +1,20 @@
-{}
+{
+  "html/project/project-list.html": {
+    "href": "html/project/project-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "js/mui.min.js"
+    ],
+    "priority": 3
+  },
+  "html/home/tab-webview-goutong.html": {
+    "href": "html/home/tab-webview-goutong.html",
+    "resources": [
+      "fonts/iconfont.ttf"
+    ],
+    "refer": [],
+    "priority": 0
+  }
+}

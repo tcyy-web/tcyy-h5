@@ -8,36 +8,13 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
+			.mui-bar{
+				-webkit-box-shadow: none;
+				box-shadow: none;
+			}
 			.mui-content {
 				background-color: #765fc3;
 				overflow: auto;
-			}
-			.history-back {
-				position: absolute;
-				left: 10px;
-				top: 3px;
-				margin-right: -10px;
-		    margin-left: -10px;
-		    padding: 16px 10px 10px 10px;
-				color: #ffffff;
-				font-family: Muiicons;
-		    font-size: 24px;
-		    font-weight: 400;
-		    font-style: normal;
-		    line-height: 1;
-		    display: inline-block;
-		    text-decoration: none;
-		    -webkit-font-smoothing: antialiased;
-			}
-			.history-back:before {
-				content: '\e471';
-			}
-			.mui-content .login-title {
-				font-size: 18px;
-				color: #ffffff;
-				text-align: center;
-				line-height: 50px;
-				margin-bottom: 100px;
 			}
 			.mui-input-group .mui-input-row {
 				background-color: #765fc3;
@@ -110,7 +87,7 @@
 				padding: 0 10px;
 			}
 			.mui-content-padded {
-				margin: 70px 30px 200px 30px;
+				margin: 70px 30px 140px 30px;
 			}
 
 			.btn-reg {
@@ -127,7 +104,9 @@
 				-moz-border-radius: 60px;
 				border-radius: 60px;
 			}
-
+			.link-area {
+				margin-bottom: 60px;
+			}
 			.link-area p {
 				text-align: center;
 				color: #ffffff;
@@ -140,9 +119,11 @@
 	</head>
 
 	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">登录</h1>
+		</header>
 		<div class="mui-content">
-			<i class="history-back"></i>
-			<h1 class="login-title">注册</h1>
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
 					<label>手&emsp;机：</label>

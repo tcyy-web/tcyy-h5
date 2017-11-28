@@ -145,13 +145,18 @@
       "images/tab-goutong/img3.png",
       "images/tab-goutong/img4.png",
       "images/tab-goutong/img5.png",
-      "images/tab-goutong/img6.png"
+      "images/tab-goutong/img6.png",
+      "fonts/iconfont.ttf",
+      "html/home/tab-webview-yanshi.html"
     ],
     "refer": [
       "html/home/tab-webview-kuozhan.html",
       "html/home/tab-webview-yanshi.html",
       "html/login/login.html",
-      "html/home/tab-webview-wode.html"
+      "html/home/tab-webview-wode.html",
+      "html/video/vedio-list.html",
+      "html/project/project-list.html",
+      "html/video/video-list.html"
     ],
     "priority": 0
   },
@@ -187,6 +192,22 @@
     "refer": [
       "html/login/login.html"
     ],
+    "priority": 0
+  },
+  "html/video/vedio-list.html": {
+    "refer": [
+      "html/home/tab-webview-goutong.html"
+    ],
+    "resources": []
+  },
+  "html/project/project-list.html": {
+    "href": "html/project/project-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js"
+    ],
+    "refer": [],
     "priority": 0
   }
 }
