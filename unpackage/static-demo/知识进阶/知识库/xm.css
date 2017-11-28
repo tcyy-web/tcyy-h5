@@ -1,0 +1,139 @@
+
+header{
+	width:100%;
+	height:45px;
+	text-align: center;
+	line-height: 45px;
+	font-size:14px;
+	color:white;
+	background:#755fc3;
+	text-indent: -40px;
+}
+
+header a{
+    display: inline-block;
+    height: 45px;
+    width: 40px;
+    float: left;
+    background: url(../../个人中心/img/return.png) 15px center no-repeat;
+}
+
+
+.bl-tab ul{
+	overflow: hidden;
+	
+}
+
+.bl-tab ul li{
+	height:50px;
+	line-height:50px;
+	float:left;
+	width:calc(100% / 4);
+	text-align: center;
+	box-sizing: border-box;
+	font-size:14px;
+	border-bottom: 1px solid #d2d2d2;
+	position: relative;
+}
+
+.bl-tab ul li:before{
+	content: "";
+	position: absolute;
+	width:1px;
+	height:20px;
+	background:#d6d6d6;
+	right:0;
+	top:50%;
+	transform: translate(0,-50%);
+}
+
+.bl-tab ul li:first-child{
+	color:#765fc3;
+	border-bottom: 2px solid #765fc3;
+}
+
+.bl-tab ul li:last-child:before{
+	display: none;
+}
+
+.block{
+	overflow: hidden;
+	padding:15px;
+	border-bottom: 1px solid #d6d6d6;
+}
+
+.block-left{
+	float:left;
+	width:calc(70% - 20px);
+}
+
+.block-right{
+	float:right;
+	width:30%;
+}
+
+.block-left h2{
+	font-size:14px;
+	padding-bottom: 5px;
+}
+
+.block-left p{
+	font-size:12px;
+	color:#7c7c7c;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+
+.block-right img{
+	width:100%;
+}
+
+.zh{
+	font-size:14px;
+	color:#7c7c7c;
+	margin-top:0.8rem;
+}
+
+.zh span{
+	padding-left:25px;
+}
+
+
+.zh span:first-child{
+	background:url(../img/date.png) 5px center no-repeat;
+}
+
+.zh span:nth-child(2){
+	padding-left:35px;
+	background:url(../img/yj.png) 5px center no-repeat;
+}
+
+.zh a{
+	display: inline-block;
+	width:15px;
+	background:url(../img/weizhuan.png) center no-repeat;
+	color:transparent;
+	margin-left:15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

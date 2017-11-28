@@ -1,0 +1,10 @@
+body,div,p,span,h1,h2,h3,h4,h5,ul,li,dl,dd,dt,a,from,input,div,menu,ol{ border:0; margin:0; padding:0; text-decoration:none; list-style:none;}
+body{
+	font-family: "PingHei Light,微软雅黑";
+}
+img{
+	border:none;
+}
+a{
+	color:#292929;
+}
