@@ -9,6 +9,13 @@
 	<style>
 .mui-content>.mui-table-view:first-child{margin-top: 0;}
 	.mui-pull-right{ color: #999; margin-right: -24px; font-style: normal;}
+	/* CSS 我的简历-添加工作经历*/
+.tjgzjl{width:100%; height:50px; font-family:'微软雅黑';  line-height:50px; margin-left:10PX; font-size:0.9em; background-color:#FFF;  display:inline-block; border-bottom:1px solid #d4d4d4; float:right;  }
+.tjgzjl .tjgzjlspan1{ margin-left:10PX; color:#7c7c7c; position: absolute;}
+.tjgzjl input{ border:none; padding-left:78PX;; outline:none;}
+.sqzw{ width:100%; height:40PX; display:inline-block; background-color:#765fc3; text-align:center; height:50PX; font-family:'微软雅黑'; color:#ffffff; line-height:50PX; font-size:0.9em; }
+
+
 	</style>
 
 </head>
@@ -16,19 +23,18 @@
 <body>
 <header class="mui-bar mui-bar-nav">
 	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	<h1 class="mui-title">选择性别</h1>
+	<h1 class="mui-title">添加教育经历</h1>
 </header>
 <div class="mui-content">
 
-	<ul class="mui-table-view mui-table-view-chevron">
-
-		<li class="mui-table-view-cell selected">
-			男
-		</li>
-		<li class="mui-table-view-cell">
-			女
-		</li>
-	</ul>
+<!--top-->
+<a class="tjgzjl"><span class="tjgzjlspan1">教育名称：</span><input placeholder="请输入" type="text" /></a>
+<a class="tjgzjl"><span class="tjgzjlspan1">专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业：</span><input placeholder="请输入" type="text" /></a>
+<a class="tjgzjl"><span class="tjgzjlspan1">开始时间：</span><input placeholder="请输入" type="text" /></a>
+<a class="tjgzjl"><span class="tjgzjlspan1">结束时间：</span><input placeholder="请输入" type="text" /></a>
+<!--申请职位-->
+<a class="sqzw" style="position:fixed; bottom:0px; ">保存</a>
+<!--申请职位-->
 	
 </div>
 <script src="../../js/mui.min.js"></script>

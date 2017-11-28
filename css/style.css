@@ -1,5 +1,6 @@
 html {
 	height: 100%;
+	
 }
 body {
 	width: 100%;
@@ -9,6 +10,7 @@ body {
 	background-color: #f1f1f1;
 	font-size: 14px;
 	box-sizing: border-box;
+	font-family: "微软雅黑",arial;
 }
 body,div,p,span,h1,h2,h3,h4,h5,ul,li,dl,dd,dt,a,from,input,div,menu,ol{ border:0; margin:0; padding:0; text-decoration:none; list-style:none;}
 .mui-content{
@@ -23,7 +25,7 @@ body,div,p,span,h1,h2,h3,h4,h5,ul,li,dl,dd,dt,a,from,input,div,menu,ol{ border:0
 .mui-bar {
 	background-color: #765fc3;
 }
-.mui-bar .mui-pull-left {
+.mui-bar .mui-pull-left,.mui-bar .mui-pull-right {
 	color: #ffffff !important;
 }
 .mui-title {
@@ -127,3 +129,8 @@ img {
 	background-color: #efeff4;
 }
 /**下拉刷新 end**/
+
+.mui-table-view-cell.selected{
+	color: green;
+	background:#FFF url(../images/profile/xg.jpg) no-repeat right ;
+}
