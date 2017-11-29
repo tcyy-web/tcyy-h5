@@ -98,7 +98,7 @@
 						{
 							"tag": "font",
 							"id": "gtIcon",
-							"text": "\ue500",
+							"text": "\ue679",
 							"position": {
 								"top": "4px",
 								"left": "0",
@@ -106,16 +106,16 @@
 								"height": "24px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/mui.ttf",
+								"fontSrc": "_www/fonts/iconfont.ttf",
 								"align": "center",
-								"size": "24px"
+								"size": "23px"
 							}
 						}, {
 							"tag": "font",
 							"id": "gtText",
 							"text": "沟通",
 							"position": {
-								"top": "23px",
+								"top": "25px",
 								"left": "0",
 								"width": "25%",
 								"height": "24px"
@@ -127,7 +127,7 @@
 						},{
 							"tag": "font",
 							"id": "ysIcon",
-							"text": "\ue201",
+							"text": "\ue653",
 							"position": {
 								"top": "4px",
 								"left": "20%",
@@ -135,7 +135,7 @@
 								"height": "24px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/mui.ttf",
+								"fontSrc": "_www/fonts/iconfont.ttf",
 								"align": "center",
 								"size": "24px"
 							}
@@ -144,7 +144,7 @@
 							"id": "ysText",
 							"text": "演示",
 							"position": {
-								"top": "23px",
+								"top": "25px",
 								"left": "20%",
 								"width": "25%",
 								"height": "24px"
@@ -156,7 +156,7 @@
 						},{
 							"tag": "font",
 							"id": "kzIcon",
-							"text": "\ue100",
+							"text": "\ue60a",
 							"position": {
 								"top": "4px",
 								"left": "55%",
@@ -164,16 +164,16 @@
 								"height": "24px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/mui.ttf",
+								"fontSrc": "_www/fonts/iconfont.ttf",
 								"align": "center",
-								"size": "24px"
+								"size": "23px"
 							}
 						}, {
 							"tag": "font",
 							"id": "kzText",
 							"text": "扩展",
 							"position": {
-								"top": "24px",
+								"top": "25px",
 								"left": "55%",
 								"width": "25%",
 								"height": "24px"
@@ -185,24 +185,24 @@
 						},{
 							"tag": "font",
 							"id": "wdIcon",
-							"text": "\ue100",
+							"text": "\ue67a",
 							"position": {
-								"top": "4px",
+								"top": "3px",
 								"left": "75%",
 								"width": "25%",
-								"height": "24px"
+								"height": "25px"
 							},
 							"textStyles": {
-								"fontSrc": "_www/fonts/mui.ttf",
+								"fontSrc": "_www/fonts/iconfont.ttf",
 								"align": "center",
-								"size": "24px"
+								"size": "23px"
 							}
 						}, {
 							"tag": "font",
 							"id": "wdText",
 							"text": "我的",
 							"position": {
-								"top": "24px",
+								"top": "25px",
 								"left": "75%",
 								"width": "25%",
 								"height": "24px"
@@ -230,7 +230,7 @@
 			]
 		},
 		"statusbar": {
-		  "immersed": true //开启沉浸式状态栏
+		  "immersed": false //开启沉浸式状态栏
 		},
 		"splashscreen": {
 			"autoclose": true,/*是否自动关闭程序启动界面，true表示应用加载应用入口页面后自动关闭；false则需调plus.navigator.closeSplashscreen()关闭*/

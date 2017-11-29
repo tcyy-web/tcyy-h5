@@ -1,7 +1,7 @@
 var util = {
 	options: {
-		ACTIVE_COLOR: "#007aff",
-		NORMAL_COLOR: "#000",
+		ACTIVE_COLOR: "#765fc3",
+		NORMAL_COLOR: "#303030",
 		subpages: ["tab-webview-yanshi.html", "tab-webview-kuozhan.html", "tab-webview-wode.html"]
 	},
 	/**
@@ -13,7 +13,7 @@ var util = {
 		return view;
 	},
 	/**
-	 * 初始化首个tab窗口 和 创建子webview窗口 
+	 * 初始化首个tab窗口 和 创建子webview窗口
 	 */
 	initSubpage: function(aniShow) {
 		var subpage_style = {
@@ -23,7 +23,7 @@ var util = {
 			subpages = util.options.subpages,
 			self = plus.webview.currentWebview(),
 			temp = {};
-			
+
 		//兼容安卓上添加titleNView 和 设置沉浸式模式会遮盖子webview内容
 		if(mui.os.android) {
 			if(plus.navigator.isImmersedStatusbar()) {
@@ -32,7 +32,7 @@ var util = {
 			if(self.getTitleNView()) {
 				subpage_style.top += 40;
 			}
-			
+
 		}
 
 		// 初始化第一个tab项为首次显示
@@ -52,8 +52,8 @@ var util = {
 			}
 		}
 	},
-	/**	
-	 * 点击切换tab窗口 
+	/**
+	 * 点击切换tab窗口
 	 */
 	changeSubpage: function(targetPage, activePage, aniShow) {
 		//若为iOS平台或非首次显示，则直接显示

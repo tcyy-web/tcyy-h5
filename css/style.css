@@ -1,6 +1,6 @@
 html {
 	height: 100%;
-	
+
 }
 body {
 	width: 100%;
@@ -31,13 +31,6 @@ body,div,p,span,h1,h2,h3,h4,h5,ul,li,dl,dd,dt,a,from,input,div,menu,ol{ border:0
 .mui-title {
 	color: #ffffff;
 	font-size: 18px;
-}
-/*android 问题*/
-.mui-android .mui-bar {
-	top: 25px;
-}
-.mui-android .mui-bar-nav~.mui-content {
-	padding-top: 69px;
 }
 /*公共*/
 img {
