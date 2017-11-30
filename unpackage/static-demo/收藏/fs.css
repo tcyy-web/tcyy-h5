@@ -1,0 +1,21 @@
+
+header{
+	width:100%;
+	height:45px;
+	text-align: center;
+	line-height: 45px;
+	font-size:14px;
+	color:white;
+	background:#755fc3;
+	text-indent: -40px;
+}
+
+header a{
+	display: inline-block;
+	height:45px;
+	width:40px;
+	background: url(../个人中心/img/return.png) 15px center no-repeat;
+	float:left;
+	
+}
+

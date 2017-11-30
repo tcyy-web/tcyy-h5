@@ -1,0 +1,124 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{ background-color:#f1f1f1; margin:0px; padding:0px; height:;}
+.top{ width:100%; height:40px; background-color:#000;  margin-bottom:20px;}
+.top1{ width:100%; height:40px; background-color:#765fc3; position:fixed; top:0px; padding-top:10PX; padding-bottom:10PX; line-height:40px; text-align:center; font-size:18px; color:#FFF;}
+.top1fh{ width:95%; margin:auto; display:inline-block; height:30px; background:url(../img/fh.png) no-repeat ;   }
+.kb{ width:100%; height:60px;}
+
+
+
+/* CSS 课程详情*/
+@media screen and (Max-width:1024px) {
+ .xq_kcxq_img{ width:100%; height:auto;}
+ .footkcxq{ width:100%; height:70px; padding-top:15px; background-color:#765fc3; position:fixed; bottom:0px;} 
+ /* CSS  课程安排 */
+ .list_kcap{ width:100%; height:70px; border-bottom:1px solid #CCC; background-color:#;}
+ .list_kcapl{ width:15%; height:70px; line-height:70px; float:left; margin-left:5%; font-size:'方正黑体'; font-size:0.8em; color:#7c7c7c;}
+ .list_kcapr{ width:78%; height:70px; background-color:#; float:left;}
+ .list_kcapra1{font-size:'方正黑体'; font-size:0.9em; line-height:30PX; display:inline-block; margin-top:10PX; color:#7c7c7c;}
+ .list_kcapra2{font-size:'方正黑体'; font-size:0.9em;  color:#7c7c7c;}
+ /* CSS  课程详情 */
+ .list_kcnr{ width:95%; height:auto; margin:auto; background-color:#; font-size:'方正黑体'; font-size:0.9em;  color:#7c7c7c; line-height:25px;} 
+ /* CSS  课程评论 */
+ .list_kcpl{ width:100%; height:auto; margin-top:20px; background-color:#; border-bottom:1PX solid #d6d6d6;}
+ .list_kcpll{ width:7%; float:left; height:auto; background-color:#; margin-bottom:20px;}
+ .list_kcpll img{ width:100%; height:auto; margin-left:10%;}
+ .list_kcplr{ width:88%; float:left; margin-left:3%; height:auto; padding-top:8px; background-color:#; margin-bottom:10px;}
+ .list_kcplrName{font-size:'方正黑体'; font-size:0.9em; float:left; color:#195ea4;}
+ .list_kcplrsj{font-size:'方正黑体'; font-size:0.9em; float:right;  color:#7c7c7c;}
+ .list_kcplrly{font-size:'方正黑体'; font-size:0.9em; display:inline-block; margin-top:10px; line-height:23px; color:#000000;}
+ .list_kchf{ width:80%; margin-left:10%; margin-top:10px; background-color:#; height:auto; }
+ .list_kchfmc{ font-size:'方正黑体'; font-size:0.9em; line-height:23px; margin-right:10px;float:left; color:#7c7c7c;}
+ .list_kchfmc span{ font-size:'方正黑体'; font-size:0.9em; color:#195ea4;}
+ .list_kchfjj{ font-size:'方正黑体'; font-size:0.9em; line-height:23px; color:#000000;}
+ .list_kchfsj{font-size:'方正黑体'; font-size:0.9em; display:inline-block; width:30%;  color:#7c7c7c;}
+ .footkcxq1{ float:left; width:20%; display:inline-block;}
+ .footkcxq1 img{ width:35%; height:auto;}
+ .footkcxq2{  width:20%;   display:inline-block;}
+ .footkcxq2 img{ width:35%; height:auto;}
+ .footkcxq3{  width:20%;   display:inline-block; float:right;}
+ .footkcxq3 img{ width:35%; height:auto;}
+}
+
+@media screen and (Max-width:430px) {
+/* CSS  课程安排 */
+ .xq_kcxq_img{ width:100%; height:auto;}
+ .footkcxq{ width:100%; height:50px; padding-top:10px; background-color:#765fc3; position:fixed; bottom:0px;} 
+ .list_kcap{ width:100%; height:70px; border-bottom:1px solid #CCC; background-color:#;}
+ .list_kcapl{ width:15%; height:70px; line-height:70px; float:left; margin-left:5%; font-size:'方正黑体'; font-size:0.8em; color:#7c7c7c;}
+ .list_kcapr{ width:78%; height:70px; background-color:#; float:left;}
+ .list_kcapra1{font-size:'方正黑体'; font-size:0.9em; line-height:30PX; display:inline-block; margin-top:10PX; color:#7c7c7c;}
+ .list_kcapra2{font-size:'方正黑体'; font-size:0.9em;  color:#7c7c7c;}
+ /* CSS  课程详情 */
+ .list_kcnr{ width:95%; height:auto; margin:auto; background-color:#; font-size:'方正黑体'; font-size:0.9em;  color:#7c7c7c; line-height:25px;} 
+ /* CSS  课程评论 */
+ .list_kcpl{ width:100%; height:auto; background-color:#; border-bottom:1PX solid #d6d6d6;}
+ .list_kcpll{ width:15%; float:left; height:auto; background-color:#; margin-bottom:20px;}
+ .list_kcpll img{ width:100%; height:auto; margin-left:10%;}
+ .list_kcplr{ width:78%; float:left; margin-left:3%; height:auto; padding-top:8px; background-color:#; margin-bottom:10px;}
+ .list_kcplrName{font-size:'方正黑体'; font-size:0.9em; float:left; color:#195ea4;}
+ .list_kcplrsj{font-size:'方正黑体'; font-size:0.9em; float:right;  color:#7c7c7c;}
+ .list_kcplrly{font-size:'方正黑体'; font-size:0.9em; display:inline-block; margin-top:10px; line-height:23px; color:#000000;}
+ .list_kchf{ width:70%; margin-left:17%; margin-top:10px; background-color:#; height:auto; }
+ .list_kchfmc{ font-size:'方正黑体'; font-size:0.9em; line-height:23px; margin-right:10px;float:left; color:#7c7c7c;}
+ .list_kchfmc span{ font-size:'方正黑体'; font-size:0.9em; color:#195ea4;}
+ .list_kchfjj{ font-size:'方正黑体'; font-size:0.9em; line-height:23px; color:#000000;}
+ .list_kchfsj{font-size:'方正黑体'; font-size:0.9em; display:inline-block; width:30%;  color:#7c7c7c;}
+ .footkcxq1{ float:left; width:20%; display:inline-block;}
+ .footkcxq1 img{ width:50%; height:auto;}
+ .footkcxq2{  width:20%;   display:inline-block;}
+ .footkcxq2 img{ width:50%; height:auto;}
+ .footkcxq3{  width:20%;   display:inline-block; float:right;}
+ .footkcxq3 img{ width:50%; height:auto;}
+}   
+
+@media screen and (Max-width:375px) {
+ .footkcxq{ width:100%; height:35px; padding-top:15px; background-color:#765fc3; position:fixed; bottom:0px;} 
+ .footkcxq1{ float:left; width:20%; display:inline-block;}
+ .footkcxq1 img{ width:45%; height:auto;}
+ .footkcxq2{  width:20%;   display:inline-block;}
+ .footkcxq2 img{ width:45%; height:auto;}
+ .footkcxq3{  width:20%;   display:inline-block; float:right;}
+ .footkcxq3 img{ width:45%; height:auto;}
+}
+
+li{list-style:none;}
+.tab1 ,.tab2{width:100%;height:40px;border-bottom:0;}
+.tab1 ul ,.tab2 ul{margin:0;padding:0; margin-top:10px; }
+.tab1 li,.tab2 li{float:left; width:32%; height:40px;line-height:34px;text-align:center; font-size:13px; color:#7c7c7c; font-family:'微软雅黑'; background-color:#;cursor:pointer;}
+.tab1 li.now,.tab2 li.now{color:#765fc3; border-bottom:1PX solid #765fc3; font-family:'微软雅黑';}
+.tablist{width:100%;height:100px;font-size:14px;line-height:24px;border-top:0;display:none;}
+.block{display:block;}
+
+/* CSS 课程列表*/
+@media screen and (Max-width:1024px) {
+.kcnav{ width:100%; height:36PX; background-color:#; border-bottom:1px solid #d2d2d2; margin-top:15px;}
+.kcnav a{ width:25%; float:left; padding-bottom:15px; text-decoration:none; text-align:center; display:inline-block; background-color:#;}
+.kcnav .knav1{ border-left:1PX solid #d6d6d6;  border-right:1PX solid #d6d6d6;}
+.kcnav .knav2{ border-right:1PX solid #d6d6d6;}
+.kcnav .dj{ border-bottom:1px solid #765fc3; color:#765fc3;}
+.kelist{ width:100%; height:auto; border-bottom:1px solid #d6d6d6; border-top:1px solid #d6d6d6; background-color:#; margin-top:10px;}
+.kelistl{ width:30%; height:auto; padding-top:10px; padding-bottom:10px; padding-left:10px;}
+.kelistr{ width:63%; float:right; height:100px; background-color:#;}
+.kelistr1 { width:100%; height:150PX;}
+.kelistr1 .span1{ font-size:20px;  font-family:'微软雅黑'; margin-top:10PX; line-height:40px; display:inline-block; color:#000;}
+.kelistr1 .span2{ font-size:15px;  font-family:'微软雅黑'; color:#7c7c7c; line-height:18PX; line-height:20px;}
+.jrkc{ width:30%; height:40PX; background-color:#765fc3; line-height:40px; font-size:17px;  font-family:'微软雅黑'; color:#fff; border-radius:5px; text-align:center; float:right; bottom:0PX;  margin-right:5%;}
+}
+@media screen and (Max-width:430px) {
+.kcnav{ width:100%; height:32PX; background-color:#; border-bottom:1px solid #d2d2d2; margin-top:15px;}
+.kcnav a{ width:25%; float:left; padding-bottom:15px; color:#000; font-size:13px;  font-family:'微软雅黑'; text-decoration:none; text-align:center; display:inline-block; background-color:#;}
+.kcnav .knav1{ border-left:1PX solid #d6d6d6;  border-right:1PX solid #d6d6d6;}
+.kcnav .knav2{ border-right:1PX solid #d6d6d6;}
+.kcnav .dj{ border-bottom:1px solid #765fc3; color:#765fc3;}
+.kelist{ width:100%; height:auto; border-bottom:1px solid #d6d6d6; border-top:1px solid #d6d6d6; background-color:#; margin-top:10px;}
+.kelistl{ width:30%; height:auto; padding-top:10px; padding-bottom:10px; padding-left:10px;}
+.kelistr{ width:63%; float:right; height:80px; background-color:#;}
+.kelistr1 { width:100%; height:75PX;}
+.kelistr1 .span1{ font-size:0.9em;  font-family:'微软雅黑'; margin-top:10PX;  line-height:18px; display:inline-block; color:#000;}
+.kelistr1 .span2{ font-size:0.7em;  font-family:'微软雅黑'; color:#7c7c7c; line-height:18PX;}
+.jrkc{ width:30%; height:30PX; background-color:#765fc3; line-height:30px; font-size:0.7em;  font-family:'微软雅黑'; color:#fff; border-radius:5px; text-align:center; float:right; bottom:0PX;  margin-right:5%;}
+}
+

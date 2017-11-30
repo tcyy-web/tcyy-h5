@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="ui-page-login">
+<html>
 
 	<head>
 		<meta charset="utf-8">
@@ -8,43 +8,14 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
-			.ui-page-login {
-				width: 100%;
-				height: 100%;
-				margin: 0px;
-				padding: 0px;
-				background-color: #765fc3;
+			.mui-bar{
+				-webkit-box-shadow: none;
+				box-shadow: none;
 			}
 			.mui-content {
+				position: relative;
 				background-color: #765fc3;
 				overflow: auto;
-			}
-			.history-back {
-				position: absolute;
-				left: 10px;
-				top: 3px;
-				margin-right: -10px;
-		    margin-left: -10px;
-		    padding: 16px 10px 10px 10px;
-				color: #ffffff;
-				font-family: Muiicons;
-		    font-size: 24px;
-		    font-weight: 400;
-		    font-style: normal;
-		    line-height: 1;
-		    display: inline-block;
-		    text-decoration: none;
-		    -webkit-font-smoothing: antialiased;
-			}
-			.history-back:before {
-				content: '\e471';
-			}
-			.mui-content .login-title {
-				font-size: 18px;
-				color: #ffffff;
-				text-align: center;
-				line-height: 50px;
-				margin-bottom: 100px;
 			}
 			.mui-input-group .mui-input-row {
 				background-color: #765fc3;
@@ -123,7 +94,6 @@
 			.oauth-area {
 				text-align: center;
 				width: 100%;
-				margin-bottom: 100px;
 			}
 
 			.oauth-area .oauth-btn {
@@ -143,7 +113,9 @@
 				width: 100%;
 				height: 100%;
 			}
-
+			.link-area {
+				margin: 60px 0;
+			}
 			.link-area p {
 				text-align: center;
 				color: #ffffff;
@@ -157,9 +129,11 @@
 	</head>
 
 	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">登录</h1>
+		</header>
 		<div class="mui-content">
-			<i id="history-back" class="history-back"></i>
-			<h1 class="login-title">登录</h1>
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
 					<label>手&nbsp;&nbsp;&nbsp;&nbsp;机：</label>
@@ -174,12 +148,12 @@
 				<button id='login' class="btn-login">登录</button>
 			</div>
 			<div class="oauth-area">
-				<div class="oauth-btn">
+				<!--<div class="oauth-btn">
 					<img src="../../images/login/qq.png"/>
 				</div>
 				<div class="oauth-btn">
 					<img src="../../images/login/wx.png"/>
-				</div>
+				</div>-->
 			</div>
 			<div class="link-area">
 				<p>还没有账号？<a id='reg'>注册账号</a></p>
@@ -193,46 +167,25 @@
 				$.init({});
 				$.plusReady(function() {
 					var self = plus.webview.currentWebview();
-					var mainPage = plus.webview.getWebviewById("main");
-					var main_loaded_flag = false;
-					if(!mainPage){
-						mainPage = $.preload({
-							"id": 'main',
-							"url": 'main.html'
-						});
-					}else{
-						main_loaded_flag = true;
-					}
-					mainPage.addEventListener("loaded",function () {
-						main_loaded_flag = true;
-					});
-					var toMain = function() {
-						var id = setInterval(function () {
-							if(main_loaded_flag){
-								clearInterval(id);
-								$.fire(mainPage, 'show', null);
-								mainPage.show("pop-in");
-							}
-						},20);
-					};
-
 					//第三方登录
-					var authBtns = ['weixin', 'sinaweibo']; //配置业务支持的第三方登录
+					var authBtns = ['weixin', 'qq']; //配置业务支持的第三方登录
 					var auths = {};
 					var oauthArea = doc.querySelector('.oauth-area');
 					plus.oauth.getServices(function(services) {
 						for (var i in services) {
 							var service = services[i];
 							auths[service.id] = service;
-//								if (~authBtns.indexOf(service.id)) {
-//									var isInstalled = login.isInstalled(service.id);
-//									var btn = document.createElement('div');
-//									//如果微信未安装，则为不启用状态
-//									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
-//									btn.authId = service.id;
-//									btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
-//									oauthArea.appendChild(btn);
-//								}
+							if (~authBtns.indexOf(service.id)) {
+								var isInstalled = login.isInstalled(service.id);
+								var btn = doc.createElement('div');
+								//如果微信未安装，则为不启用状态
+								btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
+								btn.authId = service.id;
+								var img = doc.createElement('img');
+								img.src = '../../images/login/'+service.id+'.png'
+								btn.appendChild(img);
+								oauthArea.appendChild(btn);
+							}
 						}
 						$(oauthArea).on('tap', '.oauth-btn', function() {
 							if (this.classList.contains('disabled')) {
@@ -247,9 +200,7 @@
 								auth.getUserInfo(function() {
 									plus.nativeUI.toast("获取用户信息成功");
 									var name = auth.userInfo.nickname || auth.userInfo.name;
-									login.createState(name, function() {
-										toMain();
-									});
+									console.log(auth.userInfo);
 								}, function(e) {
 									plus.nativeUI.toast("获取用户信息失败：" + e.message);
 								});
@@ -271,7 +222,6 @@
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
 					var regButton = doc.getElementById('reg');
-					var backBtn = doc.getElementById('history-back');
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
 							account: accountBox.value,
@@ -282,7 +232,7 @@
 								plus.nativeUI.toast(err);
 								return;
 							}
-							toMain();
+							plus.nativeUI.toast("登录成功");
 						});
 					});
 					$.enterfocus('#login-form input', function() {
@@ -304,8 +254,6 @@
 							}
 						});
 					}, false);
-					backBtn.addEventListener('tap', function(event) {
-					});
 				});
 			}(mui, document));
 		</script>

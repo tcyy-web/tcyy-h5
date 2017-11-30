@@ -1,0 +1,95 @@
+{
+  "html/login/reg.html": {
+    "href": "html/login/reg.html",
+    "resources": [
+      "images/profile/xg.jpg"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/login/login.html": {
+    "href": "html/login/login.html",
+    "resources": [
+      "images/profile/xg.jpg"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/home/tab-webview-wode.html": {
+    "href": "html/home/tab-webview-wode.html",
+    "resources": [
+      "images/profile/xg.jpg"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/train/train-list.html": {
+    "href": "html/train/train-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "images/my/bgy.png"
+    ],
+    "priority": 1
+  },
+  "html/home/tab-webview-kuozhan.html": {
+    "href": "html/home/tab-webview-kuozhan.html",
+    "resources": [
+      "images/profile/xg.jpg"
+    ],
+    "refer": [
+      "html/train/train-list.html"
+    ],
+    "priority": 1
+  },
+  "html/home/tab-webview-yanshi.html": {
+    "href": "html/home/tab-webview-yanshi.html",
+    "resources": [
+      "images/profile/xg.jpg"
+    ],
+    "priority": 2
+  },
+  "html/video/video-list.html": {
+    "href": "html/video/video-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "images/tab-vedio/sc11.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "images/tab-vedio/sc10.png"
+    ],
+    "priority": 3
+  },
+  "html/project/project-index.html": {
+    "href": "html/project/project-index.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "images/project/body-bg.png",
+      "images/project/formleft.png"
+    ],
+    "priority": 4
+  },
+  "html/home/tab-webview-goutong.html": {
+    "href": "html/home/tab-webview-goutong.html",
+    "resources": [
+      "images/profile/xg.jpg"
+    ],
+    "refer": [
+      "html/project/project-index.html"
+    ],
+    "priority": 0
+  }
+}

@@ -36,12 +36,12 @@
 	</head>
 
 	<body>
-<header class="mui-bar mui-bar-nav">
+		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">沟通</h1>
 		</header>
 		<div class="mui-content">
 			<div class="goutong-row flex">
-				<div class="gr-item flex flex-col flex-1">
+				<div id="video" url="../video/video-list.html" class="clickItem gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
 							<img src="../../images/tab-goutong/img1.png" />
@@ -49,10 +49,10 @@
 					</div>
 					<p>视频</p>
 				</div>
-				<div class="gr-item flex flex-col flex-1">
+				<div id="picture" class="gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
-<img src="../../images/tab-goutong/img2.png" />
+							<img src="../../images/tab-goutong/img2.png" />
 						</div>
 					</div>
 					<p>图片</p>
@@ -60,7 +60,7 @@
 				<div class="gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
-<img src="../../images/tab-goutong/img3.png" />
+							<img src="../../images/tab-goutong/img3.png" />
 						</div>
 					</div>
 					<p>演示</p>
@@ -70,7 +70,7 @@
 				<div class="gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
-<img src="../../images/tab-goutong/img4.png" />
+							<img src="../../images/tab-goutong/img4.png" />
 						</div>
 					</div>
 					<p>3D</p>
@@ -78,15 +78,15 @@
 				<div class="gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
-<img src="../../images/tab-goutong/img5.png" />
+							<img src="../../images/tab-goutong/img5.png" />
 						</div>
 					</div>
 					<p>预约</p>
 				</div>
-				<div class="gr-item flex flex-col flex-1">
+				<div id="project" url="../project/project-index.html" class="clickItem gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
-<img src="../../images/tab-goutong/img6.png" />
+							<img src="../../images/tab-goutong/img6.png" />
 						</div>
 					</div>
 					<p>项目</p>
@@ -152,13 +152,13 @@
 								height: '50px'
 							},
 							rectStyles: {
-								color: '#d74b28',
+								color: '#a39cc4',
 								radius: '50%'
 							}
 						}, {
 							tag: 'font',
 							id: 'icon',
-							text: '\ue600', //此为字体图标Unicode码'\e600'转换为'\ue600'
+							text: '3D', //此为字体图标Unicode码'\e600'转换为'\ue600'
 							position: {
 								top: '0px',
 								left: '5px',
@@ -166,82 +166,99 @@
 								height: '100%'
 							},
 							textStyles: {
-								fontSrc: '_www/fonts/iconfont.ttf',
 								align: 'center',
 								color: '#fff',
-								size: '30px'
+								size: '25px'
 							}
 						}]);
 						// append 到父webview中
 						self.append(drawNativeIcon);
 
-					//自定义监听图标点击事件
-					var active_color = '#fff';
-					drawNativeIcon.addEventListener('click', function(e) {
-						$.alert('你点击了图标，你在此可以打开摄像头或者新窗口等自定义点击事件。', '悬浮球点击事件');
-						// 重绘字体颜色
-						if(active_color == '#fff') {
-							drawNativeIcon.drawText('\ue600', {}, {
-								fontSrc: '_www/fonts/iconfont.ttf',
-								align: 'center',
-								color: '#000',
-								size: '30px'
-							}, 'icon');
-							active_color = '#000';
-						} else {
-							drawNativeIcon.drawText('\ue600', {}, {
-								fontSrc: '_www/fonts/iconfont.ttf',
-								align: 'center',
-								color: '#fff',
-								size: '30px'
-							}, 'icon');
-							active_color = '#fff';
-						}
+						//自定义监听图标点击事件
+						var active_color = '#fff';
+						drawNativeIcon.addEventListener('click', function(e) {
+							// 重绘字体颜色
+							if(active_color == '#fff') {
+								drawNativeIcon.drawText('3D', {}, {
+									align: 'center',
+									color: '#000',
+									size: '25px'
+								}, 'icon');
+								active_color = '#000';
+							} else {
+								drawNativeIcon.drawText('3D', {}, {
+									align: 'center',
+									color: '#fff',
+									size: '25px'
+								}, 'icon');
+								active_color = '#fff';
+							}
+						});
+						// 中间凸起图标绘制及监听点击完毕
 
-					});
-					// 中间凸起图标绘制及监听点击完毕
+						// 创建子webview窗口 并初始化
+						var aniShow = {};
+						util.initSubpage(aniShow);
 
-					// 创建子webview窗口 并初始化
-					var aniShow = {};
-					util.initSubpage(aniShow);
-
-					var nview = plus.nativeObj.View.getViewById('tabBar'),
-						activePage = plus.webview.currentWebview(),
-						targetPage,
-						subpages = util.options.subpages,
-						pageW = window.innerWidth,
-						currIndex = 0;
-					/**
-					 * 根据判断view控件点击位置判断切换的tab
-					 */
-					nview.addEventListener('click', function(e) {
-						var clientX = e.clientX;
-						if(clientX > 0 && clientX <= parseInt(pageW * 0.25)) {
+						var nview = plus.nativeObj.View.getViewById('tabBar'),
+							activePage = plus.webview.currentWebview(),
+							targetPage,
+							subpages = util.options.subpages,
+							pageW = window.innerWidth,
 							currIndex = 0;
-						} else if(clientX > parseInt(pageW * 0.25) && clientX <= parseInt(pageW * 0.45)) {
-							currIndex = 1;
-						} else if(clientX > parseInt(pageW * 0.45) && clientX <= parseInt(pageW * 0.8)) {
-							currIndex = 2;
-						} else {
-							currIndex = 3;
-						}
-						// 匹配对应tab窗口
-						if(currIndex > 0) {
-							targetPage = plus.webview.getWebviewById(subpages[currIndex - 1]);
-						} else {
-							targetPage = plus.webview.currentWebview();
-						}
+						/**
+						 * 根据判断view控件点击位置判断切换的tab
+						 */
+						nview.addEventListener('click', function(e) {
+							var clientX = e.clientX;
+							if(clientX > 0 && clientX <= parseInt(pageW * 0.25)) {
+								currIndex = 0;
+							} else if(clientX > parseInt(pageW * 0.25) && clientX <= parseInt(pageW * 0.45)) {
+								currIndex = 1;
+							} else if(clientX > parseInt(pageW * 0.45) && clientX <= parseInt(pageW * 0.8)) {
+								currIndex = 2;
+							} else {
+								currIndex = 3;
+							}
+							// 匹配对应tab窗口
+							if(currIndex > 0) {
+								targetPage = plus.webview.getWebviewById(subpages[currIndex - 1]);
+							} else {
+								targetPage = plus.webview.currentWebview();
+							}
 
-						if(targetPage == activePage) {
-							return;
+							if(targetPage == activePage) {
+								return;
+							}
+							//底部选项卡切换
+							util.toggleNview(currIndex);
+							// 子页面切换
+							util.changeSubpage(targetPage, activePage, aniShow);
+							//更新当前活跃的页面
+							activePage = targetPage;
+						});
+						// 点击item
+						var clickItems = $('.clickItem');
+						for (var i = 0;i< clickItems.length;i++) {
+							clickItems[i].addEventListener('tap', function(event) {
+								var id = this.getAttribute("id");
+								var url = this.getAttribute("url");
+								$.openWindow({
+									url: url,
+									id: id,
+									preload: true,
+									show: {
+										aniShow: 'pop-in'
+									},
+									styles: {
+										popGesture: 'hide'
+									},
+									waiting: {
+										autoShow: false
+									}
+								});
+							});
 						}
-						//底部选项卡切换
-						util.toggleNview(currIndex);
-						// 子页面切换
-						util.changeSubpage(targetPage, activePage, aniShow);
-						//更新当前活跃的页面
-						activePage = targetPage;
-					});
 					});
 				}(mui, document));
 		</script>

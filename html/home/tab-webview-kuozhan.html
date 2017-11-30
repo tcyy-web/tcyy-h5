@@ -15,6 +15,9 @@
 			.mui-content {
 				background-color: #ececec;
 			}
+			.pb10 {
+				padding-bottom: 10px;
+			}
 			.kuozhan-item .item-title p {
 				padding: 0 10px;
 				font-size: 14px;
@@ -24,14 +27,15 @@
 				line-height: 50px;
 				margin-bottom: 0;
 			}
-			.mui-ios .mui-table-view-cell {
+			.mui-table-view-cell {
 				font-size: 14px !important;
 				padding: 14px 15px 14px 40px !important;
 			}
 			.mui-table-view-cell>a:not(.mui-btn) {
 			    margin: -14px -15px -14px -40px !important;
+			    margin-right: -40px !important;
 			}
-			.mui-ios .mui-table-view-cell a {
+			.mui-table-view-cell a {
 				color: #303030 !important;
 			}
 			.mui-table-view-cell img {
@@ -65,7 +69,7 @@
 					</li>
 					<li class="mui-table-view-cell">
 						<img src="../../images/tab-kuozhan/zhishiku.png"/>
-						<a class="mui-navigate-right" href="#">
+						<a class="clickItem" id="zsk" url="../knowledge/list.html" class="mui-navigate-right">
 							知识库
 						</a>
 					</li>
@@ -140,14 +144,14 @@
 					</li>
 				</ul>
 			</div>
-			<div class="kuozhan-item">
+			<div class="kuozhan-item pb10">
 				<div class="item-title">
 					<p>教育培训</p>
 				</div>
 				<ul class="mui-table-view mui-table-view-chevron">
 					<li class="mui-table-view-cell">
 						<img src="../../images/tab-kuozhan/zaixianketang.png"/>
-						<a class="mui-navigate-right" href="#">
+						<a class="clickItem" id="zxkt" url="../train/train-list.html" class="mui-navigate-right">
 							在线课堂
 						</a>
 					</li>
@@ -172,6 +176,27 @@
 		(function($, doc) {
 				$.init();
 				$.plusReady(function() {
+					var clickItems = $('.clickItem');
+					for (var i = 0;i< clickItems.length;i++) {
+						clickItems[i].addEventListener('tap', function(event) {
+							var id = this.getAttribute("id");
+							var url = this.getAttribute("url");
+							$.openWindow({
+								url: url,
+								id: id,
+								preload: true,
+								show: {
+									aniShow: 'pop-in'
+								},
+								styles: {
+									popGesture: 'hide'
+								},
+								waiting: {
+									autoShow: false
+								}
+							});
+						});
+					}
 				});
 			}(mui, document));
 	</script>
