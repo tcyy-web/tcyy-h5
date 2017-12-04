@@ -26,19 +26,19 @@ w.tools = {
   	}
   },
   ajaxData:function( obj ){
-  	var default = {
+  	var defaults = {
   		dataType: 'json',//服务器返回json格式数据
-			type: 'get',//HTTP请求类型
-			timeout: 10000,//超时时间设置为10秒；
-			headers: {'Content-Type': 'application/json'},
-			success:function(data){
-			},
-			error:function(xhr,type,errorThrown){
-				//异常处理；
-				console.log(type);
-			}
+		type: 'get',//HTTP请求类型
+		timeout: 10000,//超时时间设置为10秒；
+		headers: {'Content-Type': 'application/json'},
+		success:function(data){
+		},
+		error:function(xhr,type,errorThrown){
+			//异常处理；
+			console.log(type);
+		}
   	}
-  	mui.extend(default, obj);
+  	mui.extend(defaults, obj);
   	this.conncheck(function(){
   		mui.ajax( obj );
   	})

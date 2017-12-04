@@ -99,6 +99,7 @@
 			(function($, doc) {
 					$.init();
 					$.plusReady(function() {
+						plus.navigator.setStatusBarBackground('#765fc3');
 						var self = plus.webview.currentWebview(),
 						leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
 						/**
@@ -239,8 +240,8 @@
 						});
 						// 点击item
 						var clickItems = $('.clickItem');
-						for (var i = 0;i< clickItems.length;i++) {
-							clickItems[i].addEventListener('tap', function(event) {
+						$.each(clickItems, function(index, item) {
+							item.addEventListener('tap', function(event) {
 								var id = this.getAttribute("id");
 								var url = this.getAttribute("url");
 								$.openWindow({
@@ -258,7 +259,7 @@
 									}
 								});
 							});
-						}
+						});
 					});
 				}(mui, document));
 		</script>
