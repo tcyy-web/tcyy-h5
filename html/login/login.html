@@ -32,7 +32,8 @@
 			}
 
 			.mui-input-group label {
-				width: 22%;
+				width: 100px;
+				text-align: right;
 				color: #ffffff;
 			}
 			.mui-input-group .mui-input-row {
@@ -44,7 +45,8 @@
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 78%;
+				width: calc(100% - 100px);
+				width: -webkit-calc(100% - 100px);
 			}
 			.mui-input-row label {
 				padding: 0 15px;
@@ -134,13 +136,13 @@
 			<h1 class="mui-title">登录</h1>
 		</header>
 		<div class="mui-content">
-			<form id='login-form' class="mui-input-group">
+			<form class="mui-input-group">
 				<div class="mui-input-row">
-					<label>手&nbsp;&nbsp;&nbsp;&nbsp;机：</label>
+					<label>手&emsp;机：</label>
 					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入注册手机">
 				</div>
 				<div class="mui-input-row">
-					<label>密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+					<label>密&emsp;码：</label>
 					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
 				</div>
 			</form>
@@ -161,6 +163,7 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.enterfocus.js"></script>
+		<script src="../../js/tools.js" ></script>
 		<script src="../../js/business/login-reg.js"></script>
 		<script>
 			(function($, doc) {
@@ -214,29 +217,35 @@
 						plus.nativeUI.toast("获取登录认证失败：" + e.message);
 					});
 					// close splash
-					setTimeout(function() {
+					$.later(function() {
 						//关闭 splash
 						plus.navigator.closeSplashscreen();
 					}, 600);
+					$.enterfocus('#login-form input', function() {
+						$.trigger(loginButton, 'tap');
+					});
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
 					var regButton = doc.getElementById('reg');
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
-							account: accountBox.value,
+							phone: accountBox.value,
 							password: passwordBox.value
 						};
-						login.login(loginInfo, function(err) {
-							if (err) {
-								plus.nativeUI.toast(err);
-								return;
-							}
-							plus.nativeUI.toast("登录成功");
+						if (loginInfo.phone.trim() === '') {
+							$.toast('请输入注册手机');
+							return;
+						}
+						if (loginInfo.password.trim() === '') {
+							$.toast('请输入密码');
+							return;
+						}
+						window.tools.ajaxData('login/byPhone',{
+							data: loginInfo
+						}, function(data) {
+							console.log(data)
 						});
-					});
-					$.enterfocus('#login-form input', function() {
-						$.trigger(loginButton, 'tap');
 					});
 					regButton.addEventListener('tap', function(event) {
 						$.openWindow({

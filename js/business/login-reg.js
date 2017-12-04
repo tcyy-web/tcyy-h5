@@ -1,45 +1,5 @@
 (function($, owner) {
 	/**
-	 * 用户登录
-	 **/
-	owner.login = function(loginInfo, callback) {
-		callback = callback || $.noop;
-		loginInfo = loginInfo || {};
-		loginInfo.account = loginInfo.account || '';
-		loginInfo.password = loginInfo.password || '';
-		if (loginInfo.account.trim() === '') {
-			return callback('请输入注册手机');
-		}
-		if (loginInfo.password.trim() === '') {
-			return callback('请输入密码');
-		}
-		// TODO 调用登录接口
-		var user = {
-			username: 'mumu'
-		};
-		owner.setUserInfo(user);
-		return callback();
-	};
-
-	/**
-	 * 新用户注册
-	 **/
-	owner.reg = function(regInfo, callback) {
-		callback = callback || $.noop;
-		regInfo = regInfo || {};
-		regInfo.account = regInfo.account || '';
-		regInfo.verify = regInfo.verify || '';
-		if (regInfo.account.trim() === '') {
-			return callback('请输入手机号');
-		}
-		if (regInfo.verify.trim() === '') {
-			return callback('请输入验证码');
-		}
-    // TODO 调用服务器注册逻辑
-		return callback();
-	};
-
-	/**
 	 * 获取用户
 	 **/
 	owner.getUserInfo = function() {
