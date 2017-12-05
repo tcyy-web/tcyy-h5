@@ -78,7 +78,7 @@
 					<input type="text" placeholder="请输入项目名称" />
 				</div>
 			</div>
-			<div class="icon-box flex flex-col-center flex-row-center">
+			<div id="project-list" class="icon-box flex flex-col-center flex-row-center">
 				<img src="../../images/project/formleft.png"/>
 			</div>
 		</div>
@@ -87,6 +87,23 @@
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
+					var projectList = doc.getElementById('project-list')
+					projectList.addEventListener('tap', function(event) {
+						$.openWindow({
+							url: './project-list.html',
+							id: 'projectList',
+							preload: true,
+							show: {
+								aniShow: 'pop-in'
+							},
+							styles: {
+								popGesture: 'hide'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+					});					
 				});
 			}(mui, document));
 		</script>
