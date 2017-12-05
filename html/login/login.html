@@ -136,7 +136,7 @@
 			<h1 class="mui-title">登录</h1>
 		</header>
 		<div class="mui-content">
-			<form class="mui-input-group">
+			<form id="login-form" class="mui-input-group">
 				<div class="mui-input-row">
 					<label>手&emsp;机：</label>
 					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入注册手机">
@@ -162,7 +162,6 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/mui.enterfocus.js"></script>
 		<script src="../../js/tools.js" ></script>
 		<script src="../../js/business/login-reg.js"></script>
 		<script>
@@ -203,7 +202,11 @@
 								auth.getUserInfo(function() {
 									plus.nativeUI.toast("获取用户信息成功");
 									var name = auth.userInfo.nickname || auth.userInfo.name;
-									console.log(auth.userInfo);
+									console.log(JSON.stringify(auth));
+									// qq登录
+									if (auth.id === 'qq') {
+										
+									}
 								}, function(e) {
 									plus.nativeUI.toast("获取用户信息失败：" + e.message);
 								});
@@ -221,30 +224,31 @@
 						//关闭 splash
 						plus.navigator.closeSplashscreen();
 					}, 600);
-					$.enterfocus('#login-form input', function() {
-						$.trigger(loginButton, 'tap');
-					});
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
 					var regButton = doc.getElementById('reg');
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
-							phone: accountBox.value,
-							password: passwordBox.value
+							phone: accountBox.value.trim(),
+							password: passwordBox.value.trim()
 						};
-						if (loginInfo.phone.trim() === '') {
+						if (loginInfo.phone === '') {
 							$.toast('请输入注册手机');
 							return;
 						}
-						if (loginInfo.password.trim() === '') {
+						if (loginInfo.password === '') {
 							$.toast('请输入密码');
 							return;
 						}
 						window.tools.ajaxData('login/byPhone',{
 							data: loginInfo
 						}, function(data) {
-							console.log(data)
+							window.tools.saveData({
+								key: '$user',
+								value: JSON.stringify(data)
+							});
+							$.toast('登录成功');
 						});
 					});
 					regButton.addEventListener('tap', function(event) {

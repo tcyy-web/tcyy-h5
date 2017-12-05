@@ -30,6 +30,7 @@ w.tools = {
 		timeout: 10000,//超时时间设置为10秒；
 		headers: {'Content-Type': 'application/json'},
 		success:function(data){
+			console.log('接口返回信息', JSON.stringify(data));
 			if (data) {
 				if (data.header && data.header.status) {
 					switch (data.header.status){
