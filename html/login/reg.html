@@ -169,7 +169,6 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/tools.js"></script>
-		<script src="../../js/business/login-reg.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
@@ -212,7 +211,7 @@
 							return;
 						}
 						flag = true;
-						window.tools.ajaxData('Sendmsg/sendCode',{
+						tools.ajaxData('Sendmsg/sendCode',{
 							data: {
 								phone: _phone,
 								type: 1
@@ -263,28 +262,16 @@
 							$.toast('两次输入的密码不一致');
 							return;
 						}						
-						window.tools.ajaxData('Register/byPhone',{
+						tools.ajaxData('Register/byPhone',{
 							data: regInfo
 						}, function() {
 							$.toast('注册成功');
-							$.openWindow({
-								url: 'login.html',
-								id: 'login',
-								show: {
-									aniShow: 'pop-in'
-								}
-							});
+							$.back();
 						});
 					});
 					// 跳转登录
 					loginButton.addEventListener('tap', function(event) {
-						$.openWindow({
-							url: 'login.html',
-							id: 'login',
-							show: {
-								aniShow: 'pop-in'
-							}
-						});
+						$.back();
 					});
 				});
 			}(mui, document));

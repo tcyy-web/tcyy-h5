@@ -1,26 +1,5 @@
 (function($, owner) {
 	/**
-	 * 获取用户
-	 **/
-	owner.getUserInfo = function() {
-		var stateText = localStorage.getItem('$user') || "{}";
-		return JSON.parse(stateText);
-	};
-	/**
-	 * 设置用户
-	 **/
-	owner.setUserInfo = function(state) {
-		state = state || {};
-		localStorage.setItem('$user', JSON.stringify(state));
-	};
-	/**
-	 * 判断是否登录
-	 */
-	owner.checkLogin = function () {
-		// TODO 检查逻辑
-		return true;
-	}
-	/**
 	 * 获取本地是否安装客户端
 	 **/
 	owner.isInstalled = function(id) {

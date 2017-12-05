@@ -2,13 +2,39 @@
 (function(w){
 w.tools = {
   saveData:function( obj ){
-		plus.storage.setItem( obj.key , obj.value);
+	plus.storage.setItem( obj.key , obj.value);
   },
   getData:function( key ){
-		plus.storage.getItem( key );
+	return plus.storage.getItem( key );
   },
   deleteData:function( key ){
-		plus.storage.removeItem(key);
+	plus.storage.removeItem(key);
+  },
+  /*存储登录信息*/
+  saveUser:function(userinfo) {
+  	userinfo = userinfo || {};
+  	this.deleteData('$user');
+	this.saveData({
+		key: '$user',
+		value: JSON.stringify(userinfo)
+	});
+  },
+  /*获取用户信息*/
+  getUser:function() {
+	var userinfo = this.getData('$user') || "{}";
+	return JSON.parse(userinfo);
+  },
+  clearUser:function() {
+  	this.deleteData('$user');
+  },
+  /*判断是否登录*/
+  checkLogin:function() {
+  	var user = this.getUser();
+  	if (user.id > 0) {
+  		return true;
+  	} else {
+  		return false;
+  	}
   },
   /*判断是否有网络*/
   getNetworkState:function(){
@@ -58,6 +84,7 @@ w.tools = {
 		error:function(xhr,type,errorThrown){
 			//异常处理；
 			mui.toast("服务器连接出错，请稍后再试");
+			console.log(JSON.stringify(xhr),type,errorThrown);
 		}
   	}
   	mui.extend(defaults, obj);
