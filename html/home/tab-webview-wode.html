@@ -222,7 +222,7 @@
 				var extras = {};
 				if (fromurl) {
 					extras.fromurl = fromurl;
-					extras.fromid = fromid; 
+					extras.fromid = fromid;
 				}
 				mui.openWindow({
 					url: '../login/login.html',
@@ -267,12 +267,13 @@
 					// 退出登录
 					logout.addEventListener('tap', function(event) {
 						$.confirm('确认退出登录？','退出登录','',function(ok){
+							//login/loginOut
 							if (ok.index === 1) {
 								tools.clearUser();
 								location.reload();
 							}
 						});
-						
+
 					});
 					// 其它页面
 					var clickItems = $('.clickItem');

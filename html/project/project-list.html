@@ -14,12 +14,13 @@
 				position: relative;
 			}
 			.mui-row.mui-fullscreen>[class*="mui-col-"] {
-				height: 100%;
+				height: calc(100% - 100px);
+				height: -webkit-calc(100% - 100px);
 			}
 			.mui-row.mui-fullscreen>.mui-col-xs-8 {
 				position: relative;
 				background-color: #ffffff;
-				padding: 60px 10px;
+				padding: 10px;
 			}
 
 			.mui-col-xs-4,
@@ -41,9 +42,9 @@
 				background-color: #fff;
 			}
 			.add-project {
-				position: absolute;
+				/*position: absolute;
 				top: 44px;
-				right: 0;
+				right: 0;*/
 				line-height: 50px;
 				height: 50px;
 				width: 66.66666667%;
@@ -65,9 +66,9 @@
 			<h1 class="mui-title">项目</h1>
 		</header>
 		<div class="mui-content mui-row mui-fullscreen">
-			<div class="add-project">
-					<span>添加项目</span>
-				</div>
+			<!--<div class="add-project">
+				<span>添加项目</span>
+			</div>-->
 			<div class="mui-col-xs-4">
 				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
 				</div>
@@ -86,7 +87,7 @@
 				var i = 1;
 				var j = 1;
 				var	m = 6; //左侧选项卡数量+1
-				var	n = 3; //每个选项卡列表数量+1
+				var	n = 4; //每个选项卡列表数量+1
 				for (; i < m; i++) {
 					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
 				}
@@ -140,11 +141,12 @@
 					}
 					contentsElem.addEventListener('scroll', function() {
 						var scrollTop = contentsElem.scrollTop;
+//						console.log(scrollTop);
 						for (var i = 0; i < length; i++) {
 							var offsetTop = contentTops[i];
 							var offset = Math.abs(offsetTop - scrollTop);
-	//						console.log("i:"+i+",scrollTop:"+scrollTop+",offsetTop:"+offsetTop+",offset:"+offset);
-							if (scrollTop < offsetTop) {
+							console.log("i:"+i+",scrollTop:"+scrollTop+",offsetTop:"+offsetTop+",offset:"+offset+',maxScroll'+maxScroll);
+							if (scrollTop + 250 < offsetTop) {
 								if (scrollTop >= maxScroll) {
 									onScroll(length - 1);
 								} else {
@@ -163,6 +165,7 @@
 					var lastIndex = 0;
 					//监听content滚动
 					var onScroll = function(index) {
+						console.log(lastIndex, index);
 						if (lastIndex !== index) {
 							lastIndex = index;
 							var lastActiveElem = controlsElem.querySelector('.mui-active');
