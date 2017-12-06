@@ -45,6 +45,10 @@
 				width: 60px;
 				height: 60px;
 				margin-right: 20px;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				border-radius: 50%;
+				overflow: hidden;
 			}
 			.wode-header .user-info .img img {
 				width: 100%;
@@ -97,6 +101,27 @@
 			.mui-table-view-cell:after {
 				left: 40px !important;
 			}
+			.btn-padding {
+				padding-bottom: 20px;
+			}
+			.btn-logout {
+				display: none;
+				width: 100%;
+				border: 0;
+				color: #303030;
+				height: 50px;
+				line-height: 50px;
+				background-color: #ffffff;
+				padding: 0 10px;
+				-webkit-border-radius: 0;
+				-moz-border-radius: 0;
+				border-radius: 0;
+			}
+			button.btn-logout:enabled,
+			button.btn-logout:enabled:active{
+				background-color: #ffffff ;
+				opacity: 1;
+			}
 		</style>
 	</head>
 
@@ -105,28 +130,28 @@
 			<div class="wode-header">
 				<div class="wh-title">
 					<p>我的</p>
-					<div id="msg" url="../my/my-message.html" class="clickItem msg">
+					<div id="msg" url="../my/my-message.html" login="yes" class="clickItem msg">
 						<img src="../../images/tab-wode/msg.png" />
 					</div>
 				</div>
 				<div class="user-info">
 					<div id="login" class="flex">
-						<div class="img flex flex-col-center">
+						<div class="img flex flex-row-center">
 							<img src="../../images/tab-wode/user_default.png" />
 						</div>
 						<div class="info flex-1">
-							<p>游客身份</p>
-							<p>立即登录</p>
+							<p id="nickname">游客身份</p>
+							<p id="sex">立即登录</p>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="count flex">
-				<div id="sc" url="../my/follows.html" class="clickItem flex-1">
+				<div id="sc" url="../my/follows.html" login="yes" class="clickItem flex-1">
 					<p>收藏</p>
 					<p>0</p>
 				</div>
-				<div id="jf" url="../my/point.html" class="clickItem flex-1">
+				<div id="jf" url="../my/point.html" login="yes" class="clickItem flex-1">
 					<p>积分</p>
 					<p>0</p>
 				</div>
@@ -183,30 +208,83 @@
 					</a>
 				</li>
 			</ul>
-
+			<div class="btn-padding">
+				<button id="logout" class="btn-logout">退出登录</button>
+			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/tools.js" ></script>
 		<script>
+			window.addEventListener('refresh', function(e){
+			    location.reload();
+			});
+			function toLogin(fromurl, fromid) {
+				var extras = {};
+				if (fromurl) {
+					extras.fromurl = fromurl;
+					extras.fromid = fromid; 
+				}
+				mui.openWindow({
+					url: '../login/login.html',
+					id: 'login',
+					preload: true,
+					createNew: true,
+					show: {
+						aniShow: 'pop-in'
+					},
+					styles: {
+						popGesture: 'hide'
+					},
+					waiting: {
+						autoShow: false
+					},
+					extras: extras
+				});
+			}
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
+					var user = tools.getUser();
+					// 判断登录
+					var loginItem = doc.getElementById('login');
+					var logout = doc.getElementById('logout');
+					// 加载登录信息
+					if (tools.checkLogin()) {
+						if (user.header) {
+							$('#login img')[0].src = user.header || '../../images/tab-wode/user_default.png';
+							$('#login #nickname')[0].innerText = user.nickname;
+							$('#login #sex')[0].innerText = user.sex === 1 ? '男' : '女';
+							logout.style.display = 'block';
+						}
+					}
 					var self = plus.webview.currentWebview();
-					var loginButton = doc.getElementById('login');
-					loginButton.addEventListener('tap', function(event) {
-						$.openWindow({
-							url: '../login/login.html',
-							id: 'login',
-							show: {
-								aniShow: 'pop-in'
+					loginItem.addEventListener('tap', function(event) {
+						if (tools.checkLogin()) {
+							return;
+						}
+						toLogin();
+					});
+					// 退出登录
+					logout.addEventListener('tap', function(event) {
+						$.confirm('确认退出登录？','退出登录','',function(ok){
+							if (ok.index === 1) {
+								tools.clearUser();
+								location.reload();
 							}
 						});
+						
 					});
-
+					// 其它页面
 					var clickItems = $('.clickItem');
-					for (var i = 0;i< clickItems.length;i++) {
-						clickItems[i].addEventListener('tap', function(event) {
+					$.each(clickItems, function(index, item) {
+						item.addEventListener('tap', function(event) {
 							var id = this.getAttribute("id");
 							var url = this.getAttribute("url");
+							var loginFlag = this.getAttribute('login');
+							if (loginFlag === 'yes' && !tools.checkLogin()) {
+								toLogin(url,id);
+								return;
+							}
 							$.openWindow({
 								url: url,
 								id: id,
@@ -222,7 +300,7 @@
 								}
 							});
 						});
-					}
+					});
 				});
 			}(mui, document));
 		</script>

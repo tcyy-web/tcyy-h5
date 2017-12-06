@@ -31,7 +31,8 @@
 			}
 
 			.mui-input-group label {
-				width: 23%;
+				text-align: right;
+				width: 100px;
 				color: #ffffff;
 			}
 			.mui-input-group .mui-input-row {
@@ -43,7 +44,8 @@
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 77%;
+				width: calc(100% - 100px);
+				width: -webkit-calc(100% - 100px);
 			}
 			.mui-input-row label {
 				padding: 0 15px;
@@ -58,8 +60,14 @@
 				height: 50px !important;
 			}
 			.mui-icon-clear {
-				top: 14px !important;
+				padding-top: 14px !important;
+				height: 50px !important;
+				top: 0 !important;
 				color: #ffffff !important;
+			}
+			.verify~.mui-icon-clear {
+				right: calc(60% - 100px) !important;
+				right: -webkit-calc(60% - 100px) !important;
 			}
 			::-moz-placeholder {
 				color: #ffffff;
@@ -85,6 +93,11 @@
 				line-height: 40px;
 				background-color: #e0e0e0;
 				padding: 0 10px;
+			}
+			button.btn-verify:enabled,
+			button.btn-verify:enabled:active{
+				background-color: #e0e0e0 ;
+				opacity: 1;
 			}
 			.mui-content-padded {
 				margin: 70px 30px 140px 30px;
@@ -121,18 +134,30 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">登录</h1>
+			<h1 class="mui-title">注册</h1>
 		</header>
 		<div class="mui-content">
-			<form id='login-form' class="mui-input-group">
+			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>手&emsp;机：</label>
-					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入手机">
+					<input id='phone' type="text" class="mui-input-clear mui-input" placeholder="请输入注册手机">
 				</div>
 				<div class="mui-input-row">
 					<label>验证码：</label>
-					<input id='verify' type="text" class="mui-input-clear mui-input verify" placeholder="请输入验证码">
-					<button id='getVerify' class="btn-verify">获取验证码</button>
+					<input id='code' type="text" class="mui-input-clear mui-input verify" placeholder="请输入验证码">
+					<button id='getVerify' class="btn-verify" type="button">获取验证码</button>
+				</div>
+				<div class="mui-input-row">
+					<label>昵&emsp;称：</label>
+					<input id='nickname' type="text" class="mui-input-clear mui-input" placeholder="请输入昵称">
+				</div>
+				<div class="mui-input-row">
+					<label>密&emsp;码：</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+				</div>
+				<div class="mui-input-row">
+					<label>确认密码：</label>
+					<input id='rpassword' type="password" class="mui-input-clear mui-input" placeholder="请输入确认密码">
 				</div>
 			</form>
 			<div class="mui-content-padded">
@@ -143,45 +168,110 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/business/login-reg.js"></script>
+		<script src="../../js/tools.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-					var accountBox = doc.getElementById('account');
-					var verifyBox = doc.getElementById('verify');
+					// 点击
 					var regButton = doc.getElementById('reg');
 					var getVerify = doc.getElementById('getVerify');
 					var loginButton = doc.getElementById('login');
+					// 输入内容
+					var phone = doc.getElementById('phone');
+					var code = doc.getElementById('code');
+					var nickname = doc.getElementById('nickname');
+					var password = doc.getElementById('password');
+					var rpassword = doc.getElementById('rpassword');
+					// 获取验证码
+					var flag = false;
+					var verifyLater;
+					var seconds = 60;
+					var verifyFn = function() {
+						getVerify.innerText = seconds + 's';
+						seconds--;
+						if (seconds > 0) {
+							$.later(function(){
+								verifyFn();
+							}, 1000);
+						}
+						else {
+							seconds = 60;
+							flag = false;
+							getVerify.innerText = '重新获取';
+						}
+					}
+					getVerify.addEventListener('tap', function(event) {
+						if (flag) {
+							return;
+						}
+						var _phone = phone.value.trim();
+						if (_phone === '') {
+							$.toast('请输入注册手机');
+							return;
+						}
+						flag = true;
+						tools.ajaxData('Sendmsg/sendCode',{
+							data: {
+								phone: _phone,
+								type: 1
+							},
+							success:function(data){
+								if (data.header.status === 2001) {
+									$.toast('短信发送成功，请注意查收');
+									seconds = 60;
+									verifyFn();
+								} else {
+									flag = false;
+									$.toast(data.header.msg);
+								}
+							},
+							error:function(xhr,type,errorThrown){
+								$.toast("服务器连接出错，请稍后再试");
+								flag = false;
+							}
+						});
+					});					
 					// 注册
 					regButton.addEventListener('tap', function(event) {
 						var regInfo = {
-							account: accountBox.value,
-							verify: passwordBox.value,
+							phone: phone.value.trim(),
+							code: code.value.trim(),
+							password: password.value.trim(),
+							rpassword: rpassword.value.trim(),
+							type: 1,
+							nickname: nickname.value.trim(),
 						};
-						login.reg(regInfo, function(err) {
-							if (err) {
-								plus.nativeUI.toast(err);
-								return;
-							}
-							plus.nativeUI.toast('注册成功');
+						if (regInfo.phone === '') {
+							$.toast('请输入注册手机');
+							return;
+						}
+						if (regInfo.code === '') {
+							$.toast('请输入验证码');
+							return;
+						}
+						if (regInfo.nickname === '') {
+							$.toast('请输入昵称');
+							return;
+						}
+						if (regInfo.password === '') {
+							$.toast('请输入密码');
+							return;
+						}
+						if (regInfo.rpassword !== regInfo.password) {
+							$.toast('两次输入的密码不一致');
+							return;
+						}						
+						tools.ajaxData('Register/byPhone',{
+							data: regInfo
+						}, function() {
+							$.toast('注册成功');
+							$.back();
 						});
-					});
-					// 获取验证码
-					getVerify.addEventListener('tap', function(event) {
-						// TODO
-						getVerify.prop('disabled', true);
-						getVerify.text('58s');
 					});
 					// 跳转登录
 					loginButton.addEventListener('tap', function(event) {
-						$.openWindow({
-							url: 'login.html',
-							id: 'login',
-							show: {
-								aniShow: 'pop-in'
-							}
-						});
+						$.back();
 					});
 				});
 			}(mui, document));

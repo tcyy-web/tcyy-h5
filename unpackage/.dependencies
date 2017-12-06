@@ -1,95 +1,52 @@
 {
   "html/login/reg.html": {
     "href": "html/login/reg.html",
-    "resources": [
-      "images/profile/xg.jpg"
-    ],
+    "resources": [],
     "refer": [],
     "priority": 0
   },
   "html/login/login.html": {
     "href": "html/login/login.html",
-    "resources": [
-      "images/profile/xg.jpg"
-    ],
+    "resources": [],
     "refer": [],
     "priority": 0
   },
   "html/home/tab-webview-wode.html": {
     "href": "html/home/tab-webview-wode.html",
-    "resources": [
-      "images/profile/xg.jpg"
-    ],
+    "resources": [],
     "refer": [],
     "priority": 0
   },
   "html/train/train-list.html": {
     "href": "html/train/train-list.html",
-    "resources": [
-      "css/mui.min.css",
-      "fonts/mui.ttf",
-      "css/style.css",
-      "images/profile/xg.jpg",
-      "js/mui.min.js",
-      "js/mui.pullToRefresh.js",
-      "js/mui.pullToRefresh.material.js",
-      "images/my/bgy.png"
-    ],
+    "resources": [],
     "priority": 1
   },
   "html/home/tab-webview-kuozhan.html": {
     "href": "html/home/tab-webview-kuozhan.html",
-    "resources": [
-      "images/profile/xg.jpg"
-    ],
-    "refer": [
-      "html/train/train-list.html"
-    ],
+    "resources": [],
+    "refer": [],
     "priority": 1
   },
   "html/home/tab-webview-yanshi.html": {
     "href": "html/home/tab-webview-yanshi.html",
-    "resources": [
-      "images/profile/xg.jpg"
-    ],
+    "resources": [],
     "priority": 2
   },
   "html/video/video-list.html": {
     "href": "html/video/video-list.html",
-    "resources": [
-      "css/mui.min.css",
-      "fonts/mui.ttf",
-      "css/style.css",
-      "images/profile/xg.jpg",
-      "images/tab-vedio/sc11.png",
-      "js/mui.min.js",
-      "js/mui.pullToRefresh.js",
-      "js/mui.pullToRefresh.material.js",
-      "images/tab-vedio/sc10.png"
-    ],
+    "resources": [],
     "priority": 3
   },
   "html/project/project-index.html": {
     "href": "html/project/project-index.html",
-    "resources": [
-      "css/mui.min.css",
-      "fonts/mui.ttf",
-      "css/style.css",
-      "images/profile/xg.jpg",
-      "js/mui.min.js",
-      "images/project/body-bg.png",
-      "images/project/formleft.png"
-    ],
+    "resources": [],
     "priority": 4
   },
   "html/home/tab-webview-goutong.html": {
     "href": "html/home/tab-webview-goutong.html",
-    "resources": [
-      "images/profile/xg.jpg"
-    ],
-    "refer": [
-      "html/project/project-index.html"
-    ],
+    "resources": [],
+    "refer": [],
     "priority": 0
   }
 }

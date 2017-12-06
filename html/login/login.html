@@ -32,7 +32,8 @@
 			}
 
 			.mui-input-group label {
-				width: 22%;
+				width: 100px;
+				text-align: right;
 				color: #ffffff;
 			}
 			.mui-input-group .mui-input-row {
@@ -44,7 +45,8 @@
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 78%;
+				width: calc(100% - 100px);
+				width: -webkit-calc(100% - 100px);
 			}
 			.mui-input-row label {
 				padding: 0 15px;
@@ -134,13 +136,13 @@
 			<h1 class="mui-title">登录</h1>
 		</header>
 		<div class="mui-content">
-			<form id='login-form' class="mui-input-group">
+			<form id="login-form" class="mui-input-group">
 				<div class="mui-input-row">
-					<label>手&nbsp;&nbsp;&nbsp;&nbsp;机：</label>
+					<label>手&emsp;机：</label>
 					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入注册手机">
 				</div>
 				<div class="mui-input-row">
-					<label>密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+					<label>密&emsp;码：</label>
 					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
 				</div>
 			</form>
@@ -160,13 +162,48 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/mui.enterfocus.js"></script>
-		<script src="../../js/business/login-reg.js"></script>
+		<script src="../../js/tools.js" ></script>
+		<script src="../../js/business/login.js"></script>
 		<script>
 			(function($, doc) {
-				$.init({});
+				$.init({
+					beforeback: function() {
+				　　　　 //获得父页面的webview
+				        var list = plus.webview.currentWebview().opener();
+				　　　　 //触发父页面的自定义事件(refresh),从而进行刷新
+				        $.fire(list, 'refresh');
+				        //返回true,继续页面关闭逻辑
+				        return true;
+				    }
+				});
 				$.plusReady(function() {
-					var self = plus.webview.currentWebview();
+					var currentView = plus.webview.currentWebview();
+					var fromurl = currentView.fromurl;
+					var fromid = currentView.fromid;
+					var 	loginSuccess = function loginSuccess(user) {
+						tools.saveUser(user);
+						$.toast('登录成功');
+						$.back();
+//						if (fromurl) {
+//							mui.openWindow({
+//								url: fromurl,
+//								id: fromid,
+//								preload: true,
+//								createNew: true,
+//								show: {
+//									aniShow: 'pop-in'
+//								},
+//								styles: {
+//									popGesture: 'hide'
+//								},
+//								waiting: {
+//									autoShow: false
+//								}
+//							});
+//						} else {
+//							mui.back();
+//						}
+					}
 					//第三方登录
 					var authBtns = ['weixin', 'qq']; //配置业务支持的第三方登录
 					var auths = {};
@@ -189,32 +226,42 @@
 						}
 						$(oauthArea).on('tap', '.oauth-btn', function() {
 							if (this.classList.contains('disabled')) {
-								plus.nativeUI.toast('您尚未安装微信客户端');
+								$.toast('您尚未安装微信客户端');
 								return;
 							}
 							var auth = auths[this.authId];
 							var waiting = plus.nativeUI.showWaiting();
 							auth.login(function() {
 								waiting.close();
-								plus.nativeUI.toast("登录认证成功");
 								auth.getUserInfo(function() {
-									plus.nativeUI.toast("获取用户信息成功");
-									var name = auth.userInfo.nickname || auth.userInfo.name;
-									console.log(auth.userInfo);
+									var loginInfo = {};
+									// qq登录
+									if (auth.id === 'qq') {
+										loginInfo.code = auth.authResult.access_token;
+										loginInfo.type = 2;
+										loginInfo.nickname = auth.userInfo.nickname;
+										loginInfo.headurl = auth.userInfo.figureurl_qq_2;
+										loginInfo.sex = auth.userInfo.gender === '男' ? 1 : 2;
+									}
+									tools.ajaxData('login/byQQWX',{
+										data: loginInfo
+									}, function(data) {
+										loginSuccess(data);
+									});
 								}, function(e) {
-									plus.nativeUI.toast("获取用户信息失败：" + e.message);
+									$.toast("获取用户信息失败：" + e.message);
 								});
 							}, function(e) {
 								waiting.close();
-								plus.nativeUI.toast("登录认证失败：" + e.message);
+								$.toast("登录认证失败：" + e.message);
 							});
 						});
 					}, function(e) {
 						oauthArea.style.display = 'none';
-						plus.nativeUI.toast("获取登录认证失败：" + e.message);
+						$.toast("获取登录认证失败：" + e.message);
 					});
 					// close splash
-					setTimeout(function() {
+					$.later(function() {
 						//关闭 splash
 						plus.navigator.closeSplashscreen();
 					}, 600);
@@ -224,19 +271,22 @@
 					var regButton = doc.getElementById('reg');
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
-							account: accountBox.value,
-							password: passwordBox.value
+							phone: accountBox.value.trim(),
+							password: passwordBox.value.trim()
 						};
-						login.login(loginInfo, function(err) {
-							if (err) {
-								plus.nativeUI.toast(err);
-								return;
-							}
-							plus.nativeUI.toast("登录成功");
+						if (loginInfo.phone === '') {
+							$.toast('请输入注册手机');
+							return;
+						}
+						if (loginInfo.password === '') {
+							$.toast('请输入密码');
+							return;
+						}
+						tools.ajaxData('login/byPhone',{
+							data: loginInfo
+						}, function(data) {
+							loginSuccess(data);
 						});
-					});
-					$.enterfocus('#login-form input', function() {
-						$.trigger(loginButton, 'tap');
 					});
 					regButton.addEventListener('tap', function(event) {
 						$.openWindow({
