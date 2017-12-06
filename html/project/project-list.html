@@ -10,52 +10,340 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
-			.mui-content{
-				position: relative;
+			.mui-content {
+				position:relative;
 			}
 			.mui-row.mui-fullscreen>[class*="mui-col-"] {
-				height: calc(100% - 100px);
-				height: -webkit-calc(100% - 100px);
+				height: calc(100% - 60px);
+				height: -webkit-calc(100% - 60px);
 			}
-			.mui-row.mui-fullscreen>.mui-col-xs-8 {
-				position: relative;
-				background-color: #ffffff;
-				padding: 10px;
-			}
-
 			.mui-col-xs-4,
-			.mui-col-xs-8 {
+			.mui-control-content {
 				overflow-y: auto;
 				height: 100%;
 			}
-
+			.mui-col-xs-4 {
+				background-color: #f1f1f1;
+			}
+			.mui-control-content {
+				background-color: #ffffff;
+				padding: 10px;
+			}
+			.content-box {
+				height: calc(100% - 50px);
+				height: -webkit-calc(100% - 50px);
+			}
 			.mui-segmented-control .mui-control-item {
 				line-height: 50px;
 				width: 100%;
 			}
-
-			.mui-control-content {
-				display: block;
-			}
-
-			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
-				background-color: #fff;
-			}
 			.add-project {
-				/*position: absolute;
-				top: 44px;
-				right: 0;*/
 				line-height: 50px;
 				height: 50px;
-				width: 66.66666667%;
+				width: 100%;
 				text-align: right;
 				padding: 0 10px;
 				z-index: 10;
 				background-color: #f9f9f9;
 				color: #f34336;
 			}
+			.mui-table-view:before {
+				display: none;
+			}
+			.mui-table-view:after{
+				background-color: #dedede;
+			}
 			.mui-table-view-cell {
-				height: 250px;
+				padding: 0;
+			}
+			.mui-table-view-cell:after{
+				background-color: #dedede;
+			}
+			.mui-table-view-cell .img {
+				height: 180px;
+				overflow: hidden;
+			}
+			.mui-table-view-cell .img img {
+				height: 100%;
+				width: auto;
+			}
+			.bill-item {
+				position: relative;
+				padding-right: 50px;
+				background-color: #ffffff;
+			}
+			.bill-item .flex p {
+				width: 100px;
+				padding: 5px 0;
+				position: relative;
+				font-size: 14px;
+				color: #292929;
+				word-break: break-all;
+			}
+			.bill-item .flex p:first-child:before {
+				position: absolute;
+				right: 0;
+				top: 10px;
+				content: '';
+				width: 1px;
+				height: 10px;
+				background-color: #565656;
+			}
+			.bill-item .flex p:last-child {
+				padding-left: 5px;
+			}
+			.bill-item > p{
+				padding: 5px 0;
+				text-align: left;
+				font-size: 18px;
+				color: #f34336;
+			}
+			.bill-item > p span {
+				font-size: 14px;
+				color: #bbbbbb;
+				margin-left: 5px;
+			}
+			.bill-add {
+				position: absolute;
+				right: 5px;
+				top: 10px;
+				width: 40px;
+				height: 40px;
+				background-color: #765fc3;
+				-webkit-border-radius: 50%;
+				border-radius: 50%;
+			}
+			.bill-add:before,
+			.bill-add:after{
+				content: '';
+				position: absolute;
+				background-color: #ffffff;
+			}
+			.bill-add:before {
+				width: 2px;
+				top: 10px;
+				left: 19px;
+				height: 20px;
+			}
+			.bill-add:after {
+				top: 19px;
+				left: 10px;
+				height: 2px;
+				width: 20px;
+			}
+		</style>
+		<style>
+			/*购物车*/
+			.shop-car {
+				position: absolute;
+				left: 0;
+				width: 100%;
+				bottom: 0;
+				z-index: 20;
+				height: 60px;
+				-webkit-transition: .3s linear height;
+				transition: .3s linear height;
+			}
+			.shop-car.active {
+				height: 60%;
+			}
+			.shop-car~.shop-car-bg {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 19;
+				background-color: rgba(0,0,0,0.3);
+				display: none;
+			}
+			.shop-car.active~.shop-car-bg {
+				display: block;
+			}
+			.shop-car.active .sc-tips{
+				top: -70px;
+			}
+			.shop-car.active .sc-tips:before {
+				content: '';
+				position: absolute;
+				bottom: -10px;
+				left: 24px;
+				width: 0;
+				height: 0;
+				border-left: 6px solid transparent;
+				border-right: 6px solid transparent;
+				border-bottom: 8px solid #ebebeb;
+			}
+			.shop-car .sc-tips {
+				position: absolute;
+				z-index: 21;
+				top: -10px;
+				left: 10px;
+				width: 60px;
+				height: 60px;
+				background-color: #0d1520;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				border-radius: 50%;
+				-webkit-transition: 0.5s linear top;
+				transition: 0.5s linear top;
+			}
+			.shop-car .sc-tips p {
+				position: absolute;
+				top: -5px;
+				right: -5px;
+				color: #ffffff;
+				width: 25px;
+				height: 25px;
+				line-height: 25px;
+				text-align: center;
+				font-size: 12px;
+				background-color: #f34336;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				border-radius: 50%;
+			}
+			.shop-car .sc-items {
+				height: calc(100% - 60px);
+				height: -webkit-calc(100% - 60px);
+				background-color: #ffffff;
+				overflow: hidden;
+			}
+			.shop-car .sc-items .sc-title {
+				padding: 0 10px;
+				background-color: #ebebeb;
+				color: #9b9b9b;
+				font-size: 14px;
+				height: 40px;
+				line-height: 40px;
+			}
+			.shop-car .sc-clear {
+				float: right;
+			}
+			.shop-car .sc-clear img {
+				height: 16px;
+				width: auto;
+				position: relative;
+				top: -1px;
+				margin-right: 2px;
+			}
+			.shop-car .sc-box {
+				padding:0 10px;
+				height: calc(100% - 40px);
+				height: -webkit-calc(100% - 40px);
+				overflow-y: auto;
+			}
+			.shop-car .sc-box .sc-item {
+				position: relative;
+				padding: 15px 0;
+			}
+			.shop-car .sc-box .sc-item:before {
+				position: absolute;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    height: 1px;
+		    content: '';
+		    -webkit-transform: scaleY(.5);
+		    transform: scaleY(.5);
+		    background-color: #c8c7cc;
+			}
+			.shop-car .sc-box .sc-item > p {
+				display: inline-block;
+				font-size: 18px;
+			}
+			.shop-car .sc-box .sc-item > p.name {
+				color:#292929;
+				width: 50%;
+				padding-right: 10px;
+			}
+			.shop-car .sc-box .sc-item > p.money {
+				color:#f34336;
+				float: right;
+				word-break: break-all;
+				width: calc(50% - 100px);
+				width: -webkit-calc(50% - 100px);
+			}
+			.shop-car .sc-box .sc-item .tools {
+				float: right;
+				position: relative;
+				top: -5px;
+			}
+			.shop-car .sc-total {
+				height: 60px;
+				line-height: 60px;
+				background-color: #3f4249;
+				font-size: 16px;
+				color: #ffffff;
+			}
+			.shop-car .sc-total .sc-money {
+				width: calc(100% - 100px);
+				width: -webkit-calc(100% - 100px);
+				float: left;
+				padding-left: 80px;
+				padding-right: 10px;
+			}
+			.shop-car.active .sc-total .sc-money {
+				padding-left: 10px;
+			}
+			.shop-car .sc-total .sc-money .f1 {
+				font-size: 14px;
+				color: #b7b7b7;
+			}
+			.shop-car .sc-total .btn-submit {
+				width: 100px;
+				float: right;
+				color: #ffffff;
+				text-align: center;
+				font-size: 16px;
+				background-color: #765fc3;
+			}
+
+			.tools {
+				width: 90px;
+				margin-left: 10px;
+			}
+			.tools > p {
+				font-size: 14px;
+				font-weight: 700;
+				color: #696969;
+				text-align: center;
+			}
+			.tools .item {
+				position: relative;
+				width: 30px;
+				height: 30px;
+				background-color:#f34336;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				border-radius: 50%;
+			}
+			.tools .item.item-jia:before,
+			.tools .item.item-jia:after,
+			.tools .item.item-jian:before {
+				position: absolute;
+				content: '';
+			}
+			.tools .item.item-jian:before {
+				top: 13px;
+				left: 8px;
+				width: 14px;
+				height: 2px;
+				background-color: #ffffff;
+			}
+			.tools .item.item-jia:before {
+				top: 13px;
+				left: 8px;
+				width: 14px;
+				height: 2px;
+				background-color: #ffffff;
+			}
+			.tools .item.item-jia:after {
+				top: 7px;
+				left: 14px;
+				width: 2px;
+				height: 14px;
+				background-color: #ffffff;
 			}
 		</style>
 	</head>
@@ -66,23 +354,77 @@
 			<h1 class="mui-title">项目</h1>
 		</header>
 		<div class="mui-content mui-row mui-fullscreen">
-			<!--<div class="add-project">
-				<span>添加项目</span>
-			</div>-->
 			<div class="mui-col-xs-4">
 				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
 				</div>
 			</div>
-			<div id="segmentedControlContents" class="mui-col-xs-8">
-				<div id="segmentedControlContentsBox"></div>
+			<div class="mui-col-xs-8">
+				<div class="add-project">
+					<span>添加项目</span>
+				</div>
+				<div id="segmentedControlContents" class="content-box">
+					<div id="content1" class="mui-control-content">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<div class="img flex flex-col-center">
+									<img src="../../images/project/banner.png" />
+								</div>
+								<div class="bill-item">
+									<div class="flex">
+										<p>编号：01by01by01by01by01by</p>
+										<p class="flex-1">牙齿修复牙齿修复牙齿修复牙齿修复牙齿修复</p>
+									</div>
+									<p>￥318<span>元</span></p>
+									<div class="bill-add"></div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
 			</div>
+			<div id="shop-car-box" class="shop-car active">
+				<div id="shop-car" class="sc-tips flex flex-col-center flex-row-center">
+					<p>18+</p>
+					<img src="../../images/project/edit.png"/>
+				</div>
+				<div class="sc-items">
+					<div class="sc-title">
+						<span>治疗清单</span>
+						<div class="sc-clear">
+							<img src="../../images/project/del.png"/>
+							<span>清空清单</span>
+						</div>
+					</div>
+					<div class="sc-box">
+						<div class="sc-item">
+							<p class="name">口腔修复口腔修复口腔修复口腔修复口腔修复口腔修复</p>
+							<div class="tools flex flex-row-center">
+								<div class="item item-jian"></div>
+								<p class="flex-1">99</p>
+								<div class="item item-jia"></div>
+							</div>
+							<p class="money">￥213</p>
+						</div>
+					</div>
+				</div>
+				<div class="sc-total">
+					<div class="sc-money">
+						<span class="f1">共</span>
+						<span>￥</span>
+						<span>152</span>
+						<span class="f1">元</span>
+					</div>
+					<div class="btn-submit"><span>提交</span></div>
+				</div>
+			</div>
+			<div class="shop-car-bg"></div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
 				var controls = doc.getElementById("segmentedControls");
-				var contents = doc.getElementById("segmentedControlContentsBox");
+				var contents = doc.getElementById("segmentedControlContents");
 				var html = [];
 				var i = 1;
 				var j = 1;
@@ -100,96 +442,18 @@
 					}
 					html.push('</ul></div>');
 				}
-				contents.innerHTML = html.join('');
-				//默认选中第一个
+//				contents.innerHTML = html.join('');
 				controls.querySelector('.mui-control-item').classList.add('mui-active');
-	//			contents.querySelector('.mui-control-content').classList.add('mui-active');
-				(function() {
-					var controlsElem = doc.getElementById("segmentedControls");
-					var contentsElem = doc.getElementById("segmentedControlContents");
-					var controlListElem = controlsElem.querySelectorAll('.mui-control-item');
-					var contentListElem = contentsElem.querySelectorAll('.mui-control-content');
-					var controlWrapperElem = controlsElem.parentNode;
-					var controlWrapperHeight = controlWrapperElem.offsetHeight;
-					var controlMaxScroll = controlWrapperElem.scrollHeight - controlWrapperHeight;//左侧类别最大可滚动高度
-					var maxScroll = contentsElem.scrollHeight - contentsElem.offsetHeight;//右侧内容最大可滚动高度
-					var controlHeight = controlListElem[0].offsetHeight;//左侧类别每一项的高度
-					var controlTops = []; //存储control的scrollTop值
-					var contentTops = [0]; //存储content的scrollTop值
-					var length = contentListElem.length;
-					for (var i = 0; i < length; i++) {
-						controlTops.push(controlListElem[i].offsetTop + controlHeight);
+				contents.querySelector('.mui-control-content').classList.add('mui-active');
+				var shopCarBox = doc.querySelector('#shop-car-box');
+				var shopCar = doc.getElementById('shop-car');
+				shopCar.addEventListener('tap', function(e) {
+					if (shopCarBox.classList.contains('active')) {
+						shopCarBox.classList.remove('active');
+					} else {
+						shopCarBox.classList.add('active');
 					}
-					for (var i = 1; i < length; i++) {
-						var offsetTop = contentListElem[i].offsetTop;
-						if (offsetTop + 100 >= maxScroll) {
-							var height = Math.max(offsetTop + 100 - maxScroll, 100);
-							var totalHeight = 0;
-							var heights = [];
-							for (var j = i; j < length; j++) {
-								var offsetHeight = contentListElem[j].offsetHeight;
-								totalHeight += offsetHeight;
-								heights.push(totalHeight);
-							}
-							for (var m = 0, len = heights.length; m < len; m++) {
-								contentTops.push(parseInt(maxScroll - (height - heights[m] / totalHeight * height)));
-							}
-							break;
-						} else {
-							contentTops.push(parseInt(offsetTop));
-						}
-					}
-					contentsElem.addEventListener('scroll', function() {
-						var scrollTop = contentsElem.scrollTop;
-//						console.log(scrollTop);
-						for (var i = 0; i < length; i++) {
-							var offsetTop = contentTops[i];
-							var offset = Math.abs(offsetTop - scrollTop);
-							console.log("i:"+i+",scrollTop:"+scrollTop+",offsetTop:"+offsetTop+",offset:"+offset+',maxScroll'+maxScroll);
-							if (scrollTop + 250 < offsetTop) {
-								if (scrollTop >= maxScroll) {
-									onScroll(length - 1);
-								} else {
-									onScroll(i - 1);
-								}
-								break;
-							} else if (offset < 20) {
-								onScroll(i);
-								break;
-							}else if(scrollTop >= maxScroll){
-								onScroll(length - 1);
-								break;
-							}
-						}
-					});
-					var lastIndex = 0;
-					//监听content滚动
-					var onScroll = function(index) {
-						console.log(lastIndex, index);
-						if (lastIndex !== index) {
-							lastIndex = index;
-							var lastActiveElem = controlsElem.querySelector('.mui-active');
-							lastActiveElem && (lastActiveElem.classList.remove('mui-active'));
-							var currentElem = controlsElem.querySelector('.mui-control-item:nth-child(' + (index + 1) + ')');
-							currentElem.classList.add('mui-active');
-							//简单处理左侧分类滚动，要么滚动到底，要么滚动到顶
-							var controlScrollTop = controlWrapperElem.scrollTop;
-							if (controlScrollTop + controlWrapperHeight < controlTops[index]) {
-								controlWrapperElem.scrollTop = controlMaxScroll;
-							} else if (controlScrollTop > controlTops[index] - controlHeight) {
-								controlWrapperElem.scrollTop = 0;
-							}
-						}
-					};
-					//滚动到指定content
-					var scrollTo = function(index) {
-						contentsElem.scrollTop = contentTops[index];
-					};
-					mui(controlsElem).on('tap', '.mui-control-item', function(e) {
-						scrollTo(this.getAttribute('data-index'));
-						return false;
-					});
-				})();
+				});
 				$.plusReady(function() {
 				});
 			}(mui, document));

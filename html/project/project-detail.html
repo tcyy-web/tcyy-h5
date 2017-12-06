@@ -21,7 +21,8 @@
 				min-height: 60px;
 				position: relative;
 			}
-			.bill .bill-add {
+			.bill-add {
+				z-index: 2;
 				position: absolute;
 				top: 10px;
 				right: 10px;
@@ -33,20 +34,44 @@
 				border-radius: 50%;
 				cursor: pointer;
 			}
-			.bill .bill-add img {
+			.bill-add:before,
+			.bill-add:after{
+				content: '';
+				position: absolute;
+				background-color: #ffffff;
+			}
+			.bill-add:before {
+				width: 2px;
+				top: 10px;
+				left: 19px;
+				height: 20px;
+			}
+			.bill-add:after {
+				top: 19px;
+				left: 10px;
+				height: 2px;
 				width: 20px;
 			}
 			.bill-item {
+				position: relative;
 				padding-left: 10px;
 				padding-right: 60px;
-				border-bottom: 1px solid #d6d6d6;
 				background-color: #ffffff;
+			}
+			.bill-item:before{
+				position: absolute;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    height: 1px;
+		    content: '';
+		    -webkit-transform: scaleY(.5);
+		    transform: scaleY(.5);
+		    background-color: #d6d6d6;
 			}
 			.bill-item .flex p {
 				width: 100px;
 				padding: 5px 0;
-				height: 30px;
-				line-height: 30px;
 				position: relative;
 				font-size: 14px;
 				color: #292929;
@@ -54,7 +79,7 @@
 			.bill-item .flex p:first-child:before {
 				position: absolute;
 				right: 0;
-				top: 15px;
+				top: 10px;
 				content: '';
 				width: 1px;
 				height: 10px;
@@ -185,8 +210,7 @@
 				<img src="../../images/project/banner.png" />
 			</div>
 			<div class="bill">
-				<div class="bill-add flex flex-col-center flex-row-center">
-					<img src="../../images/project/jiafooter.png" />
+				<div class="bill-add">
 				</div>
 				<div class="bill-item">
 					<div class="flex">

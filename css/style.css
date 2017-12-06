@@ -33,6 +33,9 @@ body,div,p,span,h1,h2,h3,h4,h5,ul,li,dl,dd,dt,a,from,input,div,menu,ol{ border:0
 	font-size: 18px;
 }
 /*公共*/
+.clearFix:before,.clearFix:after{ content:""; display:table;}
+.clearFix:after{ clear:both;}
+.clearFix{ zoom:1;}
 img {
 	border: 0;
 	vertical-align: middle;
