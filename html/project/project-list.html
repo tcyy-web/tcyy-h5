@@ -248,18 +248,17 @@
 		    transform: scaleY(.5);
 		    background-color: #c8c7cc;
 			}
-			.shop-car .sc-box .sc-item > p {
-				display: inline-block;
+			.shop-car .sc-box .sc-item .clearFix > p {
+				float: left;
 				font-size: 18px;
 			}
-			.shop-car .sc-box .sc-item > p.name {
+			.shop-car .sc-box .sc-item .clearFix > p.name {
 				color:#292929;
 				width: 50%;
 				padding-right: 10px;
 			}
-			.shop-car .sc-box .sc-item > p.money {
+			.shop-car .sc-box .sc-item .clearFix > p.money {
 				color:#f34336;
-				float: right;
 				word-break: break-all;
 				width: calc(50% - 100px);
 				width: -webkit-calc(50% - 100px);
@@ -397,13 +396,15 @@
 					</div>
 					<div class="sc-box">
 						<div class="sc-item">
-							<p class="name">口腔修复口腔修复口腔修复口腔修复口腔修复口腔修复</p>
-							<div class="tools flex flex-row-center">
-								<div class="item item-jian"></div>
-								<p class="flex-1">99</p>
-								<div class="item item-jia"></div>
+							<div class="clearFix">
+								<p class="name">口腔修复口腔修复口腔修复口腔修复口腔修复口腔修复</p>
+								<p class="money">￥213</p>
+								<div class="tools flex flex-row-center">
+									<div class="item item-jian"></div>
+									<p class="flex-1">99</p>
+									<div class="item item-jia"></div>
+								</div>
 							</div>
-							<p class="money">￥213</p>
 						</div>
 					</div>
 				</div>
