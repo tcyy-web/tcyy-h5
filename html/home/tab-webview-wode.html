@@ -35,7 +35,7 @@
 				height: 20px;
 			}
 			.wode-header .user-info {
-				padding: 40px 10px 40px 10px;
+				padding: 10px 10px 40px 10px;
 			}
 			.wode-header .user-info .img {
 				width: 60px;
@@ -124,18 +124,12 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">我的</h1>
-			<a id="info" class="mui-pull-right msg">
+			<a id="msg" url="../my/my-message.html" login="yes" class="clickItem mui-pull-right msg">
 				<img src="../../images/tab-wode/msg.png" />
 			</a>
 		</header>
 		<div class="mui-content">
 			<div class="wode-header">
-				<!--<div class="wh-title">
-					<p>我的</p>
-					<div id="msg" url="../my/my-message.html" login="yes" class="clickItem msg">
-						<img src="../../images/tab-wode/msg.png" />
-					</div>
-				</div>-->
 				<div class="user-info">
 					<div id="login" class="flex">
 						<div class="img flex flex-row-center">
@@ -246,11 +240,15 @@
 					// 退出登录
 					logout.addEventListener('tap', function(event) {
 						$.confirm('确认退出登录？','退出登录','',function(ok){
-							//login/loginOut
 							if (ok.index === 1) {
 								tools.clearUser();
 								location.reload();
 							}
+							tools.ajaxData('login/loginOut',{
+								data: {
+									code:user.code,
+								}
+							});
 						});
 
 					});

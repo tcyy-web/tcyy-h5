@@ -108,7 +108,7 @@ w.tools = {
 		error:function(xhr,type,errorThrown){
 			//异常处理；
 			mui.toast("服务器连接出错，请稍后再试");
-			console.log(JSON.stringify(xhr),type,errorThrown);
+			console.log('接口错误信息：',JSON.stringify(xhr),type,errorThrown);
 		}
   	}
   	mui.extend(defaults, obj);

@@ -75,7 +75,7 @@
 			<img class="bg" src="../../images/project/body-bg.png" />
 			<div class="info-box flex flex-col-center">
 				<div class="input-box">
-					<input type="text" placeholder="请输入门诊名称" />
+					<input id="inputText" type="text" placeholder="请输入门诊名称" />
 				</div>
 			</div>
 			<div id="project-list" class="icon-box flex flex-col-center flex-row-center">
@@ -83,12 +83,25 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/tools.js" ></script>
 		<script>
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-					var projectList = doc.getElementById('project-list')
+					var projectList = doc.getElementById('project-list');
+					var inputText = doc.getElementById('inputText');
+					var saveValue = tools.getData('$projetIndex');
+					if (saveValue !== null) {
+						inputText.value = saveValue;
+					}
 					projectList.addEventListener('tap', function(event) {
+						var currentValue = inputText.value.trim();
+						if (currentValue !== '' && currentValue !== saveValue) {
+							tools.saveData({
+								key:'$projetIndex',
+								value: currentValue
+							});
+						}
 						$.openWindow({
 							url: './project-list.html',
 							id: 'projectList',
