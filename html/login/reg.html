@@ -168,7 +168,7 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/tools.js"></script>
+		<script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
@@ -211,7 +211,7 @@
 							return;
 						}
 						flag = true;
-						tools.ajaxData('Sendmsg/sendCode',{
+						request.ajax('Sendmsg/sendCode',{
 							data: {
 								phone: _phone,
 								type: 1
@@ -262,7 +262,7 @@
 							$.toast('两次输入的密码不一致');
 							return;
 						}						
-						tools.ajaxData('Register/byPhone',{
+						request.ajax('Register/byPhone',{
 							data: regInfo
 						}, function() {
 							$.toast('注册成功');
