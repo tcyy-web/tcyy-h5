@@ -83,22 +83,25 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/tools.js" ></script>
+    <script src="../../js/utils.storages.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
+				  var storageKey = '$projetIndex';
 					var projectList = doc.getElementById('project-list');
 					var inputText = doc.getElementById('inputText');
-					var saveValue = tools.getData('$projetIndex');
+					var saveValue = storage.get({
+					  key: storageKey
+					});
 					if (saveValue !== null) {
 						inputText.value = saveValue;
 					}
 					projectList.addEventListener('tap', function(event) {
 						var currentValue = inputText.value.trim();
 						if (currentValue !== '' && currentValue !== saveValue) {
-							tools.saveData({
-								key:'$projetIndex',
+							storage.save({
+								key:storageKey,
 								value: currentValue
 							});
 						}

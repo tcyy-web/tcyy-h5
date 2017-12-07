@@ -209,7 +209,9 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/tools.js" ></script>
+    <script src="../../js/utils.storages.js"></script>
+    <script src="../../js/utils.auth.js"></script>
+    <script src="../../js/utils.request.js" ></script>
 		<script>
 			window.addEventListener('refresh', function(e){
 			    location.reload();
@@ -217,12 +219,12 @@
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-					var user = tools.getUser();
+					var user = authManage.getUser();
 					// 判断登录
 					var loginItem = doc.getElementById('login');
 					var logout = doc.getElementById('logout');
 					// 加载登录信息
-					if (tools.checkLogin()) {
+					if (authManage.checkLogin()) {
 						if (user.header) {
 							$('#login img')[0].src = user.header || '../../images/tab-wode/user_default.png';
 							$('#login #nickname')[0].innerText = user.nickname;
@@ -230,21 +232,20 @@
 							logout.style.display = 'block';
 						}
 					}
-					var self = plus.webview.currentWebview();
 					loginItem.addEventListener('tap', function(event) {
-						if (tools.checkLogin()) {
+						if (authManage.checkLogin()) {
 							return;
 						}
-						tools.toLogin();
+						authManage.toLogin();
 					});
 					// 退出登录
 					logout.addEventListener('tap', function(event) {
 						$.confirm('确认退出登录？','退出登录','',function(ok){
 							if (ok.index === 1) {
-								tools.clearUser();
+								authManage.clearUser();
 								location.reload();
 							}
-							tools.ajaxData('login/loginOut',{
+							request.loginAjax('login/loginOut',{
 								data: {
 									code:user.code,
 								}
@@ -259,8 +260,8 @@
 							var id = this.getAttribute("id");
 							var url = this.getAttribute("url");
 							var loginFlag = this.getAttribute('login');
-							if (loginFlag === 'yes' && !tools.checkLogin()) {
-								tools.toLogin(url,id);
+							if (loginFlag === 'yes' && !authManage.checkLogin()) {
+								authManage.toLogin(url,id);
 								return;
 							}
 							$.openWindow({

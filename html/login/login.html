@@ -162,7 +162,9 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/tools.js" ></script>
+		<script src="../../js/utils.storages.js"></script>
+		<script src="../../js/utils.auth.js"></script>
+		<script src="../../js/utils.request.js" ></script>
 		<script src="../../js/business/login.js"></script>
 		<script>
 			(function($, doc) {
@@ -182,7 +184,7 @@
 					var fromurl = currentView.fromurl;
 					var fromid = currentView.fromid;
 					var 	loginSuccess = function loginSuccess(user) {
-						tools.saveUser(user);
+						authManage.saveUser(user);
 						$.toast('登录成功');
 						$.back();
 //						if (fromurl) {
@@ -244,7 +246,7 @@
 										loginInfo.headurl = auth.userInfo.figureurl_qq_2;
 										loginInfo.sex = auth.userInfo.gender === '男' ? 1 : 2;
 									}
-									tools.ajaxData('login/byQQWX',{
+									request.ajax('login/byQQWX',{
 										data: loginInfo
 									}, function(data) {
 										loginSuccess(data);
@@ -283,7 +285,7 @@
 							$.toast('请输入密码');
 							return;
 						}
-						tools.ajaxData('login/byPhone',{
+						request.ajax('login/byPhone',{
 							data: loginInfo
 						}, function(data) {
 							loginSuccess(data);
