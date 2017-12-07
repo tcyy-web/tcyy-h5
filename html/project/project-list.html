@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/iconfont.css" />
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
@@ -17,13 +18,25 @@
 				height: calc(100% - 60px);
 				height: -webkit-calc(100% - 60px);
 			}
-			.mui-col-xs-4,
+			.mui-col-xs-3,
 			.mui-control-content {
 				overflow-y: auto;
 				height: 100%;
 			}
-			.mui-col-xs-4 {
+			.mui-col-xs-3 {
+				position: relative;
 				background-color: #f1f1f1;
+			}
+			.mui-col-xs-3:before {
+				position: absolute;
+		    top: 0;
+		    bottom: 0;
+		    right: 0;
+		    width: 1px;
+		    content: '';
+		    -webkit-transform: scaleX(.5);
+		    transform: scaleX(.5);
+		    background-color: #dedede;
 			}
 			.mui-control-content {
 				background-color: #ffffff;
@@ -33,10 +46,64 @@
 				height: calc(100% - 50px);
 				height: -webkit-calc(100% - 50px);
 			}
-			.mui-segmented-control .mui-control-item {
-				line-height: 50px;
-				width: 100%;
+			/*左边*/
+			.mui-segmented-control.mui-segmented-control-inverted.mui-segmented-control-vertical .mui-control-item,
+			.mui-segmented-control.mui-segmented-control-inverted.mui-segmented-control-vertical .mui-control-item.mui-active {
+				border-bottom: 0;
 			}
+			.mui-segmented-control .mui-control-item {
+				width: 100%;
+				margin-top: 20px;
+				overflow: initial;
+			}
+			.mui-segmented-control .mui-control-item .category {
+				position: relative;
+			}
+			.mui-segmented-control .mui-control-item:first-child .category:before {
+				display: none;
+			}
+			.mui-segmented-control .mui-control-item .category:before {
+				position: absolute;
+				z-index: 2;
+				top: -20px;
+				left: 50%;
+				content: '';
+				width: 1px;
+				height: 20px;
+				background-color: #dbdbdb;
+			}
+			.mui-segmented-control .mui-control-item .category .c-icon {
+				width: 40px;
+				height: 40px;
+				background-color: #dbdbdb;
+				-webkit-border-radius: 50%;
+				border-radius: 50%;
+				color: #aaaaaa;
+			}
+			.mui-segmented-control .mui-control-item .category > p {
+				line-height: 30px;
+				color: #3a3a3a;
+			}
+			.mui-segmented-control .mui-control-item.mui-active .category:after {
+				position: absolute;
+				right: 0;
+				bottom: 15px;
+				z-index: 2;
+				content: '';
+				display: block;
+				width: 0;height: 0;
+				border-top: 10px solid transparent;
+				border-bottom: 10px solid transparent;
+				border-right: 10px solid #ffffff;
+			}
+			.mui-segmented-control .mui-control-item.mui-active .category .c-icon {
+				background-color: #765fc3;
+				color: #ffffff;
+			}
+			.mui-segmented-control .mui-control-item.mui-active .category > p {
+				color: #765fc3;
+			}
+			/*右边*/
 			.add-project {
 				line-height: 50px;
 				height: 50px;
@@ -353,11 +420,27 @@
 			<h1 class="mui-title">项目</h1>
 		</header>
 		<div class="mui-content mui-row mui-fullscreen">
-			<div class="mui-col-xs-4">
+			<div class="mui-col-xs-3">
 				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
+					<a class="mui-control-item mui-active" data-index="1" href="#content1">
+						<div class="category">
+							<div class="flex flex-col-center">
+								<div class="c-icon flex flex-col-center flex-row-center"><i class="iconfont icon-kouqiangbaojian"></i></div>
+							</div>
+							<p>口腔修复</p>
+						</div>
+					</a>
+					<a class="mui-control-item" data-index="2" href="#content2">
+						<div class="category">
+							<div class="flex flex-col-center">
+								<div class="c-icon flex flex-col-center flex-row-center"><i class="iconfont icon-kouqiangbaojian"></i></div>
+							</div>
+							<p>口腔修复</p>
+						</div>
+					</a>
 				</div>
 			</div>
-			<div class="mui-col-xs-8">
+			<div class="mui-col-xs-9">
 				<div class="add-project">
 					<span>添加项目</span>
 				</div>
@@ -381,7 +464,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="shop-car-box" class="shop-car active">
+			<div id="shop-car-box" class="shop-car">
 				<div id="shop-car" class="sc-tips flex flex-col-center flex-row-center">
 					<p>18+</p>
 					<img src="../../images/project/edit.png"/>
@@ -434,7 +517,7 @@
 				for (; i < m; i++) {
 					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
 				}
-				controls.innerHTML = html.join('');
+//				controls.innerHTML = html.join('');
 				html = [];
 				for (i = 1; i < m; i++) {
 					html.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view">');
@@ -444,7 +527,7 @@
 					html.push('</ul></div>');
 				}
 //				contents.innerHTML = html.join('');
-				controls.querySelector('.mui-control-item').classList.add('mui-active');
+//				controls.querySelector('.mui-control-item').classList.add('mui-active');
 				contents.querySelector('.mui-control-content').classList.add('mui-active');
 				var shopCarBox = doc.querySelector('#shop-car-box');
 				var shopCar = doc.getElementById('shop-car');

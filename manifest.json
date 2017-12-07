@@ -98,7 +98,7 @@
 						{
 							"tag": "font",
 							"id": "gtIcon",
-							"text": "\ue679",
+							"text": "\ua679",
 							"position": {
 								"top": "4px",
 								"left": "0",
@@ -127,7 +127,7 @@
 						},{
 							"tag": "font",
 							"id": "ysIcon",
-							"text": "\ue653",
+							"text": "\ua653",
 							"position": {
 								"top": "4px",
 								"left": "20%",
@@ -156,7 +156,7 @@
 						},{
 							"tag": "font",
 							"id": "kzIcon",
-							"text": "\ue60a",
+							"text": "\ua60a",
 							"position": {
 								"top": "4px",
 								"left": "55%",
@@ -185,7 +185,7 @@
 						},{
 							"tag": "font",
 							"id": "wdIcon",
-							"text": "\ue67a",
+							"text": "\ua67a",
 							"position": {
 								"top": "3px",
 								"left": "75%",
