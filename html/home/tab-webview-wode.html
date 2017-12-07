@@ -18,28 +18,24 @@
 			.mui-content {
 				background-color: #eaeaea;
 			}
+			.mui-bar{
+				-webkit-box-shadow: none;
+				box-shadow: none;
+			}
 			.wode-header {
 				position: relative;
 				background-color: #765fc3;
 				text-align: center;
 			}
-			.wode-header .wh-title p {
-				color: #ffffff;
-				height: 50px;
-				line-height: 50px;
-				font-size: 18px;
+			.msg{
+				padding: 12px 0;
 			}
-			.wode-header .msg{
-				position: absolute;
-				right: 0;
-				top: 5px;
-				padding: 10px;
-			}
-			.wode-header .msg img{
-				width: 20px;
+			.msg img{
+				width: auto;
+				height: 20px;
 			}
 			.wode-header .user-info {
-				padding: 0 10px 40px 10px;
+				padding: 40px 10px 40px 10px;
 			}
 			.wode-header .user-info .img {
 				width: 60px;
@@ -126,14 +122,20 @@
 	</head>
 
 	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">我的</h1>
+			<a id="info" class="mui-pull-right msg">
+				<img src="../../images/tab-wode/msg.png" />
+			</a>
+		</header>
 		<div class="mui-content">
 			<div class="wode-header">
-				<div class="wh-title">
+				<!--<div class="wh-title">
 					<p>我的</p>
 					<div id="msg" url="../my/my-message.html" login="yes" class="clickItem msg">
 						<img src="../../images/tab-wode/msg.png" />
 					</div>
-				</div>
+				</div>-->
 				<div class="user-info">
 					<div id="login" class="flex">
 						<div class="img flex flex-row-center">
@@ -218,29 +220,6 @@
 			window.addEventListener('refresh', function(e){
 			    location.reload();
 			});
-			function toLogin(fromurl, fromid) {
-				var extras = {};
-				if (fromurl) {
-					extras.fromurl = fromurl;
-					extras.fromid = fromid;
-				}
-				mui.openWindow({
-					url: '../login/login.html',
-					id: 'login',
-					preload: true,
-					createNew: true,
-					show: {
-						aniShow: 'pop-in'
-					},
-					styles: {
-						popGesture: 'hide'
-					},
-					waiting: {
-						autoShow: false
-					},
-					extras: extras
-				});
-			}
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
@@ -262,7 +241,7 @@
 						if (tools.checkLogin()) {
 							return;
 						}
-						toLogin();
+						tools.toLogin();
 					});
 					// 退出登录
 					logout.addEventListener('tap', function(event) {
@@ -283,7 +262,7 @@
 							var url = this.getAttribute("url");
 							var loginFlag = this.getAttribute('login');
 							if (loginFlag === 'yes' && !tools.checkLogin()) {
-								toLogin(url,id);
+								tools.toLogin(url,id);
 								return;
 							}
 							$.openWindow({

@@ -36,6 +36,30 @@ w.tools = {
   		return false;
   	}
   },
+  /*跳转登录*/
+  toLogin:function(fromurl, fromid){
+  	var extras = {};
+	if (fromurl) {
+		extras.fromurl = fromurl;
+		extras.fromid = fromid;
+	}
+	mui.openWindow({
+		url: '../login/login.html',
+		id: 'login',
+		preload: true,
+		createNew: true,
+		show: {
+			aniShow: 'pop-in'
+		},
+		styles: {
+			popGesture: 'hide'
+		},
+		waiting: {
+			autoShow: false
+		},
+		extras: extras
+	});
+  },
   /*判断是否有网络*/
   getNetworkState:function(){
   	if(plus.networkinfo.getCurrentType()==plus.networkinfo.CONNECTION_NONE){

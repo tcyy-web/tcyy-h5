@@ -83,7 +83,7 @@
 					</div>
 					<p>预约</p>
 				</div>
-				<div id="project" url="../project/project-index.html" class="clickItem gr-item flex flex-col flex-1">
+				<div id="project" url="../project/project-index.html" login="yes" class="clickItem gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
 							<img src="../../images/tab-goutong/img6.png" />
@@ -94,6 +94,7 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/tools.js" ></script>
 		<script src="../../js/business/home-tab.js"></script>
 		<script>
 			(function($, doc) {
@@ -244,6 +245,11 @@
 							item.addEventListener('tap', function(event) {
 								var id = this.getAttribute("id");
 								var url = this.getAttribute("url");
+								var loginFlag = this.getAttribute('login');
+								if (loginFlag === 'yes' && !tools.checkLogin()) {
+									tools.toLogin(url,id);
+									return;
+								}
 								$.openWindow({
 									url: url,
 									id: id,
