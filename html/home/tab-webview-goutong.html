@@ -96,23 +96,22 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils.storages.js"></script>
 		<script src="../../js/utils.auth.js" ></script>
+		<script src="../../js/utils.request.js" ></script>
+		<script src="../../js/utils.category.js"></script>
 		<script src="../../js/business/home-tab.js"></script>
 		<script>
 			(function($, doc) {
 					$.init();
 					$.plusReady(function() {
+					  /******APP初始化 begin******/
+					  // 设置系统默认状态栏
 						plus.navigator.setStatusBarBackground('#765fc3');
+						// 获取基础分类
+						categorys.getServer();
+						/******APP初始化 end******/
+						
 						var self = plus.webview.currentWebview(),
 						leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
-						/**
-						 * drawNativeIcon 绘制带边框的半圆，
-						 * 实现原理：
-						 *   id为bg的tag 创建带边框的圆
-						 *   id为bg2的tag 创建白色矩形遮住圆下半部分，只显示凸起带边框部分
-						 * 	 id为iconBg的红色背景图
-						 *   id为icon的字体图标
-						 *   注意创建先后顺序，创建越晚的层级越高
-						 */
 						var drawNativeIcon = util.drawNative('icon', {
 							bottom: '5px',
 							left: leftPos + 'px',
@@ -176,7 +175,6 @@
 						}]);
 						// append 到父webview中
 						self.append(drawNativeIcon);
-
 						//自定义监听图标点击事件
 						var active_color = '#fff';
 						drawNativeIcon.addEventListener('click', function(e) {

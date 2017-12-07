@@ -443,7 +443,11 @@
 	        "js/business/login-reg.js",
 	        "images/login/qq.png",
 	        "images/login/wx.png",
-	        "images/profile/xg.jpg"
+	        "images/profile/xg.jpg",
+	        "js/utils.storages.js",
+	        "js/utils.auth.js",
+	        "js/utils.request.js",
+	        "js/business/login.js"
 	      ],
 	      "refer": [
 	        "html/login/main.html",
@@ -546,7 +550,8 @@
 	      ],
 	      "priority": 0,
 	      "refer": [
-	        "html/train/train-list.html"
+	        "html/train/train-list.html",
+	        "html/knowledge/list.html"
 	      ]
 	    },
 	    "html/home/tab-webview-yanshi.html": {
@@ -577,14 +582,17 @@
 	        "images/tab-goutong/img6.png",
 	        "html/home/tab-webview-yanshi.html",
 	        "fonts/iconfont.ttf",
-	        "images/profile/xg.jpg"
+	        "images/profile/xg.jpg",
+	        "js/utils.storages.js",
+	        "js/utils.auth.js"
 	      ],
 	      "refer": [
 	        "html/home/tab-webview-kuozhan.html",
 	        "html/home/tab-webview-wode.html",
 	        "html/video/video-list.html",
 	        "html/home/tab-webview-yanshi.html",
-	        "html/project/project-index.html"
+	        "html/project/project-index.html",
+	        "html/login/login.html"
 	      ],
 	      "priority": 0
 	    },
@@ -604,11 +612,17 @@
 	        "images/tab-wode/gy.png",
 	        "images/tab-wode/msg.png",
 	        "images/tab-wode/user_default.png",
-	        "images/profile/xg.jpg"
+	        "images/profile/xg.jpg",
+	        "js/utils.storages.js",
+	        "js/utils.auth.js",
+	        "js/utils.request.js"
 	      ],
 	      "priority": 0,
 	      "refer": [
-	        "html/login/login.html"
+	        "html/login/login.html",
+	        "html/my/my-message.html",
+	        "html/my/follows.html",
+	        "html/my/point.html"
 	      ]
 	    },
 	    "html/login/reg.html": {
@@ -619,7 +633,8 @@
 	        "css/style.css",
 	        "js/mui.min.js",
 	        "js/business/login-reg.js",
-	        "images/profile/xg.jpg"
+	        "images/profile/xg.jpg",
+	        "js/utils.request.js"
 	      ],
 	      "refer": [
 	        "html/login/login.html"
@@ -639,9 +654,18 @@
 	        "css/mui.min.css",
 	        "fonts/mui.ttf",
 	        "css/style.css",
-	        "js/mui.min.js"
+	        "js/mui.min.js",
+	        "css/iconfont.css",
+	        "fonts/iconfont.woff",
+	        "fonts/iconfont.ttf",
+	        "fonts/iconfont.svg",
+	        "images/profile/xg.jpg",
+	        "images/project/edit.png",
+	        "images/project/del.png",
+	        "images/project/banner.png"
 	      ],
-	      "priority": 3
+	      "priority": 3,
+	      "refer": []
 	    },
 	    "html/train/train-list.html": {
 	      "href": "html/train/train-list.html",
@@ -655,7 +679,8 @@
 	        "js/mui.pullToRefresh.material.js",
 	        "images/my/bgy.png"
 	      ],
-	      "priority": 1
+	      "priority": 1,
+	      "refer": []
 	    },
 	    "html/video/video-list.html": {
 	      "href": "html/video/video-list.html",
@@ -670,7 +695,8 @@
 	        "js/mui.pullToRefresh.material.js",
 	        "images/tab-vedio/sc10.png"
 	      ],
-	      "priority": 3
+	      "priority": 3,
+	      "refer": []
 	    },
 	    "html/project/project-index.html": {
 	      "href": "html/project/project-index.html",
@@ -681,9 +707,71 @@
 	        "images/profile/xg.jpg",
 	        "js/mui.min.js",
 	        "images/project/body-bg.png",
-	        "images/project/formleft.png"
+	        "images/project/formleft.png",
+	        "js/utils.storages.js"
 	      ],
-	      "priority": 4
+	      "priority": 4,
+	      "refer": [
+	        "html/project/project-list.html"
+	      ]
+	    },
+	    "html/my/my-message.html": {
+	      "href": "html/my/my-message.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "images/profile/xg.jpg",
+	        "images/my/date.png",
+	        "images/my/message.png",
+	        "js/mui.min.js",
+	        "images/my/fstx.png"
+	      ],
+	      "priority": 1
+	    },
+	    "html/my/follows.html": {
+	      "href": "html/my/follows.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "images/profile/xg.jpg",
+	        "images/my/nans.png",
+	        "images/my/fszreo.png",
+	        "js/mui.min.js",
+	        "images/my/fstx.png"
+	      ],
+	      "priority": 2
+	    },
+	    "html/my/point.html": {
+	      "href": "html/my/point.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "images/profile/xg.jpg",
+	        "images/my/bg.png",
+	        "js/mui.min.js",
+	        "images/my/xqimg.png"
+	      ],
+	      "priority": 3
+	    },
+	    "html/knowledge/list.html": {
+	      "href": "html/knowledge/list.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "images/profile/xg.jpg",
+	        "images/weibo/date.png",
+	        "images/weibo/yj.png",
+	        "images/weibo/weizhuan.png",
+	        "js/mui.min.js",
+	        "js/mui.pullToRefresh.js",
+	        "js/mui.pullToRefresh.material.js",
+	        "images/weibo/zsk.png"
+	      ],
+	      "priority": 2
 	    }
 	  },
 	  "idle": {
@@ -691,19 +779,19 @@
 	      "images/my/gd1.png",
 	      "images/profile/sc25.jpg",
 	      "images/my/yao.png",
-	      "images/project/jiafooter.png",
 	      "thmo/Public/master/js/bootstrap.js",
 	      "thmo/Public/fonts/iconfont.ttf",
 	      "html/project/project-add.html",
+	      "upload/js/mui.min.js",
 	      "thmo/Public/master/js/dat.gui.min.js",
+	      "upload/fonts/mui.ttf",
 	      "thmo/Public/master/models/14.mtl",
-	      "thmo/Public/master/tooth/35.png",
-	      "thmo/Public/master/models/11.mtl",
 	      "images/weibo/pltx1.png",
+	      "thmo/Public/master/models/11.mtl",
+	      "upload/js/common.js",
+	      "thmo/Public/master/tooth/35.png",
 	      "images/weibo/pl3.png",
 	      "images/my/gd2.png",
-	      "js/tools.js",
-	      "images/project/banner.png",
 	      "images/weibo/pltx3.png",
 	      "html/profile/xx-xingbie.html",
 	      "thmo/Public/master/models/44.mtl",
@@ -711,6 +799,7 @@
 	      "thmo/Public/master/tooth/18.png",
 	      "README.md",
 	      "images/weibo/img3.png",
+	      "upload/css/feedback-page.css",
 	      "thmo/Public/css/mui.picker.css",
 	      "thmo/Public/master/models/34.mtl",
 	      "thmo/Public/master/tooth/share.png",
@@ -718,13 +807,16 @@
 	      "html/company/company_band.html",
 	      "images/profile/sc6.png",
 	      "thmo/Public/master/models/42.mtl",
+	      "upload/css/font-awesome.min.css",
 	      "thmo/Public/master/js/MTLLoader.js",
 	      "thmo/Public/master/models/12.mtl",
 	      "html/profile/my-home.html",
 	      "thmo/Public/master/models/46.obj",
+	      "upload/css/iconfont.css",
 	      "images/profile/ss.png",
+	      "upload/images/iconfont-tianjia.png",
 	      "thmo/Public/master/models/38.obj",
-	      "images/weibo/weizhuan.png",
+	      "third/imagecropper/cropper.min.css",
 	      "js/update.js",
 	      "thmo/Public/master/tooth/23.png",
 	      "images/profile/ss1.png",
@@ -736,9 +828,9 @@
 	      "thmo/Public/master/models/xiapai.jpg",
 	      "images/my/f5.png",
 	      "images/profile/sc15.png",
+	      "third/imagecropper/cropper.css",
 	      "images/profile/sc111.png",
 	      "thmo/Public/master/tooth/24.png",
-	      "html/my/follows.html",
 	      "images/my/dingdan.png",
 	      "thmo/Public/master/models/13.mtl",
 	      "images/my/f2.png",
@@ -751,7 +843,7 @@
 	      "html/my/more.html",
 	      "images/profile/kcico2.png",
 	      "thmo/Public/master/tooth/34.png",
-	      "images/weibo/date.png",
+	      "upload/fonts/fontawesome-webfont.ttf",
 	      "thmo/Public/master/models/12.obj",
 	      "images/my/txs.png",
 	      "images/tab-vedio/bg1.png",
@@ -760,6 +852,7 @@
 	      "js/shortcut.js",
 	      "images/my/gd3.png",
 	      "images/profile/sc21.jpg",
+	      "images/login/weixin.png",
 	      "thmo/Public/css/icons-extra.css",
 	      "thmo/Public/master/tooth/31.png",
 	      "images/profile/sc24.jpg",
@@ -768,30 +861,27 @@
 	      "thmo/Public/master/models/25.mtl",
 	      "images/profile/sc23.jpg",
 	      "thmo/Public/master/models/45.obj",
+	      "third/imagecropper/cropper.esm.js",
 	      "thmo/Public/master/models/15.mtl",
-	      "images/my/xqimg.png",
 	      "images/my/off.png",
-	      "thmo/Public/master/tooth/47.png",
 	      "thmo/Public/master/tooth/28.png",
+	      "thmo/Public/master/tooth/47.png",
 	      "images/profile/sc20.jpg",
 	      "images/my/tx.png",
 	      "thmo/Public/master/models/0.obj",
 	      "thmo/Public/master/tooth/36.png",
 	      "html/my/my-orders.html",
-	      "thmo/Public/master/tooth/14.png",
 	      "html/profile/xx-jiangli.html",
-	      "images/my/message.png",
+	      "upload/fonts/iconfont.ttf",
+	      "thmo/Public/master/tooth/14.png",
 	      "images/profile/sc12.png",
-	      "js/immersed.js",
 	      "thmo/Public/master/models/33.mtl",
+	      "js/immersed.js",
 	      "thmo/Public/master/tooth/21.png",
-	      "html/my/my-message.html",
 	      "images/my/f3.png",
 	      "html/knowledge/detail.html",
-	      "images/footer/f1.png",
 	      "thmo/Public/master/models/18.obj",
 	      "html/profile/xx-xueli.html",
-	      "images/my/date.png",
 	      "thmo/Public/master/tooth/32.png",
 	      "images/profile/sc18.jpg",
 	      "thmo/Public/master/models/22.obj",
@@ -803,9 +893,9 @@
 	      "html/profile/xx-gongzi.html",
 	      "thmo/Public/master/tooth/33.png",
 	      "thmo/Public/fonts/mui.ttf",
-	      "html/knowledge/list.html",
 	      "thmo/Public/master/models/48.mtl",
 	      "thmo/Public/master/models/13.obj",
+	      "js/utils.enums.js",
 	      "thmo/Public/master/models/17.mtl",
 	      "thmo/Public/master/models/43.obj",
 	      "thmo/Public/css/css.style.css",
@@ -815,8 +905,6 @@
 	      "images/weibo/yuandian.png",
 	      "thmo/Public/master/models/36.obj",
 	      "thmo/Public/master/js/bootstrap.min.js",
-	      "images/weibo/zsk.png",
-	      "images/weibo/yj.png",
 	      "images/project/jia.png",
 	      "thmo/Public/master/models/35.mtl",
 	      "thmo/Public/master/models/32.obj",
@@ -825,14 +913,14 @@
 	      "images/my/gd.png",
 	      "thmo/Public/master/models/28.mtl",
 	      "images/my/f1.png",
-	      "thmo/Public/master/tooth/99.png",
 	      "thmo/Public/master/tooth/43.png",
+	      "thmo/Public/master/tooth/99.png",
+	      "third/imagecropper/cropper.js",
 	      "thmo/Public/fonts/iconfont.eot",
 	      "thmo/Public/master/tooth/41.png",
 	      "images/my/return.png",
 	      "thmo/Public/css/mui.poppicker.css",
 	      "images/profile/fh.jpg",
-	      "images/my/fszreo.png",
 	      "thmo/Public/master/models/46.mtl",
 	      "html/train/train-detail.html",
 	      "thmo/Public/master/models/23.obj",
@@ -843,12 +931,16 @@
 	      "html/weibo/detail.html",
 	      "thmo/Public/master/models/24.mtl",
 	      "thmo/Public/master/tooth/42.png",
+	      "upload/css/mui.min.css",
 	      "thmo/Public/master/models/25.obj",
 	      "thmo/Public/master/js/jQuery-2.1.4.min.js",
+	      "upload/css/app.css",
 	      "images/my/f4.png",
 	      "thmo/Public/master/tooth/11.png",
 	      "images/my/return.jpg",
+	      "upload/css/fonts/mui.ttf",
 	      "thmo/Public/master/tooth/15.png",
+	      "upload/index.html",
 	      "thmo/Public/master/models/21.obj",
 	      "thmo/Public/master/models/41.mtl",
 	      "html/profile/xx-zhuangtai.html",
@@ -868,17 +960,15 @@
 	      "html/company/list.html",
 	      "thmo/Public/master/tooth/12.png",
 	      "html/profile/my-info.html",
-	      "images/my/bg.png",
 	      "thmo/Public/master/models/48.obj",
 	      "images/profile/sc10.png",
 	      "images/profile/kcico1.png",
 	      "images/weibo/pl2.png",
 	      "thmo/Public/css/mui.min.css",
-	      "images/footer/f2.png",
 	      "html/sites/list.html",
 	      "thmo/Public/master/models/47.obj",
-	      "images/profile/zpwk.jpg",
 	      "thmo/Public/master/models/37.obj",
+	      "images/profile/zpwk.jpg",
 	      "images/profile/kcico3.png",
 	      "thmo/Public/fonts/iconfont.css",
 	      "images/profile/fl.png",
@@ -896,32 +986,30 @@
 	      "thmo/Public/master/tooth/27.png",
 	      "thmo/Public/master/tooth/48.png",
 	      "thmo/Public/master/models/36.mtl",
-	      "images/my/nans.png",
 	      "thmo/Public/master/models/32.mtl",
 	      "html/profile/xx-zili.html",
 	      "images/weibo/pltx2.png",
 	      "thmo/Public/master/js/OBJLoader.js",
-	      "thmo/Public/master/models/shangpai1.jpg",
 	      "thmo/Public/master/tooth/25.png",
+	      "thmo/Public/master/models/shangpai1.jpg",
 	      "images/profile/sc233.jpg",
-	      "html/my/point.html",
 	      "html/my/point-use.html",
+	      "upload/js/jquery.js",
 	      "thmo/Public/master/models/45.mtl",
 	      "thmo/Public/master/tooth/45.png",
 	      "html/my/fans.html",
 	      "thmo/Public/master/models/24.obj",
 	      "images/profile/sc3.jpg",
 	      "thmo/Public/master/js/ShowModel.js",
-	      "images/footer/f4.png",
 	      "html/my/phone-code.html",
 	      "thmo/Public/master/tooth/17.png",
-	      "images/footer/f3.png",
+	      "third/imagecropper/cropper.common.js",
 	      "thmo/Public/css/css.css",
 	      "images/profile/sc13.png",
 	      "thmo/Public/master/models/0.mtl",
-	      "thmo/Public/master/models/27.obj",
-	      "thmo/Public/master/models/22.mtl",
 	      "thmo/Public/master/models/18.mtl",
+	      "thmo/Public/master/models/22.mtl",
+	      "thmo/Public/master/models/27.obj",
 	      "thmo/Public/master/models/16.obj",
 	      "html/weibo/list.html",
 	      "thmo/Public/master/models/31.obj",
@@ -946,11 +1034,11 @@
 	      "thmo/Public/fonts/iconfont.svg",
 	      "thmo/Public/fonts/mui-icons-extra.ttf",
 	      "thmo/Public/master/models/35.obj",
-	      "images/my/fstx.png",
 	      "thmo/Public/master/models/28.obj",
 	      "thmo/Public/master/models/26.mtl",
 	      "libs/easymob-webim-sdk/quickstart.md",
 	      "thmo/Public/master/tooth/16.png",
+	      "upload/js/utitls.js",
 	      "images/profile/sc5.png",
 	      "thmo/mo/index.html",
 	      "html/my/invite-code.html",
@@ -964,6 +1052,7 @@
 	      "thmo/Public/master/images/logo.png",
 	      "images/weibo/tx.png",
 	      "images/weibo/img2.png",
+	      "third/imagecropper/cropper.min.js",
 	      "html/profile/xz-jiaoyu.html"
 	    ]
 	  }

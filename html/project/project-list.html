@@ -504,9 +504,12 @@
 			<div class="shop-car-bg"></div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.storages.js" ></script>
+		<script src="../../js/utils.category.js" ></script>
 		<script>
 			(function($, doc) {
 				$.init();
+				console.log(JSON.stringify(categorys.get()));
 				var controls = doc.getElementById("segmentedControls");
 				var contents = doc.getElementById("segmentedControlContents");
 				var html = [];

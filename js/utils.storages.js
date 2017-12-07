@@ -7,6 +7,7 @@
 		    key: '$common',
 		    value: '通用存储'
 		  }
+		  console.log(obj.value,obj.key);
 		  mui.extend(defaults, obj);
 		  if (defaults.type === 'global') {
 		    plus.storage.setItem(defaults.key , defaults.value);
