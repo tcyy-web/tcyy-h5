@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>写一个字</title>
+  <style type="text/css">
+    html,body{ height: 100%; margin: 0; padding: 0; }
+    .controller{ position: fixed; bottom: 0; text-align: right; width: 100%; }
+    .controller>i , .controller>span{ display: inline-block; width: 40px; height: 40px;  transition: all .25s ease; }
+    .controller>span.current{ height: 45px; }
+    .controller>span.red{ background: red; }
+    .controller>span.blue{ background: blue; }
+    .controller>span.yellow{ background: yellow; }
+    .controller>span.black{ background: black; }
+    .controller>span.white{ background: white; }
+    .controller>i{ outline: 1px solid #000; }
+    .controller b{ width: 80px; display: inline-block; }
+    #wigget{ position: absolute; top:0; left:0;}
+    #wigget .module{ width: 100px; height: 100px; position: absolute; border: 1px solid #ccc; }
+    #wigget .module.current{ border:  1px solid #000; }
+    #wigget .module>img{ width: 100%; height: 100%; }
+    #wigget .module .opt{ position: absolute; top: 0; right: 0px; font-size: 18px; display: none;}
+    #wigget .module.current .opt{ display: block; }
+  </style>
+</head>
+<body style="background: #fff;">
+	<canvas id="canvas">
+		不支持canvas
+	</canvas>
+  <div id="wigget">
+     
+  </div>
+  <div class="controller">
+    <b>添加图片</b>
+    <input id="file" type="file">
+    
+    <i class="clear"></i>
+    <span class="black current"  color="black"></span>
+    <span class="red"  color="red"></span>
+    <span class="blue"  color="blue"></span>
+    <span class="yellow" color="yellow"></span>
+  </div>
+  
+</body>
+<script src="jquery-1.9.1.min.js"></script>
+<script src="handdraw.js"></script>
+
+</html>
