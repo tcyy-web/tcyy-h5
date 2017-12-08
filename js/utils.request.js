@@ -27,9 +27,12 @@
             if (data.header && data.header.status) {
               switch (data.header.status){
                 case 2001:
-                    if (typeof successCallback === 'function') {
-                      successCallback(data.body);
-                    }
+                  if (data.header.msg) {
+                    mui.toast(data.header.msg);
+                  }
+                  if (typeof successCallback === 'function') {
+                    successCallback(data.body);
+                  }
                   break;
                 case 5001:
                   mui.toast(data.header.msg || '获取数据失败')
