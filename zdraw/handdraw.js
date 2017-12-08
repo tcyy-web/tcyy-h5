@@ -112,6 +112,8 @@ function addEventListener(){
     $(this).addClass("current").siblings().removeClass("current");
     this.x = getEvent( e , "x");
     this.y = getEvent( e , "y");
+
+
     this.down = true;
     this.ismove = false;
     this.top = $(this).position().top;
@@ -120,7 +122,6 @@ function addEventListener(){
     this.height = $(this).height();
     this.win_width = $(window).width();
     this.win_height = $(window).height();
-
     this.zoom = canZoom( this.x-this.left , this.y-this.top, this.width , this.height );
 
     e.preventDefault();
@@ -129,6 +130,15 @@ function addEventListener(){
     this.ismove&&$(this).removeClass("current");
     this.down = false;
     this.zoom = false;
+    var now = new Date().getTime();
+
+    if( now - this.endtime <500 &&this.ismove===false && this.ismove2 === false ){
+      $(this).remove();
+    }
+
+    
+    this.endtime = now;
+    this.ismove2 = this.ismove;
     this.ismove = false;
   }).on("touchmove",".module",function( e ){
     e.preventDefault();
@@ -158,9 +168,8 @@ function addEventListener(){
   function addWigget( src ){
     
     var st = '<div class="module">\
-       <img src="'+(src?src:'http://mingxing.facang.com/uploads/allimg/150728/14361W444-2.jpg')+'">\
-       <div class="opt"><span class="delete">X</span></div>\
-     </div>';
+               <img src="'+(src?src:'http://mingxing.facang.com/uploads/allimg/150728/14361W444-2.jpg')+'">\
+             </div>';
      var win_w = $(window).width();
      var win_h = $(window).height();
 
