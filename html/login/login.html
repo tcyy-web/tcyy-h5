@@ -162,16 +162,19 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/tools.js" ></script>
+		<script src="../../js/utils.storages.js"></script>
+		<script src="../../js/utils.auth.js"></script>
+		<script src="../../js/utils.request.js" ></script>
 		<script src="../../js/business/login.js"></script>
 		<script>
 			(function($, doc) {
 				$.init({
 					beforeback: function() {
 				　　　　 //获得父页面的webview
-				        var list = plus.webview.currentWebview().opener();
-				　　　　 //触发父页面的自定义事件(refresh),从而进行刷新
-				        $.fire(list, 'refresh');
+				        var list = plus.webview.all();
+				        $.each(list, function(index,item) {
+				        		$.fire(item, 'refresh');
+				        });
 				        //返回true,继续页面关闭逻辑
 				        return true;
 				    }
@@ -181,7 +184,7 @@
 					var fromurl = currentView.fromurl;
 					var fromid = currentView.fromid;
 					var 	loginSuccess = function loginSuccess(user) {
-						tools.saveUser(user);
+						authManage.saveUser(user);
 						$.toast('登录成功');
 						$.back();
 //						if (fromurl) {
@@ -243,7 +246,7 @@
 										loginInfo.headurl = auth.userInfo.figureurl_qq_2;
 										loginInfo.sex = auth.userInfo.gender === '男' ? 1 : 2;
 									}
-									tools.ajaxData('login/byQQWX',{
+									request.ajax('login/byQQWX',{
 										data: loginInfo
 									}, function(data) {
 										loginSuccess(data);
@@ -282,7 +285,7 @@
 							$.toast('请输入密码');
 							return;
 						}
-						tools.ajaxData('login/byPhone',{
+						request.ajax('login/byPhone',{
 							data: loginInfo
 						}, function(data) {
 							loginSuccess(data);

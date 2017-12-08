@@ -73,7 +73,11 @@
       "js/app.js",
       "js/business/login-reg.js",
       "images/login/qq.png",
-      "images/login/wx.png"
+      "images/login/wx.png",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/business/login.js"
     ],
     "refer": [
       "html/shop/list.html",
@@ -121,7 +125,8 @@
       "images/tab-kuozhan/dushuhui.png"
     ],
     "refer": [
-      "html/train/train-list.html"
+      "html/train/train-list.html",
+      "html/knowledge/list.html"
     ],
     "priority": 0
   },
@@ -149,7 +154,9 @@
       "images/tab-goutong/img5.png",
       "images/tab-goutong/img6.png",
       "fonts/iconfont.ttf",
-      "html/home/tab-webview-yanshi.html"
+      "html/home/tab-webview-yanshi.html",
+      "js/utils.storages.js",
+      "js/utils.auth.js"
     ],
     "refer": [
       "html/home/tab-webview-kuozhan.html",
@@ -177,10 +184,16 @@
       "images/tab-wode/fk.png",
       "images/tab-wode/gy.png",
       "images/tab-wode/msg.png",
-      "images/tab-wode/user_default.png"
+      "images/tab-wode/user_default.png",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
     ],
     "refer": [
-      "html/login/login.html"
+      "html/login/login.html",
+      "html/my/my-message.html",
+      "html/my/follows.html",
+      "html/my/point.html"
     ],
     "priority": 0
   },
@@ -190,7 +203,8 @@
       "css/mui.min.css",
       "css/style.css",
       "js/mui.min.js",
-      "js/business/login-reg.js"
+      "js/business/login-reg.js",
+      "js/utils.request.js"
     ],
     "refer": [
       "html/login/login.html"
@@ -208,7 +222,11 @@
     "resources": [
       "css/mui.min.css",
       "css/style.css",
-      "js/mui.min.js"
+      "js/mui.min.js",
+      "css/iconfont.css",
+      "images/project/edit.png",
+      "images/project/del.png",
+      "images/project/banner.png"
     ],
     "refer": [],
     "priority": 0
@@ -247,7 +265,64 @@
       "css/style.css",
       "js/mui.min.js",
       "images/project/body-bg.png",
-      "images/project/formleft.png"
+      "images/project/formleft.png",
+      "js/utils.storages.js"
+    ],
+    "refer": [
+      "html/project/project-list.html"
+    ],
+    "priority": 0
+  },
+  "html/my/my-message.html": {
+    "href": "html/my/my-message.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/my/date.png",
+      "images/my/message.png",
+      "js/mui.min.js",
+      "images/my/fstx.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/my/follows.html": {
+    "href": "html/my/follows.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/my/nans.png",
+      "images/my/fszreo.png",
+      "js/mui.min.js",
+      "images/my/fstx.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/my/point.html": {
+    "href": "html/my/point.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/my/bg.png",
+      "js/mui.min.js",
+      "images/my/xqimg.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/knowledge/list.html": {
+    "href": "html/knowledge/list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/weibo/date.png",
+      "images/weibo/yj.png",
+      "images/weibo/weizhuan.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "images/weibo/zsk.png"
     ],
     "refer": [],
     "priority": 0
