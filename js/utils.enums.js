@@ -13,14 +13,14 @@
 			5: 'iconfont icon-kouqiangwaike',
 			6: 'iconfont icon-kouqiangxiufu',
 			7: 'iconfont icon-kouqiangzhengji',
-			8: 'iconfont icon-kouqiangzhongzhi',
+			8: 'iconfont icon-kouqiangzhongzhi'
 		},
-		getEnumLabel: function(type, key) {
-			var _this = this;
-			if (_this[type]) {
-				return _this[type][key] || '';
-			}
-			return '';
-		}
+//		getEnumLabel: function(type, key) {
+//			var _this = this;
+//			if (_this[type]) {
+//				return _this[type][key] || '';
+//			}
+//			return '';
+//		}
 	}
 })(window);

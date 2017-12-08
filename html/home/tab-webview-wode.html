@@ -209,6 +209,7 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.enums.js"></script>
     <script src="../../js/utils.storages.js"></script>
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js" ></script>
@@ -225,12 +226,10 @@
 					var logout = doc.getElementById('logout');
 					// 加载登录信息
 					if (authManage.checkLogin()) {
-						if (user.header) {
-							$('#login img')[0].src = user.header || '../../images/tab-wode/user_default.png';
-							$('#login #nickname')[0].innerText = user.nickname;
-							$('#login #sex')[0].innerText = user.sex === 1 ? '男' : '女';
-							logout.style.display = 'block';
-						}
+            $('#login img')[0].src = user.header || '../../images/tab-wode/user_default.png';
+            $('#login #nickname')[0].innerText = user.nickname;
+            $('#login #sex')[0].innerText = enums.sex[user.sex] || '未知';
+            logout.style.display = 'block';
 					}
 					loginItem.addEventListener('tap', function(event) {
 						if (authManage.checkLogin()) {

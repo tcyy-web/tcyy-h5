@@ -208,8 +208,6 @@
 				bottom: 0;
 				z-index: 20;
 				height: 60px;
-				-webkit-transition: .3s linear height;
-				transition: .3s linear height;
 			}
 			.shop-car.active {
 				height: 60%;
@@ -273,6 +271,8 @@
 			.shop-car .sc-items {
 				height: calc(100% - 60px);
 				height: -webkit-calc(100% - 60px);
+        -webkit-transition: .2s ease-out height;
+        transition: .2s ease-out height;
 				background-color: #ffffff;
 				overflow: hidden;
 			}
@@ -348,6 +348,8 @@
 				float: left;
 				padding-left: 80px;
 				padding-right: 10px;
+        -webkit-transition: .2s ease-out padding;
+        transition: .2s ease-out padding;
 			}
 			.shop-car.active .sc-total .sc-money {
 				padding-left: 10px;
@@ -445,7 +447,7 @@
 					<span>添加项目</span>
 				</div>
 				<div id="segmentedControlContents" class="content-box">
-					<div id="content1" class="mui-control-content">
+					<div id="content1" class="mui-control-content mui-active">
 						<ul class="mui-table-view">
 							<li class="mui-table-view-cell">
 								<div class="img flex flex-col-center">
@@ -504,44 +506,62 @@
 			<div class="shop-car-bg"></div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.extend.js"></script>
 		<script src="../../js/utils.storages.js" ></script>
 		<script src="../../js/utils.category.js" ></script>
 		<script>
 			(function($, doc) {
 				$.init();
-				console.log(JSON.stringify(categorys.get()));
-				var controls = doc.getElementById("segmentedControls");
-				var contents = doc.getElementById("segmentedControlContents");
-				var html = [];
-				var i = 1;
-				var j = 1;
-				var	m = 6; //左侧选项卡数量+1
-				var	n = 4; //每个选项卡列表数量+1
-				for (; i < m; i++) {
-					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
-				}
-//				controls.innerHTML = html.join('');
-				html = [];
-				for (i = 1; i < m; i++) {
-					html.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view">');
-					for (j = 1; j < n; j++) {
-						html.push('<li class="mui-table-view-cell">第' + i + '个选项卡子项-' + j + '</li>');
-					}
-					html.push('</ul></div>');
-				}
+//				var controls = doc.getElementById("segmentedControls");
+//				var contents = doc.getElementById("segmentedControlContents");
+//				var html = [];
+//				var i = 1;
+//				var j = 1;
+//				var	m = 6; //左侧选项卡数量+1
+//				var	n = 4; //每个选项卡列表数量+1
+//				for (; i < m; i++) {
+//					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
+//				}
+////				controls.innerHTML = html.join('');
+//				html = [];
+//				for (i = 1; i < m; i++) {
+//					html.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view">');
+//					for (j = 1; j < n; j++) {
+//						html.push('<li class="mui-table-view-cell">第' + i + '个选项卡子项-' + j + '</li>');
+//					}
+//					html.push('</ul></div>');
+//				}
 //				contents.innerHTML = html.join('');
 //				controls.querySelector('.mui-control-item').classList.add('mui-active');
-				contents.querySelector('.mui-control-content').classList.add('mui-active');
-				var shopCarBox = doc.querySelector('#shop-car-box');
-				var shopCar = doc.getElementById('shop-car');
-				shopCar.addEventListener('tap', function(e) {
-					if (shopCarBox.classList.contains('active')) {
-						shopCarBox.classList.remove('active');
-					} else {
-						shopCarBox.classList.add('active');
-					}
-				});
+//				contents.querySelector('.mui-control-content').classList.add('mui-active');
 				$.plusReady(function() {
+				  // 分类
+				  var category = categorys.get();
+				  console.log(JSON.stringify(category));
+				  var controls = doc.getElementById("segmentedControls");
+				  var controlsHtml = [];
+				  $.each(category, function(index, item) {
+//          '<a class="mui-control-item mui-active" data-index="1" href="#content1">
+//            <div class="category">
+//              <div class="flex flex-col-center">
+//                <div class="c-icon flex flex-col-center flex-row-center"><i class="iconfont icon-kouqiangbaojian"></i></div>
+//              </div>
+//              <p>口腔修复</p>
+//            </div>
+//          </a>'
+				  	  controlsHtml.push('');
+				  });
+//				  contents.querySelector('.mui-control-content').classList.add('mui-active');
+				  // 购物车
+          var shopCarBox = doc.querySelector('#shop-car-box');
+          var shopCar = doc.getElementById('shop-car');
+          shopCar.addEventListener('tap', function(e) {
+            if (shopCarBox.classList.contains('active')) {
+              shopCarBox.classList.remove('active');
+            } else {
+              shopCarBox.classList.add('active');
+            }
+          });
 				});
 			}(mui, document));
 		</script>
