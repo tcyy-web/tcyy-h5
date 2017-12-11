@@ -35,13 +35,14 @@
                   }
                   break;
                 case 5001:
-                  mui.toast(data.header.msg || '获取数据失败')
+                  mui.toast(data.header.msg || '获取数据失败');
                   break;
                 case 6001:
-                  mui.toast('登录状态失效，请重新登录')
+                  mui.toast('登录状态失效，请重新登录');
+                  w.authManage.toLogin();
                   break;
                 case 7001:
-                  mui.toast('您没有权限')
+                  mui.toast('您没有权限');
                   break;
                 default:
                   break;

@@ -156,7 +156,9 @@
       "fonts/iconfont.ttf",
       "html/home/tab-webview-yanshi.html",
       "js/utils.storages.js",
-      "js/utils.auth.js"
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.category.js"
     ],
     "refer": [
       "html/home/tab-webview-kuozhan.html",
@@ -187,7 +189,8 @@
       "images/tab-wode/user_default.png",
       "js/utils.storages.js",
       "js/utils.auth.js",
-      "js/utils.request.js"
+      "js/utils.request.js",
+      "js/utils.enums.js"
     ],
     "refer": [
       "html/login/login.html",
@@ -226,9 +229,17 @@
       "css/iconfont.css",
       "images/project/edit.png",
       "images/project/del.png",
-      "images/project/banner.png"
+      "images/project/banner.png",
+      "js/utils.enums.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
     ],
-    "refer": [],
+    "refer": [
+      "html/project/project-add.html"
+    ],
     "priority": 0
   },
   "html/train/train-list.html": {
@@ -323,6 +334,20 @@
       "js/mui.pullToRefresh.js",
       "js/mui.pullToRefresh.material.js",
       "images/weibo/zsk.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/project/project-add.html": {
+    "href": "html/project/project-add.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "images/project/jia.png"
     ],
     "refer": [],
     "priority": 0

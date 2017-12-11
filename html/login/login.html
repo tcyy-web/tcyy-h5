@@ -170,14 +170,14 @@
 			(function($, doc) {
 				$.init({
 					beforeback: function() {
-				　　　　 //获得父页面的webview
-				        var list = plus.webview.all();
-				        $.each(list, function(index,item) {
-				        		$.fire(item, 'refresh');
-				        });
-				        //返回true,继续页面关闭逻辑
-				        return true;
-				    }
+		　　　　 //获得父页面的webview
+		        var list = plus.webview.all();
+		        $.each(list, function(index,item) {
+		        		$.fire(item, 'refresh');
+		        });
+		        //返回true,继续页面关闭逻辑
+		        return true;
+			    }
 				});
 				$.plusReady(function() {
 					var currentView = plus.webview.currentWebview();

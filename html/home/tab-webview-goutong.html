@@ -245,10 +245,10 @@
 								var id = this.getAttribute("id");
 								var url = this.getAttribute("url");
 								var loginFlag = this.getAttribute('login');
-								if (loginFlag === 'yes' && !authManage.checkLogin()) {
-									authManage.toLogin(url,id);
-									return;
-								}
+//								if (loginFlag === 'yes' && !authManage.checkLogin()) {
+//									authManage.toLogin(url,id);
+//									return;
+//								}
 								$.openWindow({
 									url: url,
 									id: id,

@@ -252,7 +252,7 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
+				"permissions": ["<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
 			},
 			"orientation": ["portrait-primary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
@@ -584,7 +584,9 @@
 	        "fonts/iconfont.ttf",
 	        "images/profile/xg.jpg",
 	        "js/utils.storages.js",
-	        "js/utils.auth.js"
+	        "js/utils.auth.js",
+	        "js/utils.request.js",
+	        "js/utils.category.js"
 	      ],
 	      "refer": [
 	        "html/home/tab-webview-kuozhan.html",
@@ -615,7 +617,8 @@
 	        "images/profile/xg.jpg",
 	        "js/utils.storages.js",
 	        "js/utils.auth.js",
-	        "js/utils.request.js"
+	        "js/utils.request.js",
+	        "js/utils.enums.js"
 	      ],
 	      "priority": 0,
 	      "refer": [
@@ -662,10 +665,18 @@
 	        "images/profile/xg.jpg",
 	        "images/project/edit.png",
 	        "images/project/del.png",
-	        "images/project/banner.png"
+	        "images/project/banner.png",
+	        "js/utils.enums.js",
+	        "js/utils.extend.js",
+	        "js/utils.storages.js",
+	        "js/utils.category.js",
+	        "js/utils.auth.js",
+	        "js/utils.request.js"
 	      ],
 	      "priority": 3,
-	      "refer": []
+	      "refer": [
+	        "html/project/project-add.html"
+	      ]
 	    },
 	    "html/train/train-list.html": {
 	      "href": "html/train/train-list.html",
@@ -727,7 +738,8 @@
 	        "js/mui.min.js",
 	        "images/my/fstx.png"
 	      ],
-	      "priority": 1
+	      "priority": 1,
+	      "refer": []
 	    },
 	    "html/my/follows.html": {
 	      "href": "html/my/follows.html",
@@ -741,7 +753,8 @@
 	        "js/mui.min.js",
 	        "images/my/fstx.png"
 	      ],
-	      "priority": 2
+	      "priority": 2,
+	      "refer": []
 	    },
 	    "html/my/point.html": {
 	      "href": "html/my/point.html",
@@ -754,7 +767,8 @@
 	        "js/mui.min.js",
 	        "images/my/xqimg.png"
 	      ],
-	      "priority": 3
+	      "priority": 3,
+	      "refer": []
 	    },
 	    "html/knowledge/list.html": {
 	      "href": "html/knowledge/list.html",
@@ -771,7 +785,24 @@
 	        "js/mui.pullToRefresh.material.js",
 	        "images/weibo/zsk.png"
 	      ],
-	      "priority": 2
+	      "priority": 2,
+	      "refer": []
+	    },
+	    "html/project/project-add.html": {
+	      "href": "html/project/project-add.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "images/profile/xg.jpg",
+	        "js/mui.min.js",
+	        "js/utils.storages.js",
+	        "js/utils.auth.js",
+	        "js/utils.request.js",
+	        "images/project/jia.png"
+	      ],
+	      "priority": 5,
+	      "refer": []
 	    }
 	  },
 	  "idle": {
@@ -781,17 +812,17 @@
 	      "images/my/yao.png",
 	      "thmo/Public/master/js/bootstrap.js",
 	      "thmo/Public/fonts/iconfont.ttf",
-	      "html/project/project-add.html",
 	      "upload/js/mui.min.js",
 	      "thmo/Public/master/js/dat.gui.min.js",
 	      "upload/fonts/mui.ttf",
 	      "thmo/Public/master/models/14.mtl",
 	      "images/weibo/pltx1.png",
-	      "thmo/Public/master/models/11.mtl",
 	      "upload/js/common.js",
 	      "thmo/Public/master/tooth/35.png",
+	      "thmo/Public/master/models/11.mtl",
 	      "images/weibo/pl3.png",
 	      "images/my/gd2.png",
+	      "zdraw/jquery-1.9.1.min.js",
 	      "images/weibo/pltx3.png",
 	      "html/profile/xx-xingbie.html",
 	      "thmo/Public/master/models/44.mtl",
@@ -803,6 +834,7 @@
 	      "thmo/Public/css/mui.picker.css",
 	      "thmo/Public/master/models/34.mtl",
 	      "thmo/Public/master/tooth/share.png",
+	      "html/video/vedio-main.html",
 	      "thmo/Public/master/models/37.mtl",
 	      "html/company/company_band.html",
 	      "images/profile/sc6.png",
@@ -844,6 +876,7 @@
 	      "images/profile/kcico2.png",
 	      "thmo/Public/master/tooth/34.png",
 	      "upload/fonts/fontawesome-webfont.ttf",
+	      "zdraw/handdraw.js",
 	      "thmo/Public/master/models/12.obj",
 	      "images/my/txs.png",
 	      "images/tab-vedio/bg1.png",
@@ -872,8 +905,8 @@
 	      "thmo/Public/master/tooth/36.png",
 	      "html/my/my-orders.html",
 	      "html/profile/xx-jiangli.html",
-	      "upload/fonts/iconfont.ttf",
 	      "thmo/Public/master/tooth/14.png",
+	      "upload/fonts/iconfont.ttf",
 	      "images/profile/sc12.png",
 	      "thmo/Public/master/models/33.mtl",
 	      "js/immersed.js",
@@ -882,6 +915,7 @@
 	      "html/knowledge/detail.html",
 	      "thmo/Public/master/models/18.obj",
 	      "html/profile/xx-xueli.html",
+	      "zdraw/1.html",
 	      "thmo/Public/master/tooth/32.png",
 	      "images/profile/sc18.jpg",
 	      "thmo/Public/master/models/22.obj",
@@ -895,7 +929,6 @@
 	      "thmo/Public/fonts/mui.ttf",
 	      "thmo/Public/master/models/48.mtl",
 	      "thmo/Public/master/models/13.obj",
-	      "js/utils.enums.js",
 	      "thmo/Public/master/models/17.mtl",
 	      "thmo/Public/master/models/43.obj",
 	      "thmo/Public/css/css.style.css",
@@ -905,7 +938,6 @@
 	      "images/weibo/yuandian.png",
 	      "thmo/Public/master/models/36.obj",
 	      "thmo/Public/master/js/bootstrap.min.js",
-	      "images/project/jia.png",
 	      "thmo/Public/master/models/35.mtl",
 	      "thmo/Public/master/models/32.obj",
 	      "thmo/Public/master/js/TouchControls.js",
@@ -913,8 +945,8 @@
 	      "images/my/gd.png",
 	      "thmo/Public/master/models/28.mtl",
 	      "images/my/f1.png",
-	      "thmo/Public/master/tooth/43.png",
 	      "thmo/Public/master/tooth/99.png",
+	      "thmo/Public/master/tooth/43.png",
 	      "third/imagecropper/cropper.js",
 	      "thmo/Public/fonts/iconfont.eot",
 	      "thmo/Public/master/tooth/41.png",
@@ -1016,6 +1048,7 @@
 	      "images/my/f6.png",
 	      "thmo/Public/master/tooth/46.png",
 	      "images/weibo/jia.png",
+	      "html/video/vedio-center.html",
 	      "html/profile/xz-jingli.html",
 	      "thmo/Public/master/js/stats.min.js",
 	      "images/my/duihuan.png",
@@ -1051,8 +1084,8 @@
 	      "html/project/project-detail.html",
 	      "thmo/Public/master/images/logo.png",
 	      "images/weibo/tx.png",
-	      "images/weibo/img2.png",
 	      "third/imagecropper/cropper.min.js",
+	      "images/weibo/img2.png",
 	      "html/profile/xz-jiaoyu.html"
 	    ]
 	  }

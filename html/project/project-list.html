@@ -424,30 +424,22 @@
 		<div class="mui-content mui-row mui-fullscreen">
 			<div class="mui-col-xs-3">
 				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
-					<a class="mui-control-item mui-active" data-index="1" href="#content1">
+					<!--<a class="mui-control-item mui-active" data-index="1" href="#content1">
 						<div class="category">
 							<div class="flex flex-col-center">
 								<div class="c-icon flex flex-col-center flex-row-center"><i class="iconfont icon-kouqiangbaojian"></i></div>
 							</div>
 							<p>口腔修复</p>
 						</div>
-					</a>
-					<a class="mui-control-item" data-index="2" href="#content2">
-						<div class="category">
-							<div class="flex flex-col-center">
-								<div class="c-icon flex flex-col-center flex-row-center"><i class="iconfont icon-kouqiangbaojian"></i></div>
-							</div>
-							<p>口腔修复</p>
-						</div>
-					</a>
+					</a>-->
 				</div>
 			</div>
 			<div class="mui-col-xs-9">
-				<div class="add-project">
+				<div id="addProject" class="add-project">
 					<span>添加项目</span>
 				</div>
 				<div id="segmentedControlContents" class="content-box">
-					<div id="content1" class="mui-control-content mui-active">
+					<!--<div id="content1" class="mui-control-content mui-active">
 						<ul class="mui-table-view">
 							<li class="mui-table-view-cell">
 								<div class="img flex flex-col-center">
@@ -463,7 +455,7 @@
 								</div>
 							</li>
 						</ul>
-					</div>
+					</div>-->
 				</div>
 			</div>
 			<div id="shop-car-box" class="shop-car">
@@ -500,58 +492,96 @@
 						<span>152</span>
 						<span class="f1">元</span>
 					</div>
-					<div class="btn-submit"><span>提交</span></div>
+					<div id="submitCar" class="btn-submit"><span>提交</span></div>
 				</div>
 			</div>
 			<div class="shop-car-bg"></div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.enums.js"></script>
 		<script src="../../js/utils.extend.js"></script>
 		<script src="../../js/utils.storages.js" ></script>
 		<script src="../../js/utils.category.js" ></script>
+		<script src="../../js/utils.auth.js"></script>
+		<script src="../../js/utils.request.js"></script>
 		<script>
+      window.addEventListener('refresh', function(e){
+          location.reload();
+      });
 			(function($, doc) {
-				$.init();
-//				var controls = doc.getElementById("segmentedControls");
-//				var contents = doc.getElementById("segmentedControlContents");
-//				var html = [];
-//				var i = 1;
-//				var j = 1;
-//				var	m = 6; //左侧选项卡数量+1
-//				var	n = 4; //每个选项卡列表数量+1
-//				for (; i < m; i++) {
-//					html.push('<a class="mui-control-item" data-index="' + (i - 1) + '" href="#content' + i + '">选项' + i + '</a>');
-//				}
-////				controls.innerHTML = html.join('');
-//				html = [];
-//				for (i = 1; i < m; i++) {
-//					html.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view">');
-//					for (j = 1; j < n; j++) {
-//						html.push('<li class="mui-table-view-cell">第' + i + '个选项卡子项-' + j + '</li>');
-//					}
-//					html.push('</ul></div>');
-//				}
-//				contents.innerHTML = html.join('');
-//				controls.querySelector('.mui-control-item').classList.add('mui-active');
-//				contents.querySelector('.mui-control-content').classList.add('mui-active');
+				$.init({
+				  preloadPages:[{
+				    id:'projectAdd',
+				    url: './project-add.html'
+				  },{
+            id:'projectBillEdit',
+            url: './project-bill.html'
+				  }]
+				});
 				$.plusReady(function() {
+				  var getProjects = function(groupid,page,limit) {
+            request.loginAjax('project/getlist',{
+              data: {
+                groupid:groupid,
+                page:page,
+                limit:limit
+              }
+            },function() {
+            });
+				  }
 				  // 分类
 				  var category = categorys.get();
-				  console.log(JSON.stringify(category));
-				  var controls = doc.getElementById("segmentedControls");
-				  var controlsHtml = [];
-				  $.each(category, function(index, item) {
-//          '<a class="mui-control-item mui-active" data-index="1" href="#content1">
-//            <div class="category">
-//              <div class="flex flex-col-center">
-//                <div class="c-icon flex flex-col-center flex-row-center"><i class="iconfont icon-kouqiangbaojian"></i></div>
-//              </div>
-//              <p>口腔修复</p>
-//            </div>
-//          </a>'
-				  	  controlsHtml.push('');
-				  });
-//				  contents.querySelector('.mui-control-content').classList.add('mui-active');
+				  if (category.length > 0) {
+    				  var controls = doc.getElementById("segmentedControls");
+    				  var contents = doc.getElementById("segmentedControlContents");
+    				  var controlsHtml = [];
+    				  var contentsHtml = [];
+    				  $.each(category, function(index, item) {
+                var _controlHtml = '';
+                _controlHtml += '<a class="mui-control-item" data-index="{0}" href="#content{1}">'+
+                        ' <div class="category">'+
+                        '  <div class="flex flex-col-center">'+
+                        '   <div class="c-icon flex flex-col-center flex-row-center"><i class="{2}"></i></div>'+
+                        '  </div>'+
+                        '  <p>{3}</p>'+
+                        ' </div>'+
+                        '</a>';
+                _controlHtml = _controlHtml.format(item.id, index, enums.category[item.id], item.title);
+    				  	  controlsHtml.push(_controlHtml);
+    				  	  var _contentHtml = '';
+    				  	  _contentHtml += '<div id="content{0}" class="mui-control-content">'+
+    				  	                  ' <ul class="mui-table-view">'+
+    				  	                  ' </ul>'+
+    				  	                  '</div>';
+    				  	  _contentHtml = _contentHtml.format(index);
+    				  	  contentsHtml.push(_contentHtml);
+    				  });
+    				  controls.innerHTML = controlsHtml.join('');
+    				  contents.innerHTML = contentsHtml.join('');
+  				    controls.querySelector('.mui-control-item').classList.add('mui-active');
+  				    contents.querySelector('.mui-control-content').classList.add('mui-active');
+    				  // 初始加载项目
+            var groupid = category[0].id;
+            var page = 1;
+            var limit = 10;
+            getProjects(groupid, page, limit);
+    				}
+				  // 添加项目
+				  var addProject = doc.getElementById('addProject');
+				  var projectAddWebview = null;
+          addProject.addEventListener('tap', function(event) {
+            var currentControls = controls.querySelector('.mui-control-item.mui-active');
+            var groupid = currentControls.getAttribute('data-index');
+            if (!projectAddWebview) {
+              projectAddWebview = plus.webview.getWebviewById('projectAdd');
+            }
+            $.fire(projectAddWebview,'project-groupid',{
+              groupid:groupid
+            });
+            $.openWindow({
+              id: 'projectAdd'
+            });            
+          });  
 				  // 购物车
           var shopCarBox = doc.querySelector('#shop-car-box');
           var shopCar = doc.getElementById('shop-car');
@@ -562,6 +592,19 @@
               shopCarBox.classList.add('active');
             }
           });
+          // 提交购物车
+          var submitCar = doc.getElementById('submitCar');
+          var projectBillEditWebview = null;
+          submitCar.addEventListener('tap', function(event) {
+            if (!projectBillEditWebview) {
+              projectBillEditWebview = plus.webview.getWebviewById('projectBillEdit');
+            }
+            $.fire(projectBillEditWebview,'project-bill',{
+            });
+            $.openWindow({
+              id: 'projectBillEdit'
+            });            
+          }); 
 				});
 			}(mui, document));
 		</script>

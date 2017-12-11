@@ -98,19 +98,19 @@
 			<form>
 				<div class="flex form-item">
 					<label>编号：</label>
-					<input class="flex-1" type="text" placeholder="请输入编号" />
+					<input id="number" class="flex-1" type="text" placeholder="请输入编号" />
 				</div>
 				<div class="flex form-item">
 					<label>项目：</label>
-					<input class="flex-1" type="text" placeholder="请输入项目名称" />
+					<input id="title" class="flex-1" type="text" placeholder="请输入项目名称" />
 				</div>
 				<div class="flex form-item">
 					<label>金额：</label>
-					<input class="flex-1" type="number" placeholder="请输入金额" />
+					<input id="price" class="flex-1" type="number" placeholder="请输入金额" />
 				</div>
 			</form>
 			<div class="add-pic">
-				<div class="add-box">
+				<div id="addPic" class="add-box">
 					<div style="display: inline-block;">
 						<div class="ap-jia flex flex-col-center flex-row-center">
 							<img src="../../images/project/jia.png" />
@@ -119,13 +119,68 @@
 					<p>上传图片</p>
 				</div>
 			</div>
-			<button class="btn-save">保存</button>
+			<button id="save" class="btn-save">保存</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.storages.js"></script>
+		<script src="../../js/utils.auth.js"></script>
+		<script src="../../js/utils.uploadImg.js"></script>
+    <script src="../../js/utils.request.js" ></script>
 		<script>
 			(function($, doc) {
 				$.init();
+	      // 分类id
+        var groupid = 0;
+        var numberBox = doc.getElementById('number');
+        var titleBox = doc.getElementById('title');
+        var priceBox = doc.getElementById('price');
+        // 刷新分类
+        window.addEventListener('project-groupid', function(e){
+          groupid = e.detail.groupid;
+          numberBox.value = '';
+          titleBox.value = '';
+          priceBox.value = '';
+        });
 				$.plusReady(function() {
+				  //上传图片
+				  var addPic = doc.getElementById('addPic');
+				  addPic.addEventListener('tap', function(event) {
+				    uploadImg.show();
+				  });
+				  //保存
+          var save = doc.getElementById('save');
+          save.addEventListener('tap', function(event) {
+            if (!(groupid > 0)) {
+              $.back();
+              return;
+            }
+            var number = numberBox.value.trim();
+            var title = titleBox.value.trim();
+            var price = priceBox.value.trim();
+            if (number === '') {
+              $.toast('请输入编号');
+              return;
+            }
+            if (title === '') {
+              $.toast('请输入项目名称');
+              return;
+            }
+            if (price === '') {
+              $.toast('请输入金额');
+              return;
+            }
+            request.loginAjax('project/savedata',{
+              data: {
+                groupid:groupid,
+                number:number,
+                price:price,
+                title:title,
+                image:'',
+                id: null
+              }
+            },function() {
+            });
+          });  				  
 				});
 			}(mui, document));
 		</script>
