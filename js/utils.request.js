@@ -52,7 +52,13 @@
         error:function(xhr,type,errorThrown){
           //异常处理；
           mui.toast("服务器连接出错，请稍后再试");
-          console.log('接口错误信息：'+JSON.stringify(xhr)+'||'+type+'||'+errorThrown);
+          console.log('接口返回错误===================');
+          console.log('===错误类型：' + type);
+          console.log('===异常信息：' + errorThrown);
+          console.log('===异常内容：' + JSON.stringify(xhr));
+          if (xhr.response) {
+          	console.log('===服务器异常内容：' + xhr.response);
+          }
         }
       }
       mui.extend(defaults, obj);
