@@ -245,6 +245,12 @@
 										loginInfo.nickname = auth.userInfo.nickname;
 										loginInfo.headurl = auth.userInfo.figureurl_qq_2;
 										loginInfo.sex = auth.userInfo.gender === '男' ? 1 : 2;
+									} else if (auth.id === 'weixin') {
+										loginInfo.code = auth.authResult.access_token;
+										loginInfo.type = 3;
+										loginInfo.nickname = auth.userInfo.nickname;
+										loginInfo.headurl = auth.userInfo.headimgurl;
+										loginInfo.sex = auth.userInfo.sex;
 									}
 									request.ajax('login/byQQWX',{
 										data: loginInfo

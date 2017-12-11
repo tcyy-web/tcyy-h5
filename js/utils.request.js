@@ -22,7 +22,7 @@
         timeout: 10000,//超时时间设置为10秒；
         headers: {'Content-Type': 'application/json'},
         success:function(data){
-          console.log('接口返回信息', JSON.stringify(data));
+          console.log('接口返回信息：'+JSON.stringify(data));
           if (data) {
             if (data.header && data.header.status) {
               switch (data.header.status){
@@ -52,12 +52,12 @@
         error:function(xhr,type,errorThrown){
           //异常处理；
           mui.toast("服务器连接出错，请稍后再试");
-          console.log('接口错误信息：',JSON.stringify(xhr),type,errorThrown);
+          console.log('接口错误信息：'+JSON.stringify(xhr)+'||'+type+'||'+errorThrown);
         }
       }
       mui.extend(defaults, obj);
-      console.log('请求地址:', _url, '请求类型:', defaults.type);
-      console.log('请求参数:', JSON.stringify(defaults.data));
+      console.log('请求地址：'+ _url+'，请求类型：'+defaults.type);
+      console.log('请求参数：'+JSON.stringify(defaults.data));
       mui.ajax(_url, defaults);
     },
     loginAjax: function(url, obj, successCallback) {
