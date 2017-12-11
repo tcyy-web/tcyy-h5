@@ -32,29 +32,16 @@
 		<h1 class="mui-title">视频</h1>
 	</header>
 		<div class="mui-content">
-			<div id="slider" class="mui-slider mui-fullscreen">
-				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div class="mui-scroll">
-						<a class="mui-control-item mui-active" href="#item1mobile">
+			<div class="mui-slider mui-fullscreen">
+				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll" id="sliderSegmentedControl" >
+						<!--<a class="mui-control-item mui-active" href="#item1mobile">
 							儿童牙科
-
-						</a>
-						<a class="mui-control-item" href="#item2mobile">
-							口保健
-
-						</a>
-						<a class="mui-control-item" href="#item3mobile">
-							口美容
-
-						</a>
-						<a class="mui-control-item" href="#item4mobile">
-							口内科
-						</a>
-
+						</a>-->
 					</div>
 				</div>
-				<div class="mui-slider-group">
-					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+				<div class="mui-slider-group" id="sliderSegmentedContent">
+					<!--<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
 						<div id="scroll1" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view">
@@ -68,69 +55,62 @@
 								</ul>
 							</div>
 						</div>
-					</div>
-					<div id="item2mobile" class="mui-slider-item mui-control-content">
-						<div class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<ul class="mui-table-view">
-									
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div id="item3mobile" class="mui-slider-item mui-control-content">
-						<div class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<ul class="mui-table-view">
-									
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div id="item4mobile" class="mui-slider-item mui-control-content">
-						<div class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<ul class="mui-table-view">
-									
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div id="item5mobile" class="mui-slider-item mui-control-content">
-						<div class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<ul class="mui-table-view">
-									
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div id="item6mobile" class="mui-slider-item mui-control-content">
-						<div class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-								<ul class="mui-table-view">
-									
-								</ul>
-							</div>
-						</div>
-					</div>
+					</div>-->
 				</div>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
+    <script src="../../js/utils.extend.js"></script>
+    <script src="../../js/utils.storages.js" ></script>
+    <script src="../../js/utils.category.js" ></script>
+    <!--<script src="../../js/utils.auth.js"></script>
+    <script src="../../js/utils.request.js"></script>-->
 		<script>
 			mui.init();
-			(function($) {
+			(function($, doc) {
 				//阻尼系数
-				var deceleration = mui.os.ios?0.003:0.0009;
-				$('.mui-scroll-wrapper').scroll({
-					bounce: false,
-					indicators: true, //是否显示滚动条
-					deceleration:deceleration
-				});
-				$.ready(function() {
+				var deceleration = $.os.ios?0.003:0.0009;
+//				$('.mui-scroll-wrapper').scroll({
+//					bounce: false,
+//					indicators: true, //是否显示滚动条
+//					deceleration:deceleration
+//				});
+				$.plusReady(function() {
+          // 分类
+          var category = categorys.get();
+          if (category.length > 0) {
+              var controls = doc.getElementById("sliderSegmentedControl");
+              var contents = doc.getElementById("sliderSegmentedContent");
+              var controlsHtml = [];
+              var contentsHtml = [];
+              $.each(category, function(index, item) {
+                var _controlHtml = '<a data-id={0} class="mui-control-item" href="#content{1}">{2}</a>';
+                _controlHtml = _controlHtml.format(item.id,index,item.title);
+                controlsHtml.push(_controlHtml);
+                var _contentHtml = '';
+                _contentHtml += '<div id="content{0}" class="mui-slider-item mui-control-content mui-active">'+
+                                ' <div class="mui-scroll-wrapper">'+
+                                '  <div class="mui-scroll">'+
+//                              '   <p>{1}</p>'+
+                                '   <ul class="mui-table-view">'+
+                                '   </ul>'+
+                                '  </div>'+
+                                ' </div>'+
+                                '</div>';
+                _contentHtml = _contentHtml.format(index, index);
+                contentsHtml.push(_contentHtml);
+              });
+              controls.innerHTML = controlsHtml.join('');
+              contents.innerHTML = contentsHtml.join('');
+              controls.querySelector('.mui-control-item').classList.add('mui-active');
+              contents.querySelector('.mui-control-content').classList.add('mui-active');
+              // 初始加载项目
+              var groupid = category[0].id;
+              var page = 1;
+              var limit = 10;
+          }
 					//循环初始化所有下拉刷新，上拉加载。
 					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
 						$(pullRefreshEl).pullToRefresh({
@@ -168,7 +148,7 @@
 						return fragment;
 					};
 				});
-			})(mui);
+			})(mui, document);
 		</script>
 	</body>
 
