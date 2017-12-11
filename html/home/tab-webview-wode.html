@@ -124,7 +124,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">我的</h1>
-			<a id="msg" url="../my/my-message.html" login="yes" class="clickItem mui-pull-right msg">
+			<a id="myMsg" url="../my/my-message.html" login="yes" class="clickItem mui-pull-right msg">
 				<img src="../../images/tab-wode/msg.png" />
 			</a>
 		</header>
@@ -172,7 +172,7 @@
 				</li>
 				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/wdblx.png"/>
-					<a class="mui-navigate-right" href="#">
+					<a id="myBLX" url="../weibo/list.html" login="yes"  class="clickItem mui-navigate-right">
 						我的病例秀
 					</a>
 				</li>
@@ -187,7 +187,7 @@
 			<ul class="mui-table-view mui-table-view-chevron">
 				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/tk.png"/>
-					<a class="mui-navigate-right" href="#">
+					<a id="bdTX" url="../picture/picture-list.html" login="yes"  class="clickItem mui-navigate-right">
 						本地图库
 					</a>
 				</li>
@@ -233,9 +233,23 @@
 					}
 					loginItem.addEventListener('tap', function(event) {
 						if (authManage.checkLogin()) {
-							return;
+                $.openWindow({
+                  url: '../profile/my-home.html',
+                  id: 'WDJL',
+                  preload: true,
+                  show: {
+                    aniShow: 'pop-in'
+                  },
+                  styles: {
+                    popGesture: 'hide'
+                  },
+                  waiting: {
+                    autoShow: false
+                  }
+                });
+						} else {
+						  authManage.toLogin();
 						}
-						authManage.toLogin();
 					});
 					// 退出登录
 					logout.addEventListener('tap', function(event) {
