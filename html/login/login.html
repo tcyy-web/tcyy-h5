@@ -150,12 +150,12 @@
 				<button id='login' class="btn-login">登录</button>
 			</div>
 			<div class="oauth-area">
-				<!--<div class="oauth-btn">
+				<div authId="qq" class="oauth-btn">
 					<img src="../../images/login/qq.png"/>
 				</div>
-				<div class="oauth-btn">
-					<img src="../../images/login/wx.png"/>
-				</div>-->
+				<div authId="weixin" class="oauth-btn">
+					<img src="../../images/login/weixin.png"/>
+				</div>
 			</div>
 			<div class="link-area">
 				<p>还没有账号？<a id='reg'>注册账号</a></p>
@@ -215,24 +215,14 @@
 						for (var i in services) {
 							var service = services[i];
 							auths[service.id] = service;
-							if (~authBtns.indexOf(service.id)) {
-								var isInstalled = login.isInstalled(service.id);
-								var btn = doc.createElement('div');
-								//如果微信未安装，则为不启用状态
-								btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
-								btn.authId = service.id;
-								var img = doc.createElement('img');
-								img.src = '../../images/login/'+service.id+'.png'
-								btn.appendChild(img);
-								oauthArea.appendChild(btn);
-							}
 						}
 						$(oauthArea).on('tap', '.oauth-btn', function() {
-							if (this.classList.contains('disabled')) {
-								$.toast('您尚未安装微信客户端');
+							var authId = this.getAttribute('authId');
+							if (!login.isInstalled(authId)) {
+								$.toast('您尚未安装该客户端');
 								return;
 							}
-							var auth = auths[this.authId];
+							var auth = auths[authId];
 							var waiting = plus.nativeUI.showWaiting();
 							auth.login(function() {
 								waiting.close();

@@ -12,6 +12,12 @@
 			padding:5px 0;
 			border:none;
 		}
+		.mui-control-content {
+			display: none !important;
+		}
+		.mui-control-content.mui-active {
+			display: block !important;
+		}
 	/* CSS 视频*/
 	.list-item{ width:95%; height:auto; padding-bottom:10px;  margin:auto; background-color:#ffffff; border:1px solid #; -webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -51,7 +57,7 @@
 										    <a class="lname"><span>形牙烤瓷修复</span></a>
 										</section>
 									</li>
-									
+
 								</ul>
 							</div>
 						</div>
@@ -65,19 +71,30 @@
     <script src="../../js/utils.extend.js"></script>
     <script src="../../js/utils.storages.js" ></script>
     <script src="../../js/utils.category.js" ></script>
-    <!--<script src="../../js/utils.auth.js"></script>
-    <script src="../../js/utils.request.js"></script>-->
+    <script src="../../js/utils.auth.js"></script>
+    <script src="../../js/utils.request.js"></script>
 		<script>
-			mui.init();
 			(function($, doc) {
 				//阻尼系数
 				var deceleration = $.os.ios?0.003:0.0009;
-//				$('.mui-scroll-wrapper').scroll({
-//					bounce: false,
-//					indicators: true, //是否显示滚动条
-//					deceleration:deceleration
-//				});
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration:deceleration
+				});
+				$.init();
 				$.plusReady(function() {
+					var getList = function(page, limit, groupid){
+						request.ajax('Video/getList', {
+							data: {
+								groupid: 8,
+								page: 1,
+								limit: 10
+							}
+						}, function() {
+
+						});
+					}
           // 分类
           var category = categorys.get();
           if (category.length > 0) {
@@ -90,10 +107,9 @@
                 _controlHtml = _controlHtml.format(item.id,index,item.title);
                 controlsHtml.push(_controlHtml);
                 var _contentHtml = '';
-                _contentHtml += '<div id="content{0}" class="mui-slider-item mui-control-content mui-active">'+
+                _contentHtml += '<div id="content{0}" class="mui-slider-item mui-control-content">'+
                                 ' <div class="mui-scroll-wrapper">'+
                                 '  <div class="mui-scroll">'+
-//                              '   <p>{1}</p>'+
                                 '   <ul class="mui-table-view">'+
                                 '   </ul>'+
                                 '  </div>'+
@@ -110,12 +126,15 @@
               var groupid = category[0].id;
               var page = 1;
               var limit = 10;
+              getList();
           }
 					//循环初始化所有下拉刷新，上拉加载。
 					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						console.log(pullRefreshEl.getAttribute('id'));
 						$(pullRefreshEl).pullToRefresh({
 							down: {
 								callback: function() {
+									console.log(1);
 									var self = this;
 									setTimeout(function() {
 										var ul = self.element.querySelector('.mui-table-view');
@@ -126,6 +145,7 @@
 							},
 							up: {
 								callback: function() {
+									console.log(2);
 									var self = this;
 									setTimeout(function() {
 										var ul = self.element.querySelector('.mui-table-view');
@@ -140,7 +160,7 @@
 						var length = ul.querySelectorAll('li').length;
 						var fragment = document.createDocumentFragment();
 						var li;
-					
+
 						li = document.createElement('li');
 						li.className = 'mui-table-view-cell';
 						li.innerHTML = '<section class="list-item"> <img src="../../images/tab-vedio/sc10.png" /> <a class="lname"><span>形牙烤瓷修复</span></a> </section>';
