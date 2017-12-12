@@ -25,11 +25,13 @@
 		      var timeDiff = currentTime - parseValue.times;
 		      var day = timeDiff / 1000 / 60 / 60 / 24;
 		      // 7天获取一次
-		      if (day < 7) {
-		        return;
-		      }
+//		      if (day < 7) {
+//		        return;
+//		      }
 		    }
-		    w.request.ajax('group/getList', {}, function(data) {
+		    w.request.ajax('group/getList', {
+		      showMsg: false
+		    }, function(data) {
 		      var d = new Date().getTime();
 		      w.storage.save({
 		        key: KEY,

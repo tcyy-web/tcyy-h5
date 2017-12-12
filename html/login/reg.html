@@ -168,6 +168,7 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.config.js"></script>
 		<script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
@@ -216,20 +217,18 @@
 								phone: _phone,
 								type: 1
 							},
-							success:function(data){
-								if (data.header.status === 2001) {
-									$.toast('短信发送成功，请注意查收');
-									seconds = 60;
-									verifyFn();
-								} else {
-									flag = false;
-									$.toast(data.header.msg);
-								}
-							},
-							error:function(xhr,type,errorThrown){
-								$.toast("服务器连接出错，请稍后再试");
-								flag = false;
-							}
+							statusFlag: false
+						}, function(data) {
+              if (data.header.status === 2001) {
+                $.toast('短信发送成功，请注意查收');
+                seconds = 60;
+                verifyFn();
+              } else {
+                flag = false;
+                $.toast(data.header.msg);
+              }						  
+						}, function() {
+						  flag = false;
 						});
 					});					
 					// 注册

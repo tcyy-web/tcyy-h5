@@ -498,6 +498,7 @@
 			<div class="shop-car-bg"></div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.config.js"></script>
 		<script src="../../js/utils.enums.js"></script>
 		<script src="../../js/utils.extend.js"></script>
 		<script src="../../js/utils.storages.js" ></script>
@@ -509,6 +510,13 @@
           location.reload();
       });
 			(function($, doc) {
+	      //阻尼系数
+        var deceleration = $.os.ios?0.003:0.0009;
+        $('.mui-scroll-wrapper').scroll({
+          bounce: false,
+          indicators: true, //是否显示滚动条
+          deceleration:deceleration
+        });
 				$.init({
 				  preloadPages:[{
 				    id:'projectAdd',
