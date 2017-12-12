@@ -11,6 +11,9 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
+		  ::-webkit-scrollbar{
+		    width: 0;
+		  }
 			.mui-content {
 				position:relative;
 			}
@@ -498,6 +501,8 @@
 			<div class="shop-car-bg"></div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+    <script src="../../js/mui.pullToRefresh.js"></script>
+    <script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script src="../../js/utils.config.js"></script>
 		<script src="../../js/utils.enums.js"></script>
 		<script src="../../js/utils.extend.js"></script>
@@ -510,13 +515,6 @@
           location.reload();
       });
 			(function($, doc) {
-	      //阻尼系数
-        var deceleration = $.os.ios?0.003:0.0009;
-        $('.mui-scroll-wrapper').scroll({
-          bounce: false,
-          indicators: true, //是否显示滚动条
-          deceleration:deceleration
-        });
 				$.init({
 				  preloadPages:[{
 				    id:'projectAdd',
@@ -527,14 +525,19 @@
 				  }]
 				});
 				$.plusReady(function() {
-				  var getProjects = function(groupid,page,limit) {
+				  var limit = 10;
+				  var groupid = 0;
+				  var listRequest = {};
+				  var getProjects = function(page) {
+				    console.log(JSON.stringify(listRequest[groupid]));
             request.loginAjax('project/getlist',{
               data: {
                 groupid:groupid,
                 page:page,
                 limit:limit
               }
-            },function() {
+            },function(data) {
+              console.log(JSON.stringify(data));
             });
 				  }
 				  // 分类
@@ -546,7 +549,7 @@
     				  var contentsHtml = [];
     				  $.each(category, function(index, item) {
                 var _controlHtml = '';
-                _controlHtml += '<a class="mui-control-item" data-index="{0}" href="#content{1}">'+
+                _controlHtml += '<a class="mui-control-item" groupid="{0}" href="#content{1}">'+
                         ' <div class="category">'+
                         '  <div class="flex flex-col-center">'+
                         '   <div class="c-icon flex flex-col-center flex-row-center"><i class="{2}"></i></div>'+
@@ -569,17 +572,13 @@
   				    controls.querySelector('.mui-control-item').classList.add('mui-active');
   				    contents.querySelector('.mui-control-content').classList.add('mui-active');
     				  // 初始加载项目
-            var groupid = category[0].id;
-            var page = 1;
-            var limit = 10;
-            getProjects(groupid, page, limit);
+            groupid = category[0].id;
+            getProjects(1);
     				}
 				  // 添加项目
 				  var addProject = doc.getElementById('addProject');
 				  var projectAddWebview = null;
           addProject.addEventListener('tap', function(event) {
-            var currentControls = controls.querySelector('.mui-control-item.mui-active');
-            var groupid = currentControls.getAttribute('data-index');
             if (!projectAddWebview) {
               projectAddWebview = plus.webview.getWebviewById('projectAdd');
             }
@@ -589,7 +588,34 @@
             $.openWindow({
               id: 'projectAdd'
             });            
-          });  
+          }); 
+          // tab
+          $.each(doc.querySelectorAll('.mui-control-item'), function(index, item) {
+            item.addEventListener('tap', function(event){
+              groupid = this.getAttribute('groupid');
+//            morePage = true;
+//            getList();
+              console.log(groupid);
+            });
+          });
+          // 下拉刷新 上拉加载
+          $.each(doc.querySelectorAll('.content-box .mui-control-content'), function(index, pullRefreshEl) {
+            $(pullRefreshEl).pullToRefresh({
+              down: {
+                callback: function() {
+                  console.log(1);
+                  this.endPullDownToRefresh(true);
+//                this.endPullUpToRefresh(false);
+                }
+              },
+              up: {
+                callback: function() {
+                  console.log(2);
+                  this.endPullUpToRefresh(false);
+                }
+              }
+            });
+          });
 				  // 购物车
           var shopCarBox = doc.querySelector('#shop-car-box');
           var shopCar = doc.getElementById('shop-car');
