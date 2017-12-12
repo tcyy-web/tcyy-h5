@@ -84,15 +84,42 @@
 				});
 				$.init();
 				$.plusReady(function() {
-					var getList = function(page, limit, groupid){
+				  var groupid = 0;
+          var page = 1;
+          var morePage = true;
+          var limit = 10;
+					var getList = function(){
+					  if (!morePage) {
+					    return;
+					  }
 						request.ajax('Video/getList', {
 							data: {
-								groupid: 8,
-								page: 1,
-								limit: 10
+								groupid: groupid,
+								page: page,
+								limit: limit
 							}
-						}, function() {
-
+						}, function(data) {
+               if (data.data && data.data.length > 0) {
+                 var currentTab = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
+                 var _views = [];
+                 $.each(data.data, function(index, i) {
+                   var _view = '<li class="mui-table-view-cell"></li>'+
+                               ' <section class="list-item">'+
+                               '  <img src="{0}"/>'+
+                               '  <a class="lname"><span>{1}</span></a>'+
+                               ' </section>'+
+                               '</li>';
+                   _view = _view.format(i.image, i.title);
+                 	_views.push(_view);
+                 });
+                 if (page === 1) {
+                   currentTab.innerHTML = _views.join('');
+                 } else {
+                   currentTab.innerHTML = currentTab.innerHTML + _views.join('');
+                 }
+               } else {
+                 morePage = false;
+               }
 						});
 					}
           // 分类
@@ -103,7 +130,7 @@
               var controlsHtml = [];
               var contentsHtml = [];
               $.each(category, function(index, item) {
-                var _controlHtml = '<a data-id={0} class="mui-control-item" href="#content{1}">{2}</a>';
+                var _controlHtml = '<a groupid={0} class="mui-control-item" href="#content{1}">{2}</a>';
                 _controlHtml = _controlHtml.format(item.id,index,item.title);
                 controlsHtml.push(_controlHtml);
                 var _contentHtml = '';
@@ -123,50 +150,39 @@
               controls.querySelector('.mui-control-item').classList.add('mui-active');
               contents.querySelector('.mui-control-content').classList.add('mui-active');
               // 初始加载项目
-              var groupid = category[0].id;
-              var page = 1;
-              var limit = 10;
+              groupid = category[0].id;
               getList();
           }
+          $.each(doc.querySelectorAll('.mui-control-item'), function(index, item) {
+            item.addEventListener('tap', function(event){
+              groupid = this.getAttribute('groupid');
+              page = 1;
+              morePage = true;
+              getList();
+            });
+          });
 					//循环初始化所有下拉刷新，上拉加载。
-					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
-						console.log(pullRefreshEl.getAttribute('id'));
+					$.each(doc.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
 						$(pullRefreshEl).pullToRefresh({
 							down: {
 								callback: function() {
-									console.log(1);
+								  page = 1;
+								  morePage = true;
+								  getList();
 									var self = this;
-									setTimeout(function() {
-										var ul = self.element.querySelector('.mui-table-view');
-										ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
-										self.endPullDownToRefresh();
-									}, 1000);
+									self.endPullDownToRefresh();
 								}
 							},
 							up: {
 								callback: function() {
-									console.log(2);
+								  page ++;
+								  getList();
 									var self = this;
-									setTimeout(function() {
-										var ul = self.element.querySelector('.mui-table-view');
-										ul.appendChild(createFragment(ul, index, 5));
-										self.endPullUpToRefresh();
-									}, 1000);
+									self.endPullUpToRefresh();
 								}
 							}
 						});
 					});
-					var createFragment = function(ul, index, count, reverse) {
-						var length = ul.querySelectorAll('li').length;
-						var fragment = document.createDocumentFragment();
-						var li;
-
-						li = document.createElement('li');
-						li.className = 'mui-table-view-cell';
-						li.innerHTML = '<section class="list-item"> <img src="../../images/tab-vedio/sc10.png" /> <a class="lname"><span>形牙烤瓷修复</span></a> </section>';
-						fragment.appendChild(li);
-						return fragment;
-					};
 				});
 			})(mui, document);
 		</script>
