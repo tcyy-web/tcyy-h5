@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
-			#sliderSegmentedControl .mui-scroll {
+			#sliderSegmentedControl{
 				border-bottom:1px solid #d2d2d2;
 				margin-bottom: 10px;
 				height: 50px;
@@ -56,7 +56,8 @@
 			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
 				border: 0;
 			}
-
+  </style>
+  <style>
 			.mui-row {
 				padding: 5px 10px;
 				margin-bottom: 10px;
@@ -111,58 +112,101 @@
 			<h1 class="mui-title">在线课堂</h1>
 		</header>
 		<div class="mui-content">
-			<div id="slider" class="mui-slider mui-fullscreen">
-				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div class="mui-scroll">
-						<a class="mui-control-item mui-active" href="#item1mobile">儿童牙科</a>
-						<a class="mui-control-item" href="#item2mobile">口保健</a>
-						<a class="mui-control-item" href="#item3mobile">口美容</a>
-						<a class="mui-control-item" href="#item4mobile">口内科</a>
-						<a class="mui-control-item" href="#item4mobile">口内科</a>
-						<a class="mui-control-item" href="#item4mobile">口内科</a>
-						<a class="mui-control-item" href="#item4mobile">口内科</a>
-						<a class="mui-control-item" href="#item4mobile">口内科</a>
+			<div class="mui-slider mui-fullscreen">
+				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div id="sliderSegmentedControl" class="mui-scroll">
+            <a class="mui-control-item mui-active" href="#content1">
+              口腔种植
+            </a>
+            <a class="mui-control-item" href="#content2">
+              口腔正畸
+            </a>
+            <a class="mui-control-item" href="#content3">
+              口腔修复
+            </a>
+            <a class="mui-control-item" href="#content4">
+              口腔外科
+            </a>
+            <a class="mui-control-item" href="#content5">
+              口腔内科
+            </a>
+            <a class="mui-control-item" href="#content6">
+              口腔美容
+            </a>
 					</div>
 				</div>
-				<div class="mui-slider-group">
-					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
-						<div id="scroll1" class="mui-scroll-wrapper">
+				<div class="mui-slider-group" id="sliderSegmentedContent">
+					<div id="conten1" class="mui-slider-item mui-control-content mui-active">
+						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
-								<div class="mui-row">
-									<div class="img">
-										<img src="../../images/my/bgy.png" />
-									</div>
-									<div class="content">
-										<h1>视频名称</h1>
-										<p>发布时间：2017-11-21</p>
-										<p>观看人数：100</p>
-										<div class="btns">
-											<button>观看人数</button>
-										</div>
-									</div>
-						    </div>
-								<div class="mui-row">
-									<div class="img">
-										<img src="../../images/my/bgy.png" />
-									</div>
-									<div class="content">
-										<h1>视频名称</h1>
-										<p>发布时间：2017-11-21</p>
-										<p>观看人数：100</p>
-										<div class="btns">
-											<button>观看人数</button>
-										</div>
-									</div>
+							  <div class="contents">
+    								<div class="mui-row">
+    									<div class="img">
+    										<img src="../../images/my/bgy.png" />
+    									</div>
+    									<div class="content">
+    										<h1>视频名称</h1>
+    										<p>发布时间：2017-11-21</p>
+    										<p>观看人数：100</p>
+    										<div class="btns">
+    											<button>观看人数</button>
+    										</div>
+    									</div>
+    						    </div>
+    								<div class="mui-row">
+    									<div class="img">
+    										<img src="../../images/my/bgy.png" />
+    									</div>
+    									<div class="content">
+    										<h1>视频名称</h1>
+    										<p>发布时间：2017-11-21</p>
+    										<p>观看人数：100</p>
+    										<div class="btns">
+    											<button>观看人数</button>
+    										</div>
+    									</div>
+    						    </div>
 						    </div>
 							</div>
 						</div>
 					</div>
+          <div id="content2" class="mui-slider-item mui-control-content">
+            <div class="mui-scroll-wrapper">
+              <div class="mui-scroll"><div class="contents"></div></div>
+            </div>
+          </div>
+          <div id="content3" class="mui-slider-item mui-control-content">
+            <div class="mui-scroll-wrapper">
+              <div class="mui-scroll"><div class="contents"></div></div>
+            </div>
+          </div>  
+          <div id="content4" class="mui-slider-item mui-control-content">
+            <div class="mui-scroll-wrapper">
+              <div class="mui-scroll"><div class="contents"></div></div>
+            </div>
+          </div>  
+          <div id="content5" class="mui-slider-item mui-control-content">
+            <div class="mui-scroll-wrapper">
+              <div class="mui-scroll"><div class="contents"></div></div>
+            </div>
+          </div>
+          <div id="content6" class="mui-slider-item mui-control-content">
+            <div class="mui-scroll-wrapper">
+              <div class="mui-scroll"><div class="contents"></div></div>
+            </div>
+          </div>  					
 				</div>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/mui.pullToRefresh.js"></script>
-		<script src="../../js/mui.pullToRefresh.material.js"></script>
+    <script src="../../js/mui.pullToRefresh.js"></script>
+    <script src="../../js/mui.pullToRefresh.material.js"></script>
+    <script src="../../js/utils.config.js"></script>
+    <script src="../../js/utils.extend.js"></script>
+    <script src="../../js/utils.storages.js" ></script>
+    <script src="../../js/utils.category.js" ></script>
+    <script src="../../js/utils.auth.js"></script>
+    <script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
@@ -174,6 +218,77 @@
 					deceleration:deceleration
 				});
 				$.plusReady(function() {
+  	        var limit = 5;
+          var groupid = 0;
+          var listRequest = {};
+				  // 分类
+          var category = categorys.get();
+          if (category.length > 0) {
+            var controls = doc.getElementById("sliderSegmentedControl");
+            var contents = doc.getElementById("sliderSegmentedContent");
+            var controlsHtml = [];
+            var contentsHtml = [];
+            $.each(category, function(index, item) {
+              var _controlHtml = '<a groupid={0} class="mui-control-item" href="#content{1}">{2}</a>';
+              _controlHtml = _controlHtml.format(item.id,index,item.title);
+              controlsHtml.push(_controlHtml);
+              var _contentHtml = '';
+              _contentHtml += '<div id="content{0}" class="mui-slider-item mui-control-content">'+
+                              ' <div class="mui-scroll-wrapper">'+
+                              '  <div class="mui-scroll">'+
+                              '   <div class="contents">'+
+                              '   </div>'+
+                              '  </div>'+
+                              ' </div>'+
+                              '</div>';
+              _contentHtml = _contentHtml.format(index, index);
+              contentsHtml.push(_contentHtml);
+            });
+            controls.innerHTML = controlsHtml.join('');
+            contents.innerHTML = contentsHtml.join('');
+            controls.querySelector('.mui-control-item').classList.add('mui-active');
+            contents.querySelector('.mui-control-content').classList.add('mui-active');
+            // 初始加载项目
+            groupid = category[0].id;
+          }
+          // 切换tab
+          doc.querySelector('.mui-slider').addEventListener('slide', function(event) {
+            var contentValue = event.detail.slideNumber;
+            var currentTab = doc.querySelector('.mui-control-item.mui-active');
+            groupid = currentTab.getAttribute('groupid');
+            if (listRequest[groupid]) {
+              return;
+            }
+          });
+          //循环初始化所有下拉刷新，上拉加载。
+          $.each(doc.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+            $(pullRefreshEl).pullToRefresh({
+              down: {
+                callback: function() {
+                  var self = this;
+                  getList(1, function() {
+                    self.endPullDownToRefresh();
+                    $(pullRefreshEl).pullToRefresh().refresh(true);
+                  });
+                }
+              },
+              up: {
+                callback: function() {
+                  var self = this;
+                  if (listRequest[groupid]) {
+                    if (listRequest[groupid].more === true) {
+                      var page = listRequest[groupid].page + 1;
+                      getList(page, function(){
+                        self.endPullUpToRefresh(false);
+                      })
+                      return;
+                    }
+                  }
+                  self.endPullUpToRefresh(true);
+                }
+              }
+            });
+          });
 				});
 			}(mui, document));
 		</script>
