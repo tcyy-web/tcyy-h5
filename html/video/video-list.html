@@ -204,29 +204,12 @@
 					  // 处理页面绑定
              if (data && data.data && data.data.length > 0) {
                var currentContent = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
+               if (page === 1) {
+                 currentContent.innerHTML = '';
+               }
                $.each(data.data, function(index,i) {
                	createFragment(currentContent,i);
                });
-//             var currentContent = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
-//             var _views = [];
-//             $.each(data.data, function(index, i) {
-//               var _view = '<li class="mui-table-view-cell">'+
-//                           ' <section class="list-item">'+
-//                           '  <div class="img flex flex-col-center">'+
-//                           '    <img src="{0}"/>'+
-//                           '  </div>'+
-//                           '  <video>不支持视频</video>'+
-//                           '  <a class="lname"><span>{1}</span></a>'+
-//                           ' </section>'+
-//                           '</li>';
-//               _view = _view.format(i.image, i.title);
-//               _views.push(_view);
-//             });
-//             if (page === 1) {
-//               currentContent.innerHTML = _views.join('');
-//             } else {
-//               currentContent.innerHTML = currentContent.innerHTML + _views.join('');
-//             }
              }
              // 判断是否有下一页数据
              if (data && data.data && data.data.length === limit) {

@@ -21,9 +21,12 @@
 				height: calc(100% - 60px);
 				height: -webkit-calc(100% - 60px);
 			}
-			.mui-col-xs-3,
+			.mui-col-xs-3{
+			  overflow-y: auto;
+        height: 100%;
+			}
 			.mui-control-content {
-				overflow-y: auto;
+			  overflow-y: auto;
 				height: 100%;
 			}
 			.mui-col-xs-3 {
@@ -125,6 +128,7 @@
 			}
 			.mui-table-view-cell {
 				padding: 0;
+				margin-bottom: 10px;
 			}
 			.mui-table-view-cell:after{
 				background-color: #dedede;
@@ -427,14 +431,14 @@
 		<div class="mui-content mui-row mui-fullscreen">
 			<div class="mui-col-xs-3">
 				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
-					<!--<a class="mui-control-item mui-active" data-index="1" href="#content1">
+					<a class="mui-control-item mui-active" data-index="1" href="#content1">
 						<div class="category">
 							<div class="flex flex-col-center">
 								<div class="c-icon flex flex-col-center flex-row-center"><i class="iconfont icon-kouqiangbaojian"></i></div>
 							</div>
 							<p>口腔修复</p>
 						</div>
-					</a>-->
+					</a>
 				</div>
 			</div>
 			<div class="mui-col-xs-9">
@@ -442,23 +446,23 @@
 					<span>添加项目</span>
 				</div>
 				<div id="segmentedControlContents" class="content-box">
-					<!--<div id="content1" class="mui-control-content mui-active">
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell">
-								<div class="img flex flex-col-center">
-									<img src="../../images/project/banner.png" />
-								</div>
-								<div class="bill-item">
-									<div class="flex">
-										<p>编号：01by01by01by01by01by</p>
-										<p class="flex-1">牙齿修复牙齿修复牙齿修复牙齿修复牙齿修复</p>
-									</div>
-									<p>￥318<span>元</span></p>
-									<div class="bill-add"></div>
-								</div>
-							</li>
-						</ul>
-					</div>-->
+					<div id="content1" class="mui-control-content mui-active">
+  						<ul class="mui-table-view">
+  							<li class="mui-table-view-cell">
+  								<div class="img flex flex-col-center">
+  									<img src="../../images/project/banner.png" />
+  								</div>
+  								<div class="bill-item">
+  									<div class="flex">
+  										<p>编号：01by</p>
+  										<p class="flex-1">牙齿修复</p>
+  									</div>
+  									<p>￥318<span>元</span></p>
+  									<div class="bill-add"></div>
+  								</div>
+  							</li>
+  						</ul>
+					</div>
 				</div>
 			</div>
 			<div id="shop-car-box" class="shop-car">
@@ -525,19 +529,81 @@
 				  }]
 				});
 				$.plusReady(function() {
-				  var limit = 10;
+				  var limit = 5;
 				  var groupid = 0;
 				  var listRequest = {};
-				  var getProjects = function(page) {
-				    console.log(JSON.stringify(listRequest[groupid]));
+          var createFragment = function(parent, data) {
+            var li = doc.createElement('li');
+            li.className = 'mui-table-view-cell';
+            // 图片
+            var imgDiv = doc.createElement('div');
+            imgDiv.className = 'img flex flex-col-center';
+            var img = doc.createElement('img');
+            img.src = data.image;
+            imgDiv.appendChild(img);
+            li.append(imgDiv);
+            var billDiv = doc.createElement('div');
+            billDiv.className = 'bill-item';
+            // 标题
+            var titleDiv = doc.createElement('div');
+            titleDiv.className = 'flex';
+            titleDiv.innerHTML = '<p>{0}</p><p class="flex-1">{1}</p>'.format(data.number,data.title);
+            billDiv.append(titleDiv);
+            // 价格
+            var priceP = doc.createElement('p');
+            priceP.innerHTML = '¥{0}<span>元</span>'.format(data.price);
+            billDiv.append(priceP);
+            // 添加
+            var addDiv = doc.createElement('div');
+            addDiv.className = 'bill-add';
+            addDiv.addEventListener('tap', function(event){
+              $.toast('添加');
+            });
+            billDiv.append(addDiv);
+            li.append(billDiv);
+            parent.append(li);
+          };
+				  var getProjects = function(page, callback) {
+            if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
+              return;
+            }
             request.loginAjax('project/getlist',{
               data: {
                 groupid:groupid,
                 page:page,
                 limit:limit
-              }
+              },
+              showMsg: false
             },function(data) {
-              console.log(JSON.stringify(data));
+                // 处理页面绑定
+               if (data && data.data && data.data.length > 0) {
+                 var currentContent = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
+                 if (page === 1) {
+                   currentContent.innerHTML = '';
+                 }
+                 $.each(data.data, function(index,i) {
+                   createFragment(currentContent,i);
+                 });
+               }
+               // 判断是否有下一页数据
+               if (data && data.data && data.data.length === limit) {
+                 listRequest[groupid] = {
+                   page: page,
+                   more: true
+                 }
+               } else {
+                 listRequest[groupid] = {
+                   page: page,
+                   more: false
+                 }               
+               }
+               if (typeof callback === 'function') {
+                 callback();
+               }
+            }, function() {
+               if (typeof callback === 'function') {
+                 callback();
+               }            
             });
 				  }
 				  // 分类
@@ -561,8 +627,8 @@
     				  	  controlsHtml.push(_controlHtml);
     				  	  var _contentHtml = '';
     				  	  _contentHtml += '<div id="content{0}" class="mui-control-content">'+
-    				  	                  ' <ul class="mui-table-view">'+
-    				  	                  ' </ul>'+
+    				  	                  '   <ul class="mui-table-view">'+
+    				  	                  '   </ul>'+
     				  	                  '</div>';
     				  	  _contentHtml = _contentHtml.format(index);
     				  	  contentsHtml.push(_contentHtml);
@@ -593,25 +659,37 @@
           $.each(doc.querySelectorAll('.mui-control-item'), function(index, item) {
             item.addEventListener('tap', function(event){
               groupid = this.getAttribute('groupid');
-//            morePage = true;
-//            getList();
-              console.log(groupid);
+              if (listRequest[groupid]) {
+                return;
+              }
+              getProjects(1);
             });
           });
           // 下拉刷新 上拉加载
           $.each(doc.querySelectorAll('.content-box .mui-control-content'), function(index, pullRefreshEl) {
             $(pullRefreshEl).pullToRefresh({
-              down: {
-                callback: function() {
-                  console.log(1);
-                  this.endPullDownToRefresh(true);
-//                this.endPullUpToRefresh(false);
-                }
-              },
+//            down: {
+//              callback: function() {
+//                var self = this;
+//                getProjects(1, function() {
+//                  self.endPullDownToRefresh();
+//                  $(pullRefreshEl).pullToRefresh().refresh(true);
+//                });
+//              }
+//            },
               up: {
                 callback: function() {
-                  console.log(2);
-                  this.endPullUpToRefresh(false);
+                  var self = this;
+                  if (listRequest[groupid]) {
+                    if (listRequest[groupid].more === true) {
+                      var page = listRequest[groupid].page + 1;
+                      getProjects(page, function(){
+                        self.endPullUpToRefresh(false);
+                      })
+                      return;
+                    }
+                  }
+                  self.endPullUpToRefresh(true);
                 }
               }
             });
