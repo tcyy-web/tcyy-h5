@@ -14,6 +14,15 @@
 		  ::-webkit-scrollbar{
 		    width: 0;
 		  }
+		  .mui-bar .mui-title{
+		  	left: 100px;
+		  	right: 100px;
+		  }
+		  .mui-pull-right{
+  	    margin-right: -10px;
+		    margin-left: -10px;
+		    padding: 10px;
+		  }
 			.mui-content {
 				position:relative;
 			}
@@ -125,6 +134,7 @@
 			}
 			.mui-table-view:after{
 				background-color: #dedede;
+				display: none;
 			}
 			.mui-table-view-cell {
 				padding: 0;
@@ -132,6 +142,10 @@
 			}
 			.mui-table-view-cell:after{
 				background-color: #dedede;
+				left: 0;
+			}
+			.mui-table-view-cell:last-child:after{
+				height: 1px;
 			}
 			.mui-table-view-cell .img {
 				height: 180px;
@@ -176,6 +190,22 @@
 				font-size: 14px;
 				color: #bbbbbb;
 				margin-left: 5px;
+			}
+			.bill-btn{
+				position: absolute;
+				right: 60px;
+				bottom: 0;
+				z-index: 3;
+			}
+			.bill-btn > span{
+				padding: 5px;
+				font-size: 18px;
+			}
+			.bill-btn > .del{
+				color: #f56b62;
+			}
+			.bill-btn > .edit{
+				color: #755fc3;
 			}
 			.bill-add {
 				position: absolute;
@@ -426,6 +456,9 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a class="mui-pull-right">
+				计划列表
+			</a>
 			<h1 class="mui-title">项目</h1>
 		</header>
 		<div class="mui-content mui-row mui-fullscreen">
@@ -437,6 +470,14 @@
 								<div class="c-icon flex flex-col-center flex-row-center"><i class="iconfont icon-kouqiangbaojian"></i></div>
 							</div>
 							<p>口腔修复</p>
+						</div>
+					</a>
+					<a class="mui-control-item" data-index="1" href="#content2">
+						<div class="category">
+							<div class="flex flex-col-center">
+								<div class="c-icon flex flex-col-center flex-row-center"><i class="iconfont icon-kouqiangbaojian"></i></div>
+							</div>
+							<p>口腔内科</p>
 						</div>
 					</a>
 				</div>
@@ -458,9 +499,30 @@
   										<p class="flex-1">牙齿修复</p>
   									</div>
   									<p>￥318<span>元</span></p>
+  									<div class="bill-btn flex">
+  										<span class="flex-1 edit">修改</span>
+  										<span class="flex-1 del">删除</span>
+  									</div>
   									<div class="bill-add"></div>
   								</div>
   							</li>
+  							<li class="mui-table-view-cell">
+  								<div class="img flex flex-col-center">
+  									<img src="../../images/project/banner.png" />
+  								</div>
+  								<div class="bill-item">
+  									<div class="flex">
+  										<p>编号：01by</p>
+  										<p class="flex-1">牙齿修复</p>
+  									</div>
+  									<p>￥318<span>元</span></p>
+  									<div class="bill-add"></div>
+  								</div>
+  							</li>
+  						</ul>
+					</div>
+					<div id="content3" class="mui-control-content">
+  						<ul class="mui-table-view">
   						</ul>
 					</div>
 				</div>
@@ -595,7 +657,7 @@
                  listRequest[groupid] = {
                    page: page,
                    more: false
-                 }               
+                 }
                }
                if (typeof callback === 'function') {
                  callback();
@@ -603,7 +665,7 @@
             }, function() {
                if (typeof callback === 'function') {
                  callback();
-               }            
+               }
             });
 				  }
 				  // 分类
@@ -653,8 +715,8 @@
             });
             $.openWindow({
               id: 'projectAdd'
-            });            
-          }); 
+            });
+          });
           // tab
           $.each(doc.querySelectorAll('.mui-control-item'), function(index, item) {
             item.addEventListener('tap', function(event){
@@ -715,8 +777,8 @@
             });
             $.openWindow({
               id: 'projectBillEdit'
-            });            
-          }); 
+            });
+          });
 				});
 			}(mui, document));
 		</script>

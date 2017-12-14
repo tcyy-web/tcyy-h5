@@ -17,9 +17,11 @@
 
 .icon-icon:before { content: "\a666"; }
 
-.icon-wode:before { content: "\a67a"; }
+.icon-wode:before { content: "\e67a"; }
 
-.icon-daigoutong:before { content: "\a679"; }
+.icon-daigoutong:before { content: "\e679"; }
+
+.icon-cshy-shizhong:before { content: "\e626"; }
 
 .icon-kouqiangbaojian:before { content: "\a602"; }
 

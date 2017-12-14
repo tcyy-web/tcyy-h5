@@ -3,48 +3,24 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>新增项目</title>
+		<title>项目计划列表</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/iconfont.css" />
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
-			::-moz-placeholder {
-				color: #000000;
-			}
-			:-ms-input-placeholder {
-				color: #000000;
-			}
-			::-webkit-input-placeholder {
-				color: #000000;
-			}
-			.mui-content {
-				position: relative;
-				padding-bottom: 60px;
-			}
-			.btn-save {
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				background-color: #765fc3;
-				font-size: 18px;
-				color: #ffffff;
-				text-align: center;
-				height: 60px;
-				line-height: 60px;
-				border: 0;
-				padding: 0;
-				width: 100%;
-				-webkit-border-radius: 0;
-				-moz-border-radius: 0;
-				border-radius: 0;
-			}
+		  .mui-pull-right{
+  	    margin-right: -10px;
+		    margin-left: -10px;
+		    padding: 10px;
+		  }
 			.form-item {
 				position: relative;
 				background-color: #ffffff;
-				height: 50px;
-				line-height: 50px;
+				padding: 10px;
+				line-height: 30px;
 			}
 			.form-item:after{
 				position: absolute;
@@ -57,61 +33,22 @@
 		    transform: scaleY(.5);
 		    background-color: #d6d6d6;
 			}
-			.form-item label {
-				width: 90px;
+			.form-item > p{
+				padding-left: 5px;
+				color: #7c7c7c;
 				font-size: 14px;
-				text-align: center;
 			}
-			.form-item input {
-				border: 0;
-				padding: 0;
-				margin: 0;
-				height: 100%;
-				color: #000000;
-				font-size: 14px;
-				background-color: transparent;
+			.form-item > p:first-child{
+				padding-left: 0;
 			}
-			.add-pic {
-				position: relative;
-				margin-top: 10px;
-				margin-bottom: 10px;
-				background-color: #ffffff;
-				padding: 30px;
-				text-align: center;
+			.form-item > p:last-child{
+				width: 85px;
+				color: #ffae00;
 			}
-			.add-pic:before,
-			.add-pic:after{
-				position: absolute;
-		    right: 0;
-		    left: 0;
-		    height: 1px;
-		    content: '';
-		    -webkit-transform: scaleY(.5);
-		    transform: scaleY(.5);
-		    background-color: #d6d6d6;
-			}
-			.add-pic:before{
-				top: 0;
-			}
-			.add-pic:after{
-				bottom: 0;
-			}
-			.add-box {
-				display: inline-block;
-				text-align: center;
-			}
-			.add-box p {
-				color: #b3b3b3;
-				font-size: 14px;
-				margin-top: 5px;
-			}
-			.add-box .ap-jia{
-				border: 1px dotted #d2d2d2;
-				width: 40px;
-				height: 40px;
-				-webkit-border-radius: 5px;
-				-moz-border-radius: 5px;
-				border-radius: 5px;
+			.form-item > p .iconfont{
+				font-size: 18px;
+				vertical-align: middle;
+				margin-right: 2px;
 			}
 		</style>
 	</head>
@@ -119,34 +56,18 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">新增项目</h1>
+			<a class="mui-pull-right">筛选</a>
+			<h1 class="mui-title">项目计划列表</h1>
 		</header>
 		<div class="mui-content">
 			<form>
 				<div class="flex form-item">
-					<label>编号：</label>
-					<input id="number" class="flex-1" type="text" placeholder="请输入编号" />
-				</div>
-				<div class="flex form-item">
-					<label>项目：</label>
-					<input id="title" class="flex-1" type="text" placeholder="请输入项目名称" />
-				</div>
-				<div class="flex form-item">
-					<label>金额：</label>
-					<input id="price" class="flex-1" type="number" placeholder="请输入金额" />
+					<p class="flex-1">刘德华</p>
+					<p class="flex-1">分类</p>
+					<p class="flex-1">2017/19/19</p>
+					<p><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
 				</div>
 			</form>
-			<div class="add-pic">
-				<div id="addPic" class="add-box">
-					<div style="display: inline-block;">
-						<div class="ap-jia flex flex-col-center flex-row-center">
-							<img src="../../images/project/jia.png" />
-						</div>
-					</div>
-					<p>上传图片</p>
-				</div>
-			</div>
-			<button id="save" class="btn-save">保存</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils.storages.js"></script>

@@ -19,16 +19,30 @@
 			::-webkit-input-placeholder {
 				color: #000000;
 			}
+			body{
+				background-color: #ffffff;
+			}
 			.mui-content {
 				height: auto;
 				padding-bottom: 60px;
+				background-color: #ffffff;
 			}
 			.bill-item {
-				padding:0 10px;
-				border-bottom: 1px solid #d6d6d6;
-				height: 50px;
-				line-height: 49px;
+				position: relative;
+				padding:10px;
+				line-height: 30px;
 				background-color: #ffffff;
+			}
+			.bill-item:after{
+				position: absolute;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    height: 1px;
+		    content: '';
+		    -webkit-transform: scaleY(.5);
+		    transform: scaleY(.5);
+		    background-color: #d6d6d6;
 			}
 			.bill-item p:first-child {
 				text-align: left;
@@ -37,7 +51,7 @@
 			.bill-item p:first-child:before {
 				position: absolute;
 				right: 0;
-				top: 15px;
+				top: 5px;
 				content: '';
 				width: 1px;
 				height: 20px;
@@ -61,11 +75,22 @@
 				margin-bottom: 10px;
 			}
 			.form-item {
+				position: relative;
 				padding:0 10px;
 				background-color: #ffffff;
-				border-bottom: 1px solid #d6d6d6;
 				height: 50px;
-				line-height: 49px;
+				line-height: 50px;
+			}
+			.form-item:after{
+				position: absolute;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    height: 1px;
+		    content: '';
+		    -webkit-transform: scaleY(.5);
+		    transform: scaleY(.5);
+		    background-color: #d6d6d6;
 			}
 			.form-item label {
 				width: 60px;
@@ -81,11 +106,24 @@
 				font-size: 14px;
 				background-color: transparent;
 			}
-			.btn-share {
+			.sure-pre{
+				padding: 10px;
+			}
+			.sure-pre > span{
+				display: block;
+				border: 1px solid #755fc3;
+				color: #755fc3;
+				height: 50px;
+				line-height: 48px;
+				font-size: 18px;
+				text-align: center;
+				-webkit-border-radius: 5px;
+				border-radius: 5px;
+			}
+			.btns {
 				position: fixed;
 				bottom: 0;
 				left: 0;
-				background-color: #765fc3;
 				font-size: 18px;
 				color: #ffffff;
 				text-align: center;
@@ -94,9 +132,12 @@
 				border: 0;
 				padding: 0;
 				width: 100%;
-				-webkit-border-radius: 0;
-				-moz-border-radius: 0;
-				border-radius: 0;
+			}
+			.btns .sure{
+				background-color: #765fc3;
+			}
+			.btns .cancel{
+				background-color: #f14434;
 			}
 		</style>
 	</head>
@@ -134,7 +175,13 @@
 					<input class="flex-1" type="date" placeholder="请选择预约时间" />
 				</div>
 			</form>
-			<button class="btn-share">分享</button>
+			<div class="sure-pre">
+				<span>完成预约</span>
+			</div>
+			<div class="btns flex">
+				<div class="flex-1 sure">完成预约</div>
+				<div class="flex-1 cancel">放弃就诊</div>
+			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script>
