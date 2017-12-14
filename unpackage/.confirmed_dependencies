@@ -1,356 +1,452 @@
 {
-	"html/shop/list.html": {
-		"href": "html/shop/list.html",
-		"priority": 0,
-		"resources": [],
-		"refer": []
-	},
-	"html/login/forget_password.html": {
-		"href": "html/login/forget_password.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.min.js",
-			"js/app.js"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"html/login/setting.html": {
-		"href": "html/login/setting.html",
-		"resources": [
-			"js/mui.min.js",
-			"js/mui.view.js",
-			"libs/easymob-webim-sdk/jquery-1.11.1.js",
-			"libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
-			"libs/easymob-webim-sdk/json2.js",
-			"libs/easymob-webim-sdk/easemob.im-1.0.5.js",
-			"js/feedback.js",
-			"js/feedback-page.js",
-			"js/mui.locker.js",
-			"js/app.js",
-			"css/mui.min.css",
-			"css/feedback-page.css"
-		],
-		"refer": [
-			"html/login/login.html"
-		],
-		"priority": 0
-	},
-	"html/login/main.html": {
-		"href": "html/login/main.html",
-		"resources": [
-			"css/mui.min.css",
-			"js/mui.min.js",
-			"js/app.js"
-		],
-		"refer": [
-			"html/login/setting.html"
-		],
-		"priority": 0
-	},
-	"html/login/unlock.html": {
-		"href": "html/login/unlock.html",
-		"resources": [
-			"css/mui.min.css",
-			"js/mui.min.js",
-			"js/mui.locker.js",
-			"js/app.js"
-		],
-		"refer": [
-			"html/login/login.html",
-			"html/login/main.html"
-		],
-		"priority": 0
-	},
-	"html/login/login.html": {
-		"href": "html/login/login.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.min.js",
-			"js/mui.enterfocus.js",
-			"js/app.js",
-			"js/business/login-reg.js",
-			"images/login/qq.png",
-			"images/login/wx.png",
-			"js/utils.storages.js",
-			"js/utils.auth.js",
-			"js/utils.request.js",
-			"js/business/login.js"
-		],
-		"refer": [
-			"html/shop/list.html",
-			"html/login/forget_password.html",
-			"html/login/main.html",
-			"html/login/unlock.html",
-			"html/home/index.html",
-			"html/login/reg.html"
-		],
-		"priority": 0
-	},
-	"html/home/index.html": {
-		"href": "html/home/index.html",
-		"resources": [
-			"js/home/tab.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"fonts/mui.ttf",
-			"html/home/tab-webview-yanshi.html"
-		],
-		"refer": [
-			"html/home/tab-webview-yanshi.html",
-			"html/home/tab-webview-kuozhan.html"
-		],
-		"priority": 0
-	},
-	"html/home/tab-webview-kuozhan.html": {
-		"href": "html/home/tab-webview-kuozhan.html",
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/style.css",
-			"images/tab-kuozhan/bingli.png",
-			"images/tab-kuozhan/zhishiku.png",
-			"images/tab-kuozhan/shebei.png",
-			"images/tab-kuozhan/cailiao.png",
-			"images/tab-kuozhan/jiagong.png",
-			"images/tab-kuozhan/chuangyisheji.png",
-			"images/tab-kuozhan/zhuangshisheji.png",
-			"images/tab-kuozhan/juhui.png",
-			"images/tab-kuozhan/nianhui.png",
-			"images/tab-kuozhan/zhanhui.png",
-			"images/tab-kuozhan/zaixianketang.png",
-			"images/tab-kuozhan/peixun.png",
-			"images/tab-kuozhan/dushuhui.png"
-		],
-		"refer": [
-			"html/train/train-list.html",
-			"html/knowledge/list.html"
-		],
-		"priority": 0
-	},
-	"html/home/tab-webview-yanshi.html": {
-		"href": "html/home/tab-webview-yanshi.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.min.js"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"html/home/tab-webview-goutong.html": {
-		"href": "html/home/tab-webview-goutong.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.min.js",
-			"js/business/home-tab.js",
-			"images/tab-goutong/img1.png",
-			"images/tab-goutong/img2.png",
-			"images/tab-goutong/img3.png",
-			"images/tab-goutong/img4.png",
-			"images/tab-goutong/img5.png",
-			"images/tab-goutong/img6.png",
-			"fonts/iconfont.ttf",
-			"html/home/tab-webview-yanshi.html",
-			"js/utils.storages.js",
-			"js/utils.auth.js",
-			"js/utils.request.js",
-			"js/utils.category.js"
-		],
-		"refer": [
-			"html/home/tab-webview-kuozhan.html",
-			"html/home/tab-webview-yanshi.html",
-			"html/login/login.html",
-			"html/home/tab-webview-wode.html",
-			"html/video/vedio-list.html",
-			"html/project/project-list.html",
-			"html/video/video-list.html",
-			"html/project/project-index.html"
-		],
-		"priority": 0
-	},
-	"html/home/tab-webview-wode.html": {
-		"href": "html/home/tab-webview-wode.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.min.js",
-			"images/tab-wode/yqm.png",
-			"images/tab-wode/jhm.png",
-			"images/tab-wode/wdblx.png",
-			"images/tab-wode/bdblx.png",
-			"images/tab-wode/tk.png",
-			"images/tab-wode/fk.png",
-			"images/tab-wode/gy.png",
-			"images/tab-wode/msg.png",
-			"images/tab-wode/user_default.png",
-			"js/utils.storages.js",
-			"js/utils.auth.js",
-			"js/utils.request.js",
-			"js/utils.enums.js"
-		],
-		"refer": [
-			"html/login/login.html",
-			"html/my/my-message.html",
-			"html/my/follows.html",
-			"html/my/point.html",
-			"html/profile/my-home.html"
-		],
-		"priority": 0
-	},
-	"html/login/reg.html": {
-		"href": "html/login/reg.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.min.js",
-			"js/business/login-reg.js",
-			"js/utils.request.js"
-		],
-		"refer": [
-			"html/login/login.html"
-		],
-		"priority": 0
-	},
-	"html/video/vedio-list.html": {
-		"refer": [
-			"html/home/tab-webview-goutong.html"
-		],
-		"resources": []
-	},
-	"html/project/project-list.html": {
-		"href": "html/project/project-list.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.min.js",
-			"css/iconfont.css",
-			"images/project/edit.png",
-			"images/project/del.png",
-			"images/project/banner.png",
-			"js/utils.enums.js",
-			"js/utils.extend.js",
-			"js/utils.storages.js",
-			"js/utils.category.js",
-			"js/utils.auth.js",
-			"js/utils.request.js"
-		],
-		"refer": [
-			"html/project/project-add.html"
-		],
-		"priority": 0
-	},
-	"html/train/train-list.html": {
-		"href": "html/train/train-list.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.js",
-			"js/mui.pullToRefresh.material.js",
-			"images/my/bgy.png"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"html/video/video-list.html": {
-		"href": "html/video/video-list.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"images/tab-vedio/sc11.png",
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.js",
-			"js/mui.pullToRefresh.material.js",
-			"images/tab-vedio/sc10.png"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"html/project/project-index.html": {
-		"href": "html/project/project-index.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.min.js",
-			"images/project/body-bg.png",
-			"images/project/formleft.png",
-			"js/utils.storages.js"
-		],
-		"refer": [
-			"html/project/project-list.html"
-		],
-		"priority": 0
-	},
-	"html/my/my-message.html": {
-		"href": "html/my/my-message.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"images/my/date.png",
-			"images/my/message.png",
-			"js/mui.min.js",
-			"images/my/fstx.png"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"html/my/follows.html": {
-		"href": "html/my/follows.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"images/my/nans.png",
-			"images/my/fszreo.png",
-			"js/mui.min.js",
-			"images/my/fstx.png"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"html/my/point.html": {
-		"href": "html/my/point.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"images/my/bg.png",
-			"js/mui.min.js",
-			"images/my/xqimg.png"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"html/knowledge/list.html": {
-		"href": "html/knowledge/list.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"images/weibo/date.png",
-			"images/weibo/yj.png",
-			"images/weibo/weizhuan.png",
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.js",
-			"js/mui.pullToRefresh.material.js",
-			"images/weibo/zsk.png"
-		],
-		"refer": [],
-		"priority": 0
-	},
-	"html/project/project-add.html": {
-		"href": "html/project/project-add.html",
-		"resources": [
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.min.js",
-			"js/utils.storages.js",
-			"js/utils.auth.js",
-			"js/utils.request.js",
-			"images/project/jia.png"
-		],
-		"refer": [],
-		"priority": 0
-	}
+  "html/shop/list.html": {
+    "href": "html/shop/list.html",
+    "priority": 0,
+    "resources": [],
+    "refer": []
+  },
+  "html/login/forget_password.html": {
+    "href": "html/login/forget_password.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/app.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/login/setting.html": {
+    "href": "html/login/setting.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/mui.view.js",
+      "libs/easymob-webim-sdk/jquery-1.11.1.js",
+      "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
+      "libs/easymob-webim-sdk/json2.js",
+      "libs/easymob-webim-sdk/easemob.im-1.0.5.js",
+      "js/feedback.js",
+      "js/feedback-page.js",
+      "js/mui.locker.js",
+      "js/app.js",
+      "css/mui.min.css",
+      "css/feedback-page.css"
+    ],
+    "refer": [
+      "html/login/login.html"
+    ],
+    "priority": 0
+  },
+  "html/login/main.html": {
+    "href": "html/login/main.html",
+    "resources": [
+      "css/mui.min.css",
+      "js/mui.min.js",
+      "js/app.js"
+    ],
+    "refer": [
+      "html/login/setting.html"
+    ],
+    "priority": 0
+  },
+  "html/login/unlock.html": {
+    "href": "html/login/unlock.html",
+    "resources": [
+      "css/mui.min.css",
+      "js/mui.min.js",
+      "js/mui.locker.js",
+      "js/app.js"
+    ],
+    "refer": [
+      "html/login/login.html",
+      "html/login/main.html"
+    ],
+    "priority": 0
+  },
+  "html/login/login.html": {
+    "href": "html/login/login.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.enterfocus.js",
+      "js/app.js",
+      "js/business/login-reg.js",
+      "images/login/qq.png",
+      "images/login/wx.png",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/business/login.js",
+      "js/utils.config.js",
+      "images/login/weixin.png"
+    ],
+    "refer": [
+      "html/shop/list.html",
+      "html/login/forget_password.html",
+      "html/login/main.html",
+      "html/login/unlock.html",
+      "html/home/index.html",
+      "html/login/reg.html"
+    ],
+    "priority": 0
+  },
+  "html/home/index.html": {
+    "href": "html/home/index.html",
+    "resources": [
+      "js/home/tab.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "html/home/tab-webview-yanshi.html"
+    ],
+    "refer": [
+      "html/home/tab-webview-yanshi.html",
+      "html/home/tab-webview-kuozhan.html"
+    ],
+    "priority": 0
+  },
+  "html/home/tab-webview-kuozhan.html": {
+    "href": "html/home/tab-webview-kuozhan.html",
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "images/tab-kuozhan/bingli.png",
+      "images/tab-kuozhan/zhishiku.png",
+      "images/tab-kuozhan/shebei.png",
+      "images/tab-kuozhan/cailiao.png",
+      "images/tab-kuozhan/jiagong.png",
+      "images/tab-kuozhan/chuangyisheji.png",
+      "images/tab-kuozhan/zhuangshisheji.png",
+      "images/tab-kuozhan/juhui.png",
+      "images/tab-kuozhan/nianhui.png",
+      "images/tab-kuozhan/zhanhui.png",
+      "images/tab-kuozhan/zaixianketang.png",
+      "images/tab-kuozhan/peixun.png",
+      "images/tab-kuozhan/dushuhui.png"
+    ],
+    "refer": [
+      "html/train/train-list.html",
+      "html/knowledge/list.html",
+      "html/weibo/list.html",
+      "html/company/company_band.html"
+    ],
+    "priority": 0
+  },
+  "html/home/tab-webview-yanshi.html": {
+    "href": "html/home/tab-webview-yanshi.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/home/tab-webview-goutong.html": {
+    "href": "html/home/tab-webview-goutong.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/business/home-tab.js",
+      "images/tab-goutong/img1.png",
+      "images/tab-goutong/img2.png",
+      "images/tab-goutong/img3.png",
+      "images/tab-goutong/img4.png",
+      "images/tab-goutong/img5.png",
+      "images/tab-goutong/img6.png",
+      "fonts/iconfont.ttf",
+      "html/home/tab-webview-yanshi.html",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.category.js",
+      "js/utils.config.js"
+    ],
+    "refer": [
+      "html/home/tab-webview-kuozhan.html",
+      "html/home/tab-webview-yanshi.html",
+      "html/login/login.html",
+      "html/home/tab-webview-wode.html",
+      "html/video/vedio-list.html",
+      "html/project/project-list.html",
+      "html/video/video-list.html",
+      "html/project/project-index.html"
+    ],
+    "priority": 0
+  },
+  "html/home/tab-webview-wode.html": {
+    "href": "html/home/tab-webview-wode.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "images/tab-wode/yqm.png",
+      "images/tab-wode/jhm.png",
+      "images/tab-wode/wdblx.png",
+      "images/tab-wode/bdblx.png",
+      "images/tab-wode/tk.png",
+      "images/tab-wode/fk.png",
+      "images/tab-wode/gy.png",
+      "images/tab-wode/msg.png",
+      "images/tab-wode/user_default.png",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.enums.js",
+      "js/utils.config.js"
+    ],
+    "refer": [
+      "html/login/login.html",
+      "html/my/my-message.html",
+      "html/my/follows.html",
+      "html/my/point.html",
+      "html/profile/my-home.html",
+      "html/weibo/list.html",
+      "html/picture/picture-list.html"
+    ],
+    "priority": 0
+  },
+  "html/login/reg.html": {
+    "href": "html/login/reg.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/business/login-reg.js",
+      "js/utils.request.js",
+      "js/utils.config.js"
+    ],
+    "refer": [
+      "html/login/login.html"
+    ],
+    "priority": 0
+  },
+  "html/video/vedio-list.html": {
+    "refer": [
+      "html/home/tab-webview-goutong.html"
+    ],
+    "resources": []
+  },
+  "html/project/project-list.html": {
+    "href": "html/project/project-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "css/iconfont.css",
+      "images/project/edit.png",
+      "images/project/del.png",
+      "images/project/banner.png",
+      "js/utils.enums.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js"
+    ],
+    "refer": [
+      "html/project/project-add.html",
+      "html/project/project-bill-edit.html"
+    ],
+    "priority": 0
+  },
+  "html/train/train-list.html": {
+    "href": "html/train/train-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "images/my/bgy.png",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/video/video-list.html": {
+    "href": "html/video/video-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/tab-vedio/sc11.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "images/tab-vedio/sc10.png",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/project/project-index.html": {
+    "href": "html/project/project-index.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "images/project/body-bg.png",
+      "images/project/formleft.png",
+      "js/utils.storages.js"
+    ],
+    "refer": [
+      "html/project/project-list.html"
+    ],
+    "priority": 0
+  },
+  "html/my/my-message.html": {
+    "href": "html/my/my-message.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/my/date.png",
+      "images/my/message.png",
+      "js/mui.min.js",
+      "images/my/fstx.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/my/follows.html": {
+    "href": "html/my/follows.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/my/nans.png",
+      "images/my/fszreo.png",
+      "js/mui.min.js",
+      "images/my/fstx.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/my/point.html": {
+    "href": "html/my/point.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/my/bg.png",
+      "js/mui.min.js",
+      "images/my/xqimg.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/knowledge/list.html": {
+    "href": "html/knowledge/list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/weibo/date.png",
+      "images/weibo/yj.png",
+      "images/weibo/weizhuan.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "images/weibo/zsk.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/project/project-add.html": {
+    "href": "html/project/project-add.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "images/project/jia.png",
+      "js/utils.uploadImg.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/profile/my-home.html": {
+    "href": "html/profile/my-home.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/profile/sc15.png",
+      "images/profile/sc19.jpg",
+      "images/profile/sc20.jpg",
+      "images/profile/sc21.jpg",
+      "images/profile/sc22.jpg",
+      "js/mui.min.js",
+      "images/profile/sc16.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/weibo/list.html": {
+    "href": "html/weibo/list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/weibo/img1.png",
+      "images/weibo/img2.png",
+      "images/weibo/img3.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "images/weibo/tx.png",
+      "images/weibo/img.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/picture/picture-list.html": {
+    "href": "html/picture/picture-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/tab-vedio/bg.png",
+      "images/tab-vedio/bg1.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/company/company_band.html": {
+    "href": "html/company/company_band.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/profile/ss.png",
+      "js/mui.min.js",
+      "images/profile/sc8.png",
+      "images/profile/sc9.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/project/project-bill-edit.html": {
+    "href": "html/project/project-bill-edit.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js"
+    ],
+    "refer": [],
+    "priority": 0
+  }
 }

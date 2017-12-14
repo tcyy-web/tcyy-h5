@@ -186,7 +186,7 @@
 				font-size: 18px;
 				color: #f34336;
 			}
-			.bill-item > p span {
+			.bill-item > p span:last-child {
 				font-size: 14px;
 				color: #bbbbbb;
 				margin-left: 5px;
@@ -498,7 +498,7 @@
   										<p>编号：01by</p>
   										<p class="flex-1">牙齿修复</p>
   									</div>
-  									<p>￥318<span>元</span></p>
+  									<p>￥<span>318</span><span>元</span></p>
   									<div class="bill-btn flex">
   										<span class="flex-1 edit">修改</span>
   										<span class="flex-1 del">删除</span>
@@ -515,7 +515,7 @@
   										<p>编号：01by</p>
   										<p class="flex-1">牙齿修复</p>
   									</div>
-  									<p>￥318<span>元</span></p>
+  									<p>¥<span>318</span><span>元</span></p>
   									<div class="bill-add"></div>
   								</div>
   							</li>
@@ -529,36 +529,36 @@
 			</div>
 			<div id="shop-car-box" class="shop-car">
 				<div id="shop-car" class="sc-tips flex flex-col-center flex-row-center">
-					<p>18+</p>
+					<p id="shopCarTotal">0</p>
 					<img src="../../images/project/edit.png"/>
 				</div>
 				<div class="sc-items">
 					<div class="sc-title">
 						<span>治疗清单</span>
-						<div class="sc-clear">
+						<div id="shopCarClear" class="sc-clear">
 							<img src="../../images/project/del.png"/>
 							<span>清空清单</span>
 						</div>
 					</div>
-					<div class="sc-box">
-						<div class="sc-item">
+					<div id="shopCarList" class="sc-box">
+						<!--<div class="sc-item">
 							<div class="clearFix">
-								<p class="name">口腔修复口腔修复口腔修复口腔修复口腔修复口腔修复</p>
-								<p class="money">￥213</p>
+								<p class="name">口腔修复</p>
+								<p class="money">￥0</p>
 								<div class="tools flex flex-row-center">
 									<div class="item item-jian"></div>
-									<p class="flex-1">99</p>
+									<p class="flex-1">0</p>
 									<div class="item item-jia"></div>
 								</div>
 							</div>
-						</div>
+						</div>-->
 					</div>
 				</div>
 				<div class="sc-total">
 					<div class="sc-money">
 						<span class="f1">共</span>
 						<span>￥</span>
-						<span>152</span>
+						<span id="shopCarPriceTotal">0</span>
 						<span class="f1">元</span>
 					</div>
 					<div id="submitCar" class="btn-submit"><span>提交</span></div>
@@ -577,6 +577,7 @@
 		<script src="../../js/utils.auth.js"></script>
 		<script src="../../js/utils.request.js"></script>
 		<script>
+		  // 登录刷新
       window.addEventListener('refresh', function(e){
           location.reload();
       });
@@ -587,13 +588,122 @@
 				    url: './project-add.html'
 				  },{
             id:'projectBillEdit',
-            url: './project-bill.html'
+            url: './project-bill-edit.html'
 				  }]
 				});
 				$.plusReady(function() {
+				  // 每页条数
 				  var limit = 5;
+				  // 当前分类
 				  var groupid = 0;
+				  // 分页请求参数
 				  var listRequest = {};
+				  /***---------购物车业务 begin-------*/
+				  var carList = [];
+				  // 价钱合计
+				  var priceTotal = 0;
+				  // 清单提交成功
+          window.addEventListener('bill-success', function(e){
+            console.log(1111111);
+          });
+          // 购物车容器
+          var $shopCarBox = doc.querySelector('#shop-car-box');
+          // 合计价格容器
+          var $shopCarPriceTotal = doc.getElementById('shopCarPriceTotal');
+          // 清单容器
+          var $shopCarList = doc.getElementById('shopCarList');
+          // 展开按钮
+          var $shopCar = doc.getElementById('shop-car');
+          // 购物车项目合计容器
+          var $shopCarTotal = doc.getElementById('shopCarTotal');
+          // 购物车展开
+          $shopCar.addEventListener('tap', function(e) {
+            if ($shopCarBox.classList.contains('active')) {
+              $shopCarBox.classList.remove('active');
+            } else {
+              $shopCarBox.classList.add('active');
+            }
+          });
+          // 清空购物车
+          var $shopCarClear = doc.getElementById('shopCarClear');
+          $shopCarClear.addEventListener('tap', function(e) {
+            carList.length = 0;
+            priceTotal = 0;
+            $shopCarTotal.innerText = 0;
+            $shopCarPriceTotal.innerText = priceTotal; 
+            $shopCarList.innerHTML = '';
+            $shopCarBox.classList.remove('active');
+          });          
+				  // 新增项目到购物车
+          var addShopCar = function(item) {
+            var i = carList.find(function(i){
+              return i.pid === item.id;
+            });
+            if (i) {
+              i.num = i.num + 1;
+              return;
+            } else {
+               carList.push({
+                title: item.title,
+                price: item.price,
+                pid: item.id,
+                num: 1
+              });             
+            }
+            $shopCarTotal.innerText = carList.length > 99 ? '99+' : carList.length;
+          }
+          // 提交购物车
+          var submitCar = doc.getElementById('submitCar');
+          var projectBillEditWebview = null;
+          submitCar.addEventListener('tap', function(event) {
+            if (carList.length <= 0) {
+              $.toast('请选择项目');
+              return;
+            }
+            if (!projectBillEditWebview) {
+              projectBillEditWebview = plus.webview.getWebviewById('projectBillEdit');
+            }
+            $.fire(projectBillEditWebview,'bill-refresh',{
+              list: carList
+            });
+            $.openWindow({
+              id: 'projectBillEdit'
+            });
+            $shopCarBox.classList.remove('active');
+          });
+          /***---------购物车业务 end-------*/
+				  // 修改价格
+				  var editPrice = function(id, value, callback){
+				    if (!(id > 0)) {
+				      return;
+				    }
+				    if (isNaN(value)) {
+				      return;
+				    }
+            request.loginAjax('project/editPrice',{
+              data: {
+                price:value,
+                id:id
+              }
+            },function(data) {
+              callback();
+            });				    
+				  }
+          // 删除项目
+          var delProject = function(id, callback){
+            if (!(id > 0)) {
+              return;
+            }
+            request.loginAjax('project/del',{
+              data: {
+                id:id
+              }
+            },function(data) {
+              callback();
+            });           
+          }				  
+				  
+				  // 画每个项目
           var createFragment = function(parent, data) {
             var li = doc.createElement('li');
             li.className = 'mui-table-view-cell';
@@ -613,18 +723,59 @@
             billDiv.append(titleDiv);
             // 价格
             var priceP = doc.createElement('p');
-            priceP.innerHTML = '¥{0}<span>元</span>'.format(data.price);
+            priceP.innerHTML = '¥';
+            var priceSpan = doc.createElement('span');
+            priceSpan.innerText = data.price;
+            priceP.append(priceSpan);
+            var unitSpan = doc.createElement('span');
+            unitSpan.innerText = '元';
+            priceP.append(unitSpan);
             billDiv.append(priceP);
+            //按钮
+            var btnDiv = doc.createElement('div');
+            btnDiv.className = 'bill-btn flex';
+            var edit = doc.createElement('span');
+            edit.className = 'flex-1 edit';
+            edit.innerText = '修改';
+            edit.addEventListener('tap', function(e){
+              $.prompt(data.title, '请输入价格', '修改价格', null,function(obj){
+                if (obj.index === 1){
+                  var _value = parseFloat(obj.value);
+                  editPrice(data.id, _value, function(){
+                    priceSpan.innerText = _value.toFixed(2); 
+                  });
+                }
+              });
+            });
+            btnDiv.append(edit);
+            if (data.system !== -1){
+                var del = doc.createElement('span');
+                del.className = 'flex-1 del';
+                del.innerText = '删除';
+                del.addEventListener('tap', function(e){
+                  var _msg = '确认删除项目“{0}”？'.format(data.title);
+                  $.confirm(_msg,'删除项目','',function(ok){
+                    if (ok.index === 1) {
+                      delProject(data.id, function(){
+                        li.remove();
+                      });
+                    }
+                  });
+                });
+                btnDiv.append(del);     
+            }
+            billDiv.append(btnDiv);
             // 添加
             var addDiv = doc.createElement('div');
             addDiv.className = 'bill-add';
             addDiv.addEventListener('tap', function(event){
-              $.toast('添加');
+              addShopCar(data);
             });
             billDiv.append(addDiv);
             li.append(billDiv);
             parent.append(li);
           };
+          // 获取列表
 				  var getProjects = function(page, callback) {
             if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
               return;
@@ -730,15 +881,6 @@
           // 下拉刷新 上拉加载
           $.each(doc.querySelectorAll('.content-box .mui-control-content'), function(index, pullRefreshEl) {
             $(pullRefreshEl).pullToRefresh({
-//            down: {
-//              callback: function() {
-//                var self = this;
-//                getProjects(1, function() {
-//                  self.endPullDownToRefresh();
-//                  $(pullRefreshEl).pullToRefresh().refresh(true);
-//                });
-//              }
-//            },
               up: {
                 callback: function() {
                   var self = this;
@@ -754,29 +896,6 @@
                   self.endPullUpToRefresh(true);
                 }
               }
-            });
-          });
-				  // 购物车
-          var shopCarBox = doc.querySelector('#shop-car-box');
-          var shopCar = doc.getElementById('shop-car');
-          shopCar.addEventListener('tap', function(e) {
-            if (shopCarBox.classList.contains('active')) {
-              shopCarBox.classList.remove('active');
-            } else {
-              shopCarBox.classList.add('active');
-            }
-          });
-          // 提交购物车
-          var submitCar = doc.getElementById('submitCar');
-          var projectBillEditWebview = null;
-          submitCar.addEventListener('tap', function(event) {
-            if (!projectBillEditWebview) {
-              projectBillEditWebview = plus.webview.getWebviewById('projectBillEdit');
-            }
-            $.fire(projectBillEditWebview,'project-bill',{
-            });
-            $.openWindow({
-              id: 'projectBillEdit'
             });
           });
 				});
