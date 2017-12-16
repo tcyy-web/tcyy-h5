@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>计划详情</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+			::-moz-placeholder {
+				color: #000000;
+			}
+			:-ms-input-placeholder {
+				color: #000000;
+			}
+			::-webkit-input-placeholder {
+				color: #000000;
+			}
+			body{
+				background-color: #ffffff;
+			}
+			.mui-content {
+				height: auto;
+				padding-bottom: 60px;
+				background-color: #ffffff;
+			}
+			.bill-item {
+				position: relative;
+				padding:10px;
+				line-height: 30px;
+				background-color: #ffffff;
+			}
+			.bill-item:after{
+				position: absolute;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    height: 1px;
+		    content: '';
+		    -webkit-transform: scaleY(.5);
+		    transform: scaleY(.5);
+		    background-color: #d6d6d6;
+			}
+			.bill-item p:first-child {
+				text-align: left;
+				position: relative;
+			}
+			.bill-item p:first-child:before {
+				position: absolute;
+				right: 0;
+				top: 5px;
+				content: '';
+				width: 1px;
+				height: 20px;
+				background-color: #d6d6d6;
+			}
+			.bill-item p {
+				text-align: center;
+				color: #292929;
+			}
+			.bill-item p:last-child {
+				text-align: right;
+				font-size: 18px;
+				color: #f34336;
+			}
+			.bill-item p:last-child span {
+				font-size: 14px;
+				color: #bbbbbb;
+			}
+			form {
+				margin-top: 10px;
+				margin-bottom: 10px;
+			}
+			.form-item {
+				position: relative;
+				padding:0 10px;
+				background-color: #ffffff;
+				height: 50px;
+				line-height: 50px;
+			}
+			.form-item:after{
+				position: absolute;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    height: 1px;
+		    content: '';
+		    -webkit-transform: scaleY(.5);
+		    transform: scaleY(.5);
+		    background-color: #d6d6d6;
+			}
+			.form-item label {
+				width: 60px;
+				font-size: 14px;
+				text-align: left;
+			}
+      .form-item > p{
+        color: #000000;
+      }
+			.form-item input {
+				border: 0;
+				padding: 0;
+				margin: 0;
+				height: 100%;
+				color: #000000;
+				font-size: 14px;
+				background-color: transparent;
+			}
+			.sure-pre{
+				padding: 10px;
+			}
+			.sure-pre > span{
+				display: block;
+				border: 1px solid #755fc3;
+				color: #755fc3;
+				height: 50px;
+				line-height: 48px;
+				font-size: 18px;
+				text-align: center;
+				-webkit-border-radius: 5px;
+				border-radius: 5px;
+			}
+			.btns {
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				font-size: 18px;
+				color: #ffffff;
+				text-align: center;
+				height: 60px;
+				line-height: 60px;
+				border: 0;
+				padding: 0;
+				width: 100%;
+			}
+			.btns .sure{
+				background-color: #765fc3;
+			}
+			.btns .cancel{
+				background-color: #f14434;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">计划详情</h1>
+		</header>
+		<div class="mui-content">
+			<div class="bill-item flex">
+				<p class="flex-1">编号：01by</p>
+				<p class="flex-1">牙齿修复</p>
+				<p class="flex-1">￥318<span>元</span></p>
+			</div>
+			<form>
+				<div class="flex form-item">
+					<label>姓名：</label>
+					<p class="flex-1"></p>
+				</div>
+				<div class="flex form-item">
+					<label>性别：</label>
+					<p class="flex-1"></p>
+				</div>
+				<div class="flex form-item">
+					<label>年龄：</label>
+					<p class="flex-1"></p>
+				</div>
+				<div class="flex form-item">
+					<label>电话：</label>
+					<p class="flex-1"></p>
+				</div>
+				<div class="flex form-item">
+					<label>预约：</label>
+					<p class="flex-1"></p>
+				</div>
+			</form>
+			<div class="sure-pre">
+				<span>完成预约</span>
+			</div>
+			<div class="btns flex">
+				<div class="flex-1 sure">完成预约</div>
+				<div class="flex-1 cancel">取消就诊</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

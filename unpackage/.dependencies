@@ -1,45 +1,27 @@
 {
-  "html/project/project-bill-edit.html": {
-    "href": "html/project/project-bill-edit.html",
+  "html/project/project-plan-detail.html": {
+    "href": "html/project/project-plan-detail.html",
     "resources": [
-      "css/mui.picker.min.css",
-      "css/mui.poppicker.css",
-      "js/mui.picker.min.js",
-      "js/mui.poppicker.js",
-      "js/utils.config.js",
-      "js/utils.extend.js",
-      "js/utils.enums.js",
-      "js/utils.storages.js",
-      "js/utils.auth.js",
-      "js/utils.request.js"
-    ],
-    "priority": 6
-  },
-  "html/project/project-plan-list.html": {
-    "href": "html/project/project-plan-list.html",
-    "resources": [
-      "css/iconfont.css",
-      "fonts/iconfont.woff",
-      "fonts/iconfont.ttf",
-      "fonts/iconfont.svg",
       "css/mui.min.css",
       "fonts/mui.ttf",
       "css/style.css",
       "images/profile/xg.jpg",
-      "js/mui.min.js",
-      "js/utils.storages.js",
-      "js/utils.auth.js",
-      "js/utils.uploadImg.js",
-      "js/utils.request.js"
+      "js/mui.min.js"
     ],
     "priority": 7
   },
-  "html/project/project-list.html": {
-    "href": "html/project/project-list.html",
-    "resources": [],
-    "refer": [
-      "html/project/project-plan-list.html"
+  "html/project/project-plan-list.html": {
+    "href": "html/project/project-plan-list.html",
+    "resources": [
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.enums.js"
     ],
-    "priority": 5
+    "refer": [
+      "html/project/project-plan-detail.html"
+    ],
+    "priority": 7
   }
 }

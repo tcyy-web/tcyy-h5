@@ -250,7 +250,7 @@
 						showMsg: false
 					}, function(data) {
 					  // 处理页面绑定
-             if (data && data.data && data.data.length > 0) {
+             if (data && data.data) {
                var currentContent = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
                if (page === 1) {
                  currentContent.innerHTML = '';

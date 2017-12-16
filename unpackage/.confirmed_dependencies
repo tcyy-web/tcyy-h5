@@ -470,7 +470,24 @@
       "js/utils.storages.js",
       "js/utils.auth.js",
       "js/utils.uploadImg.js",
-      "js/utils.request.js"
+      "js/utils.request.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.enums.js"
+    ],
+    "refer": [
+      "html/project/project-plan-detail.html"
+    ],
+    "priority": 0
+  },
+  "html/project/project-plan-detail.html": {
+    "href": "html/project/project-plan-detail.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js"
     ],
     "refer": [],
     "priority": 0

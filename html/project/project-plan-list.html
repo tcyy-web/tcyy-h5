@@ -12,7 +12,7 @@
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
 		  .mui-pull-right{
-  	     margin-right: -10px;
+  	       margin-right: -10px;
 		    margin-left: -10px;
 		    padding: 12px;
 		  }
@@ -51,6 +51,11 @@
 				margin-right: 2px;
 			}
 		</style>
+		<style>
+		  .mui-pull-top-tips {
+        z-index: 10;
+      }
+		</style>
 	</head>
 
 	<body>
@@ -59,17 +64,25 @@
 			<a class="mui-pull-right">筛选</a>
 			<h1 class="mui-title">项目计划列表</h1>
 		</header>
-		<div class="mui-content mui-scroll-wrapper">
-		  <div id="pullrefresh"  class="mui-scroll">
+		<div class="mui-content">
+		  <div class="mui-fullscreen">
+		    <div class="mui-scroll-wrapper">
+		      <div id="pullrefresh" class="mui-scroll">
+		        <div id="contentBox"></div>
+		      </div>
+		    </div>
+		  </div>
+		  <!--<div id="pullrefresh" class="mui-scroll">
+		    <ul id="contentBox" class="mui-table-view"></ul>
 		    <div id="contentBox">
-      			<!--<div class="flex form-item">
+      			<div class="flex form-item">
       				<p class="flex-1 flex flex-row-center">刘德华</p>
       				<p class="flex-1 flex flex-row-center">口腔内科</p>
       				<p class="flex-1 flex flex-row-center">2000-10-10 00:00</p>
       				<p class="flex flex-row-center"><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
-      			</div>-->
+      			</div>
     			</div>
-			</div>
+			</div>-->
 		</div>
 		<script src="../../js/mui.min.js"></script>
     <script src="../../js/mui.pullToRefresh.js"></script>
@@ -82,15 +95,21 @@
     <script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
-				$.init({});
+				$.init({
+				  preloadPages:[{
+            id:'projectPlanDetail',
+            url: './project-plan-detail.html'
+          }]
+				});
 				$.plusReady(function() {
           // 分类id
           var groupid = 0;
           var page = 1;
-          var limit = 10;
+          var limit = 20;
           var more = true;
           var $pullrefresh = $('#pullrefresh');
           var $contentBox = doc.getElementById('contentBox');
+          var projectPlanDetailWebView = null;
           var paitItem = function(data) {
             var div = doc.createElement('div');
             div.className = 'flex form-item';
@@ -99,6 +118,17 @@
             p.className = 'flex flex-row-center';
             p.innerHTML = '<i class="iconfont icon-cshy-shizhong"></i>{0}'.format(enums.planStatus[data.status]);
             div.append(p);
+            div.addEventListener('tap', function(e) {
+              if (!projectPlanDetailWebView) {
+                projectPlanDetailWebView = plus.webview.getWebviewById('projectPlanDetail');
+              }
+              $.fire(projectPlanDetailWebView,'project-planid',{
+                id:data.id
+              });
+              $.openWindow({
+                id: 'projectPlanDetail'
+              });
+            })
             $contentBox.append(div);
           }
           var getList = function(callback) {
@@ -114,7 +144,7 @@
               showMsg: false
             },function(data) {
                 // 处理页面绑定
-               if (data && data.data && data.data.length > 0) {
+               if (data && data.data) {
                  if (page === 1) {
                    $contentBox.innerHTML = '';
                  }

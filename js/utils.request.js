@@ -50,9 +50,7 @@
                     if (data.header.msg && defaults.showMsg === true) {
                       mui.toast(data.header.msg);
                     }
-                    if (typeof successCallback === 'function') {
-                      successCallback(data.body);
-                    }
+                    
                     break;
                   case 5001:
                     mui.toast(data.header.msg || '获取数据失败');
@@ -68,6 +66,9 @@
                     break;
                 }
               }
+            }
+            if (typeof successCallback === 'function') {
+              successCallback(data.body);
             }
           } else {
             if (typeof successCallback === 'function') {
