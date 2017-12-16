@@ -252,7 +252,8 @@
     ],
     "refer": [
       "html/project/project-add.html",
-      "html/project/project-bill-edit.html"
+      "html/project/project-bill-edit.html",
+      "html/project/project-plan-list.html"
     ],
     "priority": 0
   },
@@ -444,7 +445,32 @@
     "resources": [
       "css/mui.min.css",
       "css/style.css",
-      "js/mui.min.js"
+      "js/mui.min.js",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "js/mui.picker.min.js",
+      "js/mui.poppicker.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.enums.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/project/project-plan-list.html": {
+    "href": "html/project/project-plan-list.html",
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.uploadImg.js",
+      "js/utils.request.js"
     ],
     "refer": [],
     "priority": 0

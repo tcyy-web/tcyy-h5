@@ -8,6 +8,8 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/mui.picker.min.css">
+		<link rel="stylesheet" href="../../css/mui.poppicker.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
 			::-moz-placeholder {
@@ -81,6 +83,17 @@
 				height: 50px;
 				line-height: 50px;
 			}
+			.form-item:first-child:before{
+        position: absolute;
+        right: 0;
+        top: 0;
+        left: 0;
+        height: 1px;
+        content: '';
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5);
+        background-color: #d6d6d6;			  
+			}
 			.form-item:after{
 				position: absolute;
 		    right: 0;
@@ -105,6 +118,9 @@
 				color: #000000;
 				font-size: 14px;
 				background-color: transparent;
+			}
+			.form-item > p{
+			  color: #000000;
 			}
 			.btns {
 				position: fixed;
@@ -135,63 +151,159 @@
 		</header>
 		<div class="mui-content">
 		  <div id="listBox">
-    			<div class="bill-item flex">
+    			<!--<div class="bill-item flex">
     				<p class="flex-1">编号：01by</p>
     				<p class="flex-1">牙齿修复</p>
-    				<p class="flex-1">￥318<span>元</span></p>
-    			</div>
+    				<p class="flex-1">￥318.00<span>元</span></p>
+    			</div>-->
 			</div>
 			<form>
 				<div class="flex form-item">
 					<label>姓名：</label>
-					<input class="flex-1" type="text" placeholder="请输入编号" />
+					<input id="name" class="flex-1" type="text" placeholder="请输入姓名" />
 				</div>
 				<div class="flex form-item">
 					<label>性别：</label>
-					<input class="flex-1" type="text" placeholder="请选择性别" />
+					<p id="showGenderPicker" class="flex-1">请选择性别</p>
 				</div>
 				<div class="flex form-item">
 					<label>年龄：</label>
-					<input class="flex-1" type="number" placeholder="请输入金额" />
+					<input id="age" class="flex-1" type="number" placeholder="请输入年龄" />
 				</div>
 				<div class="flex form-item">
 					<label>电话：</label>
-					<input class="flex-1" type="number" placeholder="请输入电话额" />
+					<input id="phone" class="flex-1" type="number" placeholder="请输入电话" />
 				</div>
 				<div class="flex form-item">
 					<label>预约：</label>
-					<input class="flex-1" type="date" placeholder="请选择预约时间" />
+					<p id="booktime" class="flex-1">请选择预约时间</p>
 				</div>
 			</form>
 			<div class="btns flex">
-				<div class="flex-1 sure">提交</div>
+				<div id="submit" class="flex-1 sure">提交</div>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+    <script src="../../js/utils.config.js"></script>
+    <script src="../../js/utils.extend.js"></script>
+    <script src="../../js/utils.enums.js"></script>
+    <script src="../../js/utils.storages.js" ></script>
+    <script src="../../js/utils.auth.js"></script>
+    <script src="../../js/utils.request.js"></script>		
 		<script>
 			(function($, doc) {
-				$.init({
-          beforeback: function() {
-    　　　　 //获得父页面的webview
-            var parent = plus.webview.currentWebview().opener();
-            $.fire(parent, 'bill-success');
-            //返回true,继续页面关闭逻辑
-            return true;
-          }
-				});
+				$.init();
 				$.plusReady(function() {
+				  var groupid = 0;
 				  var list = [];
 				  var $listBox = doc.getElementById('listBox');
+				  var $submit = doc.getElementById('submit');
+				  // 
+				  var sex = null;
+          var $sex = doc.getElementById('showGenderPicker');
+          var $name = doc.getElementById('name');
+          var $age = doc.getElementById('age');
+          var $phone = doc.getElementById('phone');
+          var booktime = null;
+          var $booktime = doc.getElementById('booktime');
+				  // 画清单每项
+          var paintItem = function(data) {
+            var boxDiv = doc.createElement('div');
+            boxDiv.className = 'bill-item flex';
+            var _p = eval(data.num + '*' + data.price);
+            boxDiv.innerHTML = '<p class="flex-1">{0}</p><p class="flex-1">{1}</p><p class="flex-1">￥{2}<span>元</span></p>'.format(data.number,data.title,_p.toFixed(2));
+            $listBox.append(boxDiv);
+          }
+          // 更新清单
 				  var refreshList = function(){
 				    $listBox.innerHTML = '';
 				    $.each(list, function(index, i) {
-				    	 
+				    	 paintItem(i);
 				    });
 				  }
 	        // 清单更新
           window.addEventListener('bill-refresh', function(e){
              list = e.detail.list;
+             groupid = e.detail.groupid;
              refreshList();
+             $name.value = '';
+             sex = null;
+             $sex.innerText = '请选择性别';
+             $age.value = '';
+             $phone.value = '';
+             booktime = null;
+             $booktime.innerText = '请选择预约时间';
+          });
+          // 提交清单
+          //性别
+          var gender = [];
+          for (var key in enums.sex) {
+            gender.push({
+              value: key,
+              text: enums.sex[key]
+            })
+          }
+          var genderPicker = new $.PopPicker();
+          genderPicker.setData(gender);
+          $sex.addEventListener('tap', function(event) {
+            genderPicker.show(function(items) {
+              sex = items[0].value;
+              $sex.innerText = items[0].text;
+            });
+          }, false);
+          // 预约时间
+          var datepicer = new $.DtPicker({});
+          $booktime.addEventListener('tap', function(event) {
+            datepicer.show(function(rs) {
+              $booktime.innerText = rs.text;
+              booktime = rs.text;
+            });
+          }, false);          
+          $submit.addEventListener('tap', function(e) {
+            var name = $name.value.trim();
+            var age = $age.value.trim();
+            var phone = $phone.value.trim();
+            if (list.length <= 0) {
+              return;
+            }
+            if (name === '') {
+              $.toast('请输入姓名');
+              return;
+            }
+            if (sex === null) {
+              $.toast('请选择性别');
+              return;
+            }     
+            if (age === '') {
+              $.toast('请输入年龄');
+              return;
+            }   
+            if (phone === '') {
+              $.toast('请输入电话');
+              return;
+            } 
+            if (booktime === null) {
+              $.toast('请选择预约时间');
+              return;
+            }
+            request.loginAjax('project/saveplan', {
+              data: {
+                groupid: groupid,
+                name: name,
+                sex: sex,
+                age: age,
+                phone: phone,
+                booktime: booktime,
+                data: list
+              }
+            }, function() {
+              //获得父页面的webview
+              var parent = plus.webview.currentWebview().opener();
+              $.fire(parent, 'bill-success');
+              $.back();
+            });
           });
 				});
 			}(mui, document));

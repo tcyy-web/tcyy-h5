@@ -689,7 +689,8 @@
 	      "priority": 3,
 	      "refer": [
 	        "html/project/project-add.html",
-	        "html/project/project-bill-edit.html"
+	        "html/project/project-bill-edit.html",
+	        "html/project/project-plan-list.html"
 	      ]
 	    },
 	    "html/train/train-list.html": {
@@ -846,7 +847,8 @@
 	        "js/mui.min.js",
 	        "images/profile/sc16.png"
 	      ],
-	      "priority": 1
+	      "priority": 1,
+	      "refer": []
 	    },
 	    "html/weibo/list.html": {
 	      "href": "html/weibo/list.html",
@@ -864,7 +866,8 @@
 	        "images/weibo/tx.png",
 	        "images/weibo/img.png"
 	      ],
-	      "priority": 5
+	      "priority": 5,
+	      "refer": []
 	    },
 	    "html/picture/picture-list.html": {
 	      "href": "html/picture/picture-list.html",
@@ -879,7 +882,8 @@
 	        "js/mui.pullToRefresh.js",
 	        "js/mui.pullToRefresh.material.js"
 	      ],
-	      "priority": 6
+	      "priority": 6,
+	      "refer": []
 	    },
 	    "html/company/company_band.html": {
 	      "href": "html/company/company_band.html",
@@ -893,7 +897,8 @@
 	        "images/profile/sc8.png",
 	        "images/profile/sc9.png"
 	      ],
-	      "priority": 4
+	      "priority": 4,
+	      "refer": []
 	    },
 	    "html/project/project-bill-edit.html": {
 	      "href": "html/project/project-bill-edit.html",
@@ -902,9 +907,39 @@
 	        "fonts/mui.ttf",
 	        "css/style.css",
 	        "images/profile/xg.jpg",
-	        "js/mui.min.js"
+	        "js/mui.min.js",
+	        "css/mui.picker.min.css",
+	        "css/mui.poppicker.css",
+	        "js/mui.picker.min.js",
+	        "js/mui.poppicker.js",
+	        "js/utils.config.js",
+	        "js/utils.extend.js",
+	        "js/utils.enums.js",
+	        "js/utils.storages.js",
+	        "js/utils.auth.js",
+	        "js/utils.request.js"
 	      ],
-	      "priority": 6
+	      "priority": 6,
+	      "refer": []
+	    },
+	    "html/project/project-plan-list.html": {
+	      "href": "html/project/project-plan-list.html",
+	      "resources": [
+	        "css/iconfont.css",
+	        "fonts/iconfont.woff",
+	        "fonts/iconfont.ttf",
+	        "fonts/iconfont.svg",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "images/profile/xg.jpg",
+	        "js/mui.min.js",
+	        "js/utils.storages.js",
+	        "js/utils.auth.js",
+	        "js/utils.uploadImg.js",
+	        "js/utils.request.js"
+	      ],
+	      "priority": 7
 	    }
 	  },
 	  "idle": {
@@ -1076,7 +1111,6 @@
 	      "html/company/list.html",
 	      "thmo/Public/master/tooth/12.png",
 	      "html/profile/my-info.html",
-	      "html/project/project-plan-list.html",
 	      "thmo/Public/master/models/48.obj",
 	      "html/upload/fonts/fontawesome-webfont.ttf",
 	      "images/profile/sc10.png",

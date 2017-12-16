@@ -15,6 +15,11 @@
 			7: 'iconfont icon-kouqiangzhengji',
 			8: 'iconfont icon-kouqiangzhongzhi'
 		},
+		planStatus: {
+		  1: '等待就诊',
+		  2: '未就诊',
+		  3: '已就诊'
+		}
 //		getEnumLabel: function(type, key) {
 //			var _this = this;
 //			if (_this[type]) {

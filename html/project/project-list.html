@@ -21,7 +21,7 @@
 		  .mui-pull-right{
   	    margin-right: -10px;
 		    margin-left: -10px;
-		    padding: 10px;
+		    padding: 12px;
 		  }
 			.mui-content {
 				position:relative;
@@ -456,7 +456,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<a class="mui-pull-right">
+			<a id="projectPlanList" class="mui-pull-right">
 				计划列表
 			</a>
 			<h1 class="mui-title">项目</h1>
@@ -558,7 +558,7 @@
 					<div class="sc-money">
 						<span class="f1">共</span>
 						<span>￥</span>
-						<span id="shopCarPriceTotal">0</span>
+						<span id="shopCarPriceTotal">0.00</span>
 						<span class="f1">元</span>
 					</div>
 					<div id="submitCar" class="btn-submit"><span>提交</span></div>
@@ -589,6 +589,9 @@
 				  },{
             id:'projectBillEdit',
             url: './project-bill-edit.html'
+				  },{
+				    id:'projectPlanList',
+				    url: './project-plan-list.html'
 				  }]
 				});
 				$.plusReady(function() {
@@ -598,14 +601,41 @@
 				  var groupid = 0;
 				  // 分页请求参数
 				  var listRequest = {};
+				  // 跳转计划列表
+				  
+          var $projectPlanList = doc.getElementById('projectPlanList');
+          var projectPlanListWebview = null;
+          $projectPlanList.addEventListener('tap', function(event) {
+            if (!projectPlanListWebview) {
+              projectPlanListWebview = plus.webview.getWebviewById('projectPlanList');
+            }
+            $.fire(projectPlanListWebview,'project-groupid',{
+              groupid:groupid
+            });
+            $.openWindow({
+              id: 'projectPlanList'
+            });
+          });				  
+          // 跳转添加项目
+          var $addProject = doc.getElementById('addProject');
+          var projectAddWebview = null;
+          $addProject.addEventListener('tap', function(event) {
+            if (!projectAddWebview) {
+              projectAddWebview = plus.webview.getWebviewById('projectAdd');
+            }
+            $.fire(projectAddWebview,'project-groupid',{
+              groupid:groupid
+            });
+            $.openWindow({
+              id: 'projectAdd'
+            });
+          });				  
 				  /***---------购物车业务 begin-------*/
 				  var carList = [];
 				  // 价钱合计
 				  var priceTotal = 0;
-				  // 清单提交成功
-          window.addEventListener('bill-success', function(e){
-            console.log(1111111);
-          });
+				  var maxNum = 99;
+				  var minNum = 1;
           // 购物车容器
           var $shopCarBox = doc.querySelector('#shop-car-box');
           // 合计价格容器
@@ -622,35 +652,87 @@
               $shopCarBox.classList.remove('active');
             } else {
               $shopCarBox.classList.add('active');
+              $shopCarList.innerHTML = '';
+              $.each(carList, function(index, i) {
+              	  paintShopCarItem(i);
+              });
             }
           });
           // 清空购物车
           var $shopCarClear = doc.getElementById('shopCarClear');
-          $shopCarClear.addEventListener('tap', function(e) {
+          var clearShopCar = function() {
             carList.length = 0;
             priceTotal = 0;
             $shopCarTotal.innerText = 0;
-            $shopCarPriceTotal.innerText = priceTotal; 
+            $shopCarPriceTotal.innerText = priceTotal.toFixed(2); 
             $shopCarList.innerHTML = '';
-            $shopCarBox.classList.remove('active');
-          });          
+            $shopCarBox.classList.remove('active');            
+          }
+          $shopCarClear.addEventListener('tap', function(e) {
+            clearShopCar();
+          });
+          // 画购物车每项
+          var paintShopCarItem = function(data) {
+            var boxDiv = doc.createElement('div');
+            boxDiv.className = 'sc-item';
+            var _div = doc.createElement('div');
+            _div.className = 'clearFix';
+            _div.innerHTML = '<p class="name">{0}</p><p class="money">￥{1}</p>'.format(data.title,data.price);
+            // 数量修改
+            var toolDiv = doc.createElement('div');
+            toolDiv.className = 'tools flex flex-row-center';
+            var reduceDiv = doc.createElement('div');
+            reduceDiv.className = 'item item-jian';
+            var numP = doc.createElement('p');
+            numP.className = 'flex-1';
+            numP.innerText = data.num;
+            var plusDiv = doc.createElement('div');
+            plusDiv.className = 'item item-jia';
+            reduceDiv.addEventListener('tap', function() {
+              data.num = (data.num - 1) < minNum ? minNum: data.num - 1; 
+              numP.innerText = data.num;
+              calcPrice();
+            });
+            plusDiv.addEventListener('tap', function() {
+              data.num = (data.num + 1) > maxNum ? maxNum : data.num + 1; 
+              numP.innerText = data.num;
+              calcPrice();
+            });
+            toolDiv.append(reduceDiv);
+            toolDiv.append(numP);
+            toolDiv.append(plusDiv);
+            _div.append(toolDiv);
+            boxDiv.append(_div);
+            $shopCarList.append(boxDiv);
+          }
+          // 重新计算总价钱
+          var calcPrice = function() {
+            var _p = 0;
+            $.each(carList, function(index, i) {
+            	   var _ip = eval(i.num + '*' + i.price);
+            	   _p = eval(_p + '+' + _ip);
+            });
+            priceTotal = _p;
+            $shopCarPriceTotal.innerText = priceTotal.toFixed(2);
+          }
 				  // 新增项目到购物车
           var addShopCar = function(item) {
             var i = carList.find(function(i){
               return i.pid === item.id;
             });
             if (i) {
-              i.num = i.num + 1;
-              return;
+              i.num = i.num + 1 > maxNum ? maxNum : i.num + 1;
             } else {
-               carList.push({
+              carList.push({
+                number: item.number,
                 title: item.title,
                 price: item.price,
                 pid: item.id,
                 num: 1
-              });             
+              });
+              $shopCarTotal.innerText = carList.length > 99 ? '99+' : carList.length;
             }
-            $shopCarTotal.innerText = carList.length > 99 ? '99+' : carList.length;
+            calcPrice();
           }
           // 提交购物车
           var submitCar = doc.getElementById('submitCar');
@@ -664,12 +746,17 @@
               projectBillEditWebview = plus.webview.getWebviewById('projectBillEdit');
             }
             $.fire(projectBillEditWebview,'bill-refresh',{
-              list: carList
+              list: carList,
+              groupid: groupid
             });
             $.openWindow({
               id: 'projectBillEdit'
             });
             $shopCarBox.classList.remove('active');
+          });
+           // 清单提交成功
+          window.addEventListener('bill-success', function(e){
+            clearShopCar();
           });
           /***---------购物车业务 end-------*/
 				  // 修改价格
@@ -686,6 +773,14 @@
                 id:id
               }
             },function(data) {
+              // 修改清单价格
+              var i = carList.find(function(i){
+                return i.pid === id;
+              });
+              if (i) {
+                i.price = value.toFixed(2);
+                calcPrice();
+              } 
               callback();
             });				    
 				  }
@@ -854,20 +949,6 @@
             groupid = category[0].id;
             getProjects(1);
     				}
-				  // 添加项目
-				  var addProject = doc.getElementById('addProject');
-				  var projectAddWebview = null;
-          addProject.addEventListener('tap', function(event) {
-            if (!projectAddWebview) {
-              projectAddWebview = plus.webview.getWebviewById('projectAdd');
-            }
-            $.fire(projectAddWebview,'project-groupid',{
-              groupid:groupid
-            });
-            $.openWindow({
-              id: 'projectAdd'
-            });
-          });
           // tab
           $.each(doc.querySelectorAll('.mui-control-item'), function(index, item) {
             item.addEventListener('tap', function(event){

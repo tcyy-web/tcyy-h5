@@ -12,15 +12,15 @@
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
 		  .mui-pull-right{
-  	    margin-right: -10px;
+  	     margin-right: -10px;
 		    margin-left: -10px;
-		    padding: 10px;
+		    padding: 12px;
 		  }
 			.form-item {
 				position: relative;
 				background-color: #ffffff;
-				padding: 10px;
-				line-height: 30px;
+				padding: 15px;
+				line-height: 20px;
 			}
 			.form-item:after{
 				position: absolute;
@@ -59,75 +59,114 @@
 			<a class="mui-pull-right">筛选</a>
 			<h1 class="mui-title">项目计划列表</h1>
 		</header>
-		<div class="mui-content">
-			<form>
-				<div class="flex form-item">
-					<p class="flex-1">刘德华</p>
-					<p class="flex-1">分类</p>
-					<p class="flex-1">2017/19/19</p>
-					<p><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
-				</div>
-			</form>
+		<div class="mui-content mui-scroll-wrapper">
+		  <div id="pullrefresh"  class="mui-scroll">
+		    <div id="contentBox">
+      			<!--<div class="flex form-item">
+      				<p class="flex-1 flex flex-row-center">刘德华</p>
+      				<p class="flex-1 flex flex-row-center">口腔内科</p>
+      				<p class="flex-1 flex flex-row-center">2000-10-10 00:00</p>
+      				<p class="flex flex-row-center"><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
+      			</div>-->
+    			</div>
+			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/utils.storages.js"></script>
-		<script src="../../js/utils.auth.js"></script>
-		<script src="../../js/utils.uploadImg.js"></script>
-    <script src="../../js/utils.request.js" ></script>
+    <script src="../../js/mui.pullToRefresh.js"></script>
+    <script src="../../js/mui.pullToRefresh.material.js"></script>
+    <script src="../../js/utils.config.js"></script>
+    <script src="../../js/utils.extend.js"></script>
+    <script src="../../js/utils.enums.js"></script>
+    <script src="../../js/utils.storages.js" ></script>
+    <script src="../../js/utils.auth.js"></script>
+    <script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
-				$.init();
-	      // 分类id
-        var groupid = 0;
-        var numberBox = doc.getElementById('number');
-        var titleBox = doc.getElementById('title');
-        var priceBox = doc.getElementById('price');
-        // 刷新分类
-        window.addEventListener('project-groupid', function(e){
-          groupid = e.detail.groupid;
-          numberBox.value = '';
-          titleBox.value = '';
-          priceBox.value = '';
-        });
+				$.init({});
 				$.plusReady(function() {
-				  //上传图片
-				  var addPic = doc.getElementById('addPic');
-				  addPic.addEventListener('tap', function(event) {
-				    uploadImg.show();
-				  });
-				  //保存
-          var save = doc.getElementById('save');
-          save.addEventListener('tap', function(event) {
-            if (!(groupid > 0)) {
-              $.back();
+          // 分类id
+          var groupid = 0;
+          var page = 1;
+          var limit = 10;
+          var more = true;
+          var $pullrefresh = $('#pullrefresh');
+          var $contentBox = doc.getElementById('contentBox');
+          var paitItem = function(data) {
+            var div = doc.createElement('div');
+            div.className = 'flex form-item';
+            div.innerHTML = '<p class="flex-1 flex flex-row-center">{name}</p><p class="flex-1 flex flex-row-center">{group}</p><p class="flex-1 flex flex-row-center">{booktime}</p>'.format(data);
+            var p = doc.createElement('p');
+            p.className = 'flex flex-row-center';
+            p.innerHTML = '<i class="iconfont icon-cshy-shizhong"></i>{0}'.format(enums.planStatus[data.status]);
+            div.append(p);
+            $contentBox.append(div);
+          }
+          var getList = function(callback) {
+            if (page !== 1 && more === false) {
               return;
             }
-            var number = numberBox.value.trim();
-            var title = titleBox.value.trim();
-            var price = priceBox.value.trim();
-            if (number === '') {
-              $.toast('请输入编号');
-              return;
-            }
-            if (title === '') {
-              $.toast('请输入项目名称');
-              return;
-            }
-            if (price === '') {
-              $.toast('请输入金额');
-              return;
-            }
-            request.loginAjax('project/savedata',{
+            request.loginAjax('project/getPatientList',{
               data: {
                 groupid:groupid,
-                number:number,
-                price:price,
-                title:title,
-                image:'',
-                id: null
+                page:page,
+                limit:limit
+              },
+              showMsg: false
+            },function(data) {
+                // 处理页面绑定
+               if (data && data.data && data.data.length > 0) {
+                 if (page === 1) {
+                   $contentBox.innerHTML = '';
+                 }
+                 $.each(data.data, function(index,i) {
+                   paitItem(i);
+                 });
+               }
+               // 判断是否有下一页数据
+               if (data && data.data && data.data.length === limit) {
+                 more = true;
+               } else {
+                 more = false;
+               }
+               if (typeof callback === 'function') {
+                 callback();
+               }
+            }, function() {
+               if (typeof callback === 'function') {
+                 callback();
+               }
+            });            
+          }
+          // 刷新分类
+          window.addEventListener('project-groupid', function(e){
+            groupid = e.detail.groupid;
+            $pullrefresh.pullToRefresh().refresh(true);
+            getList();
+          });
+          $pullrefresh.pullToRefresh({
+            down: {
+              callback: function() {
+                page = 1;
+                var self = this;
+                getList(function() {
+                  self.endPullDownToRefresh();
+                  $pullrefresh.pullToRefresh().refresh(true);
+                });
               }
-            },function() {
-            });
+            },
+            up: {
+              callback: function() {
+                var self = this;
+                if (more) {
+                  page = page + 1;
+                  getList(function(){
+                    self.endPullUpToRefresh(false);
+                  });
+                  return;
+                }
+                self.endPullUpToRefresh(true);
+              }
+            }
           });
 				});
 			}(mui, document));
