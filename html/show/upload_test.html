@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta name="misapplication-tap-highlight" content="no" />
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="MobileOptimized" content="320" />
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+<span id="select_img_1" target="img">选择文件</span>
+<div id="img"></div>
+<span id="upload_img">上传</span>
+</body>
+<script src="../../third/jquery/jquery.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.upload.js"></script>
+<script>
+	document.getElementById("select_img_1").addEventListener("tap",function(){
+		var _this = this;
+		window.upload.showImgActionSheet(this , function( data ){
+			console.log( JSON.stringify(data) );
+			appendImg( data );
+		});
+	})
+	document.getElementById("upload_img").addEventListener("tap",function(){
+		var _this = this;
+		var imgArr = [];
+		$("#img img").each(function(){
+			imgArr.push( $(this).attr("id") );
+		})
+		var url = "http://m.tianchiyueya.com:1888/tcyy/project/uploadImg";
+		window.upload.uploadimge( url , imgArr )
+	})
+	
+	function appendImg( data ){
+
+		var imgSt = "<img id="+data.name + data.divid+" src='"+data.path+"' width='200'>"
+		var tgt = $("#img").append( imgSt );
+	}
+	
+</script>
+</html>
