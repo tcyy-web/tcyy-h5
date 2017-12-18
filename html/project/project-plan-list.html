@@ -45,6 +45,12 @@
 				width: 85px;
 				color: #ffae00;
 			}
+			.form-item > p.status2{
+        color: #f14434;
+      }
+      .form-item > p.status3{
+        color: #4cd964;
+      }
 			.form-item > p .iconfont{
 				font-size: 18px;
 				vertical-align: middle;
@@ -55,35 +61,53 @@
 		  .mui-pull-top-tips {
         z-index: 10;
       }
+      #topPopover {
+        position: fixed;
+        top: 16px;
+        right: 6px;
+      }
+      #topPopover .mui-popover-arrow {
+        left: auto;
+        right: 6px;
+      }
+      .mui-popover {
+        width: 180px;
+        height: 140px;
+      }
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<a class="mui-pull-right">筛选</a>
+			<a class="mui-pull-right" href="#topPopover">筛选</a>
 			<h1 class="mui-title">项目计划列表</h1>
 		</header>
 		<div class="mui-content">
 		  <div class="mui-fullscreen">
 		    <div class="mui-scroll-wrapper">
 		      <div id="pullrefresh" class="mui-scroll">
-		        <div id="contentBox"></div>
+		        <div id="contentBox">
+              <!--<div class="flex form-item">
+                <p class="flex-1 flex flex-row-center">刘德华</p>
+                <p class="flex-1 flex flex-row-center">口腔内科</p>
+                <p class="flex-1 flex flex-row-center">2000-10-10 00:00</p>
+                <p class="flex flex-row-center status3"><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
+              </div>-->
+            </div>
 		      </div>
 		    </div>
 		  </div>
-		  <!--<div id="pullrefresh" class="mui-scroll">
-		    <ul id="contentBox" class="mui-table-view"></ul>
-		    <div id="contentBox">
-      			<div class="flex form-item">
-      				<p class="flex-1 flex flex-row-center">刘德华</p>
-      				<p class="flex-1 flex flex-row-center">口腔内科</p>
-      				<p class="flex-1 flex flex-row-center">2000-10-10 00:00</p>
-      				<p class="flex flex-row-center"><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
-      			</div>
-    			</div>
-			</div>-->
 		</div>
+		<div id="topPopover" class="mui-popover">
+      <div class="mui-popover-arrow"></div>
+      <div class="mui-scroll-wrapper">
+        <div class="mui-scroll">
+          <ul class="mui-table-view">
+          </ul>
+        </div>
+      </div>
+    </div>
 		<script src="../../js/mui.min.js"></script>
     <script src="../../js/mui.pullToRefresh.js"></script>
     <script src="../../js/mui.pullToRefresh.material.js"></script>
@@ -101,7 +125,9 @@
             url: './project-plan-detail.html'
           }]
 				});
+				$('.mui-scroll-wrapper').scroll();
 				$.plusReady(function() {
+				  var type = 1;
           // 分类id
           var groupid = 0;
           var page = 1;
@@ -115,7 +141,7 @@
             div.className = 'flex form-item';
             div.innerHTML = '<p class="flex-1 flex flex-row-center">{name}</p><p class="flex-1 flex flex-row-center">{group}</p><p class="flex-1 flex flex-row-center">{booktime}</p>'.format(data);
             var p = doc.createElement('p');
-            p.className = 'flex flex-row-center';
+            p.className = 'flex flex-row-center status{0}'.format(data.status);
             p.innerHTML = '<i class="iconfont icon-cshy-shizhong"></i>{0}'.format(enums.planStatus[data.status]);
             div.appendChild(p);
             div.addEventListener('tap', function(e) {
@@ -167,9 +193,28 @@
                }
             });
           }
+          // 筛选
+          var $type = doc.querySelector('#topPopover .mui-table-view');
+          var _typeHtml = [];
+          for (var key in enums.planStatus){
+            var _html = '<li data-type="{0}" class="mui-table-view-cell"><a>{1}</a></li>'.format(key,enums.planStatus[key]);
+            _typeHtml.push(_html);
+          }
+          $type.innerHTML = _typeHtml.join('');
+          $.each($type.querySelectorAll('.mui-table-view-cell'), function(index,i) {
+             i.addEventListener('tap', function(e){
+               type = this.getAttribute('data-type');
+               page = 1;
+               $pullrefresh.pullToRefresh().refresh(true);
+               $('#topPopover').popover('hide');
+               getList();
+             });
+          });
           // 刷新分类
           window.addEventListener('project-groupid', function(e){
             groupid = e.detail.groupid;
+            page = 1;
+            type = 1;
             $pullrefresh.pullToRefresh().refresh(true);
             getList();
           });
