@@ -22,15 +22,16 @@
     }
     
     .bt-title p{
-    	color:#fff;
-    	font-size:13px;
-    	display: inline-block;
-    	padding-right:25px;
-    	background: url(../../images/weibo/yuandian.png) right center no-repeat;
+      	color:#fff;
+      	font-size:13px;
     }
-    
+    .bt-title p span.read{
+      padding-right:25px;
+      display: inline-block;
+      background: url(../../images/weibo/yuandian.png) right center no-repeat;
+    }
     .content{
-    	padding:15px 8px;
+    	padding:10px;
     	color:#000000;
     	font-size:14px;
     }
@@ -38,6 +39,9 @@
     .content p{
     	padding-bottom: 12px;
     	
+    }
+    .content img{
+      max-width: 100%;
     }
 	</style>
 
@@ -51,7 +55,13 @@
 <div class="mui-content">
 	<div class="bt-title">
 		<h1 id="title"></h1>
-		<p><span>发布时间：</span><span id="times"></span> <span id="read"></span></p>
+		<p>
+		  <span>来源：</span><span id="author" style="margin-right: 10px;">3</span>
+		  <span>发布时间：</span><span id="times">3</span> 
+		</p>
+    <p>
+      <span>阅读量：</span><span id="read" class="read">3</span>
+    </p>
 	</div>
 	
 	<div class="content" id="contents">
@@ -69,6 +79,7 @@
         $.plusReady(function() {
           var id = 0;
           var $title = doc.getElementById('title');
+          var $author = doc.getElementById('author');
           var $times = doc.getElementById('times');
           var $read = doc.getElementById('read');
           var $contents = doc.getElementById('contents');
@@ -76,11 +87,13 @@
             request.ajax('Knowledge/getDetails', {
               data: {
                 id: id
-              }
+              },
+              showMsg: false
             }, function(data) {
                // 处理页面绑定
                if (data) {
                  $title.innerText = data.title;
+                 $author.innerText = data.author;
                  $times.innerText = data.times;
                  $read.innerText = data.read;
                  $contents.innerHTML = data.contents;
