@@ -149,9 +149,10 @@
 			<button id="save" class="btn-save">保存</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.config.js"></script>
 		<script src="../../js/utils.storages.js"></script>
 		<script src="../../js/utils.auth.js"></script>
-		<script src="../../js/utils.uploadImg.js"></script>
+		<script src="../../js/utils.upload.js"></script>
     <script src="../../js/utils.request.js" ></script>
 		<script>
 			(function($, doc) {
@@ -177,36 +178,36 @@
 				  //保存
           var save = doc.getElementById('save');
           save.addEventListener('tap', function(event) {
-            if (!(groupid > 0)) {
-              $.back();
-              return;
-            }
+//          if (!(groupid > 0)) {
+//            $.back();
+//            return;
+//          }
             var number = numberBox.value.trim();
             var title = titleBox.value.trim();
             var price = priceBox.value.trim();
-            if (number === '') {
-              $.toast('请输入编号');
-              return;
-            }
-            if (title === '') {
-              $.toast('请输入项目名称');
-              return;
-            }
-            if (price === '') {
-              $.toast('请输入金额');
-              return;
-            }
-            request.loginAjax('project/savedata',{
-              data: {
-                groupid:groupid,
-                number:number,
-                price:price,
-                title:title,
-                image:'',
-                id: null
-              }
-            },function() {
-            });
+//          if (number === '') {
+//            $.toast('请输入编号');
+//            return;
+//          }
+//          if (title === '') {
+//            $.toast('请输入项目名称');
+//            return;
+//          }
+//          if (price === '') {
+//            $.toast('请输入金额');
+//            return;
+//          }
+//          request.loginAjax('project/savedata',{
+//            data: {
+//              groupid:groupid,
+//              number:number,
+//              price:price,
+//              title:title,
+//              image:'',
+//              id: null
+//            }
+//          },function() {
+//          });
           });
 				});
 			}(mui, document));
