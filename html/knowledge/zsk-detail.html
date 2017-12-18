@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+    .mui-bar-nav{ box-shadow: none;}
+    .mui-content{background: #fff;}
+    .bt-title{
+    	background:#765fc3;
+    	padding:25px 15px;
+    }
+    
+    .bt-title h1{
+    	font-size:15px;
+    	line-height: 20px;
+    	color:#fff;
+    	padding-bottom: 10px;
+    }
+    
+    .bt-title p{
+    	color:#fff;
+    	font-size:13px;
+    	display: inline-block;
+    	padding-right:25px;
+    	background: url(../../images/weibo/yuandian.png) right center no-repeat;
+    }
+    
+    .content{
+    	padding:15px 8px;
+    	color:#000000;
+    	font-size:14px;
+    }
+    
+    .content p{
+    	padding-bottom: 12px;
+    	
+    }
+	</style>
+
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">知识库详情</h1>
+</header>
+<div class="mui-content">
+	<div class="bt-title">
+		<h1 id="title"></h1>
+		<p><span>发布时间：</span><span id="times"></span> <span id="read"></span></p>
+	</div>
+	
+	<div class="content" id="contents">
+	</div>
+</div>	
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/utils.config.js"></script>
+    <script src="../../js/utils.extend.js"></script>
+    <script src="../../js/utils.storages.js" ></script>
+    <script src="../../js/utils.auth.js"></script>
+    <script src="../../js/utils.request.js"></script>
+    <script>
+      (function($, doc) {
+        $.init();
+        $.plusReady(function() {
+          var id = 0;
+          var $title = doc.getElementById('title');
+          var $times = doc.getElementById('times');
+          var $read = doc.getElementById('read');
+          var $contents = doc.getElementById('contents');
+          var getDetail = function(callback){
+            request.ajax('Knowledge/getDetails', {
+              data: {
+                id: id
+              }
+            }, function(data) {
+               // 处理页面绑定
+               if (data) {
+                 $title.innerText = data.title;
+                 $times.innerText = data.times;
+                 $read.innerText = data.read;
+                 $contents.innerHTML = data.contents;
+               }
+            });
+          }
+          // 刷新详情
+          window.addEventListener('zsk-id', function(e){
+            id = e.detail.id;
+            getDetail();
+          });
+        });
+      })(mui, document);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+      #sliderSegmentedControl{
+        border-bottom:1px solid #d2d2d2;
+        margin-bottom: 10px;
+        height: 50px;
+        background-color: #ffffff;
+      }
+      .mui-segmented-control.mui-scroll-wrapper {
+        height: 50px;
+        overflow: auto !important;
+      }
+      .mui-segmented-control .mui-control-item {
+        line-height: 50px;
+        display: inline-block;
+        position: relative;
+      }
+      .mui-segmented-control .mui-control-item:after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 20px;
+        right: 0;
+        bottom: 15px;
+        background-color: #d6d6d6;
+      }
+      .mui-segmented-control .mui-control-item:last-child:after {
+        width: 0;
+      }
+      .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+        color: #765fc3;
+      }
+      .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        left: 0;
+        bottom: -1px;
+        background-color: #765fc3;
+      }
+      .mui-fullscreen .mui-segmented-control~.mui-slider-group {
+        top: 60px;
+        background-color: #ffffff;
+      }
+      .mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+        border: 0;
+      }
+  </style>
+	<style>
+		.mui-table-view{ background: none;}
+		.mui-table-view .mui-table-view-cell{
+			padding:10px;
+			border:none;
+		}
+		.mui-table-view-cell:after{
+		  left: 0;
+		}
+		.mui-table-view-cell:last-child:after, .mui-table-view-cell:last-child:before {
+      height: 1px;
+    }
+    .item{ background: #fff; display: block; }
+    .ileft{
+    	float:left;
+    	width:calc(70% - 20px);
+    }
+    
+    .iright{
+    	float:right;
+    	width:30%;
+    }
+    .iright img{ width: 100%;}
+    .ileft h2{
+    	font-size:15px;
+    	padding-bottom: 1rem;
+    }
+    
+    .ileft p{
+    	font-size:14px;
+    	color:#7c7c7c;
+    }
+    .zh{
+    	font-size:14px;
+    	color:#7c7c7c;
+    	margin-top:1rem;
+    }
+    
+    .zh span{
+    	padding-left:25px;
+    }
+    
+    
+    .zh span:first-child{
+    	background:url(../../images/weibo/date.png) 5px center no-repeat;
+    }
+    
+    .zh span:nth-child(2){
+    	padding-left:35px;
+    	background:url(../../images/weibo/yj.png) 5px center no-repeat;
+    }
+    
+    .zh a{
+    	display: inline-block;
+    	width:15px;
+    	background:url(../../images/weibo/weizhuan.png) center no-repeat;
+    	color:transparent;
+    	margin-left:15px;
+    }
+	</style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">知识库</h1>
+	</header>
+		<div class="mui-content">
+			<div class="mui-slider mui-fullscreen">
+				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll" id="sliderSegmentedControl">
+						<a class="mui-control-item mui-active" href="#content1">
+              口腔种植
+            </a>
+            <a class="mui-control-item" href="#content2">
+              口腔正畸
+            </a>
+            <a class="mui-control-item" href="#content3">
+              口腔修复
+            </a>
+            <a class="mui-control-item" href="#content4">
+              口腔外科
+            </a>
+            <a class="mui-control-item" href="#content5">
+              口腔内科
+            </a>
+            <a class="mui-control-item" href="#content6">
+              口腔美容
+            </a>
+					</div>
+				</div>
+				<div id="sliderSegmentedContent" class="mui-slider-group">
+					<div id="conten1" class="mui-slider-item mui-control-content mui-active">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<!--<li class="mui-table-view-cell item">
+										<div class="ileft">
+											<h2>牙对好坏对健康的影响</h2>
+											<p>儿童牙如果早期不注意会对整个成长整个成长整长</p>
+											<div class="zh">
+												<span>2017.2.03</span>
+												<span>(250)</span>
+											</div>
+										</div>
+										<div class="iright">
+											<img src="../../images/weibo/zsk.png" />
+										</div>
+									</li>-->
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="content2" class="mui-slider-item mui-control-content">
+            <div class="mui-scroll-wrapper">
+              <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
+            </div>
+          </div>
+          <div id="content3" class="mui-slider-item mui-control-content">
+            <div class="mui-scroll-wrapper">
+              <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
+            </div>
+          </div>
+          <div id="content4" class="mui-slider-item mui-control-content">
+            <div class="mui-scroll-wrapper">
+              <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
+            </div>
+          </div>
+          <div id="content5" class="mui-slider-item mui-control-content">
+            <div class="mui-scroll-wrapper">
+              <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
+            </div>
+          </div>
+          <div id="content6" class="mui-slider-item mui-control-content">
+            <div class="mui-scroll-wrapper">
+              <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
+            </div>
+          </div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
+		<script src="../../js/utils.config.js"></script>
+    <script src="../../js/utils.extend.js"></script>
+    <script src="../../js/utils.storages.js" ></script>
+    <script src="../../js/utils.category.js" ></script>
+    <script src="../../js/utils.auth.js"></script>
+    <script src="../../js/utils.request.js"></script>
+		<script>
+			(function($, doc) {
+        //阻尼系数
+        var deceleration = mui.os.ios?0.003:0.0009;
+        $('.mui-scroll-wrapper').scroll({
+          bounce: false,
+          indicators: true, //是否显示滚动条
+          deceleration:deceleration
+        });
+        $.init({
+          preloadPages:[{
+            id:'zskDetail',
+            url: './zsk-detail.html'
+          }]
+        });
+        $.plusReady(function() {
+          var limit = 10;
+          var groupid = 0;
+          var listRequest = {};
+          var zskDetailWebView = null;
+          var paintItem = function(parent, data) {
+            var li = doc.createElement('li');
+            li.className = 'mui-table-view-cell item';
+            var leftDiv = doc.createElement('div');
+            leftDiv.className = 'ileft';
+            leftDiv.innerHTML = '<h2>{title}</h2><p>{info}</p><div class="zh"><span>{times}</span><span>{read}</span></div>'.format(data);
+            var rightDiv = doc.createElement('div');
+            rightDiv.className = 'iright';
+            rightDiv.innerHTML = '<img src="{0}" />'.format(data.image);
+            li.appendChild(leftDiv);
+            li.appendChild(rightDiv);
+            li.addEventListener('tap', function(event){
+              if (!zskDetailWebView) {
+                zskDetailWebView = plus.webview.getWebviewById('zskDetail');
+              }
+              $.fire(zskDetailWebView,'zsk-id',{
+                id:data.id
+              });
+              $.openWindow({
+                id: 'zskDetail'
+              });
+            });
+            parent.appendChild(li);
+          };
+          var getList = function(page,callback){
+            if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
+              return;
+            }
+            request.ajax('Knowledge/getList', {
+              data: {
+                groupid: groupid,
+                page: page,
+                limit: limit
+              },
+              showMsg: false
+            }, function(data) {
+              // 处理页面绑定
+             if (data && data.data) {
+               var currentContent = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
+               if (page === 1) {
+                 currentContent.innerHTML = '';
+               }
+               $.each(data.data, function(index,i) {
+                  paintItem(currentContent,i);
+               });
+             }
+             // 判断是否有下一页数据
+             if (data && data.data && data.data.length === limit) {
+               listRequest[groupid] = {
+                 page: page,
+                 more: true
+               }
+             } else {
+               listRequest[groupid] = {
+                 page: page,
+                 more: false
+               }
+             }
+             if (typeof callback === 'function') {
+               callback();
+             }
+            }, function() {
+               if (typeof callback === 'function') {
+                 callback();
+               }
+            });
+          }
+          // 分类
+          var category = categorys.get();
+          if (category.length > 0) {
+              var controls = doc.getElementById("sliderSegmentedControl");
+              var contents = doc.getElementById("sliderSegmentedContent");
+              var controlsHtml = [];
+              var contentsHtml = [];
+              $.each(category, function(index, item) {
+                var _controlHtml = '<a groupid={0} class="mui-control-item" href="#content{1}">{2}</a>';
+                _controlHtml = _controlHtml.format(item.id,index,item.title);
+                controlsHtml.push(_controlHtml);
+                var _contentHtml = '';
+                _contentHtml += '<div id="content{0}" class="mui-slider-item mui-control-content">'+
+                                ' <div class="mui-scroll-wrapper">'+
+                                '  <div class="mui-scroll">'+
+                                '   <ul class="mui-table-view">'+
+                                '   </ul>'+
+                                '  </div>'+
+                                ' </div>'+
+                                '</div>';
+                _contentHtml = _contentHtml.format(index, index);
+                contentsHtml.push(_contentHtml);
+              });
+              controls.innerHTML = controlsHtml.join('');
+              contents.innerHTML = contentsHtml.join('');
+              controls.querySelector('.mui-control-item').classList.add('mui-active');
+              contents.querySelector('.mui-control-content').classList.add('mui-active');
+              // 初始加载项目
+              groupid = category[0].id;
+              getList(1);
+          }
+          // 切换tab
+          doc.querySelector('.mui-slider').addEventListener('slide', function(event) {
+            var contentValue = event.detail.slideNumber;
+            var currentTab = doc.querySelector('.mui-control-item.mui-active');
+            groupid = currentTab.getAttribute('groupid');
+            if (listRequest[groupid]) {
+              return;
+            }
+            getList(1);
+          });
+          //循环初始化所有下拉刷新，上拉加载。
+          $.each(doc.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+            $(pullRefreshEl).pullToRefresh({
+              down: {
+                callback: function() {
+                  var self = this;
+                  getList(1, function() {
+                    self.endPullDownToRefresh();
+                    $(pullRefreshEl).pullToRefresh().refresh(true);
+                  });
+                }
+              },
+              up: {
+                callback: function() {
+                  var self = this;
+                  if (listRequest[groupid]) {
+                    if (listRequest[groupid].more === true) {
+                      var page = listRequest[groupid].page + 1;
+                      getList(page, function(){
+                        self.endPullUpToRefresh(false);
+                      })
+                      return;
+                    }
+                  }
+                  self.endPullUpToRefresh(true);
+                }
+              }
+            });
+          });
+        });
+      })(mui, document);
+		</script>
+	</body>
+
+</html>

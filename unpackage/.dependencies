@@ -1,1 +1,92 @@
-{}
+{
+  "html/knowledge/zsk-detail.html": {
+    "href": "html/knowledge/zsk-detail.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "images/weibo/yuandian.png",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "priority": 3
+  },
+  "html/knowledge/zsk-list.html": {
+    "href": "html/knowledge/zsk-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "images/weibo/date.png",
+      "images/weibo/yj.png",
+      "images/weibo/weizhuan.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [
+      "html/knowledge/zsk-detail.html"
+    ],
+    "priority": 3
+  },
+  "html/home/tab-webview-kuozhan.html": {
+    "href": "html/home/tab-webview-kuozhan.html",
+    "resources": [],
+    "refer": [
+      "html/knowledge/zsk-list.html"
+    ],
+    "priority": 2
+  },
+  "html/video/video-list.html": {
+    "href": "html/video/video-list.html",
+    "resources": [
+      "images/video/sc11.png",
+      "images/video/sc10.png"
+    ],
+    "priority": 4
+  },
+  "html/picture/picture-list.html": {
+    "href": "html/picture/picture-list.html",
+    "resources": [
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "priority": 5
+  },
+  "html/picture/picture-folders.html": {
+    "href": "html/picture/picture-folders.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "images/picture/bg.png"
+    ],
+    "refer": [],
+    "priority": 5
+  }
+}
