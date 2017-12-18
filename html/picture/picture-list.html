@@ -7,58 +7,50 @@
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
-      #sliderSegmentedControl{
-        border-bottom:1px solid #d2d2d2;
-        margin-bottom: 10px;
-        height: 50px;
-        background-color: #ffffff;
-      }
-      .mui-segmented-control.mui-scroll-wrapper {
-        height: 50px;
-        overflow: auto !important;
-      }
-      .mui-segmented-control .mui-control-item {
-        line-height: 50px;
-        display: inline-block;
-        position: relative;
-      }
-      .mui-segmented-control .mui-control-item:after {
-        content: '';
-        position: absolute;
-        width: 1px;
-        height: 20px;
-        right: 0;
-        bottom: 15px;
-        background-color: #d6d6d6;
-      }
-      .mui-segmented-control .mui-control-item:last-child:after {
-        width: 0;
-      }
-      .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
-        color: #765fc3;
-      }
-      .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 3px;
-        left: 0;
-        bottom: -1px;
-        background-color: #765fc3;
-      }
-      .mui-fullscreen .mui-segmented-control~.mui-slider-group {
-        top: 60px;
-        background-color: #ffffff;
-      }
-      .mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
-        border: 0;
-      }
-  </style>
-	<style>
-		
-		.pic-item{ display: block; padding: 20px; background: url('../../images/tab-vedio/bg.png') center center /auto 100% no-repeat;}
-		.mui-table-view-cell{ padding:10px;}
-		.mui-row .mui-col-sm-4:last-child .pic-item{ background-image: url('../../images/tab-vedio/bg1.png');}
+		body,
+		.mui-content{
+			background-color: #ffffff;
+		}
+	  .mui-pull-top-tips {
+      z-index: 10;
+    }
+		.mui-row{
+			padding: 0 5px;
+		}
+		.mui-row .mui-col-xs-6{
+			margin: 10px 5px;
+			width: calc(50% - 10px);
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			border-radius: 3px;
+			overflow: hidden;
+    	-webkit-box-shadow: #ccc 0px 2px 5px -1px;
+    	box-shadow: #ccc 0px 2px 5px -1px;
+		}
+		.pic-item{
+			text-align: center;
+		}
+		.pic-item img{
+			width: 100%;
+			height: auto;
+		}
+		.pic-item.upload{
+			text-align: center;
+			height: 100px;
+			background-color: #f4f4f4;
+		}
+		.pic-item.upload img {
+			width: 60px;
+		}
+		.mui-row .mui-col-xs-6 p{
+			color: #303030;
+			height: 40px;
+			padding: 5px;
+			line-height: 15px;
+		}
+		.mui-row .mui-col-xs-6 p.p {
+			color: #bababa;
+		}
 	</style>
 
 </head>
@@ -69,89 +61,37 @@
 		<h1 class="mui-title">图片</h1>
 	</header>
 		<div class="mui-content">
-			<div id="slider" class="mui-slider mui-fullscreen">
-				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div class="mui-scroll" id="sliderSegmentedControl">
-						<a class="mui-control-item mui-active" href="#content1">
-              口腔种植
-            </a>
-            <a class="mui-control-item" href="#content2">
-              口腔正畸
-            </a>
-            <a class="mui-control-item" href="#content3">
-              口腔修复
-            </a>
-            <a class="mui-control-item" href="#content4">
-              口腔外科
-            </a>
-            <a class="mui-control-item" href="#content5">
-              口腔内科
-            </a>
-            <a class="mui-control-item" href="#content6">
-              口腔美容
-            </a>
-					</div>
-				</div>
-				<div class="mui-slider-group">
-					<div id="conten1" class="mui-slider-item mui-control-content mui-active">
-						<div class="mui-scroll-wrapper">
-							<div class="mui-scroll">
-							  <div class="contents">
-    								<div class="mui-row">
-  						        <div class="mui-col-sm-4 mui-col-xs-4">
-					            <li class="mui-table-view-cell">
-					                <div class="pic-item"></div>
-					            </li>
-  						        </div>
-  						        <div class="mui-col-sm-4 mui-col-xs-4">
-					            <li class="mui-table-view-cell">
-					               <div class="pic-item"></div>
-					            </li>
-  						        </div>
-  						        <div class="mui-col-sm-4 mui-col-xs-4">
-					            <li class="mui-table-view-cell">
-					               <div class="pic-item"></div>
-					            </li>
-  						        </div>
-    						    </div>
-						    </div>
-							</div>
-						</div>
-					</div>
-					<div id="content2" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><div class="contents"></div></div>
-            </div>
-          </div>
-          <div id="content3" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><div class="contents"></div></div>
-            </div>
-          </div>  
-          <div id="content4" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><div class="contents"></div></div>
-            </div>
-          </div>  
-          <div id="content5" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><div class="contents"></div></div>
-            </div>
-          </div>
-          <div id="content6" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><div class="contents"></div></div>
-            </div>
-          </div>    
-				</div>
-			</div>
+			<div class="mui-fullscreen">
+		    <div class="mui-scroll-wrapper">
+		      <div id="pullrefresh" class="mui-scroll">
+						<div id="contentBox" class="mui-row">
+			        <!--<div class="mui-col-xs-6">
+	            	<div class="pic-item flex flex-row-center flex-col-center">
+	            		<img src="../../images/video/sc10.png" />
+	            	</div>
+	            	<p class="flex flex-row-center flex-col-center">刷牙方法</p>
+			        </div>
+			        <div class="mui-col-xs-6">
+	              <div class="pic-item upload flex flex-row-center flex-col-center">
+	              	<img src="../../images/picture/bg1.png" />
+	              </div>
+	              <p class="p flex flex-row-center flex-col-center">上传图片</p>
+			        </div>-->
+				    </div>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
+		<script src="../../js/utils.config.js"></script>
+	  <script src="../../js/utils.extend.js"></script>
+	  <script src="../../js/utils.storages.js" ></script>
+	  <script src="../../js/utils.auth.js"></script>
+	  <script src="../../js/utils.request.js"></script>
 		<script>
-			mui.init();
-			(function($) {
+			(function($, doc) {
 				//阻尼系数
 				var deceleration = mui.os.ios?0.003:0.0009;
 				$('.mui-scroll-wrapper').scroll({
@@ -159,45 +99,114 @@
 					indicators: true, //是否显示滚动条
 					deceleration:deceleration
 				});
-				$.ready(function() {
-					//循环初始化所有下拉刷新，上拉加载。
-					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
-						$(pullRefreshEl).pullToRefresh({
-							down: {
-								callback: function() {
-									var self = this;
-									setTimeout(function() {
-										var ul = self.element.querySelector('.mui-row');
-										ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
-										self.endPullDownToRefresh();
-									}, 1000);
-								}
+				$.init();
+				$.plusReady(function() {
+			  	var folderid = 0;
+ 					var page = 1;
+          var limit = 20;
+          var more = true;
+          var $pullrefresh = $('#pullrefresh');
+          var $contentBox = doc.getElementById('contentBox');
+          /*图片预览*/
+          var urls = [];
+          var images = [];
+					var picturePre = function(){
+						urls.length = 0;
+						// 获取图片地址列表
+					  images = doc.querySelectorAll('.pic-item img');
+					  for(var i = 0; i < images.length; i++) {
+					    urls.push(images[i].src);
+					  }
+					}
+				  // 监听图片的点击
+				  $('body').on('tap', 'img', function() {
+				    // 查询图片在列表中的位置
+				    // 由于dom节点列表是伪数组，需要处理一下
+				    var index = [].slice.call(images).indexOf(this);
+				    plus.nativeUI.previewImage(urls, {
+				      current: index,
+				      loop: true,
+				      indicator: 'number'
+				    });
+				  });
+	        var paintItem = function(data) {
+	          var boxDiv = doc.createElement('div');
+	          boxDiv.className = 'mui-col-xs-6';
+	          var imgDiv = doc.createElement('div');
+	          imgDiv.className = 'pic-item flex flex-row-center flex-col-center';
+	          imgDiv.innerHTML = '<img src="{0}" />'.format(data.image);
+	          boxDiv.appendChild(imgDiv);
+	          var p = doc.createElement('p');
+	          p.className = 'flex flex-row-center flex-col-center';
+	          p.innerText =  data.title;
+	          boxDiv.appendChild(p);
+	          $contentBox.appendChild(boxDiv);
+	        };
+					var getList = function(callback){
+						request.ajax('Picture/getlist', {
+							data: {
+								folderid: folderid
 							},
-							up: {
-								callback: function() {
-									var self = this;
-									setTimeout(function() {
-										var ul = self.element.querySelector('.mui-row');
-										ul.appendChild(createFragment(ul, index, 5));
-										self.endPullUpToRefresh();
-									}, 1000);
-								}
-							}
+							showMsg: false
+						}, function(data) {
+                // 处理页面绑定
+	             if (data && data.data) {
+	               if (page === 1) {
+	                 $contentBox.innerHTML = '';
+	               }
+	               $.each(data.data, function(index,i) {
+	                 paintItem(i);
+	               });
+	               picturePre();
+	             }
+	             // 判断是否有下一页数据
+	             if (data && data.data && data.data.length === limit) {
+	               more = true;
+	             } else {
+	               more = false;
+	             }
+	             if (typeof callback === 'function') {
+	               callback();
+	             }
+						}, function() {
+	             if (typeof callback === 'function') {
+	               callback();
+	             }
 						});
-					});
-					var createFragment = function(ul, index, count, reverse) {
-						var length = ul.querySelectorAll('li').length;
-						var fragment = document.createDocumentFragment();
-						var li;
-					
-						li = document.createElement('li');
-						li.className = 'mui-col-sm-4 mui-col-xs-4';
-						li.innerHTML = '<li class="mui-table-view-cell"> <div class="pic-item"></div> </li>';
-						fragment.appendChild(li);
-						return fragment;
-					};
+					}
+	        // 刷新分类
+          window.addEventListener('picture-folderid', function(e){
+            folderid = e.detail.folderid;
+            $pullrefresh.pullToRefresh().refresh(true);
+            getList();
+          });
+					$pullrefresh.pullToRefresh({
+            down: {
+              callback: function() {
+                page = 1;
+                var self = this;
+                getList(function() {
+                  self.endPullDownToRefresh();
+                  $pullrefresh.pullToRefresh().refresh(true);
+                });
+              }
+            },
+            up: {
+              callback: function() {
+                var self = this;
+                if (more) {
+                  page = page + 1;
+                  getList(function(){
+                    self.endPullUpToRefresh(false);
+                  });
+                  return;
+                }
+                self.endPullUpToRefresh(true);
+              }
+            }
+          });
 				});
-			})(mui);
+			})(mui, document);
 		</script>
 	</body>
 
