@@ -61,16 +61,16 @@
 			border:none;
 		}
     	/* CSS 视频*/
-    	.list-item{ 
+    	.list-item{
     	  padding-top: 240px;
     	  position: relative;
-    	  width:95%; height:auto; 
-    	  padding-bottom:10px;  margin:auto; 
-    	  background-color:#ffffff; 
+    	  width:95%; height:auto;
+    	  padding-bottom:10px;  margin:auto;
+    	  background-color:#ffffff;
     	  -webkit-border-radius: 3px;
       	border-radius: 3px;
       	-webkit-box-shadow: #666 0px 0px 10px;
-      	box-shadow: #666 0px 0px 10px; 
+      	box-shadow: #666 0px 0px 10px;
     	}
     	.list-item .img {
     	  height: 230px;
@@ -81,9 +81,9 @@
     	  z-index: 2;
     	  background-color: #FFFFFF;
     	}
-    	.list-item img{ 
-    	  width:auto !important; 
-    	  height:100%; 
+    	.list-item img{
+    	  width:auto !important;
+    	  height:100%;
   	  }
   	  .list-item video {
   	    display: none;
@@ -164,12 +164,12 @@
           <div class="mui-scroll-wrapper">
             <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
           </div>
-        </div>  
+        </div>
         <div id="content4" class="mui-slider-item mui-control-content">
           <div class="mui-scroll-wrapper">
             <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
           </div>
-        </div>  
+        </div>
         <div id="content5" class="mui-slider-item mui-control-content">
           <div class="mui-scroll-wrapper">
             <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
@@ -179,7 +179,7 @@
           <div class="mui-scroll-wrapper">
             <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
           </div>
-        </div>        
+        </div>
 			</div>
 		</div>
 	</div>
@@ -219,12 +219,12 @@
           var video = doc.createElement('video');
           video.src = data.url;
           video.controls = 'controls';
-          section.append(div);
-          section.append(video);
+          section.appendChild(div);
+          section.appendChild(video);
           var a = doc.createElement('a');
           a.className = 'lname';
           a.innerHTML = '<span>{0}</span>'.format(data.title);
-          section.append(a);
+          section.appendChild(a);
           a.addEventListener('tap', function(event){
             if(section.classList.contains('active')) {
               section.classList.remove('active');
@@ -235,7 +235,7 @@
             }
           });
           li.appendChild(section);
-          parent.append(li);
+          parent.appendChild(li);
         };
 				var getList = function(page,callback){
 				  if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
@@ -269,7 +269,7 @@
                listRequest[groupid] = {
                  page: page,
                  more: false
-               }               
+               }
              }
              if (typeof callback === 'function') {
                callback();
@@ -277,7 +277,7 @@
 					}, function() {
              if (typeof callback === 'function') {
                callback();
-             }					  
+             }
 					});
 				}
         // 分类

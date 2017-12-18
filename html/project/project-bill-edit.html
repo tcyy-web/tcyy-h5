@@ -92,7 +92,7 @@
         content: '';
         -webkit-transform: scaleY(.5);
         transform: scaleY(.5);
-        background-color: #d6d6d6;			  
+        background-color: #d6d6d6;
 			}
 			.form-item:after{
 				position: absolute;
@@ -191,7 +191,7 @@
     <script src="../../js/utils.enums.js"></script>
     <script src="../../js/utils.storages.js" ></script>
     <script src="../../js/utils.auth.js"></script>
-    <script src="../../js/utils.request.js"></script>		
+    <script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
@@ -200,7 +200,7 @@
 				  var list = [];
 				  var $listBox = doc.getElementById('listBox');
 				  var $submit = doc.getElementById('submit');
-				  // 
+				  //
 				  var sex = null;
           var $sex = doc.getElementById('showGenderPicker');
           var $name = doc.getElementById('name');
@@ -214,7 +214,7 @@
             boxDiv.className = 'bill-item flex';
             var _p = eval(data.num + '*' + data.price);
             boxDiv.innerHTML = '<p class="flex-1">{0}</p><p class="flex-1">{1}</p><p class="flex-1">￥{2}<span>元</span></p>'.format(data.number,data.title,_p.toFixed(2));
-            $listBox.append(boxDiv);
+            $listBox.appendChild(boxDiv);
           }
           // 更新清单
 				  var refreshList = function(){
@@ -260,7 +260,7 @@
               $booktime.innerText = rs.text;
               booktime = rs.text;
             });
-          }, false);          
+          }, false);
           $submit.addEventListener('tap', function(e) {
             var name = $name.value.trim();
             var age = $age.value.trim();
@@ -275,15 +275,15 @@
             if (sex === null) {
               $.toast('请选择性别');
               return;
-            }     
+            }
             if (age === '') {
               $.toast('请输入年龄');
               return;
-            }   
+            }
             if (phone === '') {
               $.toast('请输入电话');
               return;
-            } 
+            }
             if (booktime === null) {
               $.toast('请选择预约时间');
               return;

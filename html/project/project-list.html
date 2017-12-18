@@ -602,7 +602,7 @@
 				  // 分页请求参数
 				  var listRequest = {};
 				  // 跳转计划列表
-				  
+
           var $projectPlanList = doc.getElementById('projectPlanList');
           var projectPlanListWebview = null;
           $projectPlanList.addEventListener('tap', function(event) {
@@ -615,7 +615,7 @@
             $.openWindow({
               id: 'projectPlanList'
             });
-          });				  
+          });
           // 跳转添加项目
           var $addProject = doc.getElementById('addProject');
           var projectAddWebview = null;
@@ -629,7 +629,7 @@
             $.openWindow({
               id: 'projectAdd'
             });
-          });				  
+          });
 				  /***---------购物车业务 begin-------*/
 				  var carList = [];
 				  // 价钱合计
@@ -664,9 +664,9 @@
             carList.length = 0;
             priceTotal = 0;
             $shopCarTotal.innerText = 0;
-            $shopCarPriceTotal.innerText = priceTotal.toFixed(2); 
+            $shopCarPriceTotal.innerText = priceTotal.toFixed(2);
             $shopCarList.innerHTML = '';
-            $shopCarBox.classList.remove('active');            
+            $shopCarBox.classList.remove('active');
           }
           $shopCarClear.addEventListener('tap', function(e) {
             clearShopCar();
@@ -689,21 +689,21 @@
             var plusDiv = doc.createElement('div');
             plusDiv.className = 'item item-jia';
             reduceDiv.addEventListener('tap', function() {
-              data.num = (data.num - 1) < minNum ? minNum: data.num - 1; 
+              data.num = (data.num - 1) < minNum ? minNum: data.num - 1;
               numP.innerText = data.num;
               calcPrice();
             });
             plusDiv.addEventListener('tap', function() {
-              data.num = (data.num + 1) > maxNum ? maxNum : data.num + 1; 
+              data.num = (data.num + 1) > maxNum ? maxNum : data.num + 1;
               numP.innerText = data.num;
               calcPrice();
             });
-            toolDiv.append(reduceDiv);
-            toolDiv.append(numP);
-            toolDiv.append(plusDiv);
-            _div.append(toolDiv);
-            boxDiv.append(_div);
-            $shopCarList.append(boxDiv);
+            toolDiv.appendChild(reduceDiv);
+            toolDiv.appendChild(numP);
+            toolDiv.appendChild(plusDiv);
+            _div.appendChild(toolDiv);
+            boxDiv.appendChild(_div);
+            $shopCarList.appendChild(boxDiv);
           }
           // 重新计算总价钱
           var calcPrice = function() {
@@ -780,9 +780,9 @@
               if (i) {
                 i.price = value.toFixed(2);
                 calcPrice();
-              } 
+              }
               callback();
-            });				    
+            });
 				  }
           // 删除项目
           var delProject = function(id, callback){
@@ -795,9 +795,9 @@
               }
             },function(data) {
               callback();
-            });           
-          }				  
-				  
+            });
+          }
+
 				  // 画每个项目
           var createFragment = function(parent, data) {
             var li = doc.createElement('li');
@@ -808,24 +808,24 @@
             var img = doc.createElement('img');
             img.src = data.image;
             imgDiv.appendChild(img);
-            li.append(imgDiv);
+            li.appendChild(imgDiv);
             var billDiv = doc.createElement('div');
             billDiv.className = 'bill-item';
             // 标题
             var titleDiv = doc.createElement('div');
             titleDiv.className = 'flex';
             titleDiv.innerHTML = '<p>{0}</p><p class="flex-1">{1}</p>'.format(data.number,data.title);
-            billDiv.append(titleDiv);
+            billDiv.appendChild(titleDiv);
             // 价格
             var priceP = doc.createElement('p');
             priceP.innerHTML = '¥';
             var priceSpan = doc.createElement('span');
             priceSpan.innerText = data.price;
-            priceP.append(priceSpan);
+            priceP.appendChild(priceSpan);
             var unitSpan = doc.createElement('span');
             unitSpan.innerText = '元';
-            priceP.append(unitSpan);
-            billDiv.append(priceP);
+            priceP.appendChild(unitSpan);
+            billDiv.appendChild(priceP);
             //按钮
             var btnDiv = doc.createElement('div');
             btnDiv.className = 'bill-btn flex';
@@ -837,12 +837,12 @@
                 if (obj.index === 1){
                   var _value = parseFloat(obj.value);
                   editPrice(data.id, _value, function(){
-                    priceSpan.innerText = _value.toFixed(2); 
+                    priceSpan.innerText = _value.toFixed(2);
                   });
                 }
               });
             });
-            btnDiv.append(edit);
+            btnDiv.appendChild(edit);
             if (data.system !== -1){
                 var del = doc.createElement('span');
                 del.className = 'flex-1 del';
@@ -857,18 +857,18 @@
                     }
                   });
                 });
-                btnDiv.append(del);     
+                btnDiv.appendChild(del);
             }
-            billDiv.append(btnDiv);
+            billDiv.appendChild(btnDiv);
             // 添加
             var addDiv = doc.createElement('div');
             addDiv.className = 'bill-add';
             addDiv.addEventListener('tap', function(event){
               addShopCar(data);
             });
-            billDiv.append(addDiv);
-            li.append(billDiv);
-            parent.append(li);
+            billDiv.appendChild(addDiv);
+            li.appendChild(billDiv);
+            parent.appendChild(li);
           };
           // 获取列表
 				  var getProjects = function(page, callback) {

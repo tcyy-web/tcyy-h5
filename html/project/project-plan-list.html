@@ -117,7 +117,7 @@
             var p = doc.createElement('p');
             p.className = 'flex flex-row-center';
             p.innerHTML = '<i class="iconfont icon-cshy-shizhong"></i>{0}'.format(enums.planStatus[data.status]);
-            div.append(p);
+            div.appendChild(p);
             div.addEventListener('tap', function(e) {
               if (!projectPlanDetailWebView) {
                 projectPlanDetailWebView = plus.webview.getWebviewById('projectPlanDetail');
@@ -129,7 +129,7 @@
                 id: 'projectPlanDetail'
               });
             })
-            $contentBox.append(div);
+            $contentBox.appendChild(div);
           }
           var getList = function(callback) {
             if (page !== 1 && more === false) {
@@ -165,7 +165,7 @@
                if (typeof callback === 'function') {
                  callback();
                }
-            });            
+            });
           }
           // 刷新分类
           window.addEventListener('project-groupid', function(e){
