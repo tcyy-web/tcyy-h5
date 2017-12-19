@@ -172,21 +172,23 @@
           var numberBox = doc.getElementById('number');
           var titleBox = doc.getElementById('title');
           var priceBox = doc.getElementById('price');
+          var $img = doc.getElementById('img');
           // 刷新分类
           window.addEventListener('project-groupid', function(e){
             groupid = e.detail.groupid;
             image = null;
+            $img.src = '../../images/project/jia.png';
             numberBox.value = '';
             titleBox.value = '';
             priceBox.value = '';
           });
 				  //上传图片
-				  var addPic = doc.getElementById('addPic');
-				  addPic.addEventListener('tap', function(event) {
+				  var $addPic = doc.getElementById('addPic');
+				  $addPic.addEventListener('tap', function(event) {
 				    setTimeout(function(){
               upload.showImgActionSheet(this , function( data ){
                 console.log( JSON.stringify(data) );
-                doc.getElementById('img').src = data.path;
+                $img.src = data.path;
 //              var url = "http://m.tianchiyueya.com:1888/tcyy/project/uploadImg";
 //              upload.uploadimge( url , [data.name + data.divid] )
               });				      
