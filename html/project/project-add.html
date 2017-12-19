@@ -220,17 +220,23 @@
               $.toast('请上传图片');
               return;
             }
-//          request.loginAjax('project/savedata',{
-//            data: {
-//              groupid:groupid,
-//              number:number,
-//              price:price,
-//              title:title,
-//              image:'',
-//              id: null
-//            }
-//          },function() {
-//          });
+            request.loginAjax('project/savedata',{
+              data: {
+                groupid:groupid,
+                number:number,
+                price:price,
+                title:title,
+                image:'',
+                id: null
+              }
+            },function(data, success) {
+              if (success){
+                 //获得父页面的webview
+                var parent = plus.webview.currentWebview().opener();
+                $.fire(parent, 'project-add-success');
+                $.back();                 
+              }
+            });
           });
 				});
 			}(mui, document));

@@ -289,11 +289,13 @@
                 booktime: booktime,
                 data: list
               }
-            }, function() {
-              //获得父页面的webview
-              var parent = plus.webview.currentWebview().opener();
-              $.fire(parent, 'bill-success');
-              $.back();
+            }, function(data, success) {
+              if (success){
+                 //获得父页面的webview
+                var parent = plus.webview.currentWebview().opener();
+                $.fire(parent, 'bill-success');
+                $.back();               
+              }
             });
           });
 				});
