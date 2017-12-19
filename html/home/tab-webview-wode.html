@@ -256,9 +256,11 @@
 					logout.addEventListener('tap', function(event) {
 						$.confirm('确认退出登录？','退出登录','',function(ok){
 							if (ok.index === 1) {
-							  request.loginAjax('login/loginOut',{},function() {
-                   authManage.clearUser();
-                   location.reload();
+							  request.loginAjax('login/loginOut',{},function(data,success) {
+							    if (success){
+							      authManage.clearUser();
+                    location.reload();
+							    }
 							  });
 							}
 						});
