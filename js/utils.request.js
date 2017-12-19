@@ -68,7 +68,11 @@
               }
             }
             if (typeof successCallback === 'function') {
-              successCallback(data.body);
+              var _success = false;
+              if (data && data.header && data.header.status === 2001){
+                _success = true;
+              }
+              successCallback(data.body, _success);
             }
           } else {
             if (typeof successCallback === 'function') {

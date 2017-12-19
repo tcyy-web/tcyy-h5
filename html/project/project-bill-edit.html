@@ -32,7 +32,7 @@
 			.bill-item {
 				position: relative;
 				padding:10px;
-				line-height: 30px;
+				line-height: 20px;
 				background-color: #ffffff;
 			}
 			.bill-item:after{
@@ -47,20 +47,20 @@
 		    background-color: #d6d6d6;
 			}
 			.bill-item p:first-child {
-				text-align: left;
 				position: relative;
 			}
 			.bill-item p:first-child:before {
 				position: absolute;
 				right: 0;
-				top: 5px;
+				top: 0;
 				content: '';
 				width: 1px;
-				height: 20px;
+				height: 100%;
 				background-color: #d6d6d6;
 			}
 			.bill-item p {
-				text-align: center;
+				text-align: left;
+				padding: 0 5px;
 				color: #292929;
 			}
 			.bill-item p:last-child {
@@ -235,22 +235,22 @@
           var genderPicker = new $.PopPicker();
           genderPicker.setData(gender);
           $sex.addEventListener('tap', function(event) {
-          	setTimeout(function(){
-	            genderPicker.show(function(items) {
-	              sex = items[0].value;
-	              $sex.innerText = items[0].text;
-	            });
-          	},500);
+            	setTimeout(function(){
+  	            genderPicker.show(function(items) {
+  	              sex = items[0].value;
+  	              $sex.innerText = items[0].text;
+  	            });
+            	},500);
           }, false);
           // 预约时间
           var datepicer = new $.DtPicker({});
           $booktime.addEventListener('tap', function(event) {
-          	setTimeout(function(){
-	            datepicer.show(function(rs) {
-	              $booktime.innerText = rs.text;
-	              booktime = rs.text;
-	            });
-          	},500);
+            	setTimeout(function(){
+  	            datepicer.show(function(rs) {
+  	              $booktime.innerText = rs.text;
+  	              booktime = rs.text;
+  	            });
+            	},500);
           }, false);
           $submit.addEventListener('tap', function(e) {
             var name = $name.value.trim();

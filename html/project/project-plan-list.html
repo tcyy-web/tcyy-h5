@@ -72,7 +72,7 @@
       }
       .mui-popover {
         width: 180px;
-        height: 140px;
+        height: 180px;
       }
 		</style>
 	</head>
@@ -90,7 +90,6 @@
 		        <div id="contentBox">
               <!--<div class="flex form-item">
                 <p class="flex-1 flex flex-row-center">刘德华</p>
-                <p class="flex-1 flex flex-row-center">口腔内科</p>
                 <p class="flex-1 flex flex-row-center">2000-10-10 00:00</p>
                 <p class="flex flex-row-center status3"><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
               </div>-->
@@ -127,9 +126,8 @@
 				});
 				$('.mui-scroll-wrapper').scroll();
 				$.plusReady(function() {
-				  var type = 1;
-          // 分类id
-          var groupid = 0;
+				  // 状态
+				  var status = -1;
           var page = 1;
           var limit = 20;
           var more = true;
@@ -139,7 +137,7 @@
           var paitItem = function(data) {
             var div = doc.createElement('div');
             div.className = 'flex form-item';
-            div.innerHTML = '<p class="flex-1 flex flex-row-center">{name}</p><p class="flex-1 flex flex-row-center">{group}</p><p class="flex-1 flex flex-row-center">{booktime}</p>'.format(data);
+            div.innerHTML = '<p class="flex-1 flex flex-row-center">{name}</p><p class="flex-1 flex flex-row-center">{booktime}</p>'.format(data);
             var p = doc.createElement('p');
             p.className = 'flex flex-row-center status{0}'.format(data.status);
             p.innerHTML = '<i class="iconfont icon-cshy-shizhong"></i>{0}'.format(enums.planStatus[data.status]);
@@ -148,7 +146,7 @@
               if (!projectPlanDetailWebView) {
                 projectPlanDetailWebView = plus.webview.getWebviewById('projectPlanDetail');
               }
-              $.fire(projectPlanDetailWebView,'project-planid',{
+              $.fire(projectPlanDetailWebView,'project-plan-id',{
                 id:data.id
               });
               $.openWindow({
@@ -161,12 +159,15 @@
             if (page !== 1 && more === false) {
               return;
             }
+            var data = {
+              page:page,
+              limit:limit
+            }
+            if (status !== -1 && status !== '-1'){
+              data.status = status;
+            }
             request.loginAjax('project/getPatientList',{
-              data: {
-                groupid:groupid,
-                page:page,
-                limit:limit
-              },
+              data: data,
               showMsg: false
             },function(data) {
                 // 处理页面绑定
@@ -196,6 +197,7 @@
           // 筛选
           var $type = doc.querySelector('#topPopover .mui-table-view');
           var _typeHtml = [];
+          _typeHtml.push('<li data-type="{0}" class="mui-table-view-cell"><a>{1}</a></li>'.format(-1,'全部'))
           for (var key in enums.planStatus){
             var _html = '<li data-type="{0}" class="mui-table-view-cell"><a>{1}</a></li>'.format(key,enums.planStatus[key]);
             _typeHtml.push(_html);
@@ -203,7 +205,7 @@
           $type.innerHTML = _typeHtml.join('');
           $.each($type.querySelectorAll('.mui-table-view-cell'), function(index,i) {
              i.addEventListener('tap', function(e){
-               type = this.getAttribute('data-type');
+               status = this.getAttribute('data-type');
                page = 1;
                $pullrefresh.pullToRefresh().refresh(true);
                $('#topPopover').popover('hide');
@@ -211,8 +213,7 @@
              });
           });
           // 刷新分类
-          window.addEventListener('project-groupid', function(e){
-            groupid = e.detail.groupid;
+          window.addEventListener('project-plan', function(e){
             page = 1;
             type = 1;
             $pullrefresh.pullToRefresh().refresh(true);

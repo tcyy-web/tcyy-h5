@@ -40,37 +40,42 @@
 				-moz-border-radius: 0;
 				border-radius: 0;
 			}
-			.form-item {
-				position: relative;
-				background-color: #ffffff;
-				height: 50px;
-				line-height: 50px;
-			}
-			.form-item:after{
-				position: absolute;
-		    right: 0;
-		    bottom: 0;
-		    left: 0;
-		    height: 1px;
-		    content: '';
-		    -webkit-transform: scaleY(.5);
-		    transform: scaleY(.5);
-		    background-color: #d6d6d6;
-			}
-			.form-item label {
-				width: 90px;
-				font-size: 14px;
-				text-align: center;
-			}
-			.form-item input {
-				border: 0;
-				padding: 0;
-				margin: 0;
-				height: 100%;
-				color: #000000;
-				font-size: 14px;
-				background-color: transparent;
-			}
+			form {
+        margin-bottom: 10px;
+      }
+      .mui-input-group .mui-input-row{
+        height: 50px;
+      }
+      .mui-input-row label{
+        padding: 15px 10px;
+        line-height: 20px;
+        width: 80px;
+      }
+      .mui-input-group input{
+        height: 50px;
+        font-size: 14px;
+        padding: 15px;
+      }
+      .mui-input-row label~input{
+        width: calc(100% - 80px);
+        width: -webkit-calc(100% - 80px);
+      }
+      .mui-input-row label~p{
+        width: calc(100% - 80px);
+        width: -webkit-calc(100% - 80px);
+        float: right;
+        line-height: 50px;
+        color: #000000;
+      }
+      .mui-input-group .mui-input-row:after{
+        left: 0;
+      }
+      .mui-input-group .mui-input-row:last-child:after{
+        height: 0;
+      }
+      .mui-input-row .mui-input-clear~.mui-icon-clear{
+        top: 15px;
+      }
 			.add-pic {
 				position: relative;
 				margin-top: 10px;
@@ -125,20 +130,20 @@
 			<h1 class="mui-title">新增项目</h1>
 		</header>
 		<div class="mui-content">
-			<form>
-				<div class="flex form-item">
-					<label>编号：</label>
-					<input id="number" class="flex-1" type="text" placeholder="请输入编号" />
-				</div>
-				<div class="flex form-item">
-					<label>项目：</label>
-					<input id="title" class="flex-1" type="text" placeholder="请输入项目名称" />
-				</div>
-				<div class="flex form-item">
-					<label>金额：</label>
-					<input id="price" class="flex-1" type="number" placeholder="请输入金额" />
-				</div>
-			</form>
+		  <form class="mui-input-group">
+        <div class="mui-input-row">
+          <label>编号：</label>
+          <input id="number" class="mui-input-clear" type="text" placeholder="请输入编号" />
+        </div>
+        <div class="mui-input-row">
+          <label>项目：</label>
+          <input id="title" class="mui-input-clear" type="text" placeholder="请输入项目名称" />
+        </div>
+        <div class="mui-input-row">
+          <label>金额：</label>
+          <input id="price" class="mui-input-clear" type="number" placeholder="请输入金额" />
+        </div>
+      </form>
 			<div class="add-pic">
 				<div id="addPic" class="add-box">
 					<div style="display: inline-block;">
@@ -160,51 +165,59 @@
 		<script>
 			(function($, doc) {
 				$.init();
-	      // 分类id
-        var groupid = 0;
-        var numberBox = doc.getElementById('number');
-        var titleBox = doc.getElementById('title');
-        var priceBox = doc.getElementById('price');
-        // 刷新分类
-        window.addEventListener('project-groupid', function(e){
-          groupid = e.detail.groupid;
-          numberBox.value = '';
-          titleBox.value = '';
-          priceBox.value = '';
-        });
 				$.plusReady(function() {
+				  var image = null;
+				  // 分类id
+          var groupid = 0;
+          var numberBox = doc.getElementById('number');
+          var titleBox = doc.getElementById('title');
+          var priceBox = doc.getElementById('price');
+          // 刷新分类
+          window.addEventListener('project-groupid', function(e){
+            groupid = e.detail.groupid;
+            image = null;
+            numberBox.value = '';
+            titleBox.value = '';
+            priceBox.value = '';
+          });
 				  //上传图片
 				  var addPic = doc.getElementById('addPic');
 				  addPic.addEventListener('tap', function(event) {
-//				    upload.showImgActionSheet(this , function( data ){
-//            console.log( JSON.stringify(data) );
-//            doc.getElementById('img').src = data.path;
-//            var url = "http://m.tianchiyueya.com:1888/tcyy/project/uploadImg";
-//            upload.uploadimge( url , [data.name + data.divid] )
-//          });
+				    setTimeout(function(){
+              upload.showImgActionSheet(this , function( data ){
+                console.log( JSON.stringify(data) );
+                doc.getElementById('img').src = data.path;
+//              var url = "http://m.tianchiyueya.com:1888/tcyy/project/uploadImg";
+//              upload.uploadimge( url , [data.name + data.divid] )
+              });				      
+				    }, 500);
 				  });
 				  //保存
           var save = doc.getElementById('save');
           save.addEventListener('tap', function(event) {
-//          if (!(groupid > 0)) {
-//            $.back();
-//            return;
-//          }
+            if (!(groupid > 0)) {
+              $.back();
+              return;
+            }
             var number = numberBox.value.trim();
             var title = titleBox.value.trim();
             var price = priceBox.value.trim();
-//          if (number === '') {
-//            $.toast('请输入编号');
-//            return;
-//          }
-//          if (title === '') {
-//            $.toast('请输入项目名称');
-//            return;
-//          }
-//          if (price === '') {
-//            $.toast('请输入金额');
-//            return;
-//          }
+            if (number === '') {
+              $.toast('请输入编号');
+              return;
+            }
+            if (title === '') {
+              $.toast('请输入项目名称');
+              return;
+            }
+            if (price === '') {
+              $.toast('请输入金额');
+              return;
+            }
+            if (image === null){
+              $.toast('请上传图片');
+              return;
+            }
 //          request.loginAjax('project/savedata',{
 //            data: {
 //              groupid:groupid,

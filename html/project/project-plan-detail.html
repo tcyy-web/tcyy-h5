@@ -8,6 +8,8 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
+    <link rel="stylesheet" href="../../css/mui.picker.min.css">
+    <link rel="stylesheet" href="../../css/mui.poppicker.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
 			::-moz-placeholder {
@@ -30,7 +32,7 @@
 			.bill-item {
 				position: relative;
 				padding:10px;
-				line-height: 30px;
+				line-height: 20px;
 				background-color: #ffffff;
 			}
 			.bill-item:after{
@@ -45,20 +47,20 @@
 		    background-color: #d6d6d6;
 			}
 			.bill-item p:first-child {
-				text-align: left;
 				position: relative;
 			}
 			.bill-item p:first-child:before {
 				position: absolute;
 				right: 0;
-				top: 5px;
+				top: 0;
 				content: '';
 				width: 1px;
-				height: 20px;
+				height: 100%;
 				background-color: #d6d6d6;
 			}
 			.bill-item p {
-				text-align: center;
+				text-align: left;
+				padding: 0 5px;
 				color: #292929;
 			}
 			.bill-item p:last-child {
@@ -80,7 +82,7 @@
 			.mui-input-row label{
 				padding: 15px 10px;
 				line-height: 20px;
-				width: 80px;
+				width: 90px;
 			}
 			.mui-input-group input{
 				height: 50px;
@@ -88,16 +90,25 @@
 				padding: 15px;
 			}
 			.mui-input-row label~input{
-				width: calc(100% - 80px);
-				width: -webkit-calc(100% - 80px);
+				width: calc(100% - 90px);
+				width: -webkit-calc(100% - 90px);
 			}
 			.mui-input-row label~p{
-				width: calc(100% - 80px);
-				width: -webkit-calc(100% - 80px);
+				width: calc(100% - 90px);
+				width: -webkit-calc(100% - 90px);
 				float: right;
 				line-height: 50px;
 				color: #000000;
 			}
+      .mui-input-row label~p.status1{
+        color: #ffae00;
+      }
+      .mui-input-row label~p.status2{
+        color: #f14434;
+      }
+      .mui-input-row label~p.status3{
+        color: #4cd964;
+      }
 			.mui-input-group .mui-input-row:after{
 				left: 0;
 			}
@@ -140,6 +151,9 @@
 			.btns .cancel{
 				background-color: #f14434;
 			}
+			.hide{
+			  display: none;
+			}
 		</style>
 	</head>
 
@@ -149,46 +163,195 @@
 			<h1 class="mui-title">计划详情</h1>
 		</header>
 		<div class="mui-content">
-			<div class="bill-item flex">
-				<p class="flex-1">编号：01by</p>
-				<p class="flex-1">牙齿修复</p>
-				<p class="flex-1">￥318<span>元</span></p>
-			</div>
+      <div id="listBox">
+          <!--<div class="bill-item flex">
+            <p class="flex-1">编号：01by</p>
+            <p class="flex-1">牙齿修复牙齿修复牙齿修复牙齿修复</p>
+            <p class="flex-1">￥318.00<span>元</span></p>
+          </div>-->
+      </div>
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 	        <label>姓名：</label>
-	        <input type="text" class="mui-input-clear" placeholder="请输入姓名">
+	        <p id="name"></p>
 		    </div>
 				<div class="mui-input-row">
 	       	<label>性别：</label>
-					<p id="showGenderPicker" class="flex-1">请选择性别</p>
+					<p id="sex"></p>
 		    </div>
 		    <div class="mui-input-row">
 					<label>年龄：</label>
-					<input id="age" class="mui-input-clear" type="number" placeholder="请输入年龄" />
+					<p id="age"></p>
 				</div>
 				<div class="mui-input-row">
 					<label>电话：</label>
-					<input id="phone" class="mui-input-clear" type="number" placeholder="请输入电话" />
+					<p id="phone"></p>
 				</div>
 				<div class="mui-input-row">
-					<label>预约：</label>
-					<p id="booktime" class="flex-1">请选择预约时间</p>
+					<label>预约时间：</label>
+					<p id="booktime"></p>
 				</div>
+				<div class="mui-input-row">
+          <label>预约状态：</label>
+          <p id="status" class="status1"></p>
+        </div>
 			</form>
 			<div class="sure-pre">
-				<span>添加预约时间</span>
+				<span id="nextBooktime">修改预约时间</span>
 			</div>
 			<div class="btns flex">
-				<div class="flex-1 sure">完成预约</div>
-				<div class="flex-1 cancel">取消就诊</div>
+				<div id="sure" class="flex-1 sure hide">完成预约</div>
+				<div id="cancel" class="flex-1 cancel hide">未就诊</div>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+    <script src="../../js/mui.poppicker.js"></script>
+		<script src="../../js/utils.config.js"></script>
+    <script src="../../js/utils.extend.js"></script>
+    <script src="../../js/utils.enums.js"></script>
+    <script src="../../js/utils.storages.js" ></script>
+    <script src="../../js/utils.auth.js"></script>
+    <script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
-				$.init();
+			  var changeFlag = false;
+				$.init({
+          beforeback: function() {
+            if (changeFlag){
+              //获得父页面的webview
+              var parent = plus.webview.currentWebview().opener();
+              $.fire(parent, 'project-plan');
+            }
+            //返回true,继续页面关闭逻辑
+            return true;
+          }
+        });
 				$.plusReady(function() {
+				  // 详情id
+				  var id = 0;
+				  var status = 0;
+          var $name = doc.getElementById('name');
+          var $sex = doc.getElementById('sex');
+          var $age = doc.getElementById('age');
+          var $phone = doc.getElementById('phone');
+          var $booktime = doc.getElementById('booktime');
+          var $status = doc.getElementById('status');
+          var $listBox = doc.getElementById('listBox');
+          // 画清单每项
+          var paintItem = function(data) {
+            var boxDiv = doc.createElement('div');
+            boxDiv.className = 'bill-item flex';
+            var _p = eval(data.num + '*' + data.price);
+            boxDiv.innerHTML = '<p class="flex-1">{0}</p><p class="flex-1">{1}</p><p class="flex-1">￥{2}<span>元</span></p>'.format(data.number,data.title,_p.toFixed(2));
+            $listBox.appendChild(boxDiv);
+          }
+          // 更新清单
+          var refreshList = function(data){
+            $listBox.innerHTML = '';
+            $.each(data, function(index, i) {
+               paintItem(i);
+            });
+          }
+          // 处理状态
+          var $nextBooktime = doc.getElementById('nextBooktime');
+          var $sure = doc.getElementById('sure');
+          var $cancel = doc.getElementById('cancel');
+          var statusChange = function(status){
+            $status.setAttribute('class', '');
+            $status.classList.add('status'+status);
+            if (status === 1){
+              $nextBooktime.innerText = '修改预约时间';
+              $sure.classList.remove('hide');
+              $cancel.classList.remove('hide');
+            } else if (status === 2) {
+              $nextBooktime.innerText = '添加预约时间';
+              $sure.classList.add('hide');
+              $cancel.classList.add('hide');
+            } else if (status === 3) {
+              $nextBooktime.innerText = '添加预约时间';
+              $sure.classList.add('hide');
+              $cancel.classList.add('hide');
+            }
+          }
+          var getDetail = function(callback){
+            request.loginAjax('Project/getPatientDetails', {
+              data: {
+                id: id
+              },
+              showMsg: false
+            }, function(data) {
+               // 处理页面绑定
+               if (data) {
+                 $name.innerText = data.name;
+                 $sex.innerText = enums.sex[data.sex];
+                 $age.innerText = data.age;
+                 $phone.innerText = data.phone;
+                 $booktime.innerText = data.booktime;
+                 $status.innerText = enums.planStatus[data.status];
+                 status = data.status;
+                 statusChange(data.status);
+                 if (data.project){
+                   refreshList(data.project);
+                 }
+               }
+            });
+          }
+          // 状态修改
+          var statusChangeRequest = function(status){
+            request.loginAjax('project/editProjectUserStatus', {
+              data: {
+                id: id,
+                status:status
+              }
+            }, function(data,success) {
+              if (success){
+                changeFlag = true;
+                getDetail();
+              }
+            });
+          }
+          // 确定就诊
+          $sure.addEventListener('tap', function(e){
+            statusChangeRequest(3);
+          });
+          // 未就诊
+          $cancel.addEventListener('tap', function(e){
+            statusChangeRequest(2);
+          });
+          // 修改预约时间
+          var editBooktime = function(booktime){
+            var url = 'project/editTimingTime';
+            if (status !== 1) {
+              url = 'project/addNextBookTime';
+            }
+            request.loginAjax(url, {
+              data: {
+                puid: id,
+                booktime:booktime
+              }
+            }, function(data, success) {
+              if (success){
+                changeFlag = true;
+                getDetail();
+              }
+            });
+          }    
+          // 预约时间
+          var datepicer = new $.DtPicker({});
+          $nextBooktime.addEventListener('tap', function(event) {
+              setTimeout(function(){
+                datepicer.show(function(rs) {
+                  editBooktime(rs.text);
+                });
+              },500);
+          }, false);
+          // 刷新详情
+          window.addEventListener('project-plan-id', function(e){
+            id = e.detail.id;
+            changeFlag = false;
+            getDetail();
+          });
 				});
 			}(mui, document));
 		</script>

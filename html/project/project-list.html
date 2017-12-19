@@ -602,16 +602,13 @@
 				  // 分页请求参数
 				  var listRequest = {};
 				  // 跳转计划列表
-
           var $projectPlanList = doc.getElementById('projectPlanList');
           var projectPlanListWebview = null;
           $projectPlanList.addEventListener('tap', function(event) {
             if (!projectPlanListWebview) {
               projectPlanListWebview = plus.webview.getWebviewById('projectPlanList');
             }
-            $.fire(projectPlanListWebview,'project-groupid',{
-              groupid:groupid
-            });
+            $.fire(projectPlanListWebview,'project-plan');
             $.openWindow({
               id: 'projectPlanList'
             });
@@ -831,7 +828,7 @@
             btnDiv.className = 'bill-btn flex';
             var edit = doc.createElement('span');
             edit.className = 'flex-1 edit';
-            edit.innerText = '修改';
+            edit.innerText =  data.system !== -1 ? '修改' : '改价';
             edit.addEventListener('tap', function(e){
               $.prompt(data.title, '请输入价格', '修改价格', null,function(obj){
                 if (obj.index === 1){
