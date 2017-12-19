@@ -838,6 +838,7 @@
                   var _value = parseFloat(obj.value);
                   editPrice(data.id, _value, function(){
                     priceSpan.innerText = _value.toFixed(2);
+                    data.price = _value;
                   });
                 }
               });

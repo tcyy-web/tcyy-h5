@@ -76,51 +76,38 @@
 				margin-top: 10px;
 				margin-bottom: 10px;
 			}
-			.form-item {
-				position: relative;
-				padding:0 10px;
-				background-color: #ffffff;
+			.mui-input-group .mui-input-row{
 				height: 50px;
+			}
+			.mui-input-row label{
+				padding: 15px 10px;
+				line-height: 20px;
+				width: 80px;
+			}
+			.mui-input-group input{
+				height: 50px;
+				font-size: 14px;
+				padding: 15px;
+			}
+			.mui-input-row label~input{
+				width: calc(100% - 80px);
+				width: -webkit-calc(100% - 80px);
+			}
+			.mui-input-row label~p{
+				width: calc(100% - 80px);
+				width: -webkit-calc(100% - 80px);
+				float: right;
 				line-height: 50px;
-			}
-			.form-item:first-child:before{
-        position: absolute;
-        right: 0;
-        top: 0;
-        left: 0;
-        height: 1px;
-        content: '';
-        -webkit-transform: scaleY(.5);
-        transform: scaleY(.5);
-        background-color: #d6d6d6;
-			}
-			.form-item:after{
-				position: absolute;
-		    right: 0;
-		    bottom: 0;
-		    left: 0;
-		    height: 1px;
-		    content: '';
-		    -webkit-transform: scaleY(.5);
-		    transform: scaleY(.5);
-		    background-color: #d6d6d6;
-			}
-			.form-item label {
-				width: 60px;
-				font-size: 14px;
-				text-align: left;
-			}
-			.form-item input {
-				border: 0;
-				padding: 0;
-				margin: 0;
-				height: 100%;
 				color: #000000;
-				font-size: 14px;
-				background-color: transparent;
 			}
-			.form-item > p{
-			  color: #000000;
+			.mui-input-group .mui-input-row:after{
+				left: 0;
+			}
+			.mui-input-group .mui-input-row:last-child:after{
+				height: 0;
+			}
+			.mui-input-row .mui-input-clear~.mui-icon-clear{
+				top: 15px;
 			}
 			.btns {
 				position: fixed;
@@ -157,26 +144,26 @@
     				<p class="flex-1">￥318.00<span>元</span></p>
     			</div>-->
 			</div>
-			<form>
-				<div class="flex form-item">
-					<label>姓名：</label>
-					<input id="name" class="flex-1" type="text" placeholder="请输入姓名" />
-				</div>
-				<div class="flex form-item">
-					<label>性别：</label>
-					<p id="showGenderPicker" class="flex-1">请选择性别</p>
-				</div>
-				<div class="flex form-item">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+	        <label>姓名：</label>
+	        <input id="name" type="text" class="mui-input-clear" placeholder="请输入姓名">
+		    </div>
+				<div class="mui-input-row">
+	       	<label>性别：</label>
+					<p id="showGenderPicker">请选择性别</p>
+		    </div>
+		    <div class="mui-input-row">
 					<label>年龄：</label>
-					<input id="age" class="flex-1" type="number" placeholder="请输入年龄" />
+					<input id="age" class="mui-input-clear" type="number" placeholder="请输入年龄" />
 				</div>
-				<div class="flex form-item">
+				<div class="mui-input-row">
 					<label>电话：</label>
-					<input id="phone" class="flex-1" type="number" placeholder="请输入电话" />
+					<input id="phone" class="mui-input-clear" type="number" placeholder="请输入电话" />
 				</div>
-				<div class="flex form-item">
+				<div class="mui-input-row">
 					<label>预约：</label>
-					<p id="booktime" class="flex-1">请选择预约时间</p>
+					<p id="booktime">请选择预约时间</p>
 				</div>
 			</form>
 			<div class="btns flex">
@@ -248,18 +235,22 @@
           var genderPicker = new $.PopPicker();
           genderPicker.setData(gender);
           $sex.addEventListener('tap', function(event) {
-            genderPicker.show(function(items) {
-              sex = items[0].value;
-              $sex.innerText = items[0].text;
-            });
+          	setTimeout(function(){
+	            genderPicker.show(function(items) {
+	              sex = items[0].value;
+	              $sex.innerText = items[0].text;
+	            });
+          	},500);
           }, false);
           // 预约时间
           var datepicer = new $.DtPicker({});
           $booktime.addEventListener('tap', function(event) {
-            datepicer.show(function(rs) {
-              $booktime.innerText = rs.text;
-              booktime = rs.text;
-            });
+          	setTimeout(function(){
+	            datepicer.show(function(rs) {
+	              $booktime.innerText = rs.text;
+	              booktime = rs.text;
+	            });
+          	},500);
           }, false);
           $submit.addEventListener('tap', function(e) {
             var name = $name.value.trim();

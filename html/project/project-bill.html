@@ -70,41 +70,42 @@
 				font-size: 14px;
 				color: #bbbbbb;
 			}
-			form {
+						form {
 				margin-top: 10px;
 				margin-bottom: 10px;
 			}
-			.form-item {
-				position: relative;
-				padding:0 10px;
-				background-color: #ffffff;
+			.mui-input-group .mui-input-row{
 				height: 50px;
+			}
+			.mui-input-row label{
+				padding: 15px 10px;
+				line-height: 20px;
+				width: 80px;
+			}
+			.mui-input-group input{
+				height: 50px;
+				font-size: 14px;
+				padding: 15px;
+			}
+			.mui-input-row label~input{
+				width: calc(100% - 80px);
+				width: -webkit-calc(100% - 80px);
+			}
+			.mui-input-row label~p{
+				width: calc(100% - 80px);
+				width: -webkit-calc(100% - 80px);
+				float: right;
 				line-height: 50px;
-			}
-			.form-item:after{
-				position: absolute;
-		    right: 0;
-		    bottom: 0;
-		    left: 0;
-		    height: 1px;
-		    content: '';
-		    -webkit-transform: scaleY(.5);
-		    transform: scaleY(.5);
-		    background-color: #d6d6d6;
-			}
-			.form-item label {
-				width: 60px;
-				font-size: 14px;
-				text-align: left;
-			}
-			.form-item input {
-				border: 0;
-				padding: 0;
-				margin: 0;
-				height: 100%;
 				color: #000000;
-				font-size: 14px;
-				background-color: transparent;
+			}
+			.mui-input-group .mui-input-row:after{
+				left: 0;
+			}
+			.mui-input-group .mui-input-row:last-child:after{
+				height: 0;
+			}
+			.mui-input-row .mui-input-clear~.mui-icon-clear{
+				top: 15px;
 			}
 			.sure-pre{
 				padding: 10px;
@@ -153,26 +154,26 @@
 				<p class="flex-1">牙齿修复</p>
 				<p class="flex-1">￥318<span>元</span></p>
 			</div>
-			<form>
-				<div class="flex form-item">
-					<label>姓名：</label>
-					<input class="flex-1" type="text" placeholder="请输入编号" />
-				</div>
-				<div class="flex form-item">
-					<label>性别：</label>
-					<input class="flex-1" type="text" placeholder="请选择性别" />
-				</div>
-				<div class="flex form-item">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+	        <label>姓名：</label>
+	        <input type="text" class="mui-input-clear" placeholder="请输入姓名">
+		    </div>
+				<div class="mui-input-row">
+	       	<label>性别：</label>
+					<p id="showGenderPicker" class="flex-1">请选择性别</p>
+		    </div>
+		    <div class="mui-input-row">
 					<label>年龄：</label>
-					<input class="flex-1" type="number" placeholder="请输入金额" />
+					<input id="age" class="mui-input-clear" type="number" placeholder="请输入年龄" />
 				</div>
-				<div class="flex form-item">
+				<div class="mui-input-row">
 					<label>电话：</label>
-					<input class="flex-1" type="number" placeholder="请输入电话额" />
+					<input id="phone" class="mui-input-clear" type="number" placeholder="请输入电话" />
 				</div>
-				<div class="flex form-item">
+				<div class="mui-input-row">
 					<label>预约：</label>
-					<input class="flex-1" type="date" placeholder="请选择预约时间" />
+					<p id="booktime" class="flex-1">请选择预约时间</p>
 				</div>
 			</form>
 			<div class="sure-pre">
