@@ -226,8 +226,10 @@
 									}
 									request.ajax('login/byQQWX',{
 										data: loginInfo
-									}, function(data) {
-										loginSuccess(data);
+									}, function(data, success) {
+									  if (success){
+									    loginSuccess(data);
+									  }
 									});
 								}, function(e) {
 									$.toast("获取用户信息失败：" + e.message);
@@ -265,8 +267,10 @@
 						}
 						request.ajax('login/byPhone',{
 							data: loginInfo
-						}, function(data) {
-							loginSuccess(data);
+						}, function(data, success) {
+						  if (success){
+                loginSuccess(data);
+              }
 						});
 					});
 					regButton.addEventListener('tap', function(event) {

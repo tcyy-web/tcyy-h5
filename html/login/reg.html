@@ -263,9 +263,11 @@
 						}						
 						request.ajax('Register/byPhone',{
 							data: regInfo
-						}, function() {
-							$.toast('注册成功');
-							$.back();
+						}, function(data, success) {
+						  if (success){
+						    $.toast('注册成功');
+                $.back();
+						  }
 						});
 					});
 					// 跳转登录
