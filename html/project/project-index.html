@@ -72,7 +72,7 @@
 			<h1 class="mui-title">项目</h1>
 		</header>
 		<div class="mui-content">
-			<img class="bg" src="../../images/project/body-bg.png" />
+			<img id="img" class="bg" src="../../images/project/body-bg.png" />
 			<div class="info-box flex flex-col-center">
 				<div class="input-box">
 					<input id="inputText" type="text" placeholder="请输入门诊名称" />
@@ -83,10 +83,18 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
-    <script src="../../js/utils.storages.js"></script>
+    <script src="../../js/utils.config.js"></script>
+    <script src="../../js/utils.storages.js" ></script>
+    <script src="../../js/utils.auth.js"></script>
+    <script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
-				$.init();
+				$.init({
+          preloadPages:[{
+            id:'projectList',
+            url: './project-list.html'
+          }]
+				});
 				$.plusReady(function() {
 				  var storageKey = '$projetIndex';
 					var projectList = doc.getElementById('project-list');
@@ -97,6 +105,16 @@
 					if (saveValue !== null) {
 						inputText.value = saveValue;
 					}
+					var getImage = function(callback){
+            request.loginAjax('Project/getStartImg', {
+              showMsg: false
+            }, function(data, success) {
+              if (data && data.image) {
+                doc.getElementById('img').src = data.image;
+              }
+            });
+          }
+					getImage();
 					projectList.addEventListener('tap', function(event) {
 						var currentValue = inputText.value.trim();
 						if (currentValue !== '' && currentValue !== saveValue) {
@@ -106,18 +124,7 @@
 							});
 						}
 						$.openWindow({
-							url: './project-list.html',
 							id: 'projectList',
-							preload: true,
-							show: {
-								aniShow: 'pop-in'
-							},
-							styles: {
-								popGesture: 'hide'
-							},
-							waiting: {
-								autoShow: false
-							}
 						});
 					});					
 				});
