@@ -133,7 +133,7 @@ w.upload = {
 		var DkeyNames = [];
 
 		this.uploadfile({
-
+			url:url,
 			imgArray:imgArray,
 			type:"image"
 		})
@@ -146,7 +146,7 @@ w.upload = {
 		var DkeyNames = [];
 
 		this.uploadfile({
-
+			url:url,
 			imgArray:imgArray,
 			type:"vedio"
 		})
@@ -164,6 +164,7 @@ w.upload = {
 				if(status == 200) {
 					console.log("上传成功");
 					typeof back =="function" && back( t );
+					wa.close();
 				} else {
 					wa.close();
 					console.log("上传失败");
@@ -172,6 +173,8 @@ w.upload = {
 				
 			}
 		);
+		
+		console.log( JSON.stringify(opt) );
 		task.addData("id", id);
 	
 		for(var i = 0; i < imgArray.length; i++) {
