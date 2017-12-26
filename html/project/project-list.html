@@ -587,6 +587,9 @@
 				    id:'projectAdd',
 				    url: './project-add.html'
 				  },{
+            id:'projectEdit',
+            url: './project-edit.html'
+          },{
             id:'projectBillEdit',
             url: './project-bill-edit.html'
 				  },{
@@ -629,6 +632,7 @@
           });
           // 新增项目成功
           window.addEventListener('project-add-success', function(e){
+            getProjects(1);
           });
 				  /***---------购物车业务 begin-------*/
 				  var carList = [];
@@ -797,7 +801,7 @@
               callback();
             });
           }
-
+          var projectEditWebview = null;
 				  // 画每个项目
           var createFragment = function(parent, data) {
             var li = doc.createElement('li');
@@ -829,19 +833,33 @@
             //按钮
             var btnDiv = doc.createElement('div');
             btnDiv.className = 'bill-btn flex';
+            // 修改
             var edit = doc.createElement('span');
             edit.className = 'flex-1 edit';
             edit.innerText =  data.system !== -1 ? '修改' : '改价';
             edit.addEventListener('tap', function(e){
-              $.prompt(data.title, '请输入价格', '修改价格', null,function(obj){
-                if (obj.index === 1){
-                  var _value = parseFloat(obj.value);
-                  editPrice(data.id, _value, function(){
-                    priceSpan.innerText = _value.toFixed(2);
-                    data.price = _value;
-                  });
+              if (data.system !== -1) {
+                if (!projectEditWebview) {
+                  projectEditWebview = plus.webview.getWebviewById('projectEdit');
                 }
-              });
+                $.fire(projectEditWebview,'project-detail',{
+                  data:data,
+                  groupid: groupid
+                });
+                $.openWindow({
+                  id: 'projectEdit'
+                });                
+              } else {
+                $.prompt(data.title, '请输入价格', '修改价格', null,function(obj){
+                  if (obj.index === 1){
+                    var _value = parseFloat(obj.value);
+                    editPrice(data.id, _value, function(){
+                      priceSpan.innerText = _value.toFixed(2);
+                      data.price = _value;
+                    });
+                  }
+                });
+              }
             });
             btnDiv.appendChild(edit);
             if (data.system !== -1){

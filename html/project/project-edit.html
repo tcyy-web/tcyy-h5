@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>新增项目</title>
+		<title>修改项目</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -127,7 +127,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">新增项目</h1>
+			<h1 class="mui-title">修改项目</h1>
 		</header>
 		<div class="mui-content">
 		  <form class="mui-input-group">
@@ -167,20 +167,22 @@
 				$.init();
 				$.plusReady(function() {
 				  var image = null;
-				  // 分类id
-          var groupid = 0;
+				  var id = 0;
+				  var groupid = 0;
           var numberBox = doc.getElementById('number');
           var titleBox = doc.getElementById('title');
           var priceBox = doc.getElementById('price');
           var $img = doc.getElementById('img');
-          // 刷新分类
-          window.addEventListener('project-groupid', function(e){
+          // 更新
+          window.addEventListener('project-detail', function(e){
+            var detail = e.detail.data;
             groupid = e.detail.groupid;
-            image = null;
-            $img.src = '../../images/project/jia.png';
-            numberBox.value = '';
-            titleBox.value = '';
-            priceBox.value = '';
+            image = detail.image;
+            $img.src = detail.image;
+            id = detail.id;
+            numberBox.value = detail.number;
+            titleBox.value = detail.title;
+            priceBox.value = detail.price;
           });
 				  //上传图片
 				  var $addPic = doc.getElementById('addPic');
@@ -199,10 +201,6 @@
 				  //保存
           var save = doc.getElementById('save');
           save.addEventListener('tap', function(event) {
-            if (!(groupid > 0)) {
-              $.back();
-              return;
-            }
             var number = numberBox.value.trim();
             var title = titleBox.value.trim();
             var price = priceBox.value.trim();
@@ -229,13 +227,13 @@
                 price:price,
                 title:title,
                 image: image,
-                id: null
+                id: id
               }
             },function(data, success) {
               if (success){
                  //获得父页面的webview
                 var parent = plus.webview.currentWebview().opener();
-                $.fire(parent, 'project-add-success');
+                $.fire(parent, 'project-edit-success');
                 $.back();                 
               }
             });
