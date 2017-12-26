@@ -63,13 +63,13 @@
 				<ul class="mui-table-view mui-table-view-chevron">
 					<li class="mui-table-view-cell">
 						<img src="../../images/tab-kuozhan/bingli.png"/>
-						<a id="BLX" url="../weibo/list.html" class="clickItem mui-navigate-right">
+						<a id="BLX" class="clickItem mui-navigate-right">
 							病例秀
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
 						<img src="../../images/tab-kuozhan/zhishiku.png"/>
-						<a id="zsk" url="../knowledge/zsk-list.html" class="clickItem mui-navigate-right">
+						<a id="ZSK" class="clickItem mui-navigate-right">
 							知识库
 						</a>
 					</li>
@@ -82,19 +82,19 @@
 				<ul class="mui-table-view mui-table-view-chevron">
 					<li class="mui-table-view-cell">
 						<img src="../../images/tab-kuozhan/shebei.png"/>
-						<a id="PPQY" url="../company/company_band.html" class="clickItem mui-navigate-right">
+						<a id="PPQY" class="clickItem mui-navigate-right">
 							设备
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
 						<img src="../../images/tab-kuozhan/cailiao.png"/>
-						<a id="PPQY" url="../company/company_band.html" class="clickItem mui-navigate-right">
+						<a id="PPQY" class="clickItem mui-navigate-right">
 							材料
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
 						<img src="../../images/tab-kuozhan/jiagong.png"/>
-						<a id="PPQY" url="../company/company_band.html" class="clickItem mui-navigate-right">
+						<a id="PPQY" class="clickItem mui-navigate-right">
 							加工
 						</a>
 					</li>
@@ -151,11 +151,11 @@
 				<ul class="mui-table-view mui-table-view-chevron">
 					<li class="mui-table-view-cell">
 						<img src="../../images/tab-kuozhan/zaixianketang.png"/>
-						<a class="clickItem" id="zxkt" url="../train/train-list.html" class="mui-navigate-right">
+						<a id="ZXKT" class="clickItem mui-navigate-right">
 							在线课堂
 						</a>
 					</li>
-					<li class="mui-table-view-cell">
+					<!--<li class="mui-table-view-cell">
 						<img src="../../images/tab-kuozhan/peixun.png"/>
 						<a class="mui-navigate-right" href="#">
 							培训
@@ -166,7 +166,7 @@
 						<a class="mui-navigate-right" href="#">
 							读书会
 						</a>
-					</li>
+					</li>-->
 				</ul>
 			</div>
 		</div>
@@ -174,26 +174,33 @@
 	<script src="../../js/mui.min.js"></script>
 	<script>
 		(function($, doc) {
-				$.init();
+				$.init({
+          preloadPages:[{
+            id:'ZXKT',
+            url: '../train/train-list.html'
+          },{
+            id: 'BLX',
+            url:"../weibo/list.html"
+          },{
+            id: 'ZSK',
+            url:"../knowledge/zsk-list.html"
+          },{
+            id: 'PPQY',
+            url:"../company/company_band.html"
+          }]
+        });
 				$.plusReady(function() {
 					var clickItems = $('.clickItem');
+					var nextWebview = null;
 					$.each(clickItems, function(index, item) {
 						item.addEventListener('tap', function(event) {
-							var id = this.getAttribute("id");
-							var url = this.getAttribute("url");
+						  var id = this.getAttribute("id");
+//            nextWebview = plus.webview.getWebviewById(id);
+//            $.fire(nextWebview,'KZ-params',{
+//              id:data.id
+//            });
 							$.openWindow({
-								url: url,
 								id: id,
-								preload: true,
-								show: {
-									aniShow: 'pop-in'
-								},
-								styles: {
-									popGesture: 'hide'
-								},
-								waiting: {
-									autoShow: false
-								}
 							});
 						});
 					});
