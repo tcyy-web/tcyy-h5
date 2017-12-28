@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="ui-page-my">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+/* CSS 品牌企业 - 产品列表*/
+.search-bar { width:100%; margin-bottom:0; height:50px; background-color:#FFF;}
+.search-bar input{margin-bottom: 0; width:80%; float:left; height:48PX; border:none;  outline: none;  font-size:0.9em;  font-family:'微软雅黑'; color:#7c7c7c;}
+.search-bar button{ width:20%; height:50PX; background:url(../../images/profile/ss.png) no-repeat center; border:none;  outline: none; }
+.hj{width: 100%;}
+.brand-lists{ display: block; padding: 5px; background: #fff;}
+.brand-lists .tl{color:#765fc3; padding: 8px 5px; border-bottom: 1px solid #ddd; margin-bottom: 5px;;}
+.item{ width: 32.3%; padding: 1%; display: inline-block;}
+.item img{ width: 100%;outline: 1px solid #ddd;}
+	</style>
+
+</head>
+
+<body>
+  <header class="mui-bar mui-bar-nav">
+    	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    	<h1 class="mui-title">品牌企业</h1>
+    	<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+  </header>
+  <div class="mui-content">
+    	<div class="search-bar">
+    		<input type="text" />
+    		<button></button>
+    	</div>
+    	<img class="hj" src="../../images/profile/sc8.png" />
+    	<section class="brand-lists">
+    	    <section class="tl"><span>品牌</span></section>
+    	    <section class="lists">
+    	       <a class="item"><img src="../../images/profile/sc9.png"/></a>
+    	       <a class="item"><img src="../../images/profile/sc9.png"/></a>
+    	       <a class="item"><img src="../../images/profile/sc9.png"/></a>
+    	     </section>
+    	</section>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.extend.js"></script>
+  <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.category.js" ></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.request.js"></script>
+  <script>
+    (function($, doc) {
+      //阻尼系数
+      var deceleration = $.os.ios?0.003:0.0009;
+      $('.mui-scroll-wrapper').scroll({
+        bounce: false,
+        indicators: true, //是否显示滚动条
+        deceleration:deceleration
+      });
+      $.init();
+      $.plusReady(function() {
+        var limit = 5;
+        var groupid = 0;
+        var listRequest = {};
+        var createFragment = function(parent, data) {
+          var li = doc.createElement('li');
+          li.className = 'mui-table-view-cell';
+          var section = doc.createElement('section');
+          section.className = 'list-item';
+          var div = doc.createElement('div');
+          div.className = 'img flex flex-col-center';
+          var img = doc.createElement('img');
+          img.src = data.image;
+          div.appendChild(img);
+          var video = doc.createElement('video');
+          video.src = data.url;
+          section.appendChild(div);
+          section.appendChild(video);
+          var a = doc.createElement('a');
+          a.className = 'lname';
+          a.innerHTML = '<span>{0}</span>'.format(data.title);
+          section.appendChild(a);
+          a.addEventListener('tap', function(event){
+            if(section.classList.contains('active')) {
+              section.classList.remove('active');
+              video.pause();
+            } else {
+              section.classList.add('active');
+              video.play();
+            }
+          });
+          li.appendChild(section);
+          parent.appendChild(li);
+        };
+        var getList = function(page,callback){
+          if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
+            return;
+          }
+          request.ajax('Video/getList', {
+            data: {
+              groupid: groupid,
+              page: page,
+              limit: limit
+            },
+            showMsg: false
+          }, function(data) {
+            // 处理页面绑定
+             if (data && data.data) {
+               var currentContent = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
+               if (page === 1) {
+                 currentContent.innerHTML = '';
+               }
+               $.each(data.data, function(index,i) {
+                createFragment(currentContent,i);
+               });
+             }
+             // 判断是否有下一页数据
+             if (data && data.data && data.data.length === limit) {
+               listRequest[groupid] = {
+                 page: page,
+                 more: true
+               }
+             } else {
+               listRequest[groupid] = {
+                 page: page,
+                 more: false
+               }
+             }
+             if (typeof callback === 'function') {
+               callback();
+             }
+          }, function() {
+             if (typeof callback === 'function') {
+               callback();
+             }
+          });
+        }
+        // 分类
+        var category = categorys.get();
+        if (category.length > 0) {
+            var controls = doc.getElementById("sliderSegmentedControl");
+            var contents = doc.getElementById("sliderSegmentedContent");
+            var controlsHtml = [];
+            var contentsHtml = [];
+            $.each(category, function(index, item) {
+              var _controlHtml = '<a groupid={0} class="mui-control-item" href="#content{1}">{2}</a>';
+              _controlHtml = _controlHtml.format(item.id,index,item.title);
+              controlsHtml.push(_controlHtml);
+              var _contentHtml = '';
+              _contentHtml += '<div id="content{0}" class="mui-slider-item mui-control-content">'+
+                              ' <div class="mui-scroll-wrapper">'+
+                              '  <div class="mui-scroll">'+
+                              '   <ul class="mui-table-view">'+
+                              '   </ul>'+
+                              '  </div>'+
+                              ' </div>'+
+                              '</div>';
+              _contentHtml = _contentHtml.format(index, index);
+              contentsHtml.push(_contentHtml);
+            });
+            controls.innerHTML = controlsHtml.join('');
+            contents.innerHTML = contentsHtml.join('');
+            controls.querySelector('.mui-control-item').classList.add('mui-active');
+            contents.querySelector('.mui-control-content').classList.add('mui-active');
+            // 初始加载项目
+            groupid = category[0].id;
+            getList(1);
+        }
+        // 切换tab
+        doc.querySelector('.mui-slider').addEventListener('slide', function(event) {
+          var contentValue = event.detail.slideNumber;
+          var currentTab = doc.querySelector('.mui-control-item.mui-active');
+          groupid = currentTab.getAttribute('groupid');
+          if (listRequest[groupid]) {
+            return;
+          }
+          getList(1);
+        });
+        //循环初始化所有下拉刷新，上拉加载。
+        $.each(doc.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+          $(pullRefreshEl).pullToRefresh({
+            down: {
+              callback: function() {
+                var self = this;
+                getList(1, function() {
+                  self.endPullDownToRefresh();
+                  $(pullRefreshEl).pullToRefresh().refresh(true);
+                });
+              }
+            },
+            up: {
+              callback: function() {
+                var self = this;
+                if (listRequest[groupid]) {
+                  if (listRequest[groupid].more === true) {
+                    var page = listRequest[groupid].page + 1;
+                    getList(page, function(){
+                      self.endPullUpToRefresh(false);
+                    })
+                    return;
+                  }
+                }
+                self.endPullUpToRefresh(true);
+              }
+            }
+          });
+        });
+      });
+    })(mui, document);
+  </script>
+</body>
+</html>
+
