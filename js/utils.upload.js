@@ -129,33 +129,39 @@ w.upload = {
 	//上传图片
 	uploadimge: function( url , imgArray , back) {
 		//plus.storage.clear();
-		var wa = plus.nativeUI.showWaiting();
+//		var wa = plus.nativeUI.showWaiting();
 		var DkeyNames = [];
 
 		this.uploadfile({
 			url:url,
 			imgArray:imgArray,
-			type:"image"
+			type:"image",
+			back:back
 		})
 	},
 	
 	//上传视频
 	uploadvedio: function( url , imgArray , back) {
 		//plus.storage.clear();
-		var wa = plus.nativeUI.showWaiting();
+		//var wa = plus.nativeUI.showWaiting();
 		var DkeyNames = [];
-
+		
 		this.uploadfile({
 			url:url,
 			imgArray:imgArray,
-			type:"vedio"
+			type:"vedio",
+			back:back
 		})
 	},
 	
 	uploadfile : function ( opt ){
 		var id = new Date().getTime();
 		var imgArray = opt.imgArray;
+		
 		var type = opt.type;
+		if(imgArray.length==0){ plus.nativeUI.toast("请选择图片！"); return false;}
+		var wa = plus.nativeUI.showWaiting();
+		
 		var task = plus.uploader.createUpload( opt.url , {
 				method: "POST"
 			},
@@ -163,11 +169,13 @@ w.upload = {
 	
 				if(status == 200) {
 					console.log("上传成功");
-					typeof back =="function" && back( t );
 					wa.close();
+					typeof opt.back =="function" && opt.back( t );
+					
 				} else {
-					wa.close();
+
 					console.log("上传失败");
+					wa.close();
 				}
 
 				

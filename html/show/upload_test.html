@@ -21,7 +21,7 @@
 	document.getElementById("select_img_1").addEventListener("tap",function(){
 		var _this = this;
 		window.upload.showImgActionSheet(this , function( data ){
-			console.log( JSON.stringify(data) );
+//			console.log( JSON.stringify(data) );
 			appendImg( data );
 		});
 	})
@@ -32,7 +32,9 @@
 			imgArr.push( $(this).attr("id") );
 		})
 		var url = "http://m.tianchiyueya.com:1888/tcyy/project/uploadImg";
-		window.upload.uploadimge( url , imgArr )
+		window.upload.uploadimge( url , imgArr ,function( data ){
+			console.log(JSON.stringify(data.responseText));
+		});
 	})
 	
 	function appendImg( data ){
