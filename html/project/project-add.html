@@ -190,8 +190,11 @@
               upload.showImgActionSheet(_this , function( data ){
 //              image = 'http://m.tianchiyueya.com:1888/Project/images/20171206/ee31f101d95e173616b2d41bad56dcd3.png';
                 var url = config.url + "Uploads/Files";
+//              $img.src = data.abspath;
                 upload.uploadimge( url , data.divid, function(res) {
 //                $img.src = data.abspath;
+console.log('成功');
+					$img.src = 'http://m.tianchiyueya.com:1888/Project/images/20171206/ee31f101d95e173616b2d41bad56dcd3.png';
                 });
               });				      
 				    }, 500);

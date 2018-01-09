@@ -2,7 +2,6 @@
 (function(w){
 w.upload = {
 	//选取图片的来源，拍照和相册 
-	// multip true 多选  false 单选
 	showImgActionSheet:function(target , fnend) {
 		var divid = target.id;
 		var actionbuttons = [{
@@ -28,7 +27,7 @@ w.upload = {
 	galleryImg:function(divid , fnend) {
 		var _this = this;
 		plus.gallery.pick(function(p) {
-		  console.log(p);
+		  _this.compressImage(p, divid , fnend);
 //			plus.io.resolveLocalFileSystemURL(p, function(entry) {
 //				_this.compressImage(entry.toLocalURL(), entry.name, divid , fnend);
 //			}, function(e) {
@@ -49,15 +48,11 @@ w.upload = {
 		cmr.captureImage(function(path) {
 		  _this.compressImage(path, divid , fnend);
 //			plus.io.resolveLocalFileSystemURL(path, function(entry) {
-//			  console.log(entry.toLocalURL());
 ////				_this.compressImage(entry.toLocalURL(), entry.name, divid , fnend);
 //			}, function(e) {
 //				plus.nativeUI.toast("读取拍照文件错误：" + e.message);
 //			});
 		}, function(e) {
-		  if (e.code !== 2) {
-		    mui.toast('拍照失败：'+e.message);
-		  }
 		}, {
 			filename: "_doc/tcyy/camera/",
 			index: 1
@@ -66,8 +61,9 @@ w.upload = {
 	//压缩图片
 	compressImage:function(path, divid , fnend) {
 		var _this = this;
+		var date = new Date().getTime();
 		var filetype = path.substring(path.indexOf("."), path.length);
-		var zippath = "_doc/tcyy/upload/" + divid + filetype; 
+		var zippath = "_doc/tcyy/upload/img-" + date + filetype; 
 		plus.zip.compressImage({
 			src: path, //src: (String 类型 )压缩转换原始图片的路径
 			dst: zippath, //压缩转换目标图片的路径
@@ -97,6 +93,7 @@ w.upload = {
       path: path
     };
 		var itemvalue = JSON.stringify(data);
+		plus.storage.removeItem(itemname);
 		plus.storage.setItem(itemname, itemvalue);
 		typeof fnend =="function" && fnend(data);
 	},
