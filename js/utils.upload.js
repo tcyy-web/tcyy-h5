@@ -1,10 +1,10 @@
 ;
 (function(w){
 w.upload = {
-	//选取图片的来源，拍照和相册
+	//选取图片的来源，拍照和相册 
+	// multip true 多选  false 单选
 	showImgActionSheet:function(target , fnend) {
 		var divid = target.id;
-
 		var actionbuttons = [{
 			title: "拍照"
 		}, {
@@ -28,56 +28,58 @@ w.upload = {
 	galleryImg:function(divid , fnend) {
 		var _this = this;
 		plus.gallery.pick(function(p) {
-			//alert(p);//file:///storage/emulated/0/DCIM/Camera/IMG_20160704_112620.jpg
-			plus.io.resolveLocalFileSystemURL(p, function(entry) {
-				//alert(entry.toLocalURL());//file:///storage/emulated/0/DCIM/Camera/IMG_20160704_112620.jpg
-				//alert(entry.name);//IMG_20160704_112620.jpg
-				_this.compressImage(entry.toLocalURL(), entry.name, divid , fnend);
-			}, function(e) {
-				plus.nativeUI.toast("读取拍照文件错误：" + e.message);
-			});
-		}, function(e) {}, {
-			filename: "_doc/camera/",
-			filter: "image"
+		  console.log(p);
+//			plus.io.resolveLocalFileSystemURL(p, function(entry) {
+//				_this.compressImage(entry.toLocalURL(), entry.name, divid , fnend);
+//			}, function(e) {
+//				plus.nativeUI.toast("读取拍照文件错误：" + e.message);
+//			});
+		}, function(e) {
+		  mui.toast('打开相册失败：'+e.message);
+		}, {
+			filename: "_doc/tcyy/camera/",
+			filter: "image",
+			multiple: false
 		});
 	},
 	// 拍照
 	getImage:function(divid , fnend) {
 		var _this = this;
-		var cmr = plus.camera.getCamera();
-		cmr.captureImage(function(p) {
-			//alert(p);//_doc/camera/1467602809090.jpg
-			plus.io.resolveLocalFileSystemURL(p, function(entry) {
-				//alert(entry.toLocalURL());//file:///storage/emulated/0/Android/data/io.dcloud...../doc/camera/1467602809090.jpg
-				//alert(entry.name);//1467602809090.jpg
-				_this.compressImage(entry.toLocalURL(), entry.name, divid , fnend);
-			}, function(e) {
-				plus.nativeUI.toast("读取拍照文件错误：" + e.message);
-			});
-		}, function(e) {}, {
-			filename: "_doc/camera/",
+		var cmr = plus.camera.getCamera(1);
+		cmr.captureImage(function(path) {
+		  _this.compressImage(path, divid , fnend);
+//			plus.io.resolveLocalFileSystemURL(path, function(entry) {
+//			  console.log(entry.toLocalURL());
+////				_this.compressImage(entry.toLocalURL(), entry.name, divid , fnend);
+//			}, function(e) {
+//				plus.nativeUI.toast("读取拍照文件错误：" + e.message);
+//			});
+		}, function(e) {
+		  if (e.code !== 2) {
+		    mui.toast('拍照失败：'+e.message);
+		  }
+		}, {
+			filename: "_doc/tcyy/camera/",
 			index: 1
 		});
 	},
 	//压缩图片
-	compressImage:function(url, filename, divid , fnend) {
+	compressImage:function(path, divid , fnend) {
 		var _this = this;
-		var name = "_doc/upload/" + divid + "-" + filename; //_doc/upload/F_ZDDZZ-1467602809090.jpg
+		var filetype = path.substring(path.indexOf("."), path.length);
+		var zippath = "_doc/tcyy/upload/" + divid + filetype; 
 		plus.zip.compressImage({
-			src: url, //src: (String 类型 )压缩转换原始图片的路径
-			dst: name, //压缩转换目标图片的路径
-			quality: 20, //quality: (Number 类型 )压缩图片的质量.取值范围为1-100
+			src: path, //src: (String 类型 )压缩转换原始图片的路径
+			dst: zippath, //压缩转换目标图片的路径
+			quality: 40, //quality: (Number 类型 )压缩图片的质量.取值范围为1-100
 			overwrite: true //overwrite: (Boolean 类型 )覆盖生成新文件
 		},
 		function(event) {
-			//uploadf(event.target,divid);
-			var path = name; //压缩转换目标图片的路径
-			//event.target获取压缩转换后的图片url路
-			//filename图片名称
-			_this.saveimage(event.target, divid, filename, path, fnend);
+		  var absolutePath = event.target;
+			_this.saveimage(absolutePath,zippath, divid,fnend);
 		},
 		function(error) {
-			plus.nativeUI.toast("压缩图片失败，请稍候再试");
+			mui.toast("压缩图片失败，请稍候再试");
 		});
 	},
 	//保存信息到本地
@@ -87,120 +89,80 @@ w.upload = {
 	 * @param {Object} divid  字段的名称
 	 * @param {Object} name   图片的名称
 	 */
-	saveimage:function(url, divid, name, path , fnend ) {
-		//alert(url);//file:///storage/emulated/0/Android/data/io.dcloud...../doc/upload/F_ZDDZZ-1467602809090.jpg
-		//alert(path);//_doc/upload/F_ZDDZZ-1467602809090.jpg
-		var state = 0;
-		var wt = plus.nativeUI.showWaiting();
-		//  plus.storage.clear();
-		name = name.substring(0, name.indexOf(".")); //图片名称：1467602809090
-		
-		var itemname = "img-" + divid; //429img-F_ZDDZ
-		var itemvalue = plus.storage.getItem(itemname);
-		if(itemvalue == null) {
-			itemvalue = "{" + name + "," + path + "," + url + "}"; //{IMG_20160704_112614,_doc/upload/F_ZDDZZ-IMG_20160704_112614.jpg,file:///storage/emulated/0/Android/data/io.dcloud...../doc/upload/F_ZDDZZ-1467602809090.jpg}
-		} else {
-			itemvalue = itemvalue + "{" + name + "," + path + "," + url + "}";
-		}
-		plus.storage.setItem(itemname, itemvalue);
-
-
-
-		typeof fnend =="function" && fnend( {
-			name:name, 
-			divid:divid , 
-			path:url
-		} );
-		wt.close();
-
-	},
-	//删除图片
-	//imgId:图片名称：IMG_20160704_112614
-	//imgkey:字段，例如F_ZDDZZ
-	//ID：站点编号ID，例如429
-	delimage:function(name, divid , fnend) {
+	saveimage:function(absolutePath,path, divid , fnend ) {
 		var itemname = "img-" + divid;
-		
-		var itemvalue = plus.storage.removeItem(itemname);
-		typeof fnend =="function" && fnend();
-		
-
+		var data = {
+      abspath: absolutePath,
+      divid:divid,
+      path: path
+    };
+		var itemvalue = JSON.stringify(data);
+		plus.storage.setItem(itemname, itemvalue);
+		typeof fnend =="function" && fnend(data);
 	},
 	//上传图片
-	uploadimge: function( url , imgArray , back) {
-		//plus.storage.clear();
-//		var wa = plus.nativeUI.showWaiting();
-		var DkeyNames = [];
-
+	uploadimge: function( url , divid , back, data) {
+	  var code = '';
+    if (w.authManage) {
+      var user = w.authManage.getUser();
+      code = user.code || '';
+    }
+		var defaults = {
+		  type: '1', // 默认项目图片 1 
+		  filetype: '1', // 图片
+		  code: code
+		};
+		if(data) {
+		  mui.extend(true, defaults, data);
+		}
 		this.uploadfile({
 			url:url,
-			imgArray:imgArray,
-			type:"image",
+			data: defaults,
+			divid:divid,
 			back:back
 		})
 	},
-	
-	//上传视频
-	uploadvedio: function( url , imgArray , back) {
-		//plus.storage.clear();
-		//var wa = plus.nativeUI.showWaiting();
-		var DkeyNames = [];
-		
-		this.uploadfile({
-			url:url,
-			imgArray:imgArray,
-			type:"vedio",
-			back:back
-		})
-	},
-	
 	uploadfile : function ( opt ){
-		var id = new Date().getTime();
-		var imgArray = opt.imgArray;
-		
-		var type = opt.type;
-		if(imgArray.length==0){ plus.nativeUI.toast("请选择图片！"); return false;}
+    console.log('***********上传地址:'+opt.url);
+    console.log('***********上传参数:'+JSON.stringify(opt.data));
+    var itemkey = "img-" + opt.divid;
+    var itemvalue = plus.storage.getItem(itemkey);
+    if (itemvalue === null) {
+      mui.toast('请选择文件');
+      return;
+    }
 		var wa = plus.nativeUI.showWaiting();
-		
 		var task = plus.uploader.createUpload( opt.url , {
 				method: "POST"
 			},
 			function(t, status) {
-	
-				if(status == 200) {
-					console.log("上传成功");
-					wa.close();
-					typeof opt.back =="function" && opt.back( t );
-					
+			  wa.close();
+			  console.log(status);
+			  console.log(JSON.stringify(t));
+				if(t.state === 4 && status == 200) {
+				  console.log('***********上传返回:'+t.responseText);
+//				  var res = JSON.parse(t.responseText);
+//				  
+//				  if (res.header.status === 2001) {
+//				    typeof opt.back =="function" && opt.back( res.body );
+//				  } else {
+//				    mui.toast('上传失败，失败原因：'+res.header.msg);
+//				  }
 				} else {
-
-					console.log("上传失败");
-					wa.close();
+					mui.toast("上传失败");
 				}
-
-				
 			}
 		);
-		
-		console.log( JSON.stringify(opt) );
-		task.addData("id", id);
-	
-		for(var i = 0; i < imgArray.length; i++) {
-			var itemkey = id + "img-" + imgArray[i];
-			if(plus.storage.getItem(itemkey) != null) {
-				var itemvalue = plus.storage.getItem(itemkey).split("{");
-				for(var img = 1; img < itemvalue.length; img++) {
-					var imgname = itemvalue[img].substr(0, itemvalue[img].indexOf(","));
-					var imgurl = itemvalue[img].substring(itemvalue[img].indexOf(",") + 1, itemvalue[img].lastIndexOf(","));
-					task.addFile(imgurl, {
-						key: imgurl
-					});
-				}
-			}
+		var _itemvalue = JSON.parse(itemvalue);
+		var fileurl = _itemvalue.path;
+    task.addFile(fileurl, {
+    });
+		if (opt.data) {
+      for (var key in  opt.data) {
+        task.addData(key, opt.data[key]);
+      }
 		}
-		task.addData( "file_type", type);
 		task.start();
 	}
 }
-
 })(window);

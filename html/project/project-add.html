@@ -185,14 +185,14 @@
 				  //上传图片
 				  var $addPic = doc.getElementById('addPic');
 				  $addPic.addEventListener('tap', function(event) {
+				    var _this = this;
 				    setTimeout(function(){
-              upload.showImgActionSheet(this , function( data ){
-                $img.src = data.path;
-                image = 'http://m.tianchiyueya.com:1888/Project/images/20171206/ee31f101d95e173616b2d41bad56dcd3.png';
-//              var url = config.url + "Uploads/Files";
-//              upload.uploadimge( url , [data.name + data.divid], function(res) {
-//                console.log(res);
-//              });
+              upload.showImgActionSheet(_this , function( data ){
+//              image = 'http://m.tianchiyueya.com:1888/Project/images/20171206/ee31f101d95e173616b2d41bad56dcd3.png';
+                var url = config.url + "Uploads/Files";
+                upload.uploadimge( url , data.divid, function(res) {
+//                $img.src = data.abspath;
+                });
               });				      
 				    }, 500);
 				  });
@@ -200,7 +200,7 @@
           var save = doc.getElementById('save');
           save.addEventListener('tap', function(event) {
             if (!(groupid > 0)) {
-              $.back();
+              $.toast('缺失分类id，请返回重试');
               return;
             }
             var number = numberBox.value.trim();
