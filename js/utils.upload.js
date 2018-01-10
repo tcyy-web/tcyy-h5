@@ -134,6 +134,7 @@ w.upload = {
 			},
 			function(t, status) {
 			  wa.close();
+			  mui.alert('上传大小：'+t.uploadedSize+'====服务器返回：'+t.responseText);
 			  console.log(status);
 			  console.log(JSON.stringify(t));
 				if(t.state === 4 && status == 200) {
@@ -151,8 +152,11 @@ w.upload = {
 			}
 		);
 		var _itemvalue = JSON.parse(itemvalue);
-		var fileurl = _itemvalue.path;
+		var fileurl = _itemvalue.abspath;
     task.addFile(fileurl, {
+//    key: 'files',
+//    name: '1111',
+//    mime: 'image/jpeg'
     });
 		if (opt.data) {
       for (var key in  opt.data) {
