@@ -12,10 +12,10 @@ canvas.height  = canvasHeight;
 
 var lastLoc = { x: 0 , y : 0} ;
 var strokeColor = "#000";
+var lineWidth = 2;
 
 
-
-clear( context );
+clearHB( canvas );
 addEventListener();
 
 function changeColor( color ){
@@ -43,9 +43,11 @@ function getHeight(){
   return { height: winHeight , width: winWidth }
 }
 
-function clear( context ){
-  context.fillStyle = "#fff";
-  context.fillRect( 0 , 0 , canvasWidth , canvasHeight );
+function clearHB( canvas ){
+  
+//	context.fillStyle = "#fff";
+//	context.fillRect( 0 , 0 , canvasWidth , canvasHeight );
+	canvas.width = canvas.width;
 }
 
 function drawImage( canvas , src ){
@@ -98,14 +100,26 @@ function addEventListener(){
     }
 
   })
-  $(".controller").on("touchstart","span",function(){
+  $(".controller").on("tap","span",function(){
     $(this).addClass("current").siblings().removeClass("current");
     var color = $(this).attr("color");
     changeColor( color );
-  }).on("touchstart",".clear",function(){
-    clear( context );
-  }).on("touchstart","b",function(){
-    addWigget();
+  });
+  
+  $(".opt").on("tap",".clear",function(){
+
+    clearHB( canvas );
+  });
+  $("body").on("tap",function(){
+  	$(".left_opt2").hide();
+  });
+  $(".left_opt").on("click","li",function( e ){
+  	e.stopPropagation();
+  	$(".left_opt2").show();
+  })
+  
+  $(".mui-input-range input[type=range]").on("change",function(){
+  	lineWidth = parseInt( $(this).val() )
   })
 
   $("#wigget").on("touchstart",".module",function( e ){
@@ -165,21 +179,6 @@ function addEventListener(){
   });
 
 
-  function addWigget( src ){
-    
-    var st = '<div class="module">\
-               <img src="'+(src?src:'http://mingxing.facang.com/uploads/allimg/150728/14361W444-2.jpg')+'">\
-             </div>';
-     var win_w = $(window).width();
-     var win_h = $(window).height();
-
-     var target = $( st ).appendTo( "#wigget" )
-
-     target.css({left: win_w/2 - target.width() , top:win_h/2 -target.height()});
-  }
-
-
-
   var isMouseDown = false;
 
   canvas.ontouchstart = canvas.onmousedown = function( e ){
@@ -208,7 +207,7 @@ function addEventListener(){
       var y = getEvent( e , "y");
   
       var curLoc = windowToCanvas( x , y );
-      var lineWidth = 6;
+      
       context.beginPath();
 
       context.moveTo( lastLoc.x ,lastLoc.y )
