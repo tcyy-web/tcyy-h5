@@ -115,6 +115,7 @@
           code: code,
         }
       }
+      console.log(JSON.stringify(obj));
       mui.extend(true, defaults, obj);
       this.ajax(url, defaults, successCallback, errorCallback);
     }

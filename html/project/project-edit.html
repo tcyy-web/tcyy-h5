@@ -166,7 +166,7 @@
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-				  var image = null;
+				  var imageurl = null;
 				  var id = 0;
 				  var groupid = 0;
           var numberBox = doc.getElementById('number');
@@ -177,7 +177,7 @@
           window.addEventListener('project-detail', function(e){
             var detail = e.detail.data;
             groupid = e.detail.groupid;
-            image = detail.image;
+            imageurl = detail.image;
             $img.src = detail.image;
             id = detail.id;
             numberBox.value = detail.number;
@@ -187,15 +187,15 @@
 				  //上传图片
 				  var $addPic = doc.getElementById('addPic');
 				  $addPic.addEventListener('tap', function(event) {
+				    var _this = this;
 				    setTimeout(function(){
-              upload.showImgActionSheet(this , function( data ){
-                $img.src = data.path;
-                image = 'http://m.tianchiyueya.com:1888/Project/images/20171206/ee31f101d95e173616b2d41bad56dcd3.png';
-//              var url = config.url + "Uploads/Files";
-//              upload.uploadimge( url , [data.name + data.divid], function(res) {
-//                console.log(res);
-//              });
-              });				      
+              upload.showImgActionSheet(_this , function( data ){
+                var url = config.url + "Uploads/Files";
+                upload.uploadimge( url , data.divid, function(res) {
+                 $img.src = data.abspath;
+                 imageurl = res[0].showUrl;
+                });
+              });         
 				    }, 500);
 				  });
 				  //保存
@@ -216,7 +216,7 @@
               $.toast('请输入金额');
               return;
             }
-            if (image === null){
+            if (imageurl === null){
               $.toast('请上传图片');
               return;
             }
@@ -226,7 +226,7 @@
                 number:number,
                 price:price,
                 title:title,
-                image: image,
+                image: imageurl,
                 id: id
               }
             },function(data, success) {

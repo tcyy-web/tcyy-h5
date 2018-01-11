@@ -134,18 +134,14 @@ w.upload = {
 			},
 			function(t, status) {
 			  wa.close();
-			  mui.alert('上传大小：'+t.uploadedSize+'====服务器返回：'+t.responseText);
-			  console.log(status);
-			  console.log(JSON.stringify(t));
+			  console.log('***********上传返回:'+t.responseText);
 				if(t.state === 4 && status == 200) {
-				  console.log('***********上传返回:'+t.responseText);
-//				  var res = JSON.parse(t.responseText);
-//				  
-//				  if (res.header.status === 2001) {
-//				    typeof opt.back =="function" && opt.back( res.body );
-//				  } else {
-//				    mui.toast('上传失败，失败原因：'+res.header.msg);
-//				  }
+				  var res = JSON.parse(t.responseText);
+				  if (res.header.status === 2001) {
+				    typeof opt.back =="function" && opt.back( res.body );
+				  } else {
+				    mui.toast('上传失败，失败原因：'+res.header.msg);
+				  }
 				} else {
 					mui.toast("上传失败");
 				}
