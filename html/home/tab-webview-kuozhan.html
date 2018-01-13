@@ -55,8 +55,8 @@
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">扩展</h1>
 		</header>
-		<div class="mui-content">
-			<div class="kuozhan-item">
+		<div id="content" class="mui-content">
+			<!--<div class="kuozhan-item">
 				<div class="item-title">
 					<p>知识进阶</p>
 				</div>
@@ -155,7 +155,7 @@
 							在线课堂
 						</a>
 					</li>
-					<!--<li class="mui-table-view-cell">
+					<li class="mui-table-view-cell">
 						<img src="../../images/tab-kuozhan/peixun.png"/>
 						<a class="mui-navigate-right" href="#">
 							培训
@@ -166,9 +166,9 @@
 						<a class="mui-navigate-right" href="#">
 							读书会
 						</a>
-					</li>-->
+					</li>
 				</ul>
-			</div>
+			</div>-->
 		</div>
 	</body>
 	<script src="../../js/mui.min.js"></script>
@@ -182,24 +182,109 @@
 		(function($, doc) {
 				$.init({
           preloadPages:[{
-            id:'ZXKT',
+            id:'ZXKT', //在线课堂
             url: '../train/train-list.html'
           },{
-            id: 'BLX',
-            url:"../weibo/list.html"
-          },{
-            id: 'QY',
+            id: 'KZ-PPSP', // 品牌商品类
             url:"../ppqy/qy-list.html"
           }]
         });
 				$.plusReady(function() {
+				  var $content = doc.getElementById('content');
+				  // 点击跳转
+				  var clickType = function(type, extrals) {
+				    if (type === 1) {// 病例秀类
+		          $.openWindow({
+                url: '../kz_blx/blx-list.html',
+                id: 'KZ-BLX',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+				    } else if (type === 2) { //知识库类
+				      $.openWindow({
+                url: '../knowledge/zsk-list.html',
+                id: 'KZ-ZSK',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+				    } else if (type === 3) { // 品牌商品类
+//				      request.ajax('Brand/getGroup',{
+//				        data: {
+//				          type: 3,
+//				        },
+//              showMsg: false
+//            },function(data, success) {
+//            }, function() {
+//            });
+				    } else if (type === 4) { // 创意设计类
+              
+            } else if (type === 5) { // 在线课堂类
+              
+            } else if (type === 6) { // 购物中心类
+              
+            } else if (type === 7) { // 积分商城类
+              
+            } else if (type === 8) { // 口腔招聘类
+              
+            }
+				  }
+				  // 画每项
+				  var paintItem = function(data) {
+				    var div = doc.createElement('div');
+				    div.className = "kuozhan-item";
+				    var titleDiv = doc.createElement('div');
+				    titleDiv.className = "item-title";
+				    titleDiv.innerHTML = '<p>{0}</p>'.format(data.title);
+				    var ul = doc.createElement('ul');
+				    ul.className = "mui-table-view mui-table-view-chevron";
+				    if (data.childs && data.childs.length) {
+				      $.each(data.childs, function(index,i) {
+				        var li = doc.createElement('li');
+				        li.className = "mui-table-view-cell";
+				        var img = doc.createElement('img');
+                img.src = "../../images/tab-kuozhan/juhui.png";
+                var a = doc.createElement('a');
+                a.className = "mui-navigate-right";
+                a.innerText = i.title;
+                a.addEventListener('tap', function(event) {
+                  clickType(i.type);
+                });
+				        li.appendChild(img);
+				        li.appendChild(a);
+				        ul.appendChild(li);
+				      });
+				    }
+				    div.appendChild(titleDiv);
+				    div.appendChild(ul);
+				    $content.appendChild(div);
+				  }
 				  // 获取扩展分类
 				  var getList = function() {
             request.ajax('Extendgroup/getList',{
               showMsg: false
             },function(data, success) {
               if (success) {
-                
+                if (data && data.length && data.length > 0) {
+                  $.each(data, function(index,i) {
+                    paintItem(i);
+                  });
+                }
               }
             }, function() {
             });
