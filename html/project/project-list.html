@@ -632,11 +632,9 @@
           });
           // 新增项目成功
           window.addEventListener('project-add-success', function(e){
-            getProjects(1);
-          });
-          //修改项目成功
-          window.addEventListener('project-edit-success', function(e){
-            getProjects(1);
+            getProjects(1, function() {
+              $('.content-box .mui-control-content.mui-active').pullToRefresh().refresh(true);
+            });
           });
 				  /***---------购物车业务 begin-------*/
 				  var carList = [];
@@ -794,17 +792,39 @@
 				  }
           // 删除项目
           var delProject = function(id, callback){
-            if (!(id > 0)) {
-              return;
-            }
             request.loginAjax('project/del',{
               data: {
                 id:id
               }
             },function(data) {
+              // 修改清单价格
+              var i = carList.findIndex(function(i){
+                return i.pid === id;
+              });
+              if (i >= 0) {
+                carList.splice(i,1);
+                $shopCarTotal.innerText = carList.length > 99 ? '99+' : carList.length;
+                calcPrice();
+              }
               callback();
             });
           }
+          //修改项目成功
+          window.addEventListener('project-edit-success', function(e){
+            var editData = e.detail.data;
+            // 修改清单价格
+            var i = carList.find(function(i){
+              return i.pid === editData.id;
+            });
+            if (i) {
+              i.price = editData.price;
+              i.number = editData.number;
+              i.title = editData.title;
+              calcPrice();
+            }
+            getProjects(listRequest[groupid].page);
+          });
+          // 编辑webview
           var projectEditWebview = null;
 				  // 画每个项目
           var createFragment = function(parent, data) {

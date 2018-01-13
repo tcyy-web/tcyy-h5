@@ -220,20 +220,23 @@
               $.toast('请上传图片');
               return;
             }
+            var postData = {
+              groupid:groupid,
+              number:number,
+              price:price,
+              title:title,
+              image: imageurl,
+              id: id
+            }
             request.loginAjax('project/savedata',{
-              data: {
-                groupid:groupid,
-                number:number,
-                price:price,
-                title:title,
-                image: imageurl,
-                id: id
-              }
+              data: postData
             },function(data, success) {
               if (success){
                  //获得父页面的webview
                 var parent = plus.webview.currentWebview().opener();
-                $.fire(parent, 'project-edit-success');
+                $.fire(parent, 'project-edit-success', {
+                  data:postData
+                });
                 $.back();                 
               }
             });
