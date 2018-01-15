@@ -53,8 +53,11 @@
       }
   </style>
 	<style>
+	  .mui-pull-right{
+	    line-height: 44px;
+	  }
     .mui-table-view .mui-table-view-cell{
-      	padding:10px;
+    	padding:10px 10px 0 10px;
     }
     .wb-top{
     	height:60px;
@@ -138,134 +141,27 @@
     }
     .pl .flex-1{
       position: relative;
+      height: 50px;
+      color: #7c7c7c;
+      font-size: 14px;
     }
     .pl .flex-1:before{
       position: absolute;
-      right: -10px;
-      bottom: 0;
-      left: -10px;
-      height: 1px;
+      left: 0;
+      bottom: 10px;
+      top: 10px;
+      width: 1px;
       content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
+      -webkit-transform: scaleX(.5);
+      transform: scaleX(.5);
       background-color: #d6d6d6;
     }
-    .pl ul{
-    	overflow: hidden;
+    .pl .flex-1:first-child:before{
+      display: none;
     }
-    .pl ul li{
-    	float:left;
-    	width:calc(100% / 3);
-    	text-align: center;
-    	text-indent: 10px;
-    	font-size:14px;
-    }
-    .pl ul li a{	
-    	color:#7c7c7c;
-    }
-    .pl ul li:first-child{
-    	border-right:1px solid #d6d6d6;
-    	box-sizing: border-box;
-    	background:url(./../images/weibo/pl1.png) calc(100% / 2 - 25px) center no-repeat;
-    	background-size:auto 100%;
-    }
-    .pl ul li:nth-child(2){
-    	border-right:1px solid #d6d6d6;
-    	box-sizing: border-box;
-    	background:url(./../images/weibo/pl2.png) calc(100% / 2 - 25px) center no-repeat;
-    	background-size:auto 100%;
-    }
-    .pl ul li:nth-child(3){
-    	background:url(./../images/weibo/pl3.png) calc(100% / 2 - 25px) center no-repeat;
-    	background-size:auto 100%;
-    }
-    .pl-tx{
-    	padding:10px 15px;
-    	height:60px;
-    	border-bottom: 1px solid #d6d6d6;
-    }
-    .pl-tx img{
-    	float:left;
-    	height:100%;
-    	margin-right:10px;
-    }
-    .pl-true-img{
-    	height:60px;
-    }
-    .pl-true{
-    	padding:20px 15px;
-    }
-    .pl-true-img img{
-    	height:100%;
-    	float:left;
-    	margin-right:15px;
-    }
-    .p-name{
-    	font-size:14px;
-    	color:#195ea4;
-    	padding-bottom:15px;
-    }
-    .p-name span{
-    	float:right;
-    	color:#7c7c7c;
-    }
-    .p-name+p{
-    	font-size:14px;
-    }
-    .pl-true{
-    	border-bottom: 1px solid #d6d6d6;
-    }
-    .pl-hf{
-    	padding:15px;
-    	border-bottom: 1px solid #d6d6d6;
-    	padding-left: 90px;
-    }
-    .pl-hf p{
-    	font-size:14px;
-    	color:#000000;
-    	line-height:1.5;
-    }
-    .pl-hf p span{
-    	color:#7c7c7c;
-    }
-    .pl-hf p a{
-    	color:#195ea4;
-    }
-    .pl-hf p ins{
-    	color:#7c7c7c;
-    	text-decoration: none;	
-    }
-    .ft{
-    	width:100%;
-    	padding:15px;
-    	background:#765fc3;
-    	position: fixed;
-    	bottom: 0;
-    }
-    .ft ul{
-    	overflow: hidden;
-    }
-    .ft ul li{
-    	float: left;
-    	width:calc(100% / 3);
-    	font-size: 14px;
-    	color:#ffffff;
-    	height:20px;
-    }
-    .ft ul li:first-child{
-    	background:url(../../images/weibo/img1.png) 0 center no-repeat;
-    	text-align: center;
-    	background-size:auto 100%;
-    }
-    .ft ul li:nth-child(2){
-    	background:url(../../images/weibo/img2.png)  center no-repeat;
-    	text-align: center;
-    	background-size:auto 100%;
-    }
-    .ft ul li:nth-child(3){
-    	background:url(../../images/weibo/img3.png) calc(100% - 30px) center no-repeat;
-    	text-align: center;
-    	background-size:auto 100%;
+    .pl .flex-1 img{
+      width: 20px !important;
+      margin-right: 10px;
     }
 	</style>
 
@@ -331,9 +227,18 @@
 											</div>
 											<!-- 点赞评论 -->
 											<div class="pl flex">
-											  <div class="flex-1"></div>
-											  <div class="flex-1"></div>
-											  <div class="flex-1"></div>
+											  <div class="flex-1 flex flex-row-center flex-col-center">
+											    <img src="../../images/blx/pl1.png" />
+											    <span>111111</span>
+											  </div>
+											  <div class="flex-1 flex flex-row-center flex-col-center">
+											    <img src="../../images/blx/pl2.png" />
+											     <span>111111</span>
+											  </div>
+											  <div class="flex-1 flex flex-row-center flex-col-center">
+											    <img src="../../images/blx/pl3.png" />
+											     <span>111111</span>
+											  </div>
 											</div>
 										</div>
 									</li>
@@ -369,34 +274,6 @@
 				</div>
 			</div>
 		</div>
-		<template id="tmpl-main">
-			<div class="main">
-			<div class="wb-top">
-				<img src="../../images/weibo/tx.png"/>
-				<h2>口腔门诊王医生</h2>
-				<p>发表于：2017-05-03</p>
-				<ins>+加关注</ins>
-			</div>
-			<div class="word">
-				<p>
-					深圳软件创业基地聚集大量孵化园
-				</p>
-				<div class="word-img">
-					<img src="../../images/weibo/img.png"/>
-					<img src="../../images/weibo/img.png"/>
-					<img src="../../images/weibo/img.png"/>
-					<img src="../../images/weibo/img.png"/>
-				</div>
-			</div>
-			<div class="pl">
-				<ul>
-					<li><a href="">205</a></li>
-					<li><a href="">1</a></li>
-					<li><a href="">14</a></li>
-				</ul>
-			</div>
-		</div>
-		</template>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>

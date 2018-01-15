@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html class="ui-page-my">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+    .mui-content{
+      height: auto;
+      background: #fff;
+      padding-bottom: 50px;
+    }
+    .mui-pull-right{line-height: 44px;}
+    .main{
+      padding: 10px;
+    }
+    .wb-top{
+      height:60px;
+      position: relative;
+    }
+    .wb-top .img{
+      width: 60px;
+      height:60px;
+      margin-right: 10px;
+    }
+    .wb-top .img img{
+      width: auto;
+      height: 100%;
+    }
+    .wb-top h2{
+      font-size:16px;
+      color: #010101;
+      font-weight: normal;
+      padding-top:5px;
+      padding-bottom: 15px; 
+      padding-right: 70px;
+    }
+    .wb-top h2+p{
+      font-size:14px;
+      color:#7c7c7c;
+    }
+    .wb-top ins{
+      position: absolute;
+      top:5px;
+      right:0;
+      text-decoration: none;
+      padding:0 5px;
+      background:#f4f4f4;
+      height: 20px;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      font-size:12px;
+      color:#6d6d6d;
+    }
+    .word p{
+      font-size:14px;
+      line-height: 20px;
+      color:#000000;
+      padding: 10px 0;
+    }
+    .word p:first-child{
+      padding-bottom: 0;
+    }
+    .word-img{
+      padding:10px 0;
+      overflow: hidden;
+    }
+    .word-img img{
+      width:100px!important;
+      height: 100px;
+      float:left;
+      margin-right:10px;
+      margin-bottom: 10px;
+    }
+    .pl{
+      position: relative;
+    }
+    .pl:before{
+      position: absolute;
+      right: -10px;
+      top: 0;
+      left: -10px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
+    }
+    .pl:after{
+      position: absolute;
+      right: -10px;
+      bottom: 0;
+      left: -10px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
+    }
+    .pl .flex-1{
+      position: relative;
+      height: 50px;
+      color: #7c7c7c;
+      font-size: 14px;
+    }
+    .pl .flex-1:before{
+      position: absolute;
+      left: 0;
+      bottom: 10px;
+      top: 10px;
+      width: 1px;
+      content: '';
+      -webkit-transform: scaleX(.5);
+      transform: scaleX(.5);
+      background-color: #d6d6d6;
+    }
+    .pl .flex-1:first-child:before{
+      display: none;
+    }
+    .pl .flex-1 img{
+      width: 20px !important;
+      margin-right: 10px;
+    }
+    .pl-tx{
+    	padding:10px 0;
+    }
+    .pl-tx .img{
+    	float:left;
+    	width: 60px;
+    	height: 60px;
+    	margin-right:10px;
+    	margin-bottom: 10px;
+    }
+    .pl-tx .img img{
+      width: 100% !important;
+      height: auto;
+    }
+    
+    .pl-true{
+      position: relative;
+    }
+
+    .pl-true:before{
+      position: absolute;
+      right: -10px;
+      top: 0;
+      left: -10px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
+    }
+    .pl-true-img{
+      padding: 10px 0;
+    }
+    .pl-true-img .img{
+    	width: 60px;
+    	height: 60px;
+    	margin-right: 10px;
+    }
+    .pl-true-img .img img{
+      width: 100% !important;
+      height: auto;
+    }
+    .p-name{
+      position: relative;
+    	font-size:14px;
+    	color:#195ea4;
+    	padding-right: 60px;
+    	padding-bottom:15px;
+    }
+    .p-name span.time{
+      position: absolute;
+      right: 0;
+      top: 0;
+    	color:#7c7c7c;
+    }
+
+    .p-txt{
+      color: #000000;
+    	font-size:14px;
+    }
+    .pl-hf{
+      position: relative;
+    	padding:10px 0;
+    	padding-left: 70px;
+    	background: #fff;
+    }
+    .pl-hf:before{
+      position: absolute;
+      right: -10px;
+      top: 0;
+      left: -10px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
+    }
+
+    .pl-hf p{
+    	font-size:14px;
+    	color:#000000;
+    }
+    
+    .pl-hf p span{
+    	color:#7c7c7c;
+    }
+    
+    .pl-hf p span.slip{
+      margin: 0 8px;
+    	color:#195ea4;
+    }
+    
+    .pl-hf p span.txt{
+    	color:#000;
+    	margin-right: 10px;
+    }
+    .ft{
+    	width:100%;
+    	background:#765fc3;
+    	position: fixed;
+    	bottom: 0;
+    	font-size: 14px;
+    	color: #fff;
+    	height: 50px;
+    }
+    .ft img{
+      width: auto;
+      height: 20px;
+    }
+    .ft span{
+      margin-left: 10px;
+    }
+	</style>
+</head>
+<body>
+  <header class="mui-bar mui-bar-nav">
+  	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+  	<h1 class="mui-title">病例秀详情</h1>
+  	<a class="mui-pull-right">容量<span>1</span>/6</a>
+  </header>
+  <div class="mui-content">
+    <div class="main">
+  		<!-- 顶部头像名字 -->
+  		<div class="wb-top flex">
+        <div class="img flex flex-row-center">
+          <img src="../../images/weibo/tx.png"/>
+        </div>
+        <div class="flex-1">
+          <h2>口腔门诊王医生</h2>
+          <p>发表于：2017-05-03</p>
+          <ins class="flex flex-row-center">+加关注</ins>
+        </div>
+      </div>
+			<!-- 中间文字 AND 图片 -->
+			<div class="word">
+				<p>深圳软件创业基地聚集大量孵化园</p>
+				<p>
+					是临床常见的症状，通常将局限于头颅上半部，包括眉弓、耳轮上缘和枕外隆突连线以上部位的疼痛统称头痛。头痛病因繁多，神经痛、颅内感染、颅内占位病变、脑血管疾病、颅外头面部疾病、以及全身疾病如急性感染、中毒等均可导致头痛。发病年龄常见于青年、中年和老年中毒等均可导致头痛。发病年龄常见于青年、中年和老年中毒等均可导致头痛。发病年龄常见于青年、中年和老年中毒等均可导致头痛。
+				</p>
+				<div class="word-img">
+					<img src="../../images/weibo/img.png"/>
+					<img src="../../images/weibo/img.png"/>
+					<img src="../../images/weibo/img.png"/>
+					<img src="../../images/weibo/img.png"/>
+				</div>
+			</div>
+      <!-- 点赞评论 -->
+      <div class="pl flex">
+        <div class="flex-1 flex flex-row-center flex-col-center">
+          <img src="../../images/blx/pl1.png" />
+          <span>111111</span>
+        </div>
+        <div class="flex-1 flex flex-row-center flex-col-center">
+          <img src="../../images/blx/pl2.png" />
+           <span>111111</span>
+        </div>
+        <div class="flex-1 flex flex-row-center flex-col-center">
+          <img src="../../images/blx/pl3.png" />
+           <span>111111</span>
+        </div>
+      </div>			
+      <!-- 下面的评论 -->
+			<div class="pl-tx clearFix">
+			  <div class="img flex flex-row-center">
+			    <img src="../../images/weibo/pltx1.png"/>
+			  </div>
+				<div class="img flex flex-row-center">
+          <img src="../../images/weibo/pltx2.png"/>
+        </div>
+				<div class="img flex flex-row-center">
+          <img src="../../images/weibo/pltx2.png"/>
+        </div>
+        <div class="img flex flex-row-center">
+          <img src="../../images/weibo/pltx2.png"/>
+        </div>
+        <div class="img flex flex-row-center">
+          <img src="../../images/weibo/pltx2.png"/>
+        </div>
+        <div class="img flex flex-row-center">
+          <img src="../../images/weibo/pltx2.png"/>
+        </div>
+        <div class="img flex flex-row-center">
+          <img src="../../images/weibo/pltx2.png"/>
+        </div>
+			</div>
+			<!-- 发表的评论 -->
+			<div class="pl-true">
+				<div class="pl-true-img flex">
+				  <div class="img flex flex-row-center">
+				    <img src="../../images/weibo/pltx3.png"/>
+				  </div>
+				  <div class="flex-1">
+				    <p class="p-name"><span>领馆小草</span><span class="time">5小时</span> </p>
+            <p class="p-txt">真的假的呀？我也想去~那个大哥哥带的假的呀？我也想去~那个大哥哥带我去</p>
+				  </div>
+				</div>
+				<!-- 评论下面的回复 -->
+        <div class="pl-hf">
+          <p><span>土农民</span><span class="slip">回复</span><span>领馆小草：</span><span class="txt">是真的额,一起去吧靓仔-_-,haobuhao!</span><span>1小时前</span>
+          </p>
+        </div>
+			</div>
+		</div>
+  </div>
+  <footer class="ft flex" >
+    <div class="flex-1 flex flex-col-center flex-row-center">
+      <img src="../../images/blx/ft1.png" />
+      <span>写评论</span>
+    </div>
+    <div class="flex-1 flex flex-col-center flex-row-center">
+      <img src="../../images/blx/ft2.png" />
+    </div>
+    <div class="flex-1 flex flex-col-center flex-row-center">
+      <img src="../../images/blx/ft3.png" />
+    </div>
+  </footer>
+  <script src="../../js/mui.min.js"></script>
+</body>
+
+</html>
+
