@@ -203,43 +203,38 @@
 							<div class="mui-scroll">
 								<ul class="mui-table-view">
 									<li class="mui-table-view-cell">
-										<div class="main">
-											<!-- 顶部头像名字 -->
-											<div class="wb-top flex">
-											  <div class="img flex flex-row-center">
-											    <img src="../../images/weibo/tx.png"/>
-											  </div>
-											  <div class="flex-1">
-											    <h2>口腔门诊王医生</h2>
-                          <p>发表于：2017-05-03</p>
-                          <ins class="flex flex-row-center">+加关注</ins>
-											  </div>
+										<div class="wb-top flex">
+										  <div class="img flex flex-row-center">
+										    <img src="../../images/weibo/tx.png"/>
+										  </div>
+										  <div class="flex-1">
+										    <h2>口腔门诊王医生</h2>
+                        <p>发表于：2017-05-03</p>
+                        <ins class="flex flex-row-center">加关注</ins>
+										  </div>
+										</div>
+										<div class="word">
+											<p>深圳软件创业基地聚集大量孵化园</p>
+											<div class="word-img">
+												<img src="../../images/weibo/img.png"/>
+												<img src="../../images/weibo/img.png"/>
+												<img src="../../images/weibo/img.png"/>
+												<img src="../../images/weibo/img.png"/>
 											</div>
-											<!-- 中间文字 AND 图片 -->
-											<div class="word">
-												<p>深圳软件创业基地聚集大量孵化园</p>
-												<div class="word-img">
-													<img src="../../images/weibo/img.png"/>
-													<img src="../../images/weibo/img.png"/>
-													<img src="../../images/weibo/img.png"/>
-													<img src="../../images/weibo/img.png"/>
-												</div>
-											</div>
-											<!-- 点赞评论 -->
-											<div class="pl flex">
-											  <div class="flex-1 flex flex-row-center flex-col-center">
-											    <img src="../../images/blx/pl1.png" />
-											    <span>111111</span>
-											  </div>
-											  <div class="flex-1 flex flex-row-center flex-col-center">
-											    <img src="../../images/blx/pl2.png" />
-											     <span>111111</span>
-											  </div>
-											  <div class="flex-1 flex flex-row-center flex-col-center">
-											    <img src="../../images/blx/pl3.png" />
-											     <span>111111</span>
-											  </div>
-											</div>
+										</div>
+										<div class="pl flex">
+										  <div class="flex-1 flex flex-row-center flex-col-center">
+										    <img src="../../images/blx/pl1.png" />
+										    <span>111111</span>
+										  </div>
+										  <div class="flex-1 flex flex-row-center flex-col-center">
+										    <img src="../../images/blx/pl2.png" />
+										     <span>111111</span>
+										  </div>
+										  <div class="flex-1 flex flex-row-center flex-col-center">
+										    <img src="../../images/blx/pl3.png" />
+										     <span>111111</span>
+										  </div>
 										</div>
 									</li>
 								</ul>
@@ -292,16 +287,135 @@
           indicators: true, //是否显示滚动条
           deceleration:deceleration
         });
-        $.init();
+        $.init({
+          preloadPages:[{
+            id:'KZ_BLX_DETAIL',
+            url: './blx-detail.html'
+          }]
+        });
         $.plusReady(function() {
           var limit = 5;
           var groupid = 0;
           var listRequest = {};
+          // 关注
+          var gzFn = function(uid, callback) {
+             request.loginAjax('cases/follow', {
+                data: {
+                  touid: uid,
+                }
+              }, function(data, success) {
+                if (success) {
+                  callback();
+                }
+            });
+          }
+           /*图片预览*/
+          var previewImage = function(urllist, index) {
+            plus.nativeUI.previewImage(urllist, {
+              current: index,
+              loop: true,
+              indicator: 'number'
+            });
+          }
+          //点赞
+          var dzFn = function(caseid, callback) {
+             request.loginAjax('cases/thing', {
+                data: {
+                  case_id: caseid,
+                }
+              }, function(data, success) {
+                if (success) {
+                  callback();
+                }
+            });
+          }
+          // 详情webview
+          var detailWebView = null;
           // 画每一项
           var paintItem = function(parent, data) {
             var li = doc.createElement('li');
             li.className = 'mui-table-view-cell';
             parent.appendChild(li);
+            // 头部用户
+            var topDiv = doc.createElement('div');
+            topDiv.className = 'wb-top flex';
+            topDiv.innerHTML = '<div class="img flex flex-row-center"><img src="{0}"/></div>'.format(data.userinfo.headurl);
+            var infoDiv = doc.createElement('div');
+            infoDiv.className = 'flex-1';
+            infoDiv.innerHTML = '<h2>{0}</h2><p>发表于：{1}</p>'.format(data.userinfo.nickname,data.creatime);
+            var ins = doc.createElement('ins');
+            ins.className = 'flex flex-row-center';
+            ins.innerText = data.isfollow == 1 ? '取消关注' : '加关注';
+            ins.addEventListener('tap', function() {
+              gzFn(data.userinfo.uid, function(){
+                var txt = ins.innerText;
+                if (txt == '加关注') {
+                  ins.innerText = '取消关注';
+                } else {
+                  ins.innerText = '加关注';
+                }
+              });
+            });
+            infoDiv.appendChild(ins);
+            topDiv.appendChild(infoDiv);
+            li.appendChild(topDiv);
+            // 内容
+            var contentDiv = doc.createElement('div');
+            contentDiv.className = 'word';
+            var cp = doc.createElement('p');
+            cp.innerText = data.contents;
+            cp.addEventListener('tap', function(){
+              if (!detailWebView) {
+                detailWebView = plus.webview.getWebviewById('KZ_BLX_DETAIL');
+              }
+              $.fire(detailWebView,'KZ_BLX_DATA',{
+                data:data
+              });
+              $.openWindow({
+                id: 'KZ_BLX_DETAIL'
+              });
+            });
+            contentDiv.appendChild(cp);
+            if (data.cases_image) {
+              var imgDiv = doc.createElement('div');
+              imgDiv.className = 'word-img';
+              var caseurllist = [];
+              $.each(data.cases_image, function(i,d) {
+                var img = doc.createElement('img');
+                img.src = d.image;
+                caseurllist.push(d.image);
+                img.addEventListener('tap', function() {
+                  previewImage(caseurllist, i);
+                });
+              	  imgDiv.appendChild(img);
+              });
+              contentDiv.appendChild(imgDiv);
+            }
+            li.appendChild(contentDiv);
+            // 评论
+            var plDiv = doc.createElement('div');
+            plDiv.className = 'pl flex';
+            var ydDiv = doc.createElement('div');
+            ydDiv.className = 'flex-1 flex flex-row-center flex-col-center';
+            ydDiv.innerHTML = '<img src="../../images/blx/pl1.png" /><span>{0}</span>'.format(data.read);
+            var pl = doc.createElement('div');
+            pl.className = 'flex-1 flex flex-row-center flex-col-center';
+            pl.innerHTML = '<img src="../../images/blx/pl2.png" /><span>{0}</span>'.format(data.comments);
+            var dz = doc.createElement('div');
+            dz.className = 'flex-1 flex flex-row-center flex-col-center';
+            dz.innerHTML = '<img src="../../images/blx/pl3.png" />';
+            var dzSpan = doc.createElement('span');
+            dzSpan.innerText = data.thing;
+            dz.appendChild(dzSpan);
+            dz.addEventListener('tap', function() {
+              dzFn(data.id, function(){
+                dzSpan.innerText = data.thing + 1;
+              });
+            });
+            plDiv.appendChild(ydDiv);
+            plDiv.appendChild(pl);
+            plDiv.appendChild(dz);
+            li.appendChild(plDiv);
           };
           var getList = function(page,callback){
             if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
