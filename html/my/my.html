@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="ui-page-my">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+<style>
+	.mui-content>.mui-table-view:first-child{margin-top: 0;}
+	.mui-table-view-chevron .mui-table-view-cell{padding-right: 40px;}
+	.mui-navigate-right:after, .mui-push-right:after{ content: ''; }
+	.mui-table-view-cell>a:not(.mui-btn){ color: #999;}
+	.mui-navigate-right span{position: absolute;}
+	.mui-pull-right{ font-style: normal; color: #333; text-align: right; width: 100%;}
+</style>
+
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">个人资料</h1>
+</header>
+<div class="mui-content">
+<ul class="mui-table-view mui-table-view-chevron">
+	<li class="mui-table-view-cell">
+		<a href="#about" class="mui-navigate-right"><span>头像</span> <i id="headurl" class="mui-pull-right" contenteditable="true">ANDY</i></a>
+	</li>
+	<li class="mui-table-view-cell">
+		<a href="#about" class="mui-navigate-right"><span>昵称 </span><i id="nickname" class="mui-pull-right" contenteditable="true">ANDY</i></a>
+	</li>
+	<li class="mui-table-view-cell">
+		<a href="#about" class="mui-navigate-right"><span>性别 </span><i id="sex" class="mui-pull-right" contenteditable="true">男</i></a>
+	</li>
+	<li class="mui-table-view-cell">
+		<a href="#about" class="mui-navigate-right"><span>电话 </span><i id="phone" class="mui-pull-right" contenteditable="true">17828001555</i></a>
+	</li>
+	<li class="mui-table-view-cell">
+		<a href="#about" class="mui-navigate-right"><span>所在地 </span><i id="province" class="mui-pull-right" contenteditable="true">17828001555</i></a>
+	</li>
+	<li class="mui-table-view-cell">
+		<a href="#about" class="mui-navigate-right"><span>微信 </span><i id="weixin" class="mui-pull-right" contenteditable="true">17828001555</i></a>
+	</li>
+	<li class="mui-table-view-cell">
+		<a href="#about" class="mui-navigate-right"><span>QQ </span><i id="qq" class="mui-pull-right" contenteditable="true">17828001555</i></a>
+	</li>
+	<li class="mui-table-view-cell">
+		<a href="#about" class="mui-navigate-right"><span>Email </span><i id="email" class="mui-pull-right" contenteditable="true">824040166@QQ.com</i></a>
+	</li>
+</ul>
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.request.js"></script>
+<script src="../../js/utils.auth.js"></script>
+
+<script>
+	(function($, doc) {
+		$.init();
+		$.plusReady(function() {
+			addEvent();
+			ajaxData();
+		});
+		
+
+		function ajaxData() {
+			request.loginAjax('User/getInfo', {
+				showMsg: false
+			}, function(data, success) {
+
+				if(success) {
+					console.log( JSON.stringify(data) );
+					render( data );
+				}
+			});
+		}
+		
+		function setData( name , value){
+			var obj = {}
+			obj[name] = value;
+			
+			request.loginAjax('User/saveDataByFiled', {
+				data:obj
+			}, function(data, success) {
+
+				if(success) {
+					console.log( data );
+
+				}
+			});
+		}
+		
+		function render( obj ){
+			var arr = doc.querySelectorAll(".mui-pull-right");
+			$.each( arr , function() {
+				var name = this.getAttribute("id");
+				if( name == "headurl"){
+
+				}else if( name =="sex"){
+					this.innerText = obj[name]==1?"男":"女";
+				}else{
+					this.innerText = obj[name];
+				}
+			});
+		}
+
+		function addEvent() {
+			var oTableCell = doc.querySelectorAll(".mui-table-view-cell .mui-pull-right");
+
+			$.each(oTableCell, function() {
+
+				this.addEventListener("tap", function() {
+					this._text = this.innerText;
+
+				});
+				this.addEventListener("blur", function() {
+					if(this._text != this.innerText){
+						console.log("difference");
+						var name = this.getAttribute("id");
+						var txt = this.innerText;
+						
+						if( name == "headurl"){
+		
+						}else if( name =="sex"){
+							txt =="男"?"1":"2";
+							setData( name , txt );
+						}else{
+							setData( name , txt );
+						}
+					};
+
+				});
+			})
+		}
+
+}(mui, document));
+</script>
+</body>
+
+</html>

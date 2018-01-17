@@ -111,11 +111,55 @@ function addEventListener(){
     clearHB( canvas );
   });
   $("body").on("tap",function(){
-  	$(".left_opt2").hide();
+//	$(".left_opt2").hide();
   });
-  $(".left_opt").on("click","li",function( e ){
+
+  $(".left_opt").on("tap","li",function( e ){
   	e.stopPropagation();
+  	var cid = $(this).attr("cid");
+  	var tar = null;
+  	for( var i in _yanshi_data){
+  		var item = _yanshi_data[i];
+  		if( item.id == cid){
+  			tar = item;
+  			break;
+  		}
+  	}
+  	
+  	renderLeftOpt2( tar["dome_image"]);
   	$(".left_opt2").show();
+  })
+  
+  function renderLeftOpt2( arr ){
+  	var oList = [];
+  	for( var i in arr){
+  		var link = arr[i].image;
+  		oList.push("<li><img src="+link+"></li>");
+  	}
+  	$(".left_opt2").html( arr.length==0?'':oList.join(""));
+  }
+  var index = 2;
+  $(".left_opt2").on("tap","li",function( e ){
+  	e.stopPropagation();
+  	var oImg = $(this).find("img");
+  	var sLink = oImg.attr("src");
+  	var w = oImg.width(), h = oImg.height();
+  	var l = ($(window).width()-w)/2 , t = ($(window).height()-h)/2;
+		var oTar = $("<div class='opt_img'><img width='100%' height='100%' src="+sLink+"></div>").appendTo("body");
+		oTar.css({
+			"position":"absolute",
+			"left":0,
+			"top":0,
+			"width":w,
+			"height":h,
+			"z-index":index++
+		})
+  	$(".left_opt2").hide();
+  	move(oTar[0])
+  });
+  
+  $("body").on('tap',".del",function(){
+  	$(this).parent().remove();
   })
   
   $(".mui-input-range input[type=range]").on("change",function(){
@@ -174,9 +218,6 @@ function addEventListener(){
     }
   })
 
-  $("#wigget").on("touchend",".delete",function(){
-    $(this).parents(".module").remove()
-  });
 
 
   var isMouseDown = false;
