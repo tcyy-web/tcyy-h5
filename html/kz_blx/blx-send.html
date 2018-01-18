@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html class="ui-page-my">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+	  .mui-content{
+	    padding-bottom: 50px;
+	  }
+  .mui-pull-right{line-height: 44px;}
+  .main{
+    padding: 0 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+  }
+  .main h2{
+  	font-size:16px;
+  	font-weight: 500;
+  	line-height: 50px;
+  	position: relative;
+  	color:#000000;
+  }
+  .main h2:before{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    content: '';
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+    background-color: #d6d6d6;
+  }
+  .main textarea{
+  	resize: none;
+  	width:100%;
+  	border:none;
+  	background:transparent;
+  	padding: 10px 0;
+  	background:url(../../images/weibo/yuan.png) 5px 12px no-repeat;
+  	color:#7c7c7c;
+  	font-size:14px;
+  	text-indent: 25px;
+  	line-height:1.5;
+  	margin-bottom: 0;
+  }
+
+    
+  .main-block{
+    padding-top: 10px;
+  }
+
+  .main-block ul li{
+  	float:left;
+  	margin-right:10px;
+  	width: 60px;
+  	height:60px;
+  	margin-bottom: 10px;
+  	overflow: hidden;
+  }
+
+  .main-block ul li img{
+  	width: 100%;
+  }
+
+  .img-file{
+  	width:calc(100% / 5);
+  	float:right;
+  	height:60px;
+  	background:burlywood;
+  	border:1px dashed #666666;
+  	box-sizing: border-box;
+  	background:url(../../images/blx/jia.png) center center no-repeat;
+  }
+
+  .main-img h2{
+    margin-bottom: 10px;
+  }
+  .main-img dl{
+  	overflow: hidden;
+  }
+
+  .main-img dd{
+  	font-size:14px;
+  	color:#7c7c7c;
+  	float:left;
+  	margin-right:10px;
+  	padding:5px;
+  	padding-left:20px;
+  	border:1px solid #d6d6d6;
+  	margin-bottom: 10px;
+  	position: relative;
+  }
+  
+  .main-img dd i{
+  	position: absolute;
+  	left:10px;
+  	width:5px;
+  	height:5px;
+  	border-radius: 50%;
+  	background:#7c7c7c;
+  	top:50%;
+  	transform: translate(0, -50%);
+  }
+
+  .btn-send{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    font-size: 14px;
+    background-color: #765fc3;
+  }
+	</style>
+
+</head>
+
+<body>
+  <header class="mui-bar mui-bar-nav">
+  	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+  	<h1 class="mui-title">发表病例</h1>
+    <a class="mui-pull-right">发表</a>
+  </header>
+  <div class="mui-content">
+  	<div class="main">
+			<h2>病例详情</h2>
+			<textarea rows="8" placeholder="请输入详情" ></textarea>
+		</div>
+		<div class="main">
+			<h2>添加病例图</h2>
+			<div class="main-block clearFix">
+				<ul>
+					<li class="flex flex-row-center">
+						<img src="../../images/weibo/img.png"/>
+					</li>
+					<li class="img-file">
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="main main-img">
+			<h2>选择标签</h2>
+			<dl>
+				<dd>
+					儿童牙科1111
+					<i></i>
+				</dd>
+				<dd>
+					儿童牙科
+					<i></i>
+				</dd>
+				<dd>
+					儿童牙科
+					<i></i>
+				</dd>
+				<dd>
+					儿童牙科
+					<i></i>
+				</dd>
+			</dl>
+		</div>
+		<div class="btn-send">发布</div>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+
+</body>
+
+</html>
+
