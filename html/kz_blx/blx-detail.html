@@ -24,6 +24,7 @@
       width: 60px;
       height:60px;
       margin-right: 10px;
+      overflow: hidden;
     }
     .wb-top .img img{
       width: auto;
@@ -241,31 +242,24 @@
   <header class="mui-bar mui-bar-nav">
   	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
   	<h1 class="mui-title">病例秀详情</h1>
-  	<a class="mui-pull-right">容量<span>1</span>/6</a>
   </header>
   <div class="mui-content">
     <div class="main">
   		<!-- 顶部头像名字 -->
   		<div class="wb-top flex">
         <div class="img flex flex-row-center">
-          <img src="../../images/weibo/tx.png"/>
+          <img id="headurl" src="../../images/weibo/tx.png"/>
         </div>
         <div class="flex-1">
-          <h2>口腔门诊王医生</h2>
-          <p>发表于：2017-05-03</p>
-          <ins class="flex flex-row-center">+加关注</ins>
+          <h2 id="nickname">王医生</h2>
+          <p>发表于：<span id="createtime">2017-05-03</span></p>
+          <ins id="gzfn" class="flex flex-row-center">加关注</ins>
         </div>
       </div>
 			<!-- 中间文字 AND 图片 -->
 			<div class="word">
-				<p>深圳软件创业基地聚集大量孵化园</p>
-				<p>
-					是临床常见的症状，通常将局限于头颅上半部，包括眉弓、耳轮上缘和枕外隆突连线以上部位的疼痛统称头痛。头痛病因繁多，神经痛、颅内感染、颅内占位病变、脑血管疾病、颅外头面部疾病、以及全身疾病如急性感染、中毒等均可导致头痛。发病年龄常见于青年、中年和老年中毒等均可导致头痛。发病年龄常见于青年、中年和老年中毒等均可导致头痛。发病年龄常见于青年、中年和老年中毒等均可导致头痛。
-				</p>
-				<div class="word-img">
-					<img src="../../images/weibo/img.png"/>
-					<img src="../../images/weibo/img.png"/>
-					<img src="../../images/weibo/img.png"/>
+				<p id="contents"></p>
+				<div id="imgs" class="word-img">
 					<img src="../../images/weibo/img.png"/>
 				</div>
 			</div>
@@ -273,15 +267,15 @@
       <div class="pl flex">
         <div class="flex-1 flex flex-row-center flex-col-center">
           <img src="../../images/blx/pl1.png" />
-          <span>111111</span>
+          <span id="read">1</span>
         </div>
         <div class="flex-1 flex flex-row-center flex-col-center">
           <img src="../../images/blx/pl2.png" />
-           <span>111111</span>
+           <span id="comments">1</span>
         </div>
         <div class="flex-1 flex flex-row-center flex-col-center">
           <img src="../../images/blx/pl3.png" />
-           <span>111111</span>
+           <span id="thing">1</span>
         </div>
       </div>			
       <!-- 下面的评论 -->
@@ -289,24 +283,6 @@
 			  <div class="img flex flex-row-center">
 			    <img src="../../images/weibo/pltx1.png"/>
 			  </div>
-				<div class="img flex flex-row-center">
-          <img src="../../images/weibo/pltx2.png"/>
-        </div>
-				<div class="img flex flex-row-center">
-          <img src="../../images/weibo/pltx2.png"/>
-        </div>
-        <div class="img flex flex-row-center">
-          <img src="../../images/weibo/pltx2.png"/>
-        </div>
-        <div class="img flex flex-row-center">
-          <img src="../../images/weibo/pltx2.png"/>
-        </div>
-        <div class="img flex flex-row-center">
-          <img src="../../images/weibo/pltx2.png"/>
-        </div>
-        <div class="img flex flex-row-center">
-          <img src="../../images/weibo/pltx2.png"/>
-        </div>
 			</div>
 			<!-- 发表的评论 -->
 			<div class="pl-true">
@@ -340,6 +316,125 @@
     </div>
   </footer>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.extend.js"></script>
+  <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.request.js"></script>
+  <script>
+    (function($, doc) {
+        $.init({
+//        preloadPages:[{
+//          id:'KZ_BLX_DETAIL',
+//          url: './blx-detail.html'
+//        }]
+        });
+        $.plusReady(function() {
+          // 用户信息
+          var $headurl = doc.getElementById('headurl');
+          var $nickname = doc.getElementById('nickname');
+          var $createtime = doc.getElementById('createtime');
+          // 内容
+          var $contents = doc.getElementById('contents');
+          var $imgs = doc.getElementById('imgs');
+          // 阅读量
+          var $read = doc.getElementById('read');
+          // 评论数
+          var $comments = doc.getElementById('comments');
+          // 点赞数
+          var $thing = doc.getElementById('thing');
+          // 关注
+          var $gzfn = doc.getElementById('gzfn');
+          var isfollow = 0;
+          var uid = 0;
+          // 刷新详情
+          window.addEventListener('KZ_BLX_DATA', function(e){
+            console.log(JSON.stringify(e.detail.data));
+            setFn(e.detail.data);
+          });
+          // 设置详情
+          var setFn = function(data) {
+            $headurl.src = data.userinfo.headurl;
+            $nickname.innerText = data.userinfo.nickname;
+            $createtime.innerText = data.creatime;
+            uid = data.userinfo.uid;
+            $contents.innerText = data.contents;
+            $imgs.innerHTML = '';
+            if (data.cases_image) {
+              var caseurllist = [];
+              $.each(data.cases_image, function(i,d) {
+                var img = doc.createElement('img');
+                img.src = d.image;
+                caseurllist.push(d.image);
+                img.addEventListener('tap', function() {
+                  previewImage(caseurllist, i);
+                });
+                $imgs.appendChild(img);
+              });
+            }
+            $read.innerText = data.read;
+            $comments.innerText = data.comments;
+            $thing.innerText = data.thing;
+            isfollow = data.isfollow;
+            $gzfn.innerText = isfollow == 1 ? '取消关注' : '加关注';
+          }
+          $gzfn.addEventListener('tap', function() {
+            gzFn(uid, function(d) {
+              if (d.status == 1) {
+                $gzfn.innerText = '取消关注';
+              } else {
+                $gzfn.innerText = '加关注';
+              }
+              isfollow = d.status;
+            });
+          });
+          // 阅读
+          var readFn = function(uid, callback) {
+             request.loginAjax('cases/read', {
+                data: {
+                  touid: uid,
+                }
+              }, function(data, success) {
+                if (success) {
+                  callback(data);
+                }
+            });
+          }
+          // 关注
+          var gzFn = function(uid, callback) {
+             request.loginAjax('cases/follow', {
+                data: {
+                  touid: uid,
+                }
+              }, function(data, success) {
+                if (success) {
+                  callback(data);
+                }
+            });
+          }
+           /*图片预览*/
+          var previewImage = function(urllist, index) {
+            plus.nativeUI.previewImage(urllist, {
+              current: index,
+              loop: true,
+              indicator: 'number'
+            });
+          }
+          //点赞
+          var dzFn = function(caseid, callback) {
+             request.loginAjax('cases/thing', {
+                data: {
+                  case_id: caseid,
+                }
+              }, function(data, success) {
+                if (success) {
+                  callback();
+                }
+            });
+          }
+        });
+      })(mui, document);
+  </script>
 </body>
 
 </html>

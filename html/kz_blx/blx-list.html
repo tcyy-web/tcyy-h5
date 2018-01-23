@@ -56,7 +56,7 @@
 	  .mui-pull-right{
 	    line-height: 44px;
 	  }
-    .mui-table-view .mui-table-view-cell{
+    .mui-table-view > li{
     	padding:10px 10px 0 10px;
     }
     .wb-top{
@@ -171,7 +171,7 @@
 	<header class="mui-bar mui-bar-nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">病例秀</h1>
-		<a class="mui-pull-right">容量<span>1</span>/6</a>
+		<a id="fb_blx" class="mui-pull-right">发表</a>
 	</header>
 		<div class="mui-content">
 			<div class="mui-slider mui-fullscreen">
@@ -202,7 +202,7 @@
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view">
-									<li class="mui-table-view-cell">
+									<li>
 										<div class="wb-top flex">
 										  <div class="img flex flex-row-center">
 										    <img src="../../images/weibo/tx.png"/>
@@ -279,6 +279,10 @@
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js"></script>
 		<script>
+      // 登录刷新
+//    window.addEventListener('refresh', function(e){
+//      location.reload();
+//    });
       (function($, doc) {
         //阻尼系数
         var deceleration = $.os.ios?0.003:0.0009;
@@ -291,12 +295,28 @@
           preloadPages:[{
             id:'KZ_BLX_DETAIL',
             url: './blx-detail.html'
+          },{
+            id:'KZ_BLX_FB',
+            url: './blx-send.html'
           }]
         });
         $.plusReady(function() {
           var limit = 5;
           var groupid = 0;
           var listRequest = {};
+          //发表
+          var fbWebview = null;
+          doc.getElementById('fb_blx').addEventListener('tap', function(){
+            if (!fbWebview) {
+              fbWebview = plus.webview.getWebviewById('KZ_BLX_FB');
+            }
+            $.fire(fbWebview,'KZ_BLX_GROUPID',{
+              groupid:groupid
+            });
+            $.openWindow({
+              id: 'KZ_BLX_FB'
+            });
+          });
           // 关注
           var gzFn = function(uid, callback) {
              request.loginAjax('cases/follow', {
@@ -305,7 +325,7 @@
                 }
               }, function(data, success) {
                 if (success) {
-                  callback();
+                  callback(data);
                 }
             });
           }
@@ -334,7 +354,6 @@
           // 画每一项
           var paintItem = function(parent, data) {
             var li = doc.createElement('li');
-            li.className = 'mui-table-view-cell';
             parent.appendChild(li);
             // 头部用户
             var topDiv = doc.createElement('div');
@@ -347,13 +366,13 @@
             ins.className = 'flex flex-row-center';
             ins.innerText = data.isfollow == 1 ? '取消关注' : '加关注';
             ins.addEventListener('tap', function() {
-              gzFn(data.userinfo.uid, function(){
-                var txt = ins.innerText;
-                if (txt == '加关注') {
+              gzFn(data.userinfo.uid, function(_res){
+                if (_res.status == 1) {
                   ins.innerText = '取消关注';
                 } else {
                   ins.innerText = '加关注';
                 }
+                data.isfollow = _res.status;
               });
             });
             infoDiv.appendChild(ins);
