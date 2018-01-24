@@ -304,7 +304,7 @@
 		</div>
   </div>
   <footer class="ft flex" >
-    <div class="flex-1 flex flex-col-center flex-row-center">
+    <div id="fb_pl" class="flex-1 flex flex-col-center flex-row-center">
       <img src="../../images/blx/ft1.png" />
       <span>写评论</span>
     </div>
@@ -324,10 +324,10 @@
   <script>
     (function($, doc) {
         $.init({
-//        preloadPages:[{
-//          id:'KZ_BLX_DETAIL',
-//          url: './blx-detail.html'
-//        }]
+          preloadPages:[{
+            id:'KZ_BLX_PL',
+            url: './blx-pl.html'
+          }]
         });
         $.plusReady(function() {
           // 用户信息
@@ -346,6 +346,9 @@
           // 关注
           var $gzfn = doc.getElementById('gzfn');
           var isfollow = 0;
+          // 病例秀id
+          var id = 0;
+          // 用户id
           var uid = 0;
           // 刷新详情
           window.addEventListener('KZ_BLX_DATA', function(e){
@@ -354,6 +357,7 @@
           });
           // 设置详情
           var setFn = function(data) {
+            id = data.id;
             $headurl.src = data.userinfo.headurl;
             $nickname.innerText = data.userinfo.nickname;
             $createtime.innerText = data.creatime;
@@ -377,6 +381,8 @@
             $thing.innerText = data.thing;
             isfollow = data.isfollow;
             $gzfn.innerText = isfollow == 1 ? '取消关注' : '加关注';
+            readFn();
+            plList();
           }
           $gzfn.addEventListener('tap', function() {
             gzFn(uid, function(d) {
@@ -389,14 +395,14 @@
             });
           });
           // 阅读
-          var readFn = function(uid, callback) {
+          var readFn = function() {
              request.loginAjax('cases/read', {
                 data: {
-                  touid: uid,
-                }
+                  case_id: id,
+                },
+                showMsg: false
               }, function(data, success) {
                 if (success) {
-                  callback(data);
                 }
             });
           }
@@ -432,6 +438,35 @@
                 }
             });
           }
+          http://m.tianchiyueya.com:1888/tcyy/cases/getCommentsList
+          // 获取评论列表
+          var plList = function(callback) {
+             request.loginAjax('cases/getCommentsList', {
+                data: {
+                  case_id: id,
+                  page: 1,
+                  limit: 10
+                },
+                showMsg: false
+              }, function(data, success) {
+                if (success) {
+//                callback();
+                }
+            });
+          }
+          // 发表评论
+          var plWebview = null;
+          doc.getElementById('fb_pl').addEventListener('tap', function(){
+            if (!plWebview) {
+              plWebview = plus.webview.getWebviewById('KZ_BLX_PL');
+            }
+            $.fire(plWebview,'KZ_BLX_ID',{
+              id:id
+            });
+            $.openWindow({
+              id: 'KZ_BLX_PL'
+            });
+          });
         });
       })(mui, document);
   </script>

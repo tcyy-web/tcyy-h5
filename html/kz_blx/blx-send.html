@@ -94,12 +94,20 @@
   	margin-bottom: 10px;
   	position: relative;
   }
-  
+  .main-img dd.active{
+    border-color: #765fc3;
+    background-color: #765fc3;
+    color: #fff;
+  }
+  .main-img dd.active i{
+    background:#fff;
+  }
   .main-img dd i{
   	position: absolute;
   	left:10px;
   	width:5px;
   	height:5px;
+  	-webkit-border-radius: 50%;
   	border-radius: 50%;
   	background:#7c7c7c;
   	top:50%;
@@ -126,12 +134,12 @@
   <header class="mui-bar mui-bar-nav">
   	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
   	<h1 class="mui-title">发表病例</h1>
-  <a class="mui-pull-right">保存</a>
+  <a id="bc_blx" class="mui-pull-right">保存</a>
   </header>
   <div class="mui-content">
   	<div class="main">
 			<h2>病例详情</h2>
-			<textarea rows="8" placeholder="请输入详情" ></textarea>
+			<textarea id="contents" rows="8" placeholder="请输入详情" ></textarea>
 		</div>
 		<div class="main">
 			<h2>添加病例图</h2>
@@ -146,30 +154,80 @@
 			</div>
 		</div>
 		<div class="main main-img">
-			<h2>选择标签</h2>
-			<dl>
-				<dd>
-					儿童牙科1111
-					<i></i>
-				</dd>
-				<dd>
+			<h2>选择分类</h2>
+			<dl id="group">
+				<!--<dd class="active">
 					儿童牙科
 					<i></i>
-				</dd>
-				<dd>
-					儿童牙科
-					<i></i>
-				</dd>
-				<dd>
-					儿童牙科
-					<i></i>
-				</dd>
+				</dd>-->
 			</dl>
 		</div>
-		<div class="btn-send">发布</div>
+		<div id="fb_blx" class="btn-send">发布</div>
   </div>
   <script src="../../js/mui.min.js"></script>
-
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.extend.js"></script>
+  <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.category.js" ></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.request.js"></script>
+  <script>
+    (function($, doc) {
+        $.init();
+        $.plusReady(function() {
+          var groupid = -1;
+          var $contents = doc.getElementById('contents');
+          var $groupbox = doc.getElementById('group');
+          // 生成分类
+          var category = categorys.get();
+          if (category.length > 0) {
+            $.each(category, function(index, item) {
+              var dd = doc.createElement('dd');
+              dd.addEventListener('tap', function() {
+                $.each(doc.querySelectorAll('#group dd'), function(i, o) {
+                	 o.classList.remove('active');
+                });
+                groupid = item.id;
+                dd.className = 'active';
+              });
+              dd.innerHTML = '{0}<i></i>'.format(item.title);
+              $groupbox.appendChild(dd);
+            });
+          }
+          // 保存
+          doc.getElementById('bc_blx').addEventListener('tap', function() {
+            fbFn(2);
+          });
+          // 发布
+          doc.getElementById('fb_blx').addEventListener('tap', function() {
+            fbFn(1);
+          });
+          // 发表病例
+          var fbFn = function(type) {
+            var contents = $contents.value.trim();
+            if (contents == '') {
+              $.toast('请输入内容');
+              return;
+            }
+            if (groupid <= 0) {
+              $.toast('请选择分类');
+              return;
+            }
+             request.loginAjax('cases/releaseCase', {
+                data: {
+                  group_id: groupid,
+                  contents: contents,
+                  type: type,
+                  images: []
+                }
+              }, function(data, success) {
+                if (success) {
+                }
+            });
+          }
+        });
+      })(mui, document);
+  </script>
 </body>
 
 </html>
