@@ -60,7 +60,7 @@
 				background-color: #ffffff;
 			}
 			.mui-table-view{ background: none;}
-			.mui-table-view .mui-table-view-cell{
+			.mui-table-view > li{
 				padding:5px 0;
 				border:none;
 			}
@@ -151,7 +151,7 @@
 					<div class="mui-scroll-wrapper">
 						<div class="mui-scroll">
 							<ul class="mui-table-view">
-								<li class="mui-table-view-cell">
+								<!--<li>
 									<section class="list-item">
 									  <div class="img flex flex-col-center">
 									    <img src="../../images/video/sc10.png" />
@@ -161,7 +161,7 @@
                      </video>
 								    <a class="lname"><span>口腔内科</span></a>
 									</section>
-								</li>
+								</li>-->
 							</ul>
 						</div>
 					</div>
@@ -219,7 +219,6 @@
 			  var listRequest = {};
         var createFragment = function(parent, data) {
           var li = doc.createElement('li');
-          li.className = 'mui-table-view-cell';
           var section = doc.createElement('section');
           section.className = 'list-item';
           var div = doc.createElement('div');

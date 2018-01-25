@@ -66,7 +66,22 @@
 		.mui-table-view-cell:last-child:after, .mui-table-view-cell:last-child:before {
       height: 1px;
     }
-    .item{ background: #fff; display: block; }
+    .item{ 
+      position: relative;
+      padding: 10px;
+      background: #fff; display: block;
+   }
+   .item:before{
+     position: absolute;
+      right: -10px;
+      bottom: 0;
+      left: -10px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
+   }
     .ileft{
     	float:left;
     	width:calc(70% - 20px);
@@ -149,19 +164,36 @@
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view">
-									<!--<li class="mui-table-view-cell item">
-										<div class="ileft">
-											<h2>牙对好坏对健康的影响</h2>
-											<p>儿童牙如果早期不注意会对整个成长整个成长整长</p>
-											<div class="zh">
-												<span>2017.2.03</span>
-												<span>(250)</span>
-											</div>
+									<li class="item ">
+									  <div class="clearFix">
+    										<div class="ileft">
+    											<h2>牙对好坏对健康的影响</h2>
+    											<p>儿童牙如果早期不注意会对整个成长整个成长整长</p>
+    											<div class="zh">
+    												<span>2017.2.03</span>
+    												<span>(250)</span>
+    											</div>
+    										</div>
+    										<div class="iright">
+    											<img src="../../images/weibo/zsk.png" />
+    										</div>
 										</div>
-										<div class="iright">
-											<img src="../../images/weibo/zsk.png" />
-										</div>
-									</li>-->
+									</li>
+									<li class="item ">
+                    <div class="clearFix">
+                        <div class="ileft">
+                          <h2>牙对好坏对健康的影响</h2>
+                          <p>儿童牙如果早期不注意会对整个成长整个成长整长</p>
+                          <div class="zh">
+                            <span>2017.2.03</span>
+                            <span>(250)</span>
+                          </div>
+                        </div>
+                        <div class="iright">
+                          <img src="../../images/weibo/zsk.png" />
+                        </div>
+                    </div>
+                  </li>
 								</ul>
 							</div>
 						</div>
@@ -225,15 +257,18 @@
           var zskDetailWebView = null;
           var paintItem = function(parent, data) {
             var li = doc.createElement('li');
-            li.className = 'mui-table-view-cell item';
+            li.className = 'item';
+            var clearDiv = doc.createElement('div');
+            clearDiv.className = 'clearFix';
             var leftDiv = doc.createElement('div');
             leftDiv.className = 'ileft';
             leftDiv.innerHTML = '<h2>{title}</h2><p>{info}</p><div class="zh"><span>{times}</span><span>{read}</span></div>'.format(data);
             var rightDiv = doc.createElement('div');
             rightDiv.className = 'iright';
             rightDiv.innerHTML = '<img src="{0}" />'.format(data.image);
-            li.appendChild(leftDiv);
-            li.appendChild(rightDiv);
+            clearDiv.appendChild(leftDiv);
+            clearDiv.appendChild(rightDiv);
+            li.appendChild(clearDiv);
             li.addEventListener('tap', function(event){
               if (!zskDetailWebView) {
                 zskDetailWebView = plus.webview.getWebviewById('zskDetail');

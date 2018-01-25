@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="ui-page-my">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+	  .mui-content{
+	    padding-bottom: 50px;
+	  }
+  .mui-pull-right{line-height: 44px;}
+  .main{
+    padding: 0 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+  }
+  .main h2{
+  	font-size:16px;
+  	font-weight: 500;
+  	line-height: 50px;
+  	position: relative;
+  	color:#000000;
+  }
+  .main h2:before{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    content: '';
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+    background-color: #d6d6d6;
+  }
+  .main textarea{
+  	resize: none;
+  	width:100%;
+  	border:none;
+  	background:transparent;
+  	padding: 10px 0;
+  	padding-left: 25px;
+  	background:url(../../images/weibo/yuan.png) 5px 12px no-repeat;
+  	color:#7c7c7c;
+  	font-size:14px;
+  	line-height:1.5;
+  	margin-bottom: 0;
+  }
+
+    
+  .main-block{
+    padding-top: 10px;
+  }
+
+  .main-block ul li{
+  	float:left;
+  	margin-right:10px;
+  	width: 60px;
+  	height:60px;
+  	margin-bottom: 10px;
+  	overflow: hidden;
+  }
+
+  .main-block ul li img{
+  	width: 100%;
+  }
+
+  .img-file{
+  	width:calc(100% / 5);
+  	float:right;
+  	height:60px;
+  	background:burlywood;
+  	border:1px dashed #666666;
+  	box-sizing: border-box;
+  	background:url(../../images/blx/jia.png) center center no-repeat;
+  }
+
+  .main-img h2{
+    margin-bottom: 10px;
+  }
+  .main-img dl{
+  	overflow: hidden;
+  }
+
+  .main-img dd{
+  	font-size:14px;
+  	color:#7c7c7c;
+  	float:left;
+  	margin-right:10px;
+  	padding:5px;
+  	padding-left:20px;
+  	border:1px solid #d6d6d6;
+  	margin-bottom: 10px;
+  	position: relative;
+  }
+  .main-img dd.active{
+    border-color: #765fc3;
+    background-color: #765fc3;
+    color: #fff;
+  }
+  .main-img dd.active i{
+    background:#fff;
+  }
+  .main-img dd i{
+  	position: absolute;
+  	left:10px;
+  	width:5px;
+  	height:5px;
+  	-webkit-border-radius: 50%;
+  	border-radius: 50%;
+  	background:#7c7c7c;
+  	top:50%;
+  	transform: translate(0, -50%);
+  }
+
+  .btn-send{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    font-size: 14px;
+    background-color: #765fc3;
+  }
+	</style>
+
+</head>
+
+<body>
+  <header class="mui-bar mui-bar-nav">
+  	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+  	<h1 class="mui-title">发表病例</h1>
+  <a id="bc_blx" class="mui-pull-right">保存</a>
+  </header>
+  <div class="mui-content">
+  	<div class="main">
+			<h2>病例详情</h2>
+			<textarea id="contents" rows="8" placeholder="请输入详情" ></textarea>
+		</div>
+		<div class="main">
+			<h2>添加病例图</h2>
+			<div class="main-block clearFix">
+				<ul>
+					<li class="flex flex-row-center">
+						<img src="../../images/weibo/img.png"/>
+					</li>
+					<li class="img-file">
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="main main-img">
+			<h2>选择分类</h2>
+			<dl id="group">
+				<!--<dd class="active">
+					儿童牙科
+					<i></i>
+				</dd>-->
+			</dl>
+		</div>
+		<div id="fb_blx" class="btn-send">发布</div>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.extend.js"></script>
+  <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.category.js" ></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.request.js"></script>
+  <script>
+    (function($, doc) {
+        $.init();
+        $.plusReady(function() {
+          var groupid = -1;
+          var $contents = doc.getElementById('contents');
+          var $groupbox = doc.getElementById('group');
+          // 生成分类
+          var category = categorys.get();
+          if (category.length > 0) {
+            $.each(category, function(index, item) {
+              var dd = doc.createElement('dd');
+              dd.addEventListener('tap', function() {
+                $.each(doc.querySelectorAll('#group dd'), function(i, o) {
+                	 o.classList.remove('active');
+                });
+                groupid = item.id;
+                dd.className = 'active';
+              });
+              dd.innerHTML = '{0}<i></i>'.format(item.title);
+              $groupbox.appendChild(dd);
+            });
+          }
+          // 保存
+          doc.getElementById('bc_blx').addEventListener('tap', function() {
+            fbFn(2);
+          });
+          // 发布
+          doc.getElementById('fb_blx').addEventListener('tap', function() {
+            fbFn(1);
+          });
+          // 发表病例
+          var fbFn = function(type) {
+            var contents = $contents.value.trim();
+            if (contents == '') {
+              $.toast('请输入内容');
+              return;
+            }
+            if (groupid <= 0) {
+              $.toast('请选择分类');
+              return;
+            }
+             request.loginAjax('cases/releaseCase', {
+                data: {
+                  group_id: groupid,
+                  contents: contents,
+                  type: type,
+                  images: []
+                }
+              }, function(data, success) {
+                if (success) {
+                }
+            });
+          }
+        });
+      })(mui, document);
+  </script>
+</body>
+
+</html>
+

@@ -40,13 +40,55 @@
   </header>
   <div class="mui-content">
     <div class="textarea">
-      <textarea placeholder="想说点什么" rows="10"></textarea>
+      <textarea id="contents" placeholder="想说点什么" rows="10"></textarea>
     </div>
-    <div class="btn">
+    <div id="fb_pl" class="btn">
       <span>立刻发表</span>
     </div>
   </div>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.extend.js"></script>
+  <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.request.js"></script>
+  <script>
+    (function($, doc) {
+        $.init();
+        $.plusReady(function() {
+          // 病例秀id
+          var id = 0;
+          var pid = 0;
+          var $contents = doc.getElementById('contents');
+          // 评论病例秀
+          window.addEventListener('KZ_BLX_ID', function(e){
+            id = e.detail.id;
+            pid = 0;
+          });
+          doc.getElementById('fb_pl').addEventListener('tap', function() {
+            plFn();
+          });
+          // 发布评论
+          var plFn = function() {
+            var contents = $contents.value.trim();
+            if (contents == '') {
+              $.toast('请输入评论');
+              return;
+            }
+             request.loginAjax('cases/comments', {
+                data: {
+                  case_id: id,
+                  pid: pid,
+                  contents: contents
+                }
+              }, function(data, success) {
+                if (success) {
+                }
+            });
+          }
+        });
+      })(mui, document);
+  </script>
 </body>
 
 </html>

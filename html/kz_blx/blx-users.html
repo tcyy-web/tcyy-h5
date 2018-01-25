@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="ui-page-my">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+	  .mui-content{
+	    background-color: #fff;
+	  }
+	  .mui-table-view-cell {
+	    padding: 10px;
+	  }
+	  .mui-table-view-cell:after{
+	    left: 0;
+	  }
+	  .img{
+	    float: left;
+	    width: 50px;
+	    height: 50px;
+	    -webkit-border-radius: 50%;
+	    border-radius: 50%;
+	    overflow: hidden;
+	  }
+	  .img img{
+	    width: 100%;
+	  }
+	  .info{
+	    float: left;
+	    width: calc(100% - 110px);
+	    width: -webkit-calc(100% - 110px);
+	    padding: 0 20px;
+	  }
+	  .info p{
+	    font-size: 14px;
+	    color: #7c7c7c;
+	  }
+	  .info p:first-child{
+	    color: #000;
+	    margin-bottom: 5px;
+	  }
+	  .right{
+	    float: right;
+	    width: 60px;
+	    height: 50px;
+	  }
+	  .right p{
+	    font-size: 14px;
+	    color: #0db201;
+	  }
+	  .right p.btn{
+	    border: 1px solid #f73f40;
+	    color: #f73f40;
+	    -webkit-border-radius: 10px;
+	    border-radius: 10px;
+	    padding: 5px;
+	  }
+	</style>
+
+</head>
+
+<body>
+  <header class="mui-bar mui-bar-nav">
+  	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+  	<h1 class="mui-title">点赞的人</h1>
+  </header>
+  <div class="mui-content">
+    <div class="mui-fullscreen">
+      <div class="mui-scroll-wrapper">
+        <div id="pullrefresh" class="mui-scroll">
+           <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+              <div class="clearFix">
+                <div class="img flex flex-row-center">
+                  <img src="../../images/weibo/img.png" />
+                </div>
+                <div class="info">
+                  <p>张惠妹</p>
+                  <p>我来找我来自</p>
+                </div>
+                <div class="right flex flex-row-center flex-col-center">
+                  <p class="btn">加关注</p>
+                </div>
+              </div>
+            </li>
+            <li class="mui-table-view-cell">
+              <div class="clearFix">
+                <div class="img flex flex-row-center">
+                  <img src="../../images/weibo/img.png" />
+                </div>
+                <div class="info">
+                  <p>张惠妹</p>
+                  <p>我来找我来自</p>
+                </div>
+                <div class="right flex flex-row-center flex-col-center">
+                  <p>已关注</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+  <script src="../../js/mui.min.js"></script>
+
+</body>
+
+</html>
+
