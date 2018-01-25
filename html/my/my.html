@@ -13,6 +13,7 @@
 	.mui-table-view-cell>a:not(.mui-btn){ color: #999;}
 	.mui-navigate-right span{position: absolute;}
 	.mui-pull-right{ font-style: normal; color: #333; text-align: right; width: 100%;}
+	#headurl img{ width: 40px; height: 40px;}
 </style>
 
 </head>
@@ -25,35 +26,39 @@
 <div class="mui-content">
 <ul class="mui-table-view mui-table-view-chevron">
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>头像</span> <i id="headurl" class="mui-pull-right" contenteditable="true">ANDY</i></a>
+		<a href="#about" class="mui-navigate-right"><span>头像</span> <i id="headurl" class="mui-pull-right">
+			<img src="http://m.tianchiyueya.com:1888//Project//images//20180125//b2688d1bdfcef3617476ed6e5138ba76.png" alt="" />
+		</i></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>昵称 </span><i id="nickname" class="mui-pull-right" contenteditable="true">ANDY</i></a>
+		<a href="#about" class="mui-navigate-right"><span>昵称 </span><i id="nickname" class="mui-pull-right" contenteditable="true"></i></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>性别 </span><i id="sex" class="mui-pull-right" contenteditable="true">男</i></a>
+		<a href="#about" class="mui-navigate-right"><span>性别 </span><i id="sex" class="mui-pull-right" contenteditable="true"></i></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>电话 </span><i id="phone" class="mui-pull-right" contenteditable="true">17828001555</i></a>
+		<a href="#about" class="mui-navigate-right"><span>电话 </span><i id="phone" class="mui-pull-right" contenteditable="true"></i></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>所在地 </span><i id="province" class="mui-pull-right" contenteditable="true">17828001555</i></a>
+		<a href="#about" class="mui-navigate-right"><span>所在地 </span><i id="province" class="mui-pull-right" contenteditable="true"></i></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>微信 </span><i id="weixin" class="mui-pull-right" contenteditable="true">17828001555</i></a>
+		<a href="#about" class="mui-navigate-right"><span>微信 </span><i id="weixin" class="mui-pull-right" contenteditable="true"></i></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>QQ </span><i id="qq" class="mui-pull-right" contenteditable="true">17828001555</i></a>
+		<a href="#about" class="mui-navigate-right"><span>QQ </span><i id="qq" class="mui-pull-right" contenteditable="true"></i></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>Email </span><i id="email" class="mui-pull-right" contenteditable="true">824040166@QQ.com</i></a>
+		<a href="#about" class="mui-navigate-right"><span>Email </span><i id="email" class="mui-pull-right" contenteditable="true"></i></a>
 	</li>
 </ul>
 </div>
 <script src="../../js/mui.min.js"></script>
 <script src="../../js/utils.config.js"></script>
-<script src="../../js/utils.request.js"></script>
+<script src="../../js/utils.storages.js"></script>
 <script src="../../js/utils.auth.js"></script>
+<script src="../../js/utils.upload.js"></script>
+<script src="../../js/utils.request.js" ></script>
 
 <script>
 	(function($, doc) {
@@ -70,24 +75,23 @@
 			}, function(data, success) {
 
 				if(success) {
-					console.log( JSON.stringify(data) );
+
 					render( data );
 				}
 			});
 		}
 		
-		function setData( name , value){
-			var obj = {}
-			obj[name] = value;
+		function setData( name , value , fnEnd){
+			var postData = {}
+			postData[name] = value;
 			
 			request.loginAjax('User/saveDataByFiled', {
-				data:obj
+				
+				data: {"field": postData}
+				
 			}, function(data, success) {
 
-				if(success) {
-					console.log( data );
-
-				}
+				typeof fnEnd =="function"&&fnEnd(data , success);
 			});
 		}
 		
@@ -96,13 +100,29 @@
 			$.each( arr , function() {
 				var name = this.getAttribute("id");
 				if( name == "headurl"){
-
+					
 				}else if( name =="sex"){
 					this.innerText = obj[name]==1?"男":"女";
 				}else{
 					this.innerText = obj[name];
 				}
 			});
+		}
+		var imageurl = null;
+		function uploadImage( target ){
+			setTimeout(function(){
+              upload.showImgActionSheet(target , function( data ){
+                var url = config.url + "Uploads/Files";
+                upload.uploadimge( url , data.divid, function(res) {
+                 
+                 imageurl = res[0].showUrl;
+                 target.innerHTML = "<img src="+imageurl+">"
+                 imageurl&&setData( "headurl" , imageurl ,function(){
+					imageurl = null;
+				} );
+                });
+              });         
+			}, 500);
 		}
 
 		function addEvent() {
@@ -112,7 +132,12 @@
 
 				this.addEventListener("tap", function() {
 					this._text = this.innerText;
-
+					var name = this.getAttribute("id");
+					if( name == "headurl"){
+						uploadImage( this );
+						
+					}
+					
 				});
 				this.addEventListener("blur", function() {
 					if(this._text != this.innerText){
@@ -120,13 +145,18 @@
 						var name = this.getAttribute("id");
 						var txt = this.innerText;
 						
+						var callback = function(data ,sucess){
+							if(!sucess){
+								this.innerText = this._text;
+							}
+						}
 						if( name == "headurl"){
-		
+							
 						}else if( name =="sex"){
 							txt =="男"?"1":"2";
-							setData( name , txt );
+							setData( name , txt ,callback );
 						}else{
-							setData( name , txt );
+							setData( name , txt , callback );
 						}
 					};
 

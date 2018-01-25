@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>课程详情</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../../css/mui.min.css">
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+		.mui-card .mui-control-content {
+			padding: 10px;
+		}
+
+		.mui-control-content {
+			height: 150px;
+		}
+		.mui-pull-right{
+			line-height: 46px;				
+		}
+		.opt-bar{ position: fixed; bottom:0; width: 100%; background: #f9f9f9; box-shadow: 0 0 3px #e0e0e0;}
+		.opt-bar .opt-1,.opt-bar .opt-2{ display: table; width: 100%; position: relative;}
+		.opt-bar .opt-2{display: none;}
+		.opt-bar span{ height: 40px; display: table-cell; width: 25%; box-shadow: 1px 0 #f4f4f4;}
+		.opt-bar .s_video{background: url(../../images/train/s_video.png) center center/ 36px auto no-repeat; }
+		.opt-bar .s_audio{background: url(../../images/train/s_audio.png) center center/ 32px auto no-repeat;}
+		.opt-bar .s_pic{background: url(../../images/train/s_pic.png) center center/ 30px auto no-repeat;}
+		.opt-bar .s_txt{background: url(../../images/train/s_txt.png) center center/ 32px auto no-repeat;}
+		.opt-bar .s_add{background: url(../../images/train/s_add.png) center center/ 32px auto no-repeat;}
+		.opt-bar .s_input{margin-top:3px;display: table-cell; height: 34px;margin-bottom: 0; width: 96%;}
+		.opt-bar .s_send{ position: absolute; right: 10px; top: 0px; display: inline-block; width: 40px; height: 40px;background: url(../../images/train/s_send.png) center center/24px auto no-repeat;}
+	</style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title"></h1>
+	<a id="TrainUpload" class="mui-pull-right">
+		发布
+	</a>
+</header>
+<div class="mui-content">
+	<span id="upload-sy">录制声音</span>
+	<span id="upload-sp">录制视频</span>
+</div>
+
+<div class="opt-bar">
+	<div class="opt-2" id="opt2">
+		<span class="s_txt" id="s_txt"></span>
+		<span class="s_pic"></span>
+		<span class="s_video"></span>
+		<span class="s_audio"></span>
+	
+	</div>
+	<div class="opt-1" id="opt1">
+		<span class="s_add" id="s_add"></span>
+		<input type="text" class="s_input" />
+		<b class="s_send"></b>
+	</div>
+</div>
+<script src="../../js/mui.min.js"></script>
+<script>
+(function($,doc){
+	
+	$.init();
+	$.plusReady(function() {
+		onPlusReady();
+	});
+	
+	var opt1 = doc.getElementById("opt1");
+	var opt2 = doc.getElementById("opt2");
+	var s_txt = doc.getElementById("s_txt");
+	var s_add = doc.getElementById("s_add");
+	
+	s_add.addEventListener("tap",function(){
+		opt2.style.display="table";
+		opt1.style.display="none";
+	});
+	
+	s_txt.addEventListener("tap",function(){
+		opt1.style.display="table";
+		opt2.style.display="none";
+	});
+	
+	
+	
+	var uploadSY = doc.getElementById("upload-sy");
+	var uploadSP = doc.getElementById("upload-sp");
+	
+	uploadSY.addEventListener("tap",function(){
+		startRecord();
+		console.log("click");
+	});
+	
+	uploadSP.addEventListener("tap",function(){
+		console.log("click");
+	});
+
+	var r = null;
+	// 扩展API加载完毕，现在可以正常调用扩展API  
+	function onPlusReady() {  
+	    r = plus.audio.getRecorder();  
+	} 
+	function startRecord() { 
+	    if ( r == null ) { 
+	        alert( "Device not ready!" ); 
+	        return;  
+	    }  
+	    r.record( {filename:"_doc/audio/xx.amr"}, function () {
+	    	//真机测试文件在/sdcard/Android/data/io.dcloud.HBuilder/.HBuilder/apps/HBuilder/doc下面（.HBuilder是隐藏的，要查看隐藏的文件）
+	        alert( "Audio record success!" ); 
+	    }, function ( e ) { 
+	        alert( "Audio record failed: " + e.message ); 
+	    } ); 
+	}
+	
+	
+})(mui,document)
+</script>
+</body>
+
+</html>
