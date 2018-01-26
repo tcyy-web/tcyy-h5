@@ -11,10 +11,13 @@
   <style type="text/css">
     html,body{ height: 100%; margin: 0; padding: 0; }
     body{ background:#252a47 url(../../images/yangshi/ys_bg.jpg)center bottom/100% auto no-repeat; position: relative; overflow: hidden;}
+    .mui-bar{ height: 52px; background: none; box-shadow: none; }
+    .mui-bar .mui-icon{padding-top: 16px; font-size: 30px;}
     .mui-tooltip{ display: none;}
     .top_opt{ position: fixed; top: 0; left:0; }
-    .controller>span{ display: inline-block; border:1px solid #fff; width: 40px; height: 40px; border-radius: 40px;}
-    .controller>span.current{ border: 1px solid #ccc; }
+    .controller{ margin-left: 40px;  }
+    .controller>span{ display: inline-block; border:1px solid #000; width: 40px; height: 40px; border-radius: 40px;}
+    .controller>span.current{ border: 1px solid #555; }
     .controller>span.red{ background: #d21277; }
     .controller>span.blue{ background: #21abb8; }
     .controller>span.yellow{ background: yellow; }
@@ -47,26 +50,30 @@
   </style>
 </head>
 <body >
+<header class="mui-bar mui-bar-nav">
+  	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<div class="top_opt mui-input-row">
+		  <div class="controller fl">
+			<span class="black current"  color="#211715"></span>
+		    <span class="purple"  color="#7b5da7"></span>
+		    <span class="red"  color="#d21277"></span>
+		    <span class="blue" color="#21abb8"></span>
+		  </div>
+		  <div class="mui-input-range fl"><input type="range" min="2" value="2" max="10"/></div>
+		  <div class="opt">
+		  	<span class="clear"></span>
+		  	<!--<span class="file"></span>
+		  	<span class="add"></span>
+		  	<span class="home"></span>-->
+		  </div>
+	  </div>
+</header>
 
 	<canvas id="canvas">
 		不支持canvas
 	</canvas>
 
-  <div class="top_opt mui-input-row">
-	  <div class="controller fl">
-		<span class="black current"  color="#211715"></span>
-	    <span class="purple"  color="#7b5da7"></span>
-	    <span class="red"  color="#d21277"></span>
-	    <span class="blue" color="#21abb8"></span>
-	  </div>
-	  <div class="mui-input-range fl"><input type="range" min="2" value="2" max="10"/></div>
-	  <div class="opt">
-	  	<span class="clear"></span>
-	  	<!--<span class="file"></span>
-	  	<span class="add"></span>
-	  	<span class="home"></span>-->
-	  </div>
-  </div>
+
   <ul class="left_opt" id="left_list">
   
   </ul>
