@@ -103,10 +103,10 @@
 		<script>
 			(function($, doc) {
 					$.init({
-//					  preloadPages:[{
-//            id:'YANSHI',
-//            url: '../yanshi/yanshi.html'
-//          }]
+					  preloadPages:[{
+              id:'YANSHI_INDEX',
+              url: '../yanshi/yanshi.html'
+            }]
 					});
 					$.plusReady(function() {
 						
@@ -230,21 +230,27 @@
 							}
 							// 匹配对应tab窗口
 							if (currIndex == 1) {
+		              var  fbWebview = plus.webview.getWebviewById('YANSHI_INDEX');
+                  $.fire(fbWebview,'YANSHI_Refresh',{
+                  });
                   $.openWindow({
-                  url: '../yanshi/yanshi.html',
-                  id: 'YANSHI',
-                  createNew: true,
-                  preload: true,
-                  show: {
-                    aniShow: 'pop-in'
-                  },
-                  styles: {
-                    popGesture: 'hide'
-                  },
-                  waiting: {
-                    autoShow: false
-                  }
-                });
+                    id: 'YANSHI_INDEX'
+                  });
+//                $.openWindow({
+//                url: '../yanshi/yanshi.html',
+//                id: 'YANSHI',
+//                createNew: true,
+//                preload: true,
+//                show: {
+//                  aniShow: 'pop-in'
+//                },
+//                styles: {
+//                  popGesture: 'hide'
+//                },
+//                waiting: {
+//                  autoShow: false
+//                }
+//              });
                 return;
 							}
 							if(currIndex > 0) {
