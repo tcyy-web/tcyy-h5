@@ -5,6 +5,8 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<title></title>
 	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/mui.picker.min.css">
+	<link rel="stylesheet" href="../../css/mui.poppicker.css">
 	<link href="../../css/style.css" rel="stylesheet" />
 <style>
 	.mui-content>.mui-table-view:first-child{margin-top: 0;}
@@ -34,7 +36,7 @@
 		<a href="#about" class="mui-navigate-right"><span>昵称 </span><i id="nickname" class="mui-pull-right" contenteditable="true"></i></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>性别 </span><i id="sex" class="mui-pull-right" contenteditable="true"></i></a>
+		<a href="#about" class="mui-navigate-right"><span>性别 </span><i id="sex" class="mui-pull-right"></i></a>
 	</li>
 	<li class="mui-table-view-cell">
 		<a href="#about" class="mui-navigate-right"><span>电话 </span><i id="phone" class="mui-pull-right" contenteditable="true"></i></a>
@@ -54,6 +56,9 @@
 </ul>
 </div>
 <script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+<script src="../../js/utils.enums.js"></script>
 <script src="../../js/utils.config.js"></script>
 <script src="../../js/utils.storages.js"></script>
 <script src="../../js/utils.auth.js"></script>
@@ -136,6 +141,8 @@
 					if( name == "headurl"){
 						uploadImage( this );
 						
+					}else if( name =="sex"){
+						selectSex.call(this);
 					}
 					
 				});
@@ -153,8 +160,8 @@
 						if( name == "headurl"){
 							
 						}else if( name =="sex"){
-							txt =="男"?"1":"2";
-							setData( name , txt ,callback );
+//							txt =="男"?"1":"2";
+//							setData( name , txt ,callback );
 						}else{
 							setData( name , txt , callback );
 						}
@@ -163,6 +170,28 @@
 				});
 			})
 		}
+		//性别
+		  var gender = [];
+		  for (var key in enums.sex) {
+		    gender.push({
+		      value: key,
+		      text: enums.sex[key]
+		    })
+		  }
+		  var genderPicker = new $.PopPicker();
+		  genderPicker.setData(gender);
+		function selectSex(){
+
+		  var _this = this;
+
+		  genderPicker.show(function(items) {
+		      sex = items[0].value;
+		      _this.innerText = items[0].text;
+		      setData( "sex" , sex );
+		  });
+		 
+		}
+		
 
 }(mui, document));
 </script>

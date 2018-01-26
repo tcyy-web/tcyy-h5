@@ -218,9 +218,11 @@
 			window.addEventListener('refresh', function(e){
 			    location.reload();
 			});
+	
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
+					
 					var user = authManage.getUser();
 					// 判断登录
 					var loginItem = doc.getElementById('login');
@@ -235,7 +237,7 @@
 					loginItem.addEventListener('tap', function(event) {
 						if (authManage.checkLogin()) {
                 $.openWindow({
-                  url: '../profile/my-home.html',
+                  url: '../my/my.html',
                   id: 'WDJL',
                   preload: true,
                   show: {
