@@ -102,7 +102,12 @@
 		<script src="../../js/business/home-tab.js"></script>
 		<script>
 			(function($, doc) {
-					$.init();
+					$.init({
+//					  preloadPages:[{
+//            id:'YANSHI',
+//            url: '../yanshi/yanshi.html'
+//          }]
+					});
 					$.plusReady(function() {
 						
 					  /******APP初始化 begin******/
@@ -225,19 +230,20 @@
 							}
 							// 匹配对应tab窗口
 							if (currIndex == 1) {
-			           $.openWindow({
-                    url: "../yanshi/yanshi.html",
-                    id: "cesss",
-                    preload: true,
-                    show: {
-                      aniShow: 'pop-in'
-                    },
-                    styles: {
-                      popGesture: 'show'
-                    },
-                    waiting: {
-                      autoShow: false
-                    }
+                  $.openWindow({
+                  url: '../yanshi/yanshi.html',
+                  id: 'YANSHI',
+                  createNew: true,
+                  preload: true,
+                  show: {
+                    aniShow: 'pop-in'
+                  },
+                  styles: {
+                    popGesture: 'hide'
+                  },
+                  waiting: {
+                    autoShow: false
+                  }
                 });
                 return;
 							}

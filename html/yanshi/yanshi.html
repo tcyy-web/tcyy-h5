@@ -86,46 +86,45 @@
 <script src="../../js/business/handdraw.js"></script>
 
 <script>
-
+window.addEventListener('YANSHI-Refresh', function(e){
+    console.log('11111'+e.detail.d);
+    plus.screen.lockOrientation("landscape-primary");
+  });
 (function($,doc){
+  
 	$.init({
 		beforeback:function(){
-			
+			console.log('返回');
 			plus.screen.lockOrientation("portrait-primary");
 			return true;
 		}
 	});
 	$.plusReady(function() {
-
-		
-		ajaxData();
-		
-		plus.screen.lockOrientation("landscape-primary");
-
-		
+    plus.screen.lockOrientation("landscape-primary");
+//		ajaxData();
 	});
 	
-
-function ajaxData(){
-	request.ajax('domes/getGroup', {showMsg: false }, function(data, success) {
-	
-	  if ( success ){
-	    var obj = data;
-	    
-			window._yanshi_data = data;
-			
-	    var leftEle = doc.getElementById("left_list");
-	    for( var i in obj){
-	    	var tar = obj[i];
-	    	var oli = doc.createElement("li");
-	    	oli.innerText = tar.title;
-	    	oli.setAttribute("cid",tar.id);
-	    	leftEle.appendChild( oli );
-	
-	    }
-	  }
-	});
-	}
+  
+  function ajaxData(){
+    	request.ajax('domes/getGroup', {showMsg: false }, function(data, success) {
+    	
+    	  if ( success ){
+    	    var obj = data;
+    	    
+    			window._yanshi_data = data;
+    			
+    	    var leftEle = doc.getElementById("left_list");
+    	    for( var i in obj){
+    	    	var tar = obj[i];
+    	    	var oli = doc.createElement("li");
+    	    	oli.innerText = tar.title;
+    	    	oli.setAttribute("cid",tar.id);
+    	    	leftEle.appendChild( oli );
+    	
+    	    }
+    	  }
+    	});
+  }
 })( mui , document);
 
 </script>

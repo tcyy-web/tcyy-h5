@@ -185,8 +185,8 @@
             id:'ZXKT', //在线课堂
             url: '../train/train-list.html'
           },{
-            id: 'KZ-PPSP', // 品牌商品类
-            url:"../ppqy/qy-list.html"
+            id:'xxxxx', //在线课堂
+            url: '../kz_ppsp/qy-list.html'
           }]
         });
 				$.plusReady(function() {
@@ -232,6 +232,27 @@
 //            },function(data, success) {
 //            }, function() {
 //            });
+               var  fbWebview = plus.webview.getWebviewById('xxxxx');
+                $.fire(fbWebview,'KZ_xxxx',{
+                });
+                $.openWindow({
+                  id: 'xxxxx'
+                });
+//              $.openWindow({
+//                url: '../kz_ppsp/qy-list.html',
+//                id: 'PPQY',
+//                createNew: true,
+//                preload: false,
+//                show: {
+//                  aniShow: 'pop-in'
+//                },
+//                styles: {
+//                  popGesture: 'hide'
+//                },
+//                waiting: {
+//                  autoShow: false
+//                }
+//              });
 				    } else if (type === 4) { // 创意设计类
               
             } else if (type === 5) { // 在线课堂类
