@@ -224,6 +224,23 @@
 								currIndex = 3;
 							}
 							// 匹配对应tab窗口
+							if (currIndex == 1) {
+			           $.openWindow({
+                    url: "../yanshi/yanshi.html",
+                    id: "cesss",
+                    preload: true,
+                    show: {
+                      aniShow: 'pop-in'
+                    },
+                    styles: {
+                      popGesture: 'show'
+                    },
+                    waiting: {
+                      autoShow: false
+                    }
+                });
+                return;
+							}
 							if(currIndex > 0) {
 								targetPage = plus.webview.getWebviewById(subpages[currIndex - 1]);
 							} else {
