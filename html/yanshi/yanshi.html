@@ -88,12 +88,19 @@
 <script>
 
 (function($,doc){
-	$.init();
+	$.init({
+		beforeback:function(){
+			
+			plus.screen.lockOrientation("portrait-primary");
+		}
+	});
 	$.plusReady(function() {
 
 		
 		ajaxData();
+		
 		plus.screen.lockOrientation("landscape-primary");
+
 		
 	});
 	
