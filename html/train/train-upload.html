@@ -61,6 +61,13 @@
 		<b class="s_send"></b>
 	</div>
 </div>
+<div id="record" class="rp">
+      <div style="width:100%;height:20%;"></div>
+      <div class="rprogress"><div class="rschedule"></div></div>
+      <br/>
+      <div id="rtime" class="rtime">00:00:00</div><br/>
+      <div class="stop" onclick="stopRecord()"></div>
+    </div>
 <script src="../../js/mui.min.js"></script>
 <script>
 (function($,doc){
@@ -109,7 +116,7 @@
 	        alert( "Device not ready!" ); 
 	        return;  
 	    }  
-	    r.record( {filename:"_doc/audio/xx.amr"}, function () {
+	    r.record( {filename:"_doc/audio/"}, function () {
 	    	//真机测试文件在/sdcard/Android/data/io.dcloud.HBuilder/.HBuilder/apps/HBuilder/doc下面（.HBuilder是隐藏的，要查看隐藏的文件）
 	        alert( "Audio record success!" ); 
 	    }, function ( e ) { 
