@@ -97,14 +97,12 @@
     
     	$.init({
     		beforeback:function(){
-    			console.log('返回');
-      			plus.screen.lockOrientation("portrait-primary");
+    			plus.screen.lockOrientation("portrait-primary");
     			return true;
     		}
     	});
     	$.plusReady(function() {
     	  window.addEventListener('YANSHI_Refresh', function(e){
-        console.log(2);
         plus.screen.lockOrientation("landscape-primary");
       });
     		ajaxData();
