@@ -83,6 +83,7 @@
 				padding: 15px 10px;
 				line-height: 20px;
 				width: 80px;
+				text-align: right;
 			}
 			.mui-input-group input{
 				height: 50px;
@@ -109,6 +110,51 @@
 			.mui-input-row .mui-input-clear~.mui-icon-clear{
 				top: 15px;
 			}
+			.add-pic {
+        position: relative;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: #ffffff;
+        padding: 30px;
+        text-align: center;
+      }
+      .add-pic:before,
+      .add-pic:after{
+        position: absolute;
+        right: 0;
+        left: 0;
+        height: 1px;
+        content: '';
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5);
+        background-color: #d6d6d6;
+      }
+      .add-pic:before{
+        top: 0;
+      }
+      .add-pic:after{
+        bottom: 0;
+      }
+      .add-box {
+        display: inline-block;
+        text-align: center;
+      }
+      .add-box p {
+        color: #b3b3b3;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+      .add-box .ap-jia{
+        border: 1px dotted #d2d2d2;
+        width: 40px;
+        height: 40px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+      }
+      .add-box .ap-jia img{
+        max-width: 100%;
+        max-height: 100%;
+      }
 			.btns {
 				position: fixed;
 				bottom: 0;
@@ -165,7 +211,25 @@
 					<label>预约：</label>
 					<p id="booktime">请选择预约时间</p>
 				</div>
+				<div class="mui-input-row">
+          <label>接诊师：</label>
+          <input id="jzs" type="text" class="mui-input-clear" placeholder="请输入姓名">
+        </div>
+        <div class="mui-input-row">
+          <label>主诊师：</label>
+          <input id="zzys" type="text" class="mui-input-clear" placeholder="请输入姓名">
+        </div>
 			</form>
+			<div class="add-pic">
+        <div id="addPic" class="add-box">
+          <div style="display: inline-block;">
+            <div class="ap-jia flex flex-col-center flex-row-center">
+              <img id="img" src="../../images/project/jia.png" />
+            </div>
+          </div>
+          <p>上传图片</p>
+        </div>
+      </div>
 			<div class="btns flex">
 				<div id="submit" class="flex-1 sure">提交</div>
 			</div>
