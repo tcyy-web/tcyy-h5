@@ -139,7 +139,9 @@
       "html/company/company_band.html",
       "html/knowledge/zsk-list.html",
       "html/kz_blx/blx-list.html",
-      "html/ppqy/qy-list.html"
+      "html/ppqy/qy-list.html",
+      "html/train/train-upload.html",
+      "html/kz_ppsp/qy-list.html"
     ],
     "priority": 0
   },
@@ -482,7 +484,8 @@
       "js/utils.enums.js",
       "js/utils.storages.js",
       "js/utils.auth.js",
-      "js/utils.request.js"
+      "js/utils.request.js",
+      "images/project/jia.png"
     ],
     "refer": [],
     "priority": 0
@@ -748,6 +751,35 @@
       "js/utils.upload.js",
       "js/utils.request.js",
       "images/project/jia.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/train/train-upload.html": {
+    "href": "html/train/train-upload.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/train/s_video.png",
+      "images/train/s_audio.png",
+      "images/train/s_pic.png",
+      "images/train/s_txt.png",
+      "images/train/s_add.png",
+      "images/train/s_send.png",
+      "js/mui.min.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/kz_ppsp/qy-list.html": {
+    "href": "html/kz_ppsp/qy-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/profile/ss.png",
+      "js/mui.min.js",
+      "images/profile/sc8.png",
+      "images/profile/sc9.png"
     ],
     "refer": [],
     "priority": 0

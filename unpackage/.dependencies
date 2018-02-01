@@ -1,90 +1,49 @@
 {
-  "html/my/my.html": {
-    "href": "html/my/my.html",
-    "resources": [],
-    "priority": 1
+  "html/train/train-upload.html": {
+    "href": "html/train/train-upload.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "images/train/s_video.png",
+      "images/train/s_audio.png",
+      "images/train/s_pic.png",
+      "images/train/s_txt.png",
+      "images/train/s_add.png",
+      "images/train/s_send.png",
+      "js/mui.min.js"
+    ],
+    "priority": 3
   },
-  "html/home/tab-webview-wode.html": {
-    "href": "html/home/tab-webview-wode.html",
-    "resources": [],
-    "refer": [],
-    "priority": 1
-  },
-  "html/knowledge/zsk-list.html": {
-    "href": "html/knowledge/zsk-list.html",
-    "resources": [],
-    "refer": [],
-    "priority": 2
-  },
-  "html/kz_blx/blx-send.html": {
-    "href": "html/kz_blx/blx-send.html",
-    "resources": [],
+  "html/kz_ppsp/qy-list.html": {
+    "href": "html/kz_ppsp/qy-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "images/profile/ss.png",
+      "js/mui.min.js",
+      "images/profile/sc8.png",
+      "images/profile/sc9.png"
+    ],
     "priority": 4
-  },
-  "html/kz_blx/blx-pl.html": {
-    "href": "html/kz_blx/blx-pl.html",
-    "resources": [],
-    "priority": 5
-  },
-  "html/kz_blx/blx-detail.html": {
-    "href": "html/kz_blx/blx-detail.html",
-    "resources": [],
-    "refer": [],
-    "priority": 5
-  },
-  "html/kz_blx/blx-list.html": {
-    "href": "html/kz_blx/blx-list.html",
-    "resources": [],
-    "refer": [],
-    "priority": 4
-  },
-  "html/ppqy/qy-list.html": {
-    "href": "html/ppqy/qy-list.html",
-    "resources": [],
-    "priority": 5
   },
   "html/home/tab-webview-kuozhan.html": {
     "href": "html/home/tab-webview-kuozhan.html",
     "resources": [],
-    "refer": [],
+    "refer": [
+      "html/train/train-upload.html",
+      "html/kz_ppsp/qy-list.html"
+    ],
     "priority": 2
   },
-  "html/yanshi/yanshi.html": {
-    "href": "html/yanshi/yanshi.html",
-    "resources": [],
-    "priority": 4
-  },
-  "html/project/project-edit.html": {
-    "href": "html/project/project-edit.html",
-    "resources": [],
-    "priority": 7
-  },
-  "html/project/project-add.html": {
-    "href": "html/project/project-add.html",
-    "resources": [],
-    "priority": 8
-  },
-  "html/project/project-plan-detail.html": {
-    "href": "html/project/project-plan-detail.html",
-    "resources": [],
-    "priority": 10
-  },
-  "html/project/project-list.html": {
-    "href": "html/project/project-list.html",
-    "resources": [],
-    "refer": [],
-    "priority": 7
-  },
-  "html/project/project-index.html": {
-    "href": "html/project/project-index.html",
-    "resources": [],
-    "refer": [],
-    "priority": 7
-  },
-  "html/home/tab-webview-goutong.html": {
-    "href": "html/home/tab-webview-goutong.html",
-    "resources": [],
-    "refer": [],
-    "priority": 0
+  "html/project/project-bill-edit.html": {
+    "href": "html/project/project-bill-edit.html",
+    "resources": [
+      "images/project/jia.png"
+    ],
+    "priority": 9
   }
 }
