@@ -835,6 +835,9 @@
             imgDiv.className = 'img flex flex-col-center';
             var img = doc.createElement('img');
             img.src = data.image;
+            img.addEventListener('tap', function(e){
+              plus.nativeUI.previewImage([data.image]);
+            });
             imgDiv.appendChild(img);
             li.appendChild(imgDiv);
             var billDiv = doc.createElement('div');
