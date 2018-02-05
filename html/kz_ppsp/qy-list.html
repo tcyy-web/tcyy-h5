@@ -11,11 +11,53 @@
     .search-bar { width:100%; margin-bottom:0; height:50px; background-color:#FFF;}
     .search-bar input{margin-bottom: 0; width:80%; float:left; height:48PX; border:none;  outline: none;  font-size:0.9em;  font-family:'微软雅黑'; color:#7c7c7c;}
     .search-bar button{ width:20%; height:50PX; background:url(../../images/profile/ss.png) no-repeat center; border:none;  outline: none; }
-    .hj{width: 100%;}
-    .brand-lists{ display: block; padding: 5px; background: #fff;}
-    .brand-lists .tl{color:#765fc3; padding: 8px 5px; border-bottom: 1px solid #ddd; margin-bottom: 5px;;}
-    .item{ width: 32.3%; padding: 1%; display: inline-block;}
-    .item img{ width: 100%;outline: 1px solid #ddd;}
+    .mui-slider .mui-slider-group .mui-slider-item img{
+       height: 200px;
+    }
+    .mui-slider-indicator .mui-indicator{
+      margin: 1px 3px;
+      background-color: #b1a0e9;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+    }
+    .mui-slider-indicator .mui-active.mui-indicator{
+      background-color: #765fc3;
+    }
+    .brand-lists{
+      margin-top: 10px;
+      background: #fff;
+    }
+    .brand-lists .tl{
+      position: relative;
+      color:#765fc3; 
+      padding: 10px; 
+    }
+    .brand-lists .tl:before{
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
+    }
+    .brand-lists .lists{
+      padding: 5px;
+    }
+    .item{
+      float: left;
+      width: calc(33.33333333% - 10px);
+      width: -moz-calc(33.33333333% - 10px);
+      height: 60px;
+      border: 1px solid #ddd;
+      margin: 5px;
+    }
+    .item img{ 
+      width: 100%;
+      height: 100%;
+    }
 	</style>
 </head>
 <body>
@@ -29,16 +71,38 @@
   		<input type="text" />
   		<button></button>
   	</div>
-  	<img class="hj" src="../../images/profile/sc8.png" />
-  	<section class="brand-lists">
-  	    <section class="tl"><span>品牌</span></section>
-  	    <section class="lists">
-  	       <a class="item"><img src="../../images/profile/sc9.png"/></a>
-  	       <a class="item"><img src="../../images/profile/sc9.png"/></a>
-  	       <a class="item"><img src="../../images/profile/sc9.png"/></a>
-  	       
-  	     </section>
-  	</section>
+  	<div id="slider" class="mui-slider" >
+      <div class="mui-slider-group mui-slider-loop">
+        <div class="mui-slider-item mui-slider-item-duplicate">
+          <a href="#">
+            <img src="../../images/ppsp/banner.jpg">
+          </a>
+        </div>
+        <div class="mui-slider-item">
+          <a href="#">
+            <img src="../../images/ppsp/banner.jpg">
+          </a>
+        </div>
+        <div class="mui-slider-item mui-slider-item-duplicate">
+          <a href="#">
+            <img src="../../images/ppsp/banner.jpg">
+          </a>
+        </div>
+      </div>
+      <div class="mui-slider-indicator">
+        <div class="mui-indicator"></div>
+        <div class="mui-indicator"></div>
+      </div>
+    </div>
+  	<div class="brand-lists">
+	    <div class="tl"><span>品牌</span></div>
+	    <div class="lists clearFix">
+	      <a class="item"><img src="../../images/profile/sc9.png"/></a>
+	      <a class="item"><img src="../../images/profile/sc9.png"/></a>
+	      <a class="item"><img src="../../images/profile/sc9.png"/></a>
+	      <a class="item"><img src="../../images/profile/sc9.png"/></a>
+      </div>
+  	</div>
   </div>
   <script src="../../js/mui.min.js"></script>
    <script>
