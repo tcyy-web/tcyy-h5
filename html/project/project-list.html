@@ -161,7 +161,7 @@
 				background-color: #ffffff;
 			}
 			.bill-item .flex p {
-				width: 100px;
+				width: 60px;
 				padding: 5px 0;
 				position: relative;
 				font-size: 14px;
@@ -495,7 +495,7 @@
   								</div>
   								<div class="bill-item">
   									<div class="flex">
-  										<p>编号：01by</p>
+  										<p>01by</p>
   										<p class="flex-1">牙齿修复</p>
   									</div>
   									<p>￥<span>318</span><span>元</span></p>
@@ -512,7 +512,7 @@
   								</div>
   								<div class="bill-item">
   									<div class="flex">
-  										<p>编号：01by</p>
+  										<p>01by</p>
   										<p class="flex-1">牙齿修复</p>
   									</div>
   									<p>¥<span>318</span><span>元</span></p>
@@ -579,7 +579,7 @@
 		<script>
 		  // 登录刷新
       window.addEventListener('refresh', function(e){
-          location.reload();
+        location.reload();
       });
 			(function($, doc) {
 				$.init({
@@ -835,6 +835,9 @@
             imgDiv.className = 'img flex flex-col-center';
             var img = doc.createElement('img');
             img.src = data.image;
+            img.addEventListener('tap', function(e){
+              plus.nativeUI.previewImage([data.image]);
+            });
             imgDiv.appendChild(img);
             li.appendChild(imgDiv);
             var billDiv = doc.createElement('div');
@@ -860,7 +863,8 @@
             // 修改
             var edit = doc.createElement('span');
             edit.className = 'flex-1 edit';
-            edit.innerText =  data.system !== -1 ? '修改' : '改价';
+//          edit.innerText =  data.system !== -1 ? '修改' : '改价';
+            edit.innerText =  '修改';
             edit.addEventListener('tap', function(e){
               if (data.system !== -1) {
                 if (!projectEditWebview) {
