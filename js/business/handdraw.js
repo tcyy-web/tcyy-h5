@@ -103,7 +103,7 @@
     
     function drawBg(){
     	var link = $("body").attr("src");
-		drawImage(bgCanvas,link , 80 , 52);
+		drawImage(bgCanvas,link , 80 , 62);
     }
 
 	function addEventListener() {
@@ -205,15 +205,25 @@
 				h = oImg.height();
 			var l = ($(window).width() - w) / 2,
 				t = ($(window).height() - h) / 2;
-			var oTar = $("<div class='opt_img'><img width='100%' height='100%' src=" + sLink + "></div>").appendTo("body");
+			var oTar = $("<div class='opt_img'> <i></i><img width='100px' height='100px' src=" + sLink + "></div>").appendTo("body");
 			oTar.css({
 				"position": "absolute",
 				"left": 0,
-				"top": 0,
+				"top":  0,
 				"width": w,
 				"height": h,
 				"z-index": index++
 			})
+			
+			oTar.find("i").css({
+				"position": "absolute",
+				"left": -w*2,
+				"top":  -h*2,
+				"width": w*8,
+				"height": h*8,
+				"z-index": index++
+			})
+		
 			$(".left_opt2").hide();
 			move(oTar[0])
 		});

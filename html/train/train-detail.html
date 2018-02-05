@@ -10,13 +10,28 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
+			.mui-bar{box-shadow: none;}
 			.mui-card .mui-control-content {
 				padding: 10px;
+
 			}
 
 			.mui-control-content {
 				height: 150px;
+				padding: 5px 10px;
 			}
+			.mui-segmented-control{border-color: #ccc; border-left: none; border-right: none; border-radius: 0; padding: 5px 0;}
+			.mui-segmented-control .mui-control-item{ color: #333; border-color: #ddd; overflow: visible;}
+			.mui-segmented-control .mui-control-item.mui-active{ color: #755fc3; background: none; position: relative; }
+			.mui-segmented-control .mui-control-item.mui-active::after{
+				content: "";
+				width: 100%;
+				position: absolute;
+				bottom:-5px;
+				left: 0;
+				border-bottom: 1px solid #755fc3;
+			}
+			.choose-type{margin-top:10px;}
 		</style>
 	</head>
 
@@ -26,111 +41,32 @@
 			<h1 class="mui-title">课程详情</h1>
 		</header>
 		<div class="mui-content">
-			<div style="padding: 10px 10px;">
+			<img src="../../images/my/bg.png" alt="" width="100%" />
+			<div class="choose-type">
 				<div id="segmentedControl" class="mui-segmented-control">
-					<a class="mui-control-item mui-active" href="#item1">待办公文（8）</a>
-					<a class="mui-control-item" href="#item2">已办公文</a>
-					<a class="mui-control-item" href="#item3">全部公文</a>
+					<a class="mui-control-item mui-active" href="#item1">课程详情</a>
+					<a class="mui-control-item" href="#item2">课程安排</a>
+					
+					
 				</div>
 			</div>
 			<div>
 				<div id="item1" class="mui-control-content mui-active">
-					<div id="scroll" class="mui-scroll-wrapper">
-						<div class="mui-scroll">
-							<ul class="mui-table-view">
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-1
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-2
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-3
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-4
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-5
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-6
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-7
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-8
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-9
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-10
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-11
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-12
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-13
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-14
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-15
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-16
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-17
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-18
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-19
-								</li>
-								<li class="mui-table-view-cell">
-									第一个选项卡子项-20
-								</li>
-							</ul>
-						</div>
-					</div>
+					
 				</div>
 				<div id="item2" class="mui-control-content">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
-							第二个选项卡子项-1
-						</li>
-						<li class="mui-table-view-cell">
-							第二个选项卡子项-2
-						</li>
-						<li class="mui-table-view-cell">
-							第二个选项卡子项-3
-						</li>
-					</ul>
+					
 				</div>
-				<div id="item3" class="mui-control-content">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
-							第三个选项卡子项-1
-						</li>
-						<li class="mui-table-view-cell">
-							第三个选项卡子项-2
-						</li>
-						<li class="mui-table-view-cell">
-							第三个选项卡子项-3
-						</li>
-					</ul>
-				</div>
+				
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.config.js"></script>
+		<script src="../../js/utils.extend.js"></script>
+		<script src="../../js/utils.storages.js" ></script>
+		<script src="../../js/utils.category.js" ></script>
+		<script src="../../js/utils.auth.js"></script>
+		<script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
@@ -138,9 +74,35 @@
 					indicators: true //是否显示滚动条
 				});
 				$.plusReady(function() {
+					
+					
 				});
+			
+				
+				ajaxData(3);
+				
 			}(mui, document));
+			
+			function ajaxData( courseId ){
+				var courseId = courseId?courseId:2;
+				request.loginAjax('Curriculum/details', {
+					
+					data: {
+						id: courseId,
+					},
+					showMsg: false,
+					
+				}, function(data, success) {
+     
+		      	  if ( success ){
+		      	    document.getElementById("item1").innerText = data.contents;
+					document.getElementById("item2").innerText = "无";
+		      	  }
+//		      	  document.getElementById("item1").innerText = JSON.stringify(data);
+		      	});
+			}
 		</script>
+		
 	</body>
 
 </html>
