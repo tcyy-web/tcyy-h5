@@ -187,7 +187,7 @@
 				  $addPic.addEventListener('tap', function(event) {
 				    var _this = this;
 				    setTimeout(function(){
-              upload.showImgActionSheet(_this , function( data ){
+              upload.showImgActionSheet(function( data ){
                 var url = config.url + "Uploads/Files";
                 upload.uploadimge( url , data.divid, function(res) {
 					       $img.src = data.abspath;

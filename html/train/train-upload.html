@@ -20,6 +20,10 @@
 		.mui-pull-right{
 			line-height: 46px;				
 		}
+		
+		.caozuo span{ margin-left: 20px;}
+		.caozuo2{ display: none;}
+		
 		.opt-bar{ position: fixed; bottom:0; width: 100%; background: #f9f9f9; box-shadow: 0 0 3px #e0e0e0;}
 		.opt-bar .opt-1,.opt-bar .opt-2{ display: table; width: 100%; position: relative;}
 		.opt-bar .opt-2{display: none;}
@@ -32,6 +36,137 @@
 		.opt-bar .s_input{margin-top:3px;display: table-cell; height: 34px;margin-bottom: 0; width: 96%;}
 		.opt-bar .s_send{ position: absolute; right: 10px; top: 0px; display: inline-block; width: 40px; height: 40px;background: url(../../images/train/s_send.png) center center/24px auto no-repeat;}
 	</style>
+	<style>
+		.rp {
+			width: 100%;
+			height: 100%;
+			display: none;
+			text-align: center;
+			position: fixed;
+			top: 0;
+			background: rgba(0,0,0,0.8);
+			z-index: 9999;
+			overflow: hidden;
+		}
+		.aname {
+			font-size: 16px;
+		}
+		.ainf {
+			font-size: 12px;
+		}
+		.rtime {
+			font-size: 22px;
+			color: #FF0000;
+		}
+		.ptime {
+			margin-top: 40%;
+			font-size: 22px;
+			color: #FFFFFF;
+		}
+		.rprogress {
+			background: url(../../images/train/arecord.png) no-repeat center center;
+			background-size: 32px 32px;
+		}
+		.rschedule {
+		    background-color: rgba(0,0,0,0);
+		    border: 5px solid rgba(0,183,229,0.9);
+		    opacity: .9;
+		    border-left: 5px solid rgba(0,0,0,0);
+		    border-right: 5px solid rgba(0,0,0,0);
+		    border-radius: 50px;
+		    box-shadow: 0 0 15px #2187e7;
+		    width: 36px;
+		    height: 36px;
+		    margin: 0 auto;
+		    -webkit-animation: spin 1s infinite linear;
+		    animation: spin 1s infinite linear;
+		}
+		@-webkit-keyframes spin {
+		    0% {
+		        -webkit-transform: rotate(0deg);
+		    }
+		    100% {
+		        -webkit-transform: rotate(360deg);
+		    }
+		}
+		@keyframes spin {
+		    0% {
+		        transform: rotate(0deg);
+		    }
+		    100% {
+		        transform: rotate(360deg);
+		    }
+		}
+		.progress {
+		  width: 90%;
+		  background-color: #666;
+		  margin: 0 5%;
+		  border: 1px solid #222;
+		  -webkit-border-radius: 5px;
+		  border-radius: 5px;
+		}
+		.schedule {
+		  width: 8px;
+		  height: 8px;
+		  margin: 1px 0;
+		  background-color: #FFCC33;
+		  -webkit-border-radius: 4px;
+		  border-radius: 4px;
+		  -webkit-transition: all 1s linear;
+		  transition: all 1s linear;
+		}
+		.stop {
+			width: 72px;
+			height: 72px;
+			background: url(../../images/train/astop.png) center center;
+			background-size: 72px 72px;
+			margin: auto;
+			-webkit-border-radius: 72px;
+			border-radius: 72px;
+		}
+		.stop:active{
+		  	-webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5) inset;
+			box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5) inset;
+		}
+
+		.pcontent{
+			overflow-y:auto;
+		}
+		.pcontent p{ color: #333; margin: 0; padding: 0; margin-bottom: 5px; font-size: 15px; padding: 2px 5px;}
+		.pcontent .vedio{ width: 50px; height: 50px; display: inline-block;  background: url(../../images/train/v_video.png) center center no-repeat; }
+		.pcontent .audio{ position: relative; border-radius: 30px; border:1px solid #999; width: 160px; height: 32px; display: inline-block;}
+		.pcontent .audio::before{
+			content: '';
+			position: absolute;
+			background: url(../../images/train/v_audio.png) 4px center /20px auto no-repeat;
+			width: 32px;
+			height: 32px;
+		}
+		
+		.pcontent .paudio.playing .audio::before{
+			animation: twinkling 3s infinite ease; 
+		}
+		.pcontent p {position: relative;}
+		.pcontent p .cz{position: absolute; margin-left: 12px; }
+		p .cz i{ display: inline-block; font-style: normal; color: #0062CC;}
+		
+		@-webkit-keyframes twinkling{ 
+		0%{ 
+		opacity: 0.1; 
+		} 
+		100%{ 
+		opacity: 1; 
+		} 
+		} 
+		@keyframes twinkling{ 
+		0%{ 
+		opacity: 0.1; 
+		} 
+		100%{ 
+		opacity: 1; 
+		} 
+		}
+	</style>
 </head>
 
 <body>
@@ -39,12 +174,13 @@
 	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title"></h1>
 	<a id="TrainUpload" class="mui-pull-right">
-		发布
+		<div class="caozuo"><span class="edit">编辑</span><span class="publish">发布</span></div>
+		<div class="caozuo2"><span class="sure">完成</span></div>
 	</a>
 </header>
+
 <div class="mui-content">
-	<span id="upload-sy">录制声音</span>
-	<span id="upload-sp">录制视频</span>
+	<div id="pcontent" class="pcontent"></div>
 </div>
 
 <div class="opt-bar">
@@ -61,14 +197,32 @@
 		<b class="s_send"></b>
 	</div>
 </div>
+<div id="record" class="rp">
+	<div style="width:100%;height:20%;"></div>
+	<div class="rprogress"><div class="rschedule"></div></div>
+	<br/>
+	<div id="rtime" class="rtime">00:00:00</div><br/>
+	<div class="stop"></div>
+</div>
+
+
+
 <script src="../../js/mui.min.js"></script>
+<script src="../../js/common.js"></script>
+
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.storages.js"></script>
+<script src="../../js/utils.auth.js"></script>
+<script src="../../js/utils.upload.js"></script>
+<script src="../../js/utils.request.js" ></script>
+
+
+<script src="../../third/jquery/jquery.js"></script>
 <script>
 (function($,doc){
 	
 	$.init();
-	$.plusReady(function() {
-		onPlusReady();
-	});
+
 	
 	var opt1 = doc.getElementById("opt1");
 	var opt2 = doc.getElementById("opt2");
@@ -85,40 +239,337 @@
 		opt2.style.display="none";
 	});
 	
-	
-	
-	var uploadSY = doc.getElementById("upload-sy");
-	var uploadSP = doc.getElementById("upload-sp");
-	
-	uploadSY.addEventListener("tap",function(){
-		startRecord();
-		console.log("click");
-	});
-	
-	uploadSP.addEventListener("tap",function(){
-		console.log("click");
-	});
 
-	var r = null;
-	// 扩展API加载完毕，现在可以正常调用扩展API  
-	function onPlusReady() {  
-	    r = plus.audio.getRecorder();  
-	} 
-	function startRecord() { 
-	    if ( r == null ) { 
-	        alert( "Device not ready!" ); 
-	        return;  
-	    }  
-	    r.record( {filename:"_doc/audio/xx.amr"}, function () {
-	    	//真机测试文件在/sdcard/Android/data/io.dcloud.HBuilder/.HBuilder/apps/HBuilder/doc下面（.HBuilder是隐藏的，要查看隐藏的文件）
-	        alert( "Audio record success!" ); 
-	    }, function ( e ) { 
-	        alert( "Audio record failed: " + e.message ); 
-	    } ); 
+
+})(mui,document)
+</script>
+<script type="text/javascript">
+if(window.plus){
+	plusReady();
+}else{
+	document.addEventListener('plusready', plusReady, false);
+}
+
+var gentry = null;
+var localUrl = "_doc/media/";
+function plusReady(){
+	// 获取音频目录对象
+	plus.io.resolveLocalFileSystemURL('_doc/', function(entry){
+		entry.getDirectory('media', {create:true}, function(dir){
+			gentry = dir;
+		}, function(e){
+			console.log('Get directory "media" failed: '+e.message);
+		});
+
+	}, function(e){
+		console.log('Resolve "_doc/media" failed: '+e.message);
+	} );
+}
+
+(function($){
+	
+$("#opt2").on("tap",".s_pic",function(){
+	uploadImage();
+}).on("tap",".s_video",function(){
+ 	Record.startVedio();
+}).on("tap",".s_audio",function(){
+
+	Record.startAudio();
+});
+
+$("#opt1").on("tap",".s_send",function(){
+	var oVal = $(".s_input").val();
+	console.log( oVal );
+	creatText(oVal);
+	$(".s_input").val("");
+});
+
+$(".caozuo").on("tap",".edit",function(){
+	$(".caozuo").toggle();
+	$(".caozuo2").toggle();
+	var tar = $('<span class="cz"><i class="delete">删除</i> </span>').appendTo(".pcontent p");
+	
+	$(".pcontent p .cz").each(function(){
+		var h = $(this).parent().height();
+		$(this).css("top",(h-20)/2);
+	})
+	
+}).on("tap",".publish",function(){
+	var com = mui.prompt("输入标题",function( item ){
+
+		if(!item.index){ return false; }
+		var st = $(".pcontent").html();
+		sendCourceData( st );
+	})
+	
+});
+
+$(".caozuo2").on("tap",".sure",function(){
+	$(".caozuo").toggle();
+	$(".caozuo2").toggle();
+	$(".pcontent p .cz").remove();
+});
+
+$(".pcontent").on("tap",".delete",function(){
+	$(this).parent().parent().remove();
+})
+
+
+//录音
+
+$("#record").on("tap",".stop",function(){
+	Record.stopAudio();
+});
+
+//播放
+
+$(".pcontent").on("tap",".paudio",function(){
+	var entry = $(this).data("entry");
+	var _this = this;
+	Play.resetPlay = function(){
+		$(_this).removeClass("playing");
+	}
+	if(!Play.isplay ){
+		
+		$(this).addClass("playing");
+		Play.playAudioE( entry );	
+	}else{
+		$(this).removeClass("playing");
+		Play.stopPlay();
 	}
 	
+}).on("tap",".pvedio",function(){
+	var entry = $(this).data("entry");
+	Play.playVedioE( entry );	
+
+});
+
+var imageurl = null;
+function uploadImage(){
+	setTimeout(function(){
+      upload.showImgActionSheet(function( data ){
+      	console.log( "--->" +JSON.stringify(data));
+        var url = config.url + "Uploads/Files";
+        upload.uploadimge( url , data.divid, function(res) {
+        	
+  			createImage( data , res );
+        },{
+        	type: '5', 
+		    filetype: "1",
+        });
+      });         
+	}, 200);
+}
+
+function uploadFile( opt ){
+	var fileType = "3";
+	if( opt.type =="vedio"){
+		fileType ="2";
+	}
+	setTimeout(function(){
+	 var url = config.url + "Uploads/Files";
+	 var divid = new Date().getTime()
+      upload.uploadMedia( url , divid, function(res) {
+
+  			opt.callback&&opt.callback( res )
+        },{
+          type: '5', 
+		  filetype: fileType, 
+		  abspath:opt.abspath
+        });
+	}, 200);
+}
+
+function creatText( st ){
+	var str = '<p class="ptext">'+st+'</p>';
+	$(".pcontent").append( str );
+}
+
+function createImage( data){
+	var st = '<p class="pimg"><img style="max-width: 100%;" src='+data.abspath+'><p>'
+	$(".pcontent").append( st );
+}
+
+function createVedio( entry ){
+	var st = '<p class="pvedio"><span class="vedio"></span></p>'
+	var tar = $( st ).appendTo( ".pcontent" );
+	tar.data("entry" , entry);
 	
-})(mui,document)
+	uploadFile({
+		type:"vedio",
+		abspath: entry.toLocalURL(),
+		callback:function( res ){
+			tar.attr("link",res.showUrl)
+		}
+	})
+	
+}
+
+function createAudio( entry ){
+	var st = '<p class="paudio"><span class="audio"></span></p>'
+	var tar = $( st ).appendTo( ".pcontent" );
+	tar.data("entry" , entry);
+	uploadFile({
+		type:"audio",
+		abspath: entry.toLocalURL(),
+		callback:function( res ){
+			tar.attr("link",res.showUrl)
+		}
+	});
+}
+
+var Record = {
+	recorder : null,
+	cmr:null,
+	_timer : null,
+	startAudio:function(){
+		
+		this.recorder = plus.audio.getRecorder();
+		if ( this.recorder == null ) {
+			console.log('录音对象未获取');
+			return;
+		}
+
+		this.recorder.record({filename:localUrl}, function(p){
+	//		console.log('录音完成：'+p);
+			plus.io.resolveLocalFileSystemURL( p, function(entry){
+				createAudio( entry );
+				
+			}, function(e){
+				console.log('读取录音文件错误：'+e.message);
+			});
+		}, function(e){
+			console.log('录音失败：'+e.message);
+		});
+		
+		
+		$("#record").show();
+		var t = 0;
+		this._timer = setInterval(function(){
+			t++;
+			$("#rtime").text( timeToStr( t ));
+		}, 1000);
+	},
+	stopAudio:function(){
+		$("#record").hide();
+		$("#rtime").text( timeToStr( 0 ) )
+		clearInterval( this._timer);
+		this.recorder.stop();
+	},
+	startVedio:function(){
+
+		console.log('开始录像：');
+		this.cmr = plus.camera.getCamera();
+		this.cmr.startVideoCapture(function(p){
+			
+			plus.io.resolveLocalFileSystemURL(p, function(entry){
+				createVedio(entry);
+				
+			}, function(e){
+				console.log('读取录像文件错误：'+e.message);
+			} );
+		}, function(e){
+			console.log('失败：'+e.message);
+		}, {filename:localUrl,index:1});
+
+	},
+	stopVedio:function(){
+		
+	}
+}
+
+var Play = {
+	
+  _timer : null,
+  _player : null,
+  isplay : false ,
+  vedio_w: null,
+  playAudioE:function(entry){
+  	var url = localUrl + entry.name;
+  	this.playAudio( url);
+  },
+	// 播放音频文件
+  playAudio:function( url ){
+	this._player = plus.audio.createPlayer(url);
+	var p = this._player;
+	var _this = this;
+	
+	this.isplay = true;
+	p.play(function(){
+		console.log('播放完成！');
+		_this.resetPlay();
+		_this.stopPlay();
+	}, function(e){
+		console.log('播放音频文件"'+url+'"失败：'+e.message);
+	});
+	
+	// 获取总时长
+	var d = p.getDuration();
+	if(!d){
+//		pt.innerText = '00:00:00/'+timeToStr(d);
+	}
+	this._timer = setInterval(function(){
+		//渲染播放界面
+	}, 1000);
+	
+	},
+	// 停止播放
+	stopPlay:function (){
+		var p = this._player;
+		this.resetPlay();
+		clearInterval(this._timer);
+		this.isplay = false;
+		this._timer = null;
+		var _this = this;
+		setTimeout(_this.resetPlay, 500);
+		// 操作播放对象
+		if(p){
+			p.stop();
+			this._player = null;
+		}
+	},
+	resetPlay:function(){
+		
+	},
+	playVedioE:function( entry ){
+		var url = entry.toLocalURL();
+
+		this.playVedio( url );
+	},
+	playVedio:function( url ){
+		if($("#video").length==0){
+			$("<video id='video' autoplay='autoplay' width='0' height='0'></video>").appendTo("body")
+		}
+		$("#video")[0].src = url;
+	}
+
+}
+
+function sendCourceData(st){
+	mui.toast("发布成功");
+	return;
+	request.loginAjax('cases/comments', {
+        data: {
+          case_id: id,
+          pid: pid,
+          contents: contents
+        }
+      }, function(data, success) {
+        if (success) {
+        }
+    });
+}
+// 重写关闭
+var _back=window.back;
+function resetback(){
+	// 停止播放
+
+	Play.stopPlay();
+	Record.stopAudio();
+	_back();
+}
+window.back=resetback;
+})(jQuery)
 </script>
 </body>
 

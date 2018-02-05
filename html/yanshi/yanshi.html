@@ -10,12 +10,13 @@
 <link href="../../css/style.css" rel="stylesheet" />
   <style type="text/css">
     html,body{ height: 100%; margin: 0; padding: 0; }
-    body{ background:#252a47 url(../../images/yangshi/ys_bg.jpg)center bottom/100% auto no-repeat; position: relative; overflow: hidden;}
+    body{ background:#252a47; position: relative; overflow: hidden;}
+    
     .mui-bar{ height: 52px; background: none; box-shadow: none; }
     .mui-bar .mui-icon{padding-top: 16px; font-size: 30px;}
     .mui-tooltip{ display: none;}
     .top_opt{ position: fixed; top: 0; left:0; }
-    .controller{ margin-left: 40px;  }
+    .controller{ margin-left: 40px; position: relative; z-index: 3; }
     .controller>span{ display: inline-block; border:1px solid #000; width: 40px; height: 40px; border-radius: 40px;}
     .controller>span.current{ border: 1px solid #555; }
     .controller>span.red{ background: #d21277; }
@@ -35,10 +36,11 @@
     .opt span.file{ background: url(../../images/yangshi/wjj.png) center center/100% auto no-repeat;}
     .opt span.add{ background: url(../../images/yangshi/add.png) center center/100% auto no-repeat;}
     .opt span.home{ background: url(../../images/yangshi/hme.png) center center/100% auto no-repeat;}
+    .opt span.undo{ background: url(../../images/yangshi/undo.png) center center/100% auto no-repeat;}
     .opt span.file{ margin-left: 60px;}
     
-    .left_opt{position: fixed; top: 61px; left: 0; bottom:0; overflow-y: auto; width: 80px; text-align: center; background: #1c223f; color: #fff;}
-    .left_opt2{ display: none; position: fixed; top: 61px; left: 80px; bottom:0; overflow-y: auto; width: 80px; text-align: center; background: #252a47; color: #fff; border-right: 1px solid #555; }
+    .left_opt{ z-index:3;position: fixed; top: 61px; left: 0; bottom:0; overflow-y: auto; width: 80px; text-align: center; background: #1c223f; color: #fff;}
+    .left_opt2{z-index:3; display: none; position: fixed; top: 61px; left: 80px; bottom:0; overflow-y: auto; width: 80px; text-align: center; background: #252a47; color: #fff; border-right: 1px solid #555; }
     
     .left_opt li{padding: 10px 2px;}
     .left_opt li.active{ background: url(../../images/yangshi/a_l.png) 65px center no-repeat; }
@@ -47,9 +49,16 @@
     .opt_img{ display: inline-block;}
     .opt_img .delete{ color: #fff; font-size: 20px; position: absolute; right: -15px; top: -15px;}
     .opt_img.active{ border:1px solid #ccc;}
+    
+    .center_opt{z-index:3; display: none; position: fixed; top: 61px;left: 80px; bottom: 0; right: 0; background: #222743; overflow-y:auto;}
+    .center_opt li{ width: 30%; margin-top: 3%; margin-left: 3%; float: left;}
+    .center_opt li img{ width: 100%;}
+    canvas#bg { position: absolute; z-index: 1; top: 0; left: 0;}
+    canvas#canvas { position: relative; z-index: 2;top: 0; left: 0;}
   </style>
 </head>
-<body >
+<body src="../../images/yangshi/ys_bg.jpg">
+<canvas id="bg"></canvas>
 <header class="mui-bar mui-bar-nav">
   	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<div class="top_opt mui-input-row">
@@ -62,25 +71,21 @@
 		  <div class="mui-input-range fl"><input type="range" min="2" value="2" max="10"/></div>
 		  <div class="opt">
 		  	<span class="clear"></span>
-		  	<!--<span class="file"></span>
-		  	<span class="add"></span>
+		  	<span class="undo"></span>
+		  	<span class="file"></span>
+		  	<!--<span class="add"></span>
 		  	<span class="home"></span>-->
 		  </div>
 	  </div>
 </header>
 
-	<canvas id="canvas">
-		不支持canvas
-	</canvas>
+<canvas id="canvas"> 不支持canvas </canvas>
 
 
-  <ul class="left_opt" id="left_list">
+<ul class="left_opt" id="left_list"> </ul>
+<ul class="left_opt2"> </ul>
   
-  </ul>
-  <ul class="left_opt2">
-  	<li><img src="../../images/yangshi/xp.png" alt="" /></li>
-
-  </ul>
+<ul class="center_opt"> </ul>
   
 </body>
 <script src="../../js/mui.min.js"></script>
@@ -131,6 +136,7 @@
       	  }
       	});
     }
+    
   })( mui , document);
 
 </script>

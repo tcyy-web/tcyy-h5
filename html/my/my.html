@@ -29,7 +29,7 @@
 <ul class="mui-table-view mui-table-view-chevron">
 	<li class="mui-table-view-cell">
 		<a href="#about" class="mui-navigate-right"><span>头像</span> <i id="headurl" class="mui-pull-right">
-			<img src="http://m.tianchiyueya.com:1888//Project//images//20180125//b2688d1bdfcef3617476ed6e5138ba76.png" alt="" />
+			<img src="" alt="" />
 		</i></a>
 	</li>
 	<li class="mui-table-view-cell">
@@ -116,7 +116,7 @@
 		var imageurl = null;
 		function uploadImage( target ){
 			setTimeout(function(){
-              upload.showImgActionSheet(target , function( data ){
+              upload.showImgActionSheet(function( data ){
                 var url = config.url + "Uploads/Files";
                 upload.uploadimge( url , data.divid, function(res) {
                  

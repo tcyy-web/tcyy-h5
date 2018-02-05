@@ -2,8 +2,9 @@
 (function(w){
 w.upload = {
 	//选取图片的来源，拍照和相册 
-	showImgActionSheet:function(target , fnend) {
-		var divid = target.id;
+	showImgActionSheet:function(fnend) {
+		var date = new Date();
+		var divid = date.getTime();
 		var actionbuttons = [{
 			title: "拍照"
 		}, {
@@ -23,6 +24,30 @@ w.upload = {
 			}
 		});
 	},
+	//视频选择
+	showVedioActionSheet:function(fnend) {
+		var date = new Date();
+		var divid = date.getTime();
+
+		var actionbuttons = [{
+			title: "录像"
+		}, {
+			title: "本地选取"
+		}];
+		var actionstyle = {
+			title: "选择视频",
+			cancel: "取消",
+			buttons: actionbuttons
+		};
+		var _this = this;
+		plus.nativeUI.actionSheet(actionstyle, function(e) {
+			if(e.index == 1) {
+				_this.getImage(divid , fnend);
+			} else if(e.index == 2) {
+				_this.galleryVedio(divid , fnend);
+			}
+		});
+	},
 	//相册选取图片
 	galleryImg:function(divid , fnend) {
 		var _this = this;
@@ -34,10 +59,24 @@ w.upload = {
 //				plus.nativeUI.toast("读取拍照文件错误：" + e.message);
 //			});
 		}, function(e) {
-		  mui.toast('打开相册失败：'+e.message);
+		  console.log('打开相册失败：'+e.message);
 		}, {
 			filename: "_doc/tcyy/camera/",
 			filter: "image",
+			multiple: false
+		});
+	},
+	//相册选取图片
+	galleryVedio:function(divid , fnend) {
+		var _this = this;
+		plus.gallery.pick(function(p) {
+//		  _this.compressImage(p, divid , fnend);
+
+		}, function(e) {
+		  console.log('打开视频库失败：'+e.message);
+		}, {
+			filename: "_doc/tcyy/camera/",
+			filter: "vedio",
 			multiple: false
 		});
 	},
@@ -75,7 +114,7 @@ w.upload = {
 			_this.saveimage(absolutePath,zippath, divid,fnend);
 		},
 		function(error) {
-			mui.toast("压缩图片失败，请稍候再试");
+			console.log("压缩图片失败，请稍候再试");
 		});
 	},
 	//保存信息到本地
@@ -88,10 +127,10 @@ w.upload = {
 	saveimage:function(absolutePath,path, divid , fnend ) {
 		var itemname = "img-" + divid;
 		var data = {
-      abspath: absolutePath,
-      divid:divid,
-      path: path
-    };
+	      abspath: absolutePath,
+	      divid:divid,
+	      path: path
+	    };
 		var itemvalue = JSON.stringify(data);
 		plus.storage.removeItem(itemname);
 		plus.storage.setItem(itemname, itemvalue);
@@ -119,15 +158,72 @@ w.upload = {
 			back:back
 		})
 	},
+		//上传Media
+	uploadMedia: function( url , divid , back, data) {
+	    var code = '';
+	    if (w.authManage) {
+	      var user = w.authManage.getUser();
+	      code = user.code || '';
+	    }
+		var defaults = {
+		  type: '1', // 默认项目图片 1 
+		  filetype: '2', // 图片
+		  code: code
+		};
+		if(data) {
+		  mui.extend(true, defaults, data);
+		}
+		
+		var opt = {
+			url:url,
+			data: defaults,
+			divid:divid,
+			back:back
+		}
+		
+		console.log(JSON.stringify( opt ));
+		
+		var task = plus.uploader.createUpload( opt.url , {
+				method: "POST"
+			},
+			function(t, status) {
+			  
+			  console.log('***********上传返回:'+t.responseText);
+				if(t.state === 4 && status == 200) {
+				  var res = JSON.parse(t.responseText);
+				  if (res.header.status === 2001) {
+				    typeof opt.back =="function" && opt.back( res.body );
+				  } else {
+				    console.log('上传失败，失败原因：'+res.header.msg);
+				  }
+				} else {
+					console.log("上传失败");
+				}
+			}
+		);
+
+		var fileurl = data.abspath;
+	    task.addFile(fileurl, {
+	//    key: 'files',
+	//    name: '1111',
+	//    mime: 'image/jpeg'
+	    });
+		if (opt.data) {
+	      for (var key in  opt.data) {
+	        task.addData(key, opt.data[key]);
+	      }
+		}
+		task.start();
+	},
 	uploadfile : function ( opt ){
-    console.log('***********上传地址:'+opt.url);
-    console.log('***********上传参数:'+JSON.stringify(opt.data));
-    var itemkey = "img-" + opt.divid;
-    var itemvalue = plus.storage.getItem(itemkey);
-    if (itemvalue === null) {
-      mui.toast('请选择文件');
-      return;
-    }
+	    console.log('***********上传地址:'+opt.url);
+	    console.log('***********上传参数:'+JSON.stringify(opt.data));
+	    var itemkey = "img-" + opt.divid;
+	    var itemvalue = plus.storage.getItem(itemkey);
+	    if (itemvalue === null) {
+	      console.log('请选择文件');
+	      return;
+	    }
 		var wa = plus.nativeUI.showWaiting();
 		var task = plus.uploader.createUpload( opt.url , {
 				method: "POST"
@@ -140,24 +236,24 @@ w.upload = {
 				  if (res.header.status === 2001) {
 				    typeof opt.back =="function" && opt.back( res.body );
 				  } else {
-				    mui.toast('上传失败，失败原因：'+res.header.msg);
+				    console.log('上传失败，失败原因：'+res.header.msg);
 				  }
 				} else {
-					mui.toast("上传失败");
+					console.log("上传失败");
 				}
 			}
 		);
 		var _itemvalue = JSON.parse(itemvalue);
 		var fileurl = _itemvalue.abspath;
-    task.addFile(fileurl, {
-//    key: 'files',
-//    name: '1111',
-//    mime: 'image/jpeg'
-    });
+	    task.addFile(fileurl, {
+	//    key: 'files',
+	//    name: '1111',
+	//    mime: 'image/jpeg'
+	    });
 		if (opt.data) {
-      for (var key in  opt.data) {
-        task.addData(key, opt.data[key]);
-      }
+	      for (var key in  opt.data) {
+	        task.addData(key, opt.data[key]);
+	      }
 		}
 		task.start();
 	}

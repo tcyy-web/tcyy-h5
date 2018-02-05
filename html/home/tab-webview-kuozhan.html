@@ -256,7 +256,20 @@
 				    } else if (type === 4) { // 创意设计类
               
             } else if (type === 5) { // 在线课堂类
-              
+               $.openWindow({
+                url: '../train/train-list.html',
+                id: 'TRAIN-UPLOAD',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
             } else if (type === 6) { // 购物中心类
               
             } else if (type === 7) { // 积分商城类
