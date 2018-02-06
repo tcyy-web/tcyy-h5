@@ -238,7 +238,7 @@
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
-		"distribute": {"plugins":{"push":{"mipush":{"appid_android":"2882303761517709892","appkey_android":"5191770955892","appid_ios":"2882303761517710312","appkey_ios":"5151771041312"}},"share":{"qq":{"appid":"1106636065","description":"QQ分享"},"weixin":{"appid":"wx0ee582c9c218e1c1","appsecret":"c1db2f16925ad06b8361f1dc863b0a9a","description":"可选，微信分享"}},"oauth":{"qq":{"appid":"1106636065"},"weixin":{"appid":"wx0ee582c9c218e1c1","appsecret":"c1db2f16925ad06b8361f1dc863b0a9a"}}},
+		"distribute": {"plugins":{"push":{"mipush":{"appid_android":"2882303761517709892","appkey_android":"5191770955892","appid_ios":"2882303761517710312","appkey_ios":"5151771041312"}},"share":{"qq":{"appid":"1106636065","description":"QQ分享"},"weixin":{"appid":"wxed56e6662b878b3b","appsecret":"0473c095c08b655b2bcdd1db3dbddde3","description":"可选，微信分享"}},"oauth":{"qq":{"appid":"1106636065"},"weixin":{"appid":"wxed56e6662b878b3b","appsecret":"0473c095c08b655b2bcdd1db3dbddde3"}}},
 			"apple": {
 				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
 				"mobileprovision": "",/*iOS应用打包配置文件*/
@@ -318,7 +318,7 @@
 					"xxhdpi": ""
 				}
 			}
-		}
+		},"ads":{"rp":false,"splash":false,"push":false,"spot":false},"adid":""
 	},
 	"dependencies": {
 		"pages": {
