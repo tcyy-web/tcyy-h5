@@ -174,7 +174,8 @@
       "js/utils.auth.js",
       "js/utils.request.js",
       "js/utils.category.js",
-      "js/utils.config.js"
+      "js/utils.config.js",
+      "html/home/tab-webview-kuozhan.html"
     ],
     "refer": [
       "html/home/tab-webview-kuozhan.html",
@@ -485,7 +486,8 @@
       "js/utils.storages.js",
       "js/utils.auth.js",
       "js/utils.request.js",
-      "images/project/jia.png"
+      "images/project/jia.png",
+      "js/utils.upload.js"
     ],
     "refer": [],
     "priority": 0
@@ -734,7 +736,8 @@
       "images/yangshi/wjj.png",
       "images/yangshi/add.png",
       "images/yangshi/hme.png",
-      "images/yangshi/a_l.png"
+      "images/yangshi/a_l.png",
+      "images/yangshi/undo.png"
     ],
     "refer": [],
     "priority": 0
@@ -779,7 +782,8 @@
       "images/profile/ss.png",
       "js/mui.min.js",
       "images/profile/sc8.png",
-      "images/profile/sc9.png"
+      "images/profile/sc9.png",
+      "images/ppsp/banner.jpg"
     ],
     "refer": [],
     "priority": 0

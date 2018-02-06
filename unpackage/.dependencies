@@ -1,49 +1,23 @@
 {
-  "html/train/train-upload.html": {
-    "href": "html/train/train-upload.html",
-    "resources": [
-      "css/mui.min.css",
-      "fonts/mui.ttf",
-      "css/style.css",
-      "images/profile/xg.jpg",
-      "images/train/s_video.png",
-      "images/train/s_audio.png",
-      "images/train/s_pic.png",
-      "images/train/s_txt.png",
-      "images/train/s_add.png",
-      "images/train/s_send.png",
-      "js/mui.min.js"
-    ],
-    "priority": 3
-  },
   "html/kz_ppsp/qy-list.html": {
     "href": "html/kz_ppsp/qy-list.html",
     "resources": [
-      "css/mui.min.css",
-      "fonts/mui.ttf",
-      "css/style.css",
-      "images/profile/xg.jpg",
-      "images/profile/ss.png",
-      "js/mui.min.js",
-      "images/profile/sc8.png",
-      "images/profile/sc9.png"
+      "images/ppsp/banner.jpg"
     ],
-    "priority": 4
+    "priority": 3
   },
-  "html/home/tab-webview-kuozhan.html": {
-    "href": "html/home/tab-webview-kuozhan.html",
-    "resources": [],
-    "refer": [
-      "html/train/train-upload.html",
-      "html/kz_ppsp/qy-list.html"
+  "html/yanshi/yanshi.html": {
+    "href": "html/yanshi/yanshi.html",
+    "resources": [
+      "images/yangshi/undo.png"
     ],
-    "priority": 2
+    "priority": 3
   },
   "html/project/project-bill-edit.html": {
     "href": "html/project/project-bill-edit.html",
     "resources": [
-      "images/project/jia.png"
+      "js/utils.upload.js"
     ],
-    "priority": 9
+    "priority": 8
   }
 }
