@@ -233,7 +233,7 @@
               <img id="img" src="../../images/project/jia.png" />
             </div>
           </div>
-          <p>上传图片</p>
+          <p>患者图片</p>
         </div>
       </div>
 			<div class="btns flex">
@@ -269,6 +269,7 @@
           var $jzs = doc.getElementById('jzs');
           var $zzys = doc.getElementById('zzys');
           var $img = doc.getElementById('img');
+          var imageurl = '';
 				  // 画清单每项
           var paintItem = function(data) {
             var boxDiv = doc.createElement('div');
@@ -299,6 +300,7 @@
              booktime = null;
              $booktime.innerText = '请选择预约时间';
              $img.src = '../../images/project/jia.png';
+             imageurl = '';
           });
           // 提交清单
           //性别
@@ -331,13 +333,16 @@
           }, false);
           //选择图片
           var $addPic = doc.getElementById('bill-addpic');
-          var divid = '';
           $addPic.addEventListener('tap', function(event) {
-            var _this = this;
             setTimeout(function(){
-              upload.showImgActionSheet(_this , function( data ){
-                $img.src = data.abspath;
-                divid = data.divid;
+              upload.showImgActionSheet(function( data ){
+                var url = config.url + "Uploads/Files";
+                upload.uploadimge( url , data.divid, function(res) {
+                  $img.src = data.abspath;
+                  imageurl = res[0].showUrl;
+                }, {
+                  type: '4'
+                });
               });             
             }, 500);
           });
@@ -379,31 +384,30 @@
               $.toast('请输入主诊师姓名');
               return;
             }
-            var url = config.url + "Uploads/Files";
-            upload.uploadimge( url , divid, function(res) {
-              request.loginAjax('project/saveplan', {
-                data: {
-                  groupid: groupid,
-                  name: name,
-                  sex: sex,
-                  age: age,
-                  phone: phone,
-                  booktime: booktime,
-                  jzs:jzs,
-                  zzys: zzys,
-                  data: list,
-                  image:res[0].showUrl
-                }
-              }, function(data, success) {
-                if (success){
-                   //获得父页面的webview
-                  var parent = plus.webview.currentWebview().opener();
-                  $.fire(parent, 'bill-success');
-                  $.back();               
-                }
-              });
-            }, {
-              type: '4'
+            if (imageurl == '' || imageurl == null) {
+              $.toast('请上传患者图片');
+              return;
+            }
+            request.loginAjax('project/saveplan', {
+              data: {
+                groupid: groupid,
+                name: name,
+                sex: sex,
+                age: age,
+                phone: phone,
+                booktime: booktime,
+                jzs:jzs,
+                zzys: zzys,
+                data: list,
+                image:imageurl
+              }
+            }, function(data, success) {
+              if (success){
+                 //获得父页面的webview
+                var parent = plus.webview.currentWebview().opener();
+                $.fire(parent, 'bill-success');
+                $.back();               
+              }
             });
           });
 				});

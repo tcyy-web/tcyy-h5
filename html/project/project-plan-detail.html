@@ -30,48 +30,54 @@
 				background-color: #ffffff;
 			}
 			.bill-item {
-				position: relative;
-				padding:10px;
-				line-height: 20px;
-				background-color: #ffffff;
-			}
-			.bill-item:after{
-				position: absolute;
-		    right: 0;
-		    bottom: 0;
-		    left: 0;
-		    height: 1px;
-		    content: '';
-		    -webkit-transform: scaleY(.5);
-		    transform: scaleY(.5);
-		    background-color: #d6d6d6;
-			}
-			.bill-item p:first-child {
-				position: relative;
-			}
-			.bill-item p:first-child:before {
-				position: absolute;
-				right: 0;
-				top: 0;
-				content: '';
-				width: 1px;
-				height: 100%;
-				background-color: #d6d6d6;
-			}
-			.bill-item p {
-				text-align: left;
-				padding: 0 5px;
-				color: #292929;
-			}
-			.bill-item p:last-child {
-				text-align: right;
-				font-size: 18px;
-				color: #f34336;
-			}
-			.bill-item p:last-child span {
-				font-size: 14px;
-				color: #bbbbbb;
-			}
+        position: relative;
+        padding:10px;
+        line-height: 20px;
+        background-color: #ffffff;
+      }
+      .bill-item:after{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 1px;
+        content: '';
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5);
+        background-color: #d6d6d6;
+      }
+      .bill-item p:first-child {
+        position: relative;
+        width: 80px;
+      }
+      .bill-item p:first-child:before {
+        position: absolute;
+        right: 0;
+        top: 0;
+        content: '';
+        width: 1px;
+        height: 100%;
+        background-color: #d6d6d6;
+      }
+      .bill-item p {
+        text-align: left;
+        padding: 0 5px;
+        color: #292929;
+      }
+      .bill-item p:last-child {
+        text-align: right;
+        font-size: 18px;
+        color: #f34336;
+      }
+      .bill-item p span {
+        color: #f34336;
+        margin-left: 10px;
+      }
+      .bill-item p:last-child span {
+        font-size: 14px;
+        color: #bbbbbb;
+        margin-left: 0;
+      }
 			form {
 				margin-top: 10px;
 				margin-bottom: 10px;
@@ -154,6 +160,13 @@
 			.hide{
 			  display: none;
 			}
+			.img{
+			  padding: 10px 10px 0 10px;
+			}
+			.img img{
+			  height: 100px;
+			  width: auto;
+			}
 		</style>
 	</head>
 
@@ -164,11 +177,14 @@
 		</header>
 		<div class="mui-content">
       <div id="listBox">
-          <!--<div class="bill-item flex">
-            <p class="flex-1">编号：01by</p>
-            <p class="flex-1">牙齿修复牙齿修复牙齿修复牙齿修复</p>
+          <div class="bill-item flex">
+            <p>01by</p>
+            <p class="flex-1">牙齿修复<span>*1</span></p>
             <p class="flex-1">￥318.00<span>元</span></p>
-          </div>-->
+          </div>
+      </div>
+      <div class="img flex flex-col-center">
+        <img id="imgurl" src="../../images/project/banner.png"  />
       </div>
 			<form class="mui-input-group">
 				<div class="mui-input-row">
@@ -194,6 +210,14 @@
 				<div class="mui-input-row">
           <label>预约状态：</label>
           <p id="status" class="status1"></p>
+        </div>
+        <div class="mui-input-row">
+          <label>接诊师：</label>
+          <p id="jzs"></p>
+        </div>
+        <div class="mui-input-row">
+          <label>主诊师：</label>
+          <p id="zzys"></p>
         </div>
 			</form>
 			<div class="sure-pre">
@@ -231,27 +255,36 @@
 				  // 详情id
 				  var id = 0;
 				  var status = 0;
+				  var $img = doc.getElementById('imgurl');
           var $name = doc.getElementById('name');
           var $sex = doc.getElementById('sex');
           var $age = doc.getElementById('age');
           var $phone = doc.getElementById('phone');
           var $booktime = doc.getElementById('booktime');
           var $status = doc.getElementById('status');
+          var $jzs = doc.getElementById('jzs');
+          var $zzys = doc.getElementById('zzys');
           var $listBox = doc.getElementById('listBox');
+          // 预览图片
+          $img.addEventListener('tap', function() {
+            plus.nativeUI.previewImage([$img.src]);
+          });
           // 画清单每项
           var paintItem = function(data) {
             var boxDiv = doc.createElement('div');
             boxDiv.className = 'bill-item flex';
             var _p = eval(data.num + '*' + data.price);
-            boxDiv.innerHTML = '<p class="flex-1">{0}</p><p class="flex-1">{1}</p><p class="flex-1">￥{2}<span>元</span></p>'.format(data.number,data.title,_p.toFixed(2));
+            boxDiv.innerHTML = '<p>{0}</p><p class="flex-1">{1}<span>*{2}</span></p><p class="flex-1">￥{3}<span>元</span></p>'.format(data.number,data.title,data.num,_p.toFixed(2));
             $listBox.appendChild(boxDiv);
           }
           // 更新清单
           var refreshList = function(data){
             $listBox.innerHTML = '';
-            $.each(data, function(index, i) {
-               paintItem(i);
-            });
+            if (data) {
+              $.each(data, function(index, i) {
+                 paintItem(i);
+              });
+            }
           }
           // 处理状态
           var $nextBooktime = doc.getElementById('nextBooktime');
@@ -291,9 +324,9 @@
                  $status.innerText = enums.planStatus[data.status];
                  status = data.status;
                  statusChange(data.status);
-                 if (data.project){
-                   refreshList(data.project);
-                 }
+                 $jzs.innerText = data.jzs;
+                 $zzys.innerText = data.zzys;
+                 refreshList(data.project);
                }
             });
           }
