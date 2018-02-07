@@ -7,41 +7,273 @@
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
-/* CSS 品牌企业 - 产品列表*/
-.search-bar { width:100%; margin-bottom:20px; height:50px; background-color:#FFF;}
-.search-bar input{ width:80%; float:left; height:48PX; border:none;  outline: none;  font-size:0.9em;  font-family:'微软雅黑'; color:#7c7c7c;}
-.search-bar button{ width:20%; height:50PX; background:url(../../images/profile/ss.png) no-repeat center; border:none;  outline: none; }
-.product-lists{ width:98%; height:auto; margin:auto;}
-.item{text-align: center; width:48%; height:200px; margin-left:1%; border-radius:5px; margin-bottom:3%; margin-right:1%; background-color:#ffffff; float:left;}
-.item img{ width:100%; height:155px; margin-bottom:10px;  border-radius: 5px 5px 0px 0px; }
-.item .txt{ font-size:0.9em;  font-family:'微软雅黑'; color:#000; display:inline-block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;width:100%;padding:0 5px; }
+    .search-bar { width:100%; margin-bottom:0; height:50px; background-color:#FFF;}
+    .search-bar input{margin-bottom: 0; width:80%; float:left; height:48PX; border:none;  outline: none;  font-size:0.9em;  font-family:'微软雅黑'; color:#7c7c7c;}
+    .search-bar .button{ 
+      float: right;
+      width:20%; height:50px; 
+      background:url(../../images/profile/ss.png) no-repeat center; 
+      border:none;  outline: none; 
+    }
+    .scroll-box{
+      position: relative;
+      height: calc(100% - 50px);
+      height: -webkit-calc(100% - 50px);
+    }
+    .product-lists{ 
+      padding: 5px;
+    }
+    .item{
+      text-align: center; 
+      width: calc(50% - 10px);
+      width: -webkit-calc(50% - 10px); 
+      height:200px; 
+      margin: 5px;
+      -webkit-border-radius: 5px;
+      border-radius: 5px;
+      background-color:#ffffff; 
+      float:left;
+      overflow: hidden;
+    }
+    .item .img{ 
+      width: 100%; height:150px; 
+      overflow: hidden;
+    }
+    .item .img img{
+      height: 100%;
+      width: auto;
+    }
+    .item .txt{ 
+      font-size: 14px;
+      color:#000; 
+      width:100%;
+      height: 50px;
+      padding:5px 10px; 
+      overflow: hidden;
+    }
 	</style>
-
+  <style>
+    .mui-pull-top-tips {
+      z-index: 10;
+    }
+    #topPopover {
+      position: fixed;
+      top: 16px;
+      right: 6px;
+    }
+    #topPopover .mui-popover-arrow {
+      left: auto;
+      right: 6px;
+    }
+    .mui-popover {
+      width: 180px;
+      height: 280px;
+    }
+  </style>
 </head>
 
 <body>
-<header class="mui-bar mui-bar-nav">
-	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	<h1 class="mui-title">精品口腔店铺</h1>
-	<a class="mui-icon mui-icon-bars mui-pull-right"></a>
-</header>
-<div class="mui-content">
-	<div class="search-bar">
-		<input type="text" />
-		<button></button>
-	</div>
-	<div class="product-lists">
-		<section class="item"><img src="../../images/profile/sc5.png"  /><a class="txt">攀高 颈椎治疗仪颈椎治疗仪颈椎治疗仪 PG-260</a></section>
-		<section class="item"><img src="../../images/profile/sc5.png"  /><a class="txt">攀高 颈椎治疗仪颈椎治疗仪颈椎治疗仪 PG-260</a></section>
-		<section class="item"><img src="../../images/profile/sc5.png"  /><a class="txt">攀高 颈椎治疗仪颈椎治疗仪颈椎治疗仪 PG-260</a></section>
-		<section class="item"><img src="../../images/profile/sc5.png"  /><a class="txt">攀高 颈椎治疗仪颈椎治疗仪颈椎治疗仪 PG-260</a></section>
-		<section class="item"><img src="../../images/profile/sc5.png"  /><a class="txt">攀高 颈椎治疗仪颈椎治疗仪颈椎治疗仪 PG-260</a></section>
-		<section class="item"><img src="../../images/profile/sc5.png"  /><a class="txt">攀高 颈椎治疗仪颈椎治疗仪颈椎治疗仪 PG-260</a></section>
-		<section class="item"><img src="../../images/profile/sc5.png"  /><a class="txt">攀高 颈椎治疗仪颈椎治疗仪颈椎治疗仪 PG-260</a></section>
-		<section class="item"><img src="../../images/profile/sc5.png"  /><a class="txt">攀高 颈椎治疗仪颈椎治疗仪颈椎治疗仪 PG-260</a></section>
-	</div>
-</div>
-<script src="../../js/mui.min.js"></script>
+  <header class="mui-bar mui-bar-nav">
+  	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+  	<h1 class="mui-title" id="title">口腔店铺</h1>
+  	<a class="mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+  </header>
+  <div class="mui-content">
+    	<div class="search-bar clearFix">
+      <input id="searchValue" type="text" />
+      <div id="search" class="button"></div>
+    </div>
+    <div class="scroll-box">
+      <div class="mui-scroll-wrapper">
+        <div id="pullrefresh" class="mui-scroll">
+          <div id="productList" class="product-lists clearFix">
+            <div class="item">
+              <div class="img flex flex-col-center">
+                <img src="../../images/profile/sc5.png"  />
+              </div>
+              <p class="txt flex flex-row-center">攀高 颈椎治疗仪PG-260</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="topPopover" class="mui-popover">
+    <div class="mui-popover-arrow"></div>
+    <div class="mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <ul class="mui-table-view">
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/mui.pullToRefresh.js"></script>
+  <script src="../../js/mui.pullToRefresh.material.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.extend.js"></script>
+  <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.request.js"></script>
+  <script>
+    (function($, doc) {
+        //阻尼系数
+        var deceleration = mui.os.ios?0.003:0.0009;
+        $('.mui-scroll-wrapper').scroll({
+          bounce: false,
+          indicators: true, //是否显示滚动条
+          deceleration:deceleration
+        });
+        $.init();
+        $.plusReady(function() {
+          var brand_id = 0;
+          // 分类id
+          var product_class = 0;
+          var keyword = '';
+          // 分页参数
+          var page = 1;
+          var limit = 12;
+          var more = true;
+          var $pullrefresh = $('#pullrefresh');
+          // 标题
+          var $title = doc.getElementById('title');
+          // 页面刷新
+          window.addEventListener('KZ_PPSP_PRODUCT_DATA', function(e){
+            brand_id = e.detail.brand_id;
+            product_class = 0;
+            keyword = '';
+            page = 1;
+            more = true;
+            $title.innerText = e.detail.title;
+            $pullrefresh.pullToRefresh().refresh(true);
+            classInit();
+            ppInit();
+          });
+          // 分类
+          var $type = doc.querySelector('#topPopover .mui-table-view');
+          var classInit = function() {
+            $type.innerHTML = '';
+            request.ajax('Brandproduct/getGroup',{
+              data: {
+                brand_id: brand_id
+              },
+              showMsg: false
+            },function(data, success) {
+              if (success && data) {
+                var _typeHtml = [];
+                _typeHtml.push('<li data-type="{0}" class="mui-table-view-cell"><a>{1}</a></li>'.format(0,'全部'));
+                $.each(data, function(index, d) {
+                   var _html = '<li data-type="{0}" class="mui-table-view-cell"><a>{1}</a></li>'.format(d.id,d.title);
+                  _typeHtml.push(_html);
+                });
+                $type.innerHTML = _typeHtml.join('');
+                $.each($type.querySelectorAll('.mui-table-view-cell'), function(index,i) {
+                   i.addEventListener('tap', function(e){
+                     product_class = this.getAttribute('data-type');
+                     page = 1;
+                     more = true;
+                     $pullrefresh.pullToRefresh().refresh(true);
+                     $('#topPopover').popover('hide');
+                     ppInit();
+                   });
+                });
+              } 
+            },function() {
+            });
+          }
+          // 搜索
+          var $search = doc.getElementById('search');
+          var $searchValue = doc.getElementById('searchValue');
+          $search.addEventListener('tap',function(e){
+            keyword = $searchValue.value.trim();
+            page = 1;
+            more = true;
+            $pullrefresh.pullToRefresh().refresh(true);
+            ppInit();
+          });
+          // 列表
+          var $productList = doc.getElementById('productList');
+          var paintProduct = function(data) {
+            var div = doc.createElement('div');
+            div.className = 'item';
+            var imgdiv = doc.createElement('div');
+            imgdiv.className = 'img flex flex-col-center';
+            imgdiv.innerHTML = '<img src="{0}"  />'.format(data.image);
+            div.appendChild(imgdiv);
+            var p = doc.createElement('p');
+            p.className = 'txt flex flex-row-center';
+            p.innerText = data.title;
+            div.appendChild(p);
+            $productList.appendChild(div);
+          }
+          var ppInit = function(callback) {
+            var _request = {
+              brand_id: brand_id,
+              page: page,
+              limit: limit
+            }
+            if (keyword != '') {
+              _request.keyword = keyword;
+            }
+            if (product_class != 0) {
+              _request.product_class = product_class;
+            }
+            request.ajax('Brandproduct/getList',{
+              data: _request,
+              showMsg: false
+            },function(data, success) {
+               // 处理页面绑定
+               if (data && data.data) {
+                 if (page === 1) {
+                   $productList.innerHTML = '';
+                 }
+                 $.each(data.data, function(index,i) {
+                   paintBrand(i);
+                 });
+               }
+               // 判断是否有下一页数据
+               if (data && data.data && data.data.length === limit) {
+                 more = true;
+               } else {
+                 more = false;
+               }
+               if (typeof callback === 'function') {
+                 callback();
+               }
+            },function() {
+              if (typeof callback === 'function') {
+                 callback();
+               }
+            });
+          }
+          $pullrefresh.pullToRefresh({
+            down: {
+              callback: function() {
+                page = 1;
+                var self = this;
+                ppInit(function() {
+                  self.endPullDownToRefresh();
+                  $pullrefresh.pullToRefresh().refresh(true);
+                });
+              }
+            },
+            up: {
+              callback: function() {
+                var self = this;
+                if (more) {
+                  page = page + 1;
+                  ppInit(function() {
+                    self.endPullUpToRefresh(false);
+                  });
+                  return;
+                }
+                self.endPullUpToRefresh(true);
+              }
+            }
+          });
+        });
+      })(mui, document);
+  </script>
 
 </body>
 

@@ -159,7 +159,12 @@
           indicators: true, //是否显示滚动条
           deceleration:deceleration
         });
-        $.init();
+        $.init({
+          preloadPages:[{
+            id:'KZ-PPSP-PRODUCT',
+            url: './product-list.html'
+          }]
+        });
         $.plusReady(function() {
           var id = 0;
           // 分类id
@@ -169,7 +174,6 @@
           var page = 1;
           var limit = 15;
           var more = true;
-          var listRequest = {};
           var $pullrefresh = $('#pullrefresh');
           // 标题
           var $title = doc.getElementById('title');
@@ -308,6 +312,16 @@
             var _a = doc.createElement('a');
             _a.className = 'item';
             _a.innerHTML = '<img src="{0}"/>'.format(data.image);
+            _a.addEventListener('tap',function(e){
+              var fbWebview = plus.webview.getWebviewById('KZ-PPSP-PRODUCT');
+              $.fire(fbWebview,'KZ_PPSP_PRODUCT_DATA',{
+                brand_id: id,
+                title: data.title
+              });
+              $.openWindow({
+                id: 'KZ-PPSP-PRODUCT'
+              });
+            });
             $brandList.appendChild(_a);
           }
           var ppInit = function(callback) {
