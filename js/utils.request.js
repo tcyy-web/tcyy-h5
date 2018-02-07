@@ -36,6 +36,8 @@
         data: defaults.data,
         success:function(data){
           console.log('服务器响应=============================');
+          console.log('请求地址：'+ url);
+          console.log('请求参数：'+ JSON.stringify(defaults.data));
           console.log('header：'+JSON.stringify(data.header));
           console.log('body：'+JSON.stringify(data.body));
           // loading处理
@@ -81,6 +83,8 @@
         },
         error:function(xhr,type,errorThrown){
           console.log('服务器请求错误=============================');
+          console.log('请求地址：'+ url);
+          console.log('请求参数：'+ JSON.stringify(defaults.data));
           console.log('错误类型：' + type);
           console.log('异常信息：' + errorThrown);
           console.log('异常内容：' + JSON.stringify(xhr));

@@ -103,7 +103,7 @@
 				$.plusReady(function() {
 			  	var folderid = 0;
  					var page = 1;
-          var limit = 20;
+          var limit = 10;
           var more = true;
           var $pullrefresh = $('#pullrefresh');
           var $contentBox = doc.getElementById('contentBox');
@@ -145,7 +145,9 @@
 					var getList = function(callback){
 						request.ajax('Picture/getlist', {
 							data: {
-								folderid: folderid
+								folderid: folderid,
+								page: page,
+								limit: limit
 							},
 							showMsg: false
 						}, function(data) {
@@ -177,6 +179,8 @@
 	        // 刷新分类
           window.addEventListener('picture-folderid', function(e){
             folderid = e.detail.folderid;
+            page = 1;
+            more = true;
             $pullrefresh.pullToRefresh().refresh(true);
             getList();
           });

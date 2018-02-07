@@ -10,7 +10,12 @@
     /* CSS 品牌企业 - 产品列表*/
     .search-bar { width:100%; margin-bottom:0; height:50px; background-color:#FFF;}
     .search-bar input{margin-bottom: 0; width:80%; float:left; height:48PX; border:none;  outline: none;  font-size:0.9em;  font-family:'微软雅黑'; color:#7c7c7c;}
-    .search-bar button{ width:20%; height:50PX; background:url(../../images/profile/ss.png) no-repeat center; border:none;  outline: none; }
+    .search-bar .button{ 
+      float: right;
+      width:20%; height:50px; 
+      background:url(../../images/profile/ss.png) no-repeat center; 
+      border:none;  outline: none; 
+    }
     .mui-slider .mui-slider-group .mui-slider-item img{
        height: 200px;
     }
@@ -24,8 +29,14 @@
       background-color: #765fc3;
     }
     .brand-lists{
+      height: calc(100% - 260px);
+      height: -webkit-calc(100% - 260px);
+      position: relative;
       margin-top: 10px;
       background: #fff;
+    }
+    .brand-lists .mui-scroll-wrapper{
+      top: 41px;
     }
     .brand-lists .tl{
       position: relative;
@@ -59,64 +70,310 @@
       height: 100%;
     }
 	</style>
+	<style>
+      .mui-pull-top-tips {
+        z-index: 10;
+      }
+      #topPopover {
+        position: fixed;
+        top: 16px;
+        right: 6px;
+      }
+      #topPopover .mui-popover-arrow {
+        left: auto;
+        right: 6px;
+      }
+      .mui-popover {
+        width: 180px;
+        height: 280px;
+      }
+    </style>
 </head>
 <body>
   <header class="mui-bar mui-bar-nav">
-  	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-  	<h1 class="mui-title">品牌企业334</h1>
-  	<a class="mui-icon mui-icon-bars mui-pull-right"></a>
+    	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    	<h1 id="title" class="mui-title">品牌企业</h1>
+    	<a class="mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
   </header>
   <div class="mui-content">
-  	<div class="search-bar">
-  		<input type="text" />
-  		<button></button>
-  	</div>
-  	<div id="slider" class="mui-slider" >
+    	<div class="search-bar clearFix">
+    		<input id="searchValue" type="text" />
+    		<div id="search" class="button"></div>
+    	</div>
+  	 <div id="slider" class="mui-slider" >
       <div class="mui-slider-group mui-slider-loop">
         <div class="mui-slider-item mui-slider-item-duplicate">
-          <a href="#">
+          <a>
             <img src="../../images/ppsp/banner.jpg">
           </a>
         </div>
         <div class="mui-slider-item">
-          <a href="#">
+          <a>
             <img src="../../images/ppsp/banner.jpg">
           </a>
         </div>
         <div class="mui-slider-item mui-slider-item-duplicate">
-          <a href="#">
+          <a>
             <img src="../../images/ppsp/banner.jpg">
           </a>
         </div>
       </div>
       <div class="mui-slider-indicator">
         <div class="mui-indicator mui-active"></div>
-        <div class="mui-indicator"></div>
       </div>
     </div>
-  	<div class="brand-lists">
+    	<div class="brand-lists">
 	    <div class="tl"><span>品牌</span></div>
-	    <div class="lists clearFix">
-	      <a class="item"><img src="../../images/profile/sc9.png"/></a>
-	      <a class="item"><img src="../../images/profile/sc9.png"/></a>
-	      <a class="item"><img src="../../images/profile/sc9.png"/></a>
-	      <a class="item"><img src="../../images/profile/sc9.png"/></a>
+	    <div class="mui-scroll-wrapper">
+        <div id="pullrefresh" class="mui-scroll">
+          <div id="brandList" class="lists clearFix">
+            <a class="item"><img src="../../images/profile/sc9.png"/></a>
+          </div>
+        </div>
       </div>
-  	</div>
+    	</div>
+  </div>
+  <div id="topPopover" class="mui-popover">
+    <div class="mui-popover-arrow"></div>
+    <div class="mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <ul class="mui-table-view">
+        </ul>
+      </div>
+    </div>
   </div>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../js/mui.pullToRefresh.js"></script>
+  <script src="../../js/mui.pullToRefresh.material.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.extend.js"></script>
+  <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.request.js"></script>
    <script>
     (function($, doc) {
-        $.init({
-          beforeback:function(){
-            console.log('返回');
-//          plus.screen.lockOrientation("portrait-primary");
-            return true;
-          }
+        //阻尼系数
+        var deceleration = mui.os.ios?0.003:0.0009;
+        $('.mui-scroll-wrapper').scroll({
+          bounce: false,
+          indicators: true, //是否显示滚动条
+          deceleration:deceleration
         });
+        $.init();
         $.plusReady(function() {
-          window.addEventListener('KZ_xxxx', function(e){
-            console.log(2);
+          var id = 0;
+          // 分类id
+          var classid = 0;
+          var keyword = '';
+          // 分页参数
+          var page = 1;
+          var limit = 15;
+          var more = true;
+          var listRequest = {};
+          var $pullrefresh = $('#pullrefresh');
+          // 标题
+          var $title = doc.getElementById('title');
+          // 页面刷新
+          window.addEventListener('KZ_PPSP_DATA', function(e){
+            id = e.detail.id;
+            classid = 0;
+            keyword = '';
+            page = 1;
+            more = true;
+            $title.innerText = e.detail.title;
+            $pullrefresh.pullToRefresh().refresh(true);
+            silderInit();
+            classInit();
+            ppInit();
+          });
+          /* 幻灯片 */
+          var $silder = doc.getElementById('slider');
+          var silder = $('#slider');
+          //画默认幻灯片
+          var paintDefaultSilder = function() {
+            $silder.innerHTML = ''+
+            '<div class="mui-slider-group mui-slider-loop">'+
+             ' <div class="mui-slider-item mui-slider-item-duplicate">'+
+                '<a><img src="../../images/ppsp/banner.jpg"></a>'+
+              '</div>'+
+              '<div class="mui-slider-item"><a><img src="../../images/ppsp/banner.jpg"></a></div>'+
+              '<div class="mui-slider-item mui-slider-item-duplicate">'+
+                '<a><img src="../../images/ppsp/banner.jpg"></a>'+
+              '</div>'+
+            '</div>'+
+            '<div class="mui-slider-indicator"><div class="mui-indicator mui-active"></div></div>';
+            silder.slider({
+              interval: 0
+            });
+          }
+          // 画幻灯片
+          var paintSilder = function(data) {
+            $silder.innerHTML = '';
+            var imgDiv = doc.createElement('div');
+            imgDiv.className = 'mui-slider-group mui-slider-loop';
+            var firstImg = doc.createElement('div');
+            firstImg.className = 'mui-slider-item mui-slider-item-duplicate';
+            firstImg.innerHTML = '<a><img src="{0}"></a>'.format(data[data.length-1].image);
+            imgDiv.appendChild(firstImg);
+            $.each(data, function(index, d) {
+            	 var img = doc.createElement('div');
+            	 img.className = 'mui-slider-item';
+            	 img.innerHTML = '<a><img src="{0}"></a>'.format(d.image);
+            	 imgDiv.appendChild(img);
+            });
+            var lastImg = doc.createElement('div');
+            lastImg.className = 'mui-slider-item mui-slider-item-duplicate';
+            lastImg.innerHTML = '<a><img src="{0}"></a>'.format(data[0].image);
+            imgDiv.appendChild(lastImg);
+            $silder.appendChild(imgDiv);
+            // 画点
+            var dianDiv = doc.createElement('div');
+            dianDiv.className = 'mui-slider-indicator';
+            $.each(data, function(index, d) {
+               var dian = doc.createElement('div');
+               if (index === 0) {
+                 dian.className = 'mui-indicator mui-active';
+               } else {
+                 dian.className = 'mui-indicator';
+               }
+               dianDiv.appendChild(dian);
+            });
+            $silder.appendChild(dianDiv);
+            silder.slider({
+              interval: 0
+            });
+          }
+          var silderInit = function() {
+            request.ajax('Brandslide/getList',{
+              data: {
+                type: id
+              },
+              showMsg: false
+            },function(data, success) {
+              if (success && data) {
+                paintSilder(data);
+              } else {
+                paintDefaultSilder();
+              }
+            },function() {
+              paintDefaultSilder();
+            });
+          }
+          /*品牌*/
+          // 分类
+          var $type = doc.querySelector('#topPopover .mui-table-view');
+          var classInit = function() {
+            $type.innerHTML = '';
+            request.ajax('Brand/getGroup',{
+              data: {
+                type: id
+              },
+              showMsg: false
+            },function(data, success) {
+              if (success && data) {
+                var _typeHtml = [];
+                _typeHtml.push('<li data-type="{0}" class="mui-table-view-cell"><a>{1}</a></li>'.format(0,'全部'));
+                $.each(data, function(index, d) {
+                	 var _html = '<li data-type="{0}" class="mui-table-view-cell"><a>{1}</a></li>'.format(d.id,d.title);
+                  _typeHtml.push(_html);
+                });
+                $type.innerHTML = _typeHtml.join('');
+                $.each($type.querySelectorAll('.mui-table-view-cell'), function(index,i) {
+                   i.addEventListener('tap', function(e){
+                     classid = this.getAttribute('data-type');
+                     page = 1;
+                     more = true;
+                     $pullrefresh.pullToRefresh().refresh(true);
+                     $('#topPopover').popover('hide');
+                     ppInit();
+                   });
+                });
+              } 
+            },function() {
+            });
+          }
+          // 搜索
+          var $search = doc.getElementById('search');
+          var $searchValue = doc.getElementById('searchValue');
+          $search.addEventListener('tap',function(e){
+            keyword = $searchValue.value.trim();
+            page = 1;
+            more = true;
+            $pullrefresh.pullToRefresh().refresh(true);
+            ppInit();
+          });
+          // 列表
+          var $brandList = doc.getElementById('brandList');
+          var paintBrand = function(data) {
+            var _a = doc.createElement('a');
+            _a.className = 'item';
+            _a.innerHTML = '<img src="{0}"/>'.format(data.image);
+            $brandList.appendChild(_a);
+          }
+          var ppInit = function(callback) {
+            var _request = {
+              type: id,
+              page: page,
+              limit: limit
+            }
+            if (keyword != '') {
+              _request.keyword = keyword;
+            }
+            if (classid != 0) {
+              _request.classid = classid;
+            }
+            request.ajax('Brand/getList',{
+              data: _request,
+              showMsg: false
+            },function(data, success) {
+               // 处理页面绑定
+               if (data && data.data) {
+                 if (page === 1) {
+                   $brandList.innerHTML = '';
+                 }
+                 $.each(data.data, function(index,i) {
+                   paintBrand(i);
+                 });
+               }
+               // 判断是否有下一页数据
+               if (data && data.data && data.data.length === limit) {
+                 more = true;
+               } else {
+                 more = false;
+               }
+               if (typeof callback === 'function') {
+                 callback();
+               }
+            },function() {
+              if (typeof callback === 'function') {
+                 callback();
+               }
+            });
+          }
+          $pullrefresh.pullToRefresh({
+            down: {
+              callback: function() {
+                page = 1;
+                var self = this;
+                ppInit(function() {
+                  self.endPullDownToRefresh();
+                  $pullrefresh.pullToRefresh().refresh(true);
+                });
+              }
+            },
+            up: {
+              callback: function() {
+                var self = this;
+                if (more) {
+                  page = page + 1;
+                  ppInit(function() {
+                    self.endPullUpToRefresh(false);
+                  });
+                  return;
+                }
+                self.endPullUpToRefresh(true);
+              }
+            }
           });
         });
       })(mui, document);
