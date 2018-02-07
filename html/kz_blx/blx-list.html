@@ -61,6 +61,7 @@
     }
     .wb-top{
     	height:60px;
+    	padding-right: 70px;
     	position: relative;
     }
     .wb-top .img{
@@ -78,7 +79,6 @@
     	font-weight: normal;
     	padding-top:5px;
     	padding-bottom: 15px;	
-    	padding-right: 70px;
     }
     .wb-top h2+p{
     	font-size:14px;
@@ -88,6 +88,7 @@
     	position: absolute;
     	top:5px;
     	right:0;
+    	z-index: 3;
     	text-decoration: none;
     	padding:0 5px;
     	background:#f4f4f4;
@@ -210,8 +211,8 @@
 										  <div class="flex-1">
 										    <h2>口腔门诊王医生</h2>
                         <p>发表于：2017-05-03</p>
-                        <ins class="flex flex-row-center">加关注</ins>
 										  </div>
+										  <ins class="flex flex-row-center">加关注</ins>
 										</div>
 										<div class="word">
 											<p>深圳软件创业基地聚集大量孵化园</p>
@@ -279,10 +280,6 @@
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js"></script>
 		<script>
-      // 登录刷新
-//    window.addEventListener('refresh', function(e){
-//      location.reload();
-//    });
       (function($, doc) {
         //阻尼系数
         var deceleration = $.os.ios?0.003:0.0009;
@@ -351,6 +348,17 @@
           }
           // 详情webview
           var detailWebView = null;
+          var gotoDetail = function(data) {
+            if (!detailWebView) {
+              detailWebView = plus.webview.getWebviewById('KZ_BLX_DETAIL');
+            }
+            $.fire(detailWebView,'KZ_BLX_DATA',{
+              data:data
+            });
+            $.openWindow({
+              id: 'KZ_BLX_DETAIL'
+            });
+          }
           // 画每一项
           var paintItem = function(parent, data) {
             var li = doc.createElement('li');
@@ -362,6 +370,9 @@
             var infoDiv = doc.createElement('div');
             infoDiv.className = 'flex-1';
             infoDiv.innerHTML = '<h2>{0}</h2><p>发表于：{1}</p>'.format(data.userinfo.nickname,data.creatime);
+            infoDiv.addEventListener('tap',function(e){
+              gotoDetail(data);
+            });
             var ins = doc.createElement('ins');
             ins.className = 'flex flex-row-center';
             ins.innerText = data.isfollow == 1 ? '取消关注' : '加关注';
@@ -375,8 +386,8 @@
                 data.isfollow = _res.status;
               });
             });
-            infoDiv.appendChild(ins);
             topDiv.appendChild(infoDiv);
+            topDiv.appendChild(ins);
             li.appendChild(topDiv);
             // 内容
             var contentDiv = doc.createElement('div');
@@ -384,15 +395,7 @@
             var cp = doc.createElement('p');
             cp.innerText = data.contents;
             cp.addEventListener('tap', function(){
-              if (!detailWebView) {
-                detailWebView = plus.webview.getWebviewById('KZ_BLX_DETAIL');
-              }
-              $.fire(detailWebView,'KZ_BLX_DATA',{
-                data:data
-              });
-              $.openWindow({
-                id: 'KZ_BLX_DETAIL'
-              });
+              gotoDetail(data);
             });
             contentDiv.appendChild(cp);
             if (data.cases_image) {
