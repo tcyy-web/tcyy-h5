@@ -316,6 +316,7 @@
             }, function(data) {
                // 处理页面绑定
                if (data) {
+                 $img.src = data.image;
                  $name.innerText = data.name;
                  $sex.innerText = enums.sex[data.sex];
                  $age.innerText = data.age;
