@@ -50,7 +50,6 @@
                     if (data.header.msg && defaults.showMsg === true) {
                       mui.toast(data.header.msg);
                     }
-                    
                     break;
                   case 5001:
                     mui.toast(data.header.msg || '获取数据失败');
