@@ -297,12 +297,30 @@
 				    $content.appendChild(div);
 				  }
 				  // 获取扩展分类
+				  var storeageKey = '$KUOZHAN';
 				  var getList = function() {
+				    // 没网取缓存
+				    if (!request.getNetworkState()) {
+				      var datastr = storage.get({
+                key: storeageKey
+              });
+              if (datastr !== null) {
+                var dataobj = JSON.parse(datastr);
+                $.each(dataobj, function(index, d) {
+                	 paintItem(i);
+                });
+              }
+				      return;
+				    }
             request.ajax('Extendgroup/getList',{
               showMsg: false
             },function(data, success) {
               if (success) {
                 if (data && data.length && data.length > 0) {
+                  storage.save({
+                    key: storeageKey,
+                    value: JSON.stringify(data)
+                  });
                   $.each(data, function(index,i) {
                     paintItem(i);
                   });
