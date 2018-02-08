@@ -67,7 +67,10 @@
 
 <script>
 	(function($, doc) {
-		$.init();
+		$.init({beforeback: function() {
+			var webview_parent = plus.webview.getWebviewById("WDJL");
+			mui.fire( webview_parent, 'refresh');
+		}});
 		$.plusReady(function() {
 			addEvent();
 			ajaxData();
@@ -124,7 +127,9 @@
                  target.innerHTML = "<img src="+imageurl+">"
                  imageurl&&setData( "headurl" , imageurl ,function(){
 					imageurl = null;
-				} );
+					
+				 });
+				
                 });
               });         
 			}, 500);

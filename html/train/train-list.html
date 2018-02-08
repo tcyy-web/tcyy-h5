@@ -216,29 +216,49 @@
 				indicators: true, //是否显示滚动条
 				deceleration:deceleration
 			});
-			$.init();
+			
+			$.init({
+	          preloadPages:[{
+	            id:'trainDetail',
+	            url: './train-detail.html'
+	          }]
+	        });
 			$.plusReady(function() {
 			  var limit = 5;
 			  var groupid = 0;
 			  var listRequest = {};
-        var createFragment = function(parent, data) {
-          var li = doc.createElement('li');
-       	  li.innerHTML ='<div class="mui-row">'+
-							'<div class="img">'+
-								'<img src="'+data.image+'" />'+
-							'</div>'+
-							'<div class="content">'+
-								'<h1>'+data.title+'</h1>'+
-								'<p>发布时间：'+data.creattime+'</p>'+
-								'<p>观看人数：'+data.read+'/'+data.num+'</p>'+
-								'<div class="btns">'+
-									'<button>观看</button>'+
-								'</div>'+
-							'</div>'+
-				    	'</div>';
-
-          parent.appendChild(li);
-        };
+			  var trainDetailWebview = null;
+		        var createFragment = function(parent, data) {
+		          var li = doc.createElement('li');
+		       	  li.innerHTML ='<div class="mui-row">'+
+									'<div class="img">'+
+										'<img src="'+data.image+'" />'+
+									'</div>'+
+									'<div class="content">'+
+										'<h1>'+data.title+'</h1>'+
+										'<p>发布时间：'+data.creattime+'</p>'+
+										'<p>观看人数：'+data.read+'</p>'+
+										'<div class="btns">'+
+											'<button data-id='+data.id+' class="openDetail">观看</button>'+
+										'</div>'+
+									'</div>'+
+						    	'</div>';
+						    	
+						    	
+					 li.querySelector(".openDetail").addEventListener('tap', function(event){
+		              if (!trainDetailWebview) {
+		                trainDetailWebview = plus.webview.getWebviewById('trainDetail');
+		              }
+		              $.fire(trainDetailWebview,'train-id',{
+		                id:data.id
+		              });
+		              $.openWindow({
+		                id: 'trainDetail'
+		              });
+		            });
+		          parent.appendChild(li);
+		        };
+		      
 				var getList = function(page,callback){
 				  if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
             return;
@@ -357,6 +377,8 @@
 					});
 				});
 			});
+			
+			
 		})(mui, document);
 	</script>
 	</body>

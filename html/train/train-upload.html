@@ -252,7 +252,9 @@ if(window.plus){
 
 var gentry = null;
 var localUrl = "_doc/media/";
+window.courseId = null;
 function plusReady(){
+  
 	// 获取音频目录对象
 	plus.io.resolveLocalFileSystemURL('_doc/', function(entry){
 		entry.getDirectory('media', {create:true}, function(dir){
@@ -268,6 +270,12 @@ function plusReady(){
 
 (function($){
 	
+$(function(){
+var webview = plus.webview.currentWebview();
+
+courseId = webview.courseId;
+	
+		
 $("#opt2").on("tap",".s_pic",function(){
 	uploadImage();
 }).on("tap",".s_video",function(){
@@ -298,8 +306,8 @@ $(".caozuo").on("tap",".edit",function(){
 	var com = mui.prompt("输入标题",function( item ){
 
 		if(!item.index){ return false; }
-		var st = $(".pcontent").html();
-		sendCourceData( st );
+		var st = $(".pcontent").parent().html();
+		sendCourceData( courseId, item.value , st );
 	})
 	
 });
@@ -343,6 +351,8 @@ $(".pcontent").on("tap",".paudio",function(){
 	Play.playVedioE( entry );	
 
 });
+});
+
 
 var imageurl = null;
 function uploadImage(){
@@ -540,22 +550,25 @@ var Play = {
 		if($("#video").length==0){
 			$("<video id='video' autoplay='autoplay' width='0' height='0'></video>").appendTo("body")
 		}
+		
 		$("#video")[0].src = url;
+		
 	}
 
 }
 
-function sendCourceData(st){
-	mui.toast("发布成功");
-	return;
+function sendCourceData(courseId,title,st){
+
 	request.loginAjax('cases/comments', {
         data: {
-          case_id: id,
-          pid: pid,
-          contents: contents
+          cid: courseId,
+          title:title,
+          contents: st
         }
       }, function(data, success) {
         if (success) {
+        	mui.toast("发布成功");
+        	window.back();
         }
     });
 }

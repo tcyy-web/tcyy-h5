@@ -151,7 +151,7 @@
 					<p>积分</p>
 					<p>0</p>
 				</div>
-				<div class="flex-1">
+				<div id="qiandao" class="flex-1">
 					<p>签到</p>
 					<p>0</p>
 				</div>
@@ -176,6 +176,7 @@
 						我的病例秀
 					</a>
 				</li>
+				
 				<!--<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/bdblx.png"/>
 					<a class="mui-navigate-right" href="#">
@@ -216,7 +217,7 @@
     <script src="../../js/utils.request.js" ></script>
 		<script>
 			window.addEventListener('refresh', function(e){
-		    location.reload();
+		    	location.reload();
 			});
 	
 			(function($, doc) {
@@ -236,20 +237,20 @@
 					}
 					loginItem.addEventListener('tap', function(event) {
 						if (authManage.checkLogin()) {
-                $.openWindow({
-                  url: '../my/my.html',
-                  id: 'WDJL',
-                  preload: true,
-                  show: {
-                    aniShow: 'pop-in'
-                  },
-                  styles: {
-                    popGesture: 'hide'
-                  },
-                  waiting: {
-                    autoShow: false
-                  }
-                });
+			                $.openWindow({
+			                  url: '../my/my.html',
+			                  id: 'WDJL',
+			                  preload: true,
+			                  show: {
+			                    aniShow: 'pop-in'
+			                  },
+			                  styles: {
+			                    popGesture: 'hide'
+			                  },
+			                  waiting: {
+			                    autoShow: false
+			                  }
+			                });
 						} else {
 						  authManage.toLogin();
 						}
@@ -293,6 +294,11 @@
 								}
 							});
 						});
+					});
+					
+					//qiandao
+					document.getElementById("qiandao").addEventListener("tap",function(){
+						mui.toast("签到成功");
 					});
 				});
 			}(mui, document));

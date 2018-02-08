@@ -32,6 +32,9 @@
 				border-bottom: 1px solid #755fc3;
 			}
 			.choose-type{margin-top:10px;}
+			.mui-pull-right{
+				padding: 12px 4px;
+			}
 		</style>
 	</head>
 
@@ -39,9 +42,10 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">课程详情</h1>
+			<a id="fabu" class="mui-pull-right">编辑详情</a>
 		</header>
 		<div class="mui-content">
-			<img src="../../images/my/bg.png" alt="" width="100%" />
+			<img src="../../images/my/bg.png" id="headerImg" alt="" width="100%" />
 			<div class="choose-type">
 				<div id="segmentedControl" class="mui-segmented-control">
 					<a class="mui-control-item mui-active" href="#item1">课程详情</a>
@@ -69,17 +73,42 @@
 		<script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
+				var courseId = null;
 				$.init();
 				$('#scroll').scroll({
 					indicators: true //是否显示滚动条
 				});
 				$.plusReady(function() {
-					
+		
+
+		          window.addEventListener('train-id', function(e){
+		            courseId = e.detail.id;
+		            if(courseId){
+						ajaxData( courseId );
+					}else{
+						mui.toast("获取id失败");
+					}
+		          });
+				
+				 
+				 document.getElementById("fabu").addEventListener('tap', function(event){
+		              $.openWindow({
+		                url: './train-upload.html',
+		                id: 'KZ-TRAIN-UPLOAD',
+						extras:{ courseId  : courseId},
+		                show: {
+		                  aniShow: 'pop-in'
+		                },
+
+		                waiting: {
+		                  autoShow: true
+		                }
+		             });
+		         });
 					
 				});
 			
 				
-				ajaxData(3);
 				
 			}(mui, document));
 			
@@ -95,11 +124,30 @@
 				}, function(data, success) {
      
 		      	  if ( success ){
-		      	    document.getElementById("item1").innerText = data.contents;
-					document.getElementById("item2").innerText = "无";
+		      	  	document.getElementById("headerImg").setAttribute("src",data.image);
+		      	    document.getElementById("item1").innerHTML = "<div class='content'>"+data.contents+"</div>";
+					
 		      	  }
 //		      	  document.getElementById("item1").innerText = JSON.stringify(data);
 		      	});
+		      	
+		      	
+		      	//课程安排
+//		      	request.loginAjax('Curriculum/getSubjectsList', {
+//					
+//					data: {
+//						groupid: courseId,
+//					},
+//					showMsg: false,
+//					
+//				}, function(data, success) {
+//   
+//		      	  if ( success ){
+//		      		cosnole.log(JSON.stringify(data))
+//					document.getElementById("item2").innerText = "无";
+//		      	  }
+//
+//		      	});
 			}
 		</script>
 		
