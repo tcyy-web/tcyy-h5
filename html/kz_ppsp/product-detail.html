@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html class="ui-page-my">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+	.company-box{ 
+	  padding: 10px;
+	  margin-bottom: 10px;
+	  background-color: #fff;
+	  height: 100px;
+	}
+	.company-box .img{
+	  width: 120px;
+	  overflow: hidden;
+	  border:1px solid #d6d6d6;
+	}
+	.company-box img{ 
+	  width:auto; 
+	  height:100%; 
+  }
+	.company-box .name{ 
+	  font-size:16px;
+	  color:#333;
+  }
+	.tl{
+	  padding: 0 10px;
+	  position: relative;
+	  background-color: #fff;
+	  color: #666;
+	  line-height: 40px;
+	}
+	.tl:before{
+	  position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    content: '';
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+    background-color: #d6d6d6;
+	}
+	.content{
+	  padding: 10px;
+	  background-color: #fff;
+	}
+	.content img{
+	  max-width: 100%;
+	}
+	</style>
+
+</head>
+
+<body>
+  <header class="mui-bar mui-bar-nav">
+    	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    	<h1 class="mui-title">产品详情</h1>
+  </header>
+  <div class="mui-content">
+    <div class="company-box flex">
+      <div class="img flex flex-col-center">
+        <img id="image" src="../../images/profile/sc6.png"  />
+      </div>
+      <div class="flex flex-1 flex-col-center flex-row-center">
+        <span id="title" class="name">哈药集团</span>
+      </div>
+    </div>
+    <div class="tl">产品详情</div>
+    <div id="contents" class="content">
+      	<img src="../../images/profile/sc7.png" />
+    </div>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.extend.js"></script>
+  <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.request.js"></script>
+  <script>
+    (function($, doc) {
+        $.init();
+        $.plusReady(function() {
+          // 扩展id
+          var id = 0;
+          var $image = doc.getElementById('image');
+          var $title = doc.getElementById('title');
+          var $contents = doc.getElementById('contents');
+          // 页面刷新
+          window.addEventListener('KZ_PPSP_PRODUCT_ID', function(e){
+            id = e.detail.id;
+            $image.src = e.detail.image;
+            ppInit();
+          });
+          var ppInit = function() {
+            request.ajax('Brandproduct/getDetails',{
+              data: {
+                id: id
+              },
+              showMsg: false
+            },function(data, success) {
+              if (success) {
+                $title.innerText = data.title;
+                $contents.innerHTML = data.contents;
+              }
+            },function() {
+            });
+          }
+        });
+      })(mui, document);
+  </script>
+</body>
+
+</html>
+

@@ -91,7 +91,7 @@
               <div class="img flex flex-col-center">
                 <img src="../../images/profile/sc5.png"  />
               </div>
-              <p class="txt flex flex-row-center">攀高 颈椎治疗仪PG-260</p>
+              <p class="txt flex flex-row-center flex-col-center">攀高 颈椎治疗仪PG-260</p>
             </div>
           </div>
         </div>
@@ -124,8 +124,16 @@
           indicators: true, //是否显示滚动条
           deceleration:deceleration
         });
-        $.init();
+        $.init({
+          preloadPages:[{
+            id:'KZ-PPSP-PRODUCT-DETAIL',
+            url: './product-detail.html'
+          }]
+        });
         $.plusReady(function() {
+          // 扩展id
+          var id = 0;
+          // 企业id
           var brand_id = 0;
           // 分类id
           var product_class = 0;
@@ -139,6 +147,7 @@
           var $title = doc.getElementById('title');
           // 页面刷新
           window.addEventListener('KZ_PPSP_PRODUCT_DATA', function(e){
+            id = e.detail.id;
             brand_id = e.detail.brand_id;
             product_class = 0;
             keyword = '';
@@ -201,13 +210,24 @@
             imgdiv.innerHTML = '<img src="{0}"  />'.format(data.image);
             div.appendChild(imgdiv);
             var p = doc.createElement('p');
-            p.className = 'txt flex flex-row-center';
+            p.className = 'txt flex flex-row-center flex-col-center';
             p.innerText = data.title;
             div.appendChild(p);
+            div.addEventListener('tap',function(e){
+              var fbWebview = plus.webview.getWebviewById('KZ-PPSP-PRODUCT-DETAIL');
+              $.fire(fbWebview,'KZ_PPSP_PRODUCT_ID',{
+                id: data.id,
+                image: data.image
+              });
+              $.openWindow({
+                id: 'KZ-PPSP-PRODUCT-DETAIL'
+              });
+            });
             $productList.appendChild(div);
           }
           var ppInit = function(callback) {
             var _request = {
+              type: id,
               brand_id: brand_id,
               page: page,
               limit: limit
@@ -228,7 +248,7 @@
                    $productList.innerHTML = '';
                  }
                  $.each(data.data, function(index,i) {
-                   paintBrand(i);
+                   paintProduct(i);
                  });
                }
                // 判断是否有下一页数据

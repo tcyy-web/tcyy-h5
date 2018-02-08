@@ -7,7 +7,6 @@
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
-    /* CSS 品牌企业 - 产品列表*/
     .search-bar { width:100%; margin-bottom:0; height:50px; background-color:#FFF;}
     .search-bar input{margin-bottom: 0; width:80%; float:left; height:48PX; border:none;  outline: none;  font-size:0.9em;  font-family:'微软雅黑'; color:#7c7c7c;}
     .search-bar .button{ 
@@ -166,6 +165,7 @@
           }]
         });
         $.plusReady(function() {
+          // 扩展分类id
           var id = 0;
           // 分类id
           var classid = 0;
@@ -312,10 +312,12 @@
             var _a = doc.createElement('a');
             _a.className = 'item';
             _a.innerHTML = '<img src="{0}"/>'.format(data.image);
+            // 品牌产品
             _a.addEventListener('tap',function(e){
               var fbWebview = plus.webview.getWebviewById('KZ-PPSP-PRODUCT');
               $.fire(fbWebview,'KZ_PPSP_PRODUCT_DATA',{
-                brand_id: id,
+                id: id,
+                brand_id: data.id,
                 title: data.title
               });
               $.openWindow({
