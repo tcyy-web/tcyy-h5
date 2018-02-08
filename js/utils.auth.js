@@ -39,12 +39,7 @@
       }
     },
     /*跳转登录*/
-    toLogin:function(fromurl, fromid){
-      var extras = {};
-      if (fromurl) {
-        extras.fromurl = fromurl;
-        extras.fromid = fromid;
-      }
+    toLogin:function(){
       mui.openWindow({
         url: '../login/login.html',
         id: 'login',
@@ -58,8 +53,7 @@
         },
         waiting: {
           autoShow: false
-        },
-        extras: extras
+        }
       });
     }
 	}

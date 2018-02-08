@@ -184,9 +184,6 @@
 				  var clientinfo = plus.push.getClientInfo();
 				  var pushid = clientinfo.clientid;
 				  var systype = mui.os.android === true ? 1 : 2;
-					var currentView = plus.webview.currentWebview();
-					var fromurl = currentView.fromurl;
-					var fromid = currentView.fromid;
 					var 	loginSuccess = function loginSuccess(user) {
 						authManage.saveUser(user);
 						$.toast('登录成功');
