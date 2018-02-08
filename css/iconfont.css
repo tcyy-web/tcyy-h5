@@ -13,13 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-presentation:before { content: "\a653"; }
-
 .icon-icon:before { content: "\a666"; }
-
-.icon-wode:before { content: "\e67a"; }
-
-.icon-daigoutong:before { content: "\e679"; }
 
 .icon-cshy-shizhong:before { content: "\e626"; }
 
@@ -39,6 +33,14 @@
 
 .icon-bianji:before { content: "\a600"; }
 
-.icon-yanshi:before { content: "\a647"; }
+.icon-qysj:before { content: "\e604"; }
 
-.icon-kuozhangongneng:before { content: "\a60a"; }
+.icon-cysj:before { content: "\e605"; }
+
+.icon-wd:before { content: "\e606"; }
+
+.icon-kz:before { content: "\e607"; }
+
+.icon-ys:before { content: "\e608"; }
+
+.icon-gt:before { content: "\e609"; }
