@@ -30,8 +30,16 @@
 	font-size:14px;
 	color:#4a4e51;
 	padding:5px 10px 5px 25px;
-	background:url(../../images/my/nans.png) 0 center no-repeat;
+	background:url(../../images/my/nan.png) 0 center no-repeat;
 }
+
+.fans span.nv{
+	font-size:14px;
+	color:#4a4e51;
+	padding:5px 10px 5px 25px;
+	background:url(../../images/my/nv.png) 0 center no-repeat;
+}
+
 
 .nofans-box{
 	width:100px;
@@ -39,7 +47,8 @@
 	position: absolute;
 	top:50%;
 	left:50%;
-	transform: translate(-50%,-50%);
+	margin-left: -50px;
+	margin-top: -70px;
 	font-size:12px;
 	color:#8b8b8b;
 	text-align: center;
@@ -79,13 +88,65 @@
 			<span>18323299038</span>
 		</div>
 	</div>
-	<div class="nofans-box">
-		<div class="nofans"></div>
-		<span class="txt">暂无粉丝</span>
-	</div>
+	<!---->
 </div>
-<script src="../../js/mui.min.js"></script>
 
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.request.js"></script>
+<script>
+  (function($,doc){
+    
+    	$.init({
+    		beforeback:function(){
+    			plus.screen.lockOrientation("portrait-primary");
+    			return true;
+    		}
+    	});
+    	 $.plusReady(function() {
+	    	  window.addEventListener('YANSHI_Refresh', function(e){
+	        plus.screen.lockOrientation("landscape-primary");
+	      });
+	      ajaxData();
+    	});
+  	
+    
+    function ajaxData(){
+      	request.loginAjax('User/myFollow', {showMsg: false }, function(data, success) {
+      	
+      	  if ( success ){
+			console.log(JSON.stringify(data.data));
+			renderData( data.data )
+      	  }
+      	});
+    }
+    
+    function renderData( arr ){
+    	var st = "";
+    	for( var i = 0 ; i< arr.lenght ; i++ ){
+    		var d = arr[i];
+    		st+='<div class="fans">'+
+				'<img src="'+(d.headurl?d.headurl:'../../images/my/fstx.png')+'"/>'+
+				'<div class="right">'+
+					'<p>'+d.nickname+'</p>'+
+					'<span class="'+(d.sex==2?'nv':'')+'">'+d.uid+'</span>'+
+				'</div>'+
+				'</div>';
+    	}
+    	
+    	if( arr.length == 0){
+    		st = '<div class="nofans-box">'+
+					'<div class="nofans"></div>'+
+					'<span class="txt">暂无关注</span>'+
+				'</div>''+
+    	}
+    	document.getElementById("content").innerHTML = st;
+
+    }
+    
+  })( mui , document);
+
+</script>
 </body>
 
 </html>
