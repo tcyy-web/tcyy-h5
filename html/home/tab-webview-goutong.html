@@ -13,7 +13,7 @@
 				padding: 20px 0;
 			}
 			.goutong-row .gr-item {
-	    	  text-align: center;
+	    	text-align: center;
 			}
 			.goutong-row .gr-item .gr-img .img-box {
 				width: 60px;
@@ -41,7 +41,7 @@
 		</header>
 		<div class="mui-content">
 			<div class="goutong-row flex">
-				<div id="video" url="../video/video-list.html" class="clickItem gr-item flex flex-col flex-1">
+				<div id="video" class="gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
 							<img src="../../images/tab-goutong/img1.png" />
@@ -49,7 +49,7 @@
 					</div>
 					<p>视频</p>
 				</div>
-				<div id="picture" url="../picture/picture-folders.html" class="clickItem gr-item flex flex-col flex-1">
+				<div id="picture" class="gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
 							<img src="../../images/tab-goutong/img2.png" />
@@ -57,7 +57,7 @@
 					</div>
 					<p>图片</p>
 				</div>
-				<div class="gr-item flex flex-col flex-1">
+				<div id="yanshi" class="gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
 							<img src="../../images/tab-goutong/img3.png" />
@@ -83,7 +83,7 @@
 					</div>
 					<p>预约</p>
 				</div>
-				<div id="project" url="../project/project-index.html" login="yes" class="clickItem gr-item flex flex-col flex-1">
+				<div id="project" class="gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
 							<img src="../../images/tab-goutong/img6.png" />
@@ -109,14 +109,13 @@
             }]
 					});
 					$.plusReady(function() {
-						
+						plus.screen.lockOrientation("portrait-primary");
 					  /******APP初始化 begin******/
 					  // 设置系统默认状态栏
 						plus.navigator.setStatusBarBackground('#765fc3');
 						// 获取基础分类
 						categorys.getServer();
 						/******APP初始化 end******/
-
 						var self = plus.webview.currentWebview(),
 						leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
 						var drawNativeIcon = util.drawNative('icon', {
@@ -230,13 +229,12 @@
 							}
 							// 匹配对应tab窗口
 							if (currIndex == 1) {
-		              var  fbWebview = plus.webview.getWebviewById('YANSHI_INDEX');
-                  $.fire(fbWebview,'YANSHI_Refresh',{
-                  });
-                  $.openWindow({
-                    id: 'YANSHI_INDEX'
-                  });
-                return;
+							  var yanshiWebview = plus.webview.getWebviewById('YANSHI_INDEX');
+		             $.fire(yanshiWebview,'YANSHI_Refresh',{});
+                 $.openWindow({
+                   id: 'YANSHI_INDEX'
+                 });
+                  return;
 							}
 							if(currIndex > 0) {
 								targetPage = plus.webview.getWebviewById(subpages[currIndex - 1]);
@@ -254,33 +252,65 @@
 							//更新当前活跃的页面
 							activePage = targetPage;
 						});
-						// 点击item
-						var clickItems = $('.clickItem');
-						$.each(clickItems, function(index, item) {
-							item.addEventListener('tap', function(event) {
-								var id = this.getAttribute("id");
-								var url = this.getAttribute("url");
-								var loginFlag = this.getAttribute('login');
-								if (loginFlag === 'yes' && !authManage.checkLogin()) {
-									authManage.toLogin(url,id);
-									return;
-								}
-								$.openWindow({
-									url: url,
-									id: id,
-									preload: true,
-									show: {
-										aniShow: 'pop-in'
-									},
-									styles: {
-										popGesture: 'hide'
-									},
-									waiting: {
-										autoShow: false
-									}
-								});
-							});
-						});
+						// 视频
+						doc.getElementById('video').addEventListener('tap', function(event) {
+              $.openWindow({
+                url: '../video/video-list.html',
+                id: 'VIDEO',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 图片
+            doc.getElementById('picture').addEventListener('tap', function(event) {
+              $.openWindow({
+                url: '../picture/picture-folders.html',
+                id: 'PICTURE',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 演示
+            doc.getElementById('yanshi').addEventListener('tap', function(event) {
+              var yanshiWebview = plus.webview.getWebviewById('YANSHI_INDEX');
+              $.fire(yanshiWebview,'YANSHI_Refresh',{});
+               $.openWindow({
+                 id: 'YANSHI_INDEX'
+               });
+            });
+            // 项目
+            doc.getElementById('project').addEventListener('tap', function(event) {
+              $.openWindow({
+                url: '../project/project-index.html',
+                id: 'PRODUCT-INDEX',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
 					});
 				}(mui, document));
 		</script>

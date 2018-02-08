@@ -96,21 +96,34 @@
 				$.init();
 				$.plusReady(function() {
 				  var storageKey = '$projetIndex';
+				  var imgKey = '$projectIndexImg';
 					var projectList = doc.getElementById('project-list');
 					var inputText = doc.getElementById('inputText');
+					var $img = doc.getElementById('img');
 					var saveValue = storage.get({
 					  key: storageKey
 					});
 					if (saveValue !== null) {
-						inputText.value = saveValue;
+						inputText.value = JSON.parse();
 					}
+					var imgurl = storage.get({
+            key: imgKey
+          });
+          if (imgurl !== null) {
+            $img.src = imgurl;
+          }
 					var getImage = function(callback){
             request.loginAjax('Project/getStartImg', {
               showMsg: false
             }, function(data, success) {
               if (data && data.image) {
-                doc.getElementById('img').src = data.image;
+                $img.src = data.image;
+                storage.save({
+                  key: imgKey,
+                  value: data.image
+                });
               }
+            }, function() {
             });
           }
 					getImage();

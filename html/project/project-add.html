@@ -191,7 +191,7 @@
                 var url = config.url + "Uploads/Files";
                 upload.uploadimge( url , data.divid, function(res) {
 					       $img.src = data.abspath;
-					       imageurl = res[0].showUrl;
+					       imageurl = res[0].saveUrl;
                 });
               });				      
 				    }, 500);

@@ -181,9 +181,9 @@
 			    }
 				});
 				$.plusReady(function() {
-					var currentView = plus.webview.currentWebview();
-					var fromurl = currentView.fromurl;
-					var fromid = currentView.fromid;
+				  var clientinfo = plus.push.getClientInfo();
+				  var pushid = clientinfo.clientid;
+				  var systype = mui.os.android === true ? 1 : 2;
 					var 	loginSuccess = function loginSuccess(user) {
 						authManage.saveUser(user);
 						$.toast('登录成功');
@@ -205,11 +205,14 @@
 								return;
 							}
 							var auth = auths[authId];
-							var waiting = plus.nativeUI.showWaiting();
+//							var waiting = plus.nativeUI.showWaiting();
 							auth.login(function() {
-								waiting.close();
+//								waiting.close();
 								auth.getUserInfo(function() {
-									var loginInfo = {};
+									var loginInfo = {
+									  pushid: pushid,
+									  systype: systype
+									};
 									// qq登录
 									if (auth.id === 'qq') {
 										loginInfo.code = auth.authResult.access_token;
@@ -235,7 +238,7 @@
 									$.toast("获取用户信息失败：" + e.message);
 								});
 							}, function(e) {
-								waiting.close();
+//								waiting.close();
 								$.toast("登录认证失败：" + e.message);
 							});
 						});
@@ -255,7 +258,9 @@
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
 							phone: accountBox.value.trim(),
-							password: passwordBox.value.trim()
+							password: passwordBox.value.trim(),
+							pushid: pushid,
+              systype: systype
 						};
 						if (loginInfo.phone === '') {
 							$.toast('请输入注册手机');
