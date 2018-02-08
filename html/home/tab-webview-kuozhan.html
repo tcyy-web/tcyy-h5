@@ -229,7 +229,20 @@
                   id: 'KZ-PPSP'
                 });
 				    } else if (type === 4) { // 创意设计类
-              
+              $.openWindow({
+                url: '../kz_cysj/list.html',
+                id: 'KZ-CYSJ',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
             } else if (type === 5) { // 在线课堂类
               $.openWindow({
                 url: '../train/train-upload.html',

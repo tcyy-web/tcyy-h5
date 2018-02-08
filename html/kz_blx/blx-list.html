@@ -515,7 +515,6 @@
           }
           // 切换tab
           doc.querySelector('.mui-slider').addEventListener('slide', function(event) {
-            var contentValue = event.detail.slideNumber;
             var currentTab = doc.querySelector('.mui-control-item.mui-active');
             groupid = currentTab.getAttribute('groupid');
             if (listRequest[groupid]) {
