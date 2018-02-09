@@ -73,7 +73,7 @@
               if (data && data.header && data.header.status === 2001){
                 _success = true;
               }
-              successCallback(data.body, _success);
+              successCallback(data.body, _success, data.header);
             }
           } else {
             if (typeof successCallback === 'function') {

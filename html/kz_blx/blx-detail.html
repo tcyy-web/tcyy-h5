@@ -7,6 +7,9 @@
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
+	  body{
+	    background-color: #fff;
+	  }
     .mui-content{
       height: auto;
       background: #fff;
@@ -24,8 +27,10 @@
     .wb-top .img{
       width: 60px;
       height:60px;
-      margin-right: 10px;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
       overflow: hidden;
+      margin-right: 10px;
     }
     .wb-top .img img{
       width: auto;
@@ -128,8 +133,31 @@
     }
     .pl-tx{
       position: relative;
-    	 padding-top:10px;
-    	 padding-right: 40px;
+      padding-top: 10px;
+    	  padding-right: 40px;
+    	  margin: 10px 0;
+    }
+    .pl-tx:before{
+      position: absolute;
+      right: -10px;
+      top: 0;
+      left: -10px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
+    }
+    .pl-tx:after{
+      position: absolute;
+      right: -10px;
+      bottom: 0;
+      left: -10px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
     }
     .pl-tx .mui-icon{
       position: absolute;
@@ -143,6 +171,9 @@
     	float:left;
     	width: 60px;
     	height: 60px;
+    	-webkit-border-radius: 50%;
+    border-radius: 50%;
+    overflow: hidden;
     	margin-right:10px;
     	margin-bottom: 10px;
     }
@@ -172,6 +203,9 @@
     .pl-true-img .img{
     	width: 60px;
     	height: 60px;
+    	-webkit-border-radius: 50%;
+    	border-radius: 50%;
+    	overflow: hidden;
     	margin-right: 10px;
     }
     .pl-true-img .img img{
@@ -183,7 +217,7 @@
     	font-size:14px;
     	color:#195ea4;
     	padding-right: 60px;
-    	padding-bottom:15px;
+    	padding-bottom:10px;
     }
     .p-name span.time{
       position: absolute;
@@ -231,6 +265,33 @@
     .pl-hf p span.txt{
     	color:#000;
     	margin-right: 10px;
+    }
+    .pl-more{
+      position: relative;
+      padding: 10px 0;
+      text-align: center;
+    }
+    .pl-more:before{
+      position: absolute;
+      right: -10px;
+      top: 0;
+      left: -10px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
+    }
+    .pl-more:after{
+      position: absolute;
+      right: -10px;
+      bottom: 0;
+      left: -10px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
     }
     .ft{
     	width:100%;
@@ -291,31 +352,38 @@
         </div>
       </div>			
       <!-- 下面的评论 -->
-			<div class="pl-tx">
+			<div id="dzusersmore" class="pl-tx">
 			  <div id="dzusers" class="clearFix">
 			    <div class="img flex flex-row-center">
             <img src="../../images/weibo/pltx1.png"/>
           </div>
 			  </div>
-			  <span id="dzusersmore" class="mui-icon mui-icon-arrowright"></span>
+			  <span class="mui-icon mui-icon-arrowright"></span>
 			</div>
 			<!-- 发表的评论 -->
-			<div class="pl-true">
-				<div class="pl-true-img flex">
-				  <div class="img flex flex-row-center">
-				    <img src="../../images/weibo/pltx3.png"/>
-				  </div>
-				  <div class="flex-1">
-				    <p class="p-name"><span>领馆小草</span><span class="time">5小时</span> </p>
-            <p class="p-txt">真的假的呀？我也想去~那个大哥哥带的假的呀？我也想去~那个大哥哥带我去</p>
-				  </div>
-				</div>
-				<!-- 评论下面的回复 -->
-        <div class="pl-hf">
-          <p><span>土农民</span><span class="slip">回复</span><span>领馆小草：</span><span class="txt">是真的额,一起去吧靓仔-_-,haobuhao!</span><span>1小时前</span>
-          </p>
-        </div>
+			<div id="pllist">
+    			<div class="pl-true">
+    				<div class="pl-true-img flex">
+    				  <div class="img flex flex-row-center">
+    				    <img src="../../images/weibo/pltx3.png"/>
+    				  </div>
+    				  <div class="flex-1">
+    				    <p class="p-name"><span>领馆小草</span><span class="time">5小时</span> </p>
+                <p class="p-txt">真的假的呀？我也想去~那个大哥哥带的假的呀？我也想去~那个大哥哥带我去</p>
+    				  </div>
+    				</div>
+          <div class="pl-hf">
+            <p>
+              <span>土农民</span>
+              <span class="slip">回复</span>
+              <span>领馆小草：</span>
+              <span class="txt">是真的额,一起去吧靓仔-_-,haobuhao!</span>
+              <span>1小时前</span>
+            </p>
+          </div>
+    			</div>
 			</div>
+			<p id="plmore" class="pl-more">更多</p>
 		</div>
   </div>
   <footer class="ft flex" >
@@ -331,6 +399,7 @@
     </div>
   </footer>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../js/utils.common.js"></script>
   <script src="../../js/utils.config.js"></script>
   <script src="../../js/utils.extend.js"></script>
   <script src="../../js/utils.storages.js" ></script>
@@ -357,6 +426,12 @@
           }
         });
         $.plusReady(function() {
+          // 默认头像
+          var defaultUserImage = '../../images/tab-wode/user_default.png';
+          //一级评论分页参数
+          var page = 1;
+          var limit = 6;
+          var more = true;
           // 用户信息
           var $headurl = doc.getElementById('headurl');
           var $nickname = doc.getElementById('nickname');
@@ -374,8 +449,6 @@
           var $gzfn = doc.getElementById('gzfn');
           // 刷新详情
           window.addEventListener('KZ_BLX_DATA', function(e){
-            console.log('收到的详情');
-            console.log(JSON.stringify(e.detail.data));
             detailData = e.detail.data;
             setFn();
             readFn();
@@ -384,7 +457,7 @@
           });
           // 设置详情
           var setFn = function() {
-            $headurl.src = detailData.userinfo.headurl || '../../images/tab-wode/user_default.png';
+            $headurl.src = detailData.userinfo.headurl || defaultUserImage;
             $nickname.innerText = detailData.userinfo.nickname;
             $createtime.innerText = detailData.creatime;
             $contents.innerText = detailData.contents;
@@ -496,7 +569,7 @@
                   $.each(data.data, function(index, d) {
                     var imgdiv = doc.createElement('div');
                     imgdiv.className = 'img flex flex-row-center';
-                    var _url = d.user_info.headurl || '../../images/tab-wode/user_default.png';
+                    var _url = d.user_info.headurl || defaultUserImage;
                     imgdiv.innerHTML = '<img src="{0}"/> '.format(_url);
                     $dzusers.appendChild(imgdiv);
                   });
@@ -504,9 +577,50 @@
                 }
             });
           }
-          http://m.tianchiyueya.com:1888/tcyy/cases/getCommentsList
+          /*评论*/
+          var $pllist = doc.getElementById('pllist');
+//        <div class="pl-true">
+//          <div class="pl-true-img flex">
+//            <div class="img flex flex-row-center">
+//              <img src="../../images/weibo/pltx3.png"/>
+//            </div>
+//            <div class="flex-1">
+//              <p class="p-name"><span>领馆小草</span><span class="time">5小时</span> </p>
+//              <p class="p-txt">真的假的呀？我也想去~那个大哥哥带的假的呀？我也想去~那个大哥哥带我去</p>
+//            </div>
+//          </div>
+//        <div class="pl-hf">
+//          <p>
+//            <span>土农民</span>
+//            <span class="slip">回复</span>
+//            <span>领馆小草：</span>
+//            <span class="txt">是真的额,一起去吧靓仔-_-,haobuhao!</span>
+//            <span>1小时前</span>
+//          </p>
+//        </div>
+//        </div>
+          // 画每项评论
+          var paintPl = function(data,serverNowDateStr) {
+            var pldiv = doc.createElement('div');
+            pldiv.className = 'pl-true';
+            $pllist.appendChild(pldiv);
+            // 头像及名称
+            var div1 = doc.createElement('div');
+            div1.className = 'pl-true-img flex';
+            var _url = data.user_info.headurl || defaultUserImage;
+            div1.innerHTML = '<div class="img flex flex-row-center"><img src="{0}"/></div>'.format(_url);
+            var namediv = doc.createElement('div');
+            namediv.className = 'flex-1';
+            var dateStr = utils.formatDateToNow(data.times, serverNowDateStr);
+            namediv.innerHTML = '<p class="p-name"><span>{0}</span><span class="time">{1}</span></p><p class="p-txt">{2}</p'.format(data.user_info.nickname,dateStr,data.contents)
+            div1.appendChild(namediv);
+            pldiv.appendChild(div1);
+          }
           // 获取评论列表
-          var plList = function(callback) {
+          var plList = function() {
+             if (page === 1) {
+               $pllist.innerHTML = '';
+             }
              request.loginAjax('cases/getCommentsList', {
                 data: {
                   case_id: detailData.id,
@@ -514,10 +628,19 @@
                   limit: 10
                 },
                 showMsg: false
-              }, function(data, success) {
-                if (success) {
-//                callback();
-                }
+              }, function(data, success, resHead) {
+               // 处理页面绑定
+               if (data && data.data) {
+                 $.each(data.data, function(index,i) {
+                   paintPl(i, resHead.t);
+                 });
+               }
+               // 判断是否有下一页数据
+               if (data && data.data && data.data.length === limit) {
+                 more = true;
+               } else {
+                 more = false;
+               }
             });
           }
           // 发表评论
