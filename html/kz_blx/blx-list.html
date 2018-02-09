@@ -7,7 +7,7 @@
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
-         #sliderSegmentedControl{
+       #sliderSegmentedControl{
         height: 50px;
         background-color: #ffffff;
       }
@@ -56,8 +56,16 @@
 	  .mui-pull-right{
 	    line-height: 44px;
 	  }
+	  .mui-table-view{
+	    background-color: #f1f1f1;
+	  }
     .mui-table-view > li{
+    background-color: #fff;
     	padding:10px 10px 0 10px;
+    	margin-top: 10px;
+    }
+    .mui-table-view > li:first-child{
+      margin-top: 0;
     }
     .wb-top{
     	height:60px;
@@ -238,6 +246,41 @@
 										  </div>
 										</div>
 									</li>
+									<li>
+                    <div class="wb-top flex">
+                      <div class="img flex flex-row-center">
+                        <img src="../../images/weibo/tx.png"/>
+                      </div>
+                      <div class="flex-1">
+                        <h2>口腔门诊王医生</h2>
+                        <p>发表于：2017-05-03</p>
+                      </div>
+                      <ins class="flex flex-row-center">加关注</ins>
+                    </div>
+                    <div class="word">
+                      <p>深圳软件创业基地聚集大量孵化园</p>
+                      <div class="word-img">
+                        <img src="../../images/weibo/img.png"/>
+                        <img src="../../images/weibo/img.png"/>
+                        <img src="../../images/weibo/img.png"/>
+                        <img src="../../images/weibo/img.png"/>
+                      </div>
+                    </div>
+                    <div class="pl flex">
+                      <div class="flex-1 flex flex-row-center flex-col-center">
+                        <img src="../../images/blx/pl1.png" />
+                        <span>111111</span>
+                      </div>
+                      <div class="flex-1 flex flex-row-center flex-col-center">
+                        <img src="../../images/blx/pl2.png" />
+                         <span>111111</span>
+                      </div>
+                      <div class="flex-1 flex flex-row-center flex-col-center">
+                        <img src="../../images/blx/pl3.png" />
+                         <span>111111</span>
+                      </div>
+                    </div>
+                  </li>
 								</ul>
 							</div>
 						</div>
@@ -439,6 +482,7 @@
             plDiv.appendChild(dz);
             li.appendChild(plDiv);
           };
+          // 获取列表
           var getList = function(page,callback){
             if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
               return;
@@ -447,7 +491,8 @@
               data: {
                 groupid: groupid,
                 page: page,
-                limit: limit
+                limit: limit,
+                type: 1
               },
               showMsg: false
             }, function(data) {
