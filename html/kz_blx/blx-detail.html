@@ -127,7 +127,17 @@
       margin-right: 10px;
     }
     .pl-tx{
-    	padding:10px 0;
+      position: relative;
+    	 padding-top:10px;
+    	 padding-right: 40px;
+    }
+    .pl-tx .mui-icon{
+      position: absolute;
+      right: 0;
+      top: 20px;
+      color: #7c7c7c;
+      font-size: 40px;
+      z-index: 2;
     }
     .pl-tx .img{
     	float:left;
@@ -184,13 +194,13 @@
 
     .p-txt{
       color: #000000;
-    	font-size:14px;
+    	  font-size:14px;
     }
     .pl-hf{
       position: relative;
-    	padding:10px 0;
-    	padding-left: 70px;
-    	background: #fff;
+      	padding:10px 0;
+      	padding-left: 70px;
+      	background: #fff;
     }
     .pl-hf:before{
       position: absolute;
@@ -275,16 +285,19 @@
           <img src="../../images/blx/pl2.png" />
            <span id="comments">1</span>
         </div>
-        <div class="flex-1 flex flex-row-center flex-col-center">
+        <div id="dzFn" class="flex-1 flex flex-row-center flex-col-center">
           <img src="../../images/blx/pl3.png" />
            <span id="thing">1</span>
         </div>
       </div>			
       <!-- 下面的评论 -->
-			<div class="pl-tx clearFix">
-			  <div class="img flex flex-row-center">
-			    <img src="../../images/weibo/pltx1.png"/>
+			<div class="pl-tx">
+			  <div id="dzusers" class="clearFix">
+			    <div class="img flex flex-row-center">
+            <img src="../../images/weibo/pltx1.png"/>
+          </div>
 			  </div>
+			  <span id="dzusersmore" class="mui-icon mui-icon-arrowright"></span>
 			</div>
 			<!-- 发表的评论 -->
 			<div class="pl-true">
@@ -311,7 +324,7 @@
       <span>写评论</span>
     </div>
     <div class="flex-1 flex flex-col-center flex-row-center">
-      <img src="../../images/blx/ft2.png" />
+      <!--<img src="../../images/blx/ft2.png" />-->
     </div>
     <div class="flex-1 flex flex-col-center flex-row-center">
       <img src="../../images/blx/ft3.png" />
@@ -325,11 +338,23 @@
   <script src="../../js/utils.request.js"></script>
   <script>
     (function($, doc) {
+        var detailData = {};
         $.init({
           preloadPages:[{
             id:'KZ_BLX_PL',
             url: './blx-pl.html'
-          }]
+          }, {
+            id:'KZ_BLX_DZ_USERS',
+            url: './blx-users.html'
+          }],
+          beforeback: function() {
+    　　　　 //获得父页面的webview
+            var parent = plus.webview.currentWebview().opener();
+            $.fire(parent, 'BLX_DETAIL_CHANGE', {
+              data: detailData
+            });
+            return true;
+          }
         });
         $.plusReady(function() {
           // 用户信息
@@ -347,28 +372,26 @@
           var $thing = doc.getElementById('thing');
           // 关注
           var $gzfn = doc.getElementById('gzfn');
-          var isfollow = 0;
-          // 病例秀id
-          var id = 0;
-          // 用户id
-          var uid = 0;
           // 刷新详情
           window.addEventListener('KZ_BLX_DATA', function(e){
+            console.log('收到的详情');
             console.log(JSON.stringify(e.detail.data));
-            setFn(e.detail.data);
+            detailData = e.detail.data;
+            setFn();
+            readFn();
+            dzPeople();
+            plList();
           });
           // 设置详情
-          var setFn = function(data) {
-            id = data.id;
-            $headurl.src = data.userinfo.headurl;
-            $nickname.innerText = data.userinfo.nickname;
-            $createtime.innerText = data.creatime;
-            uid = data.userinfo.uid;
-            $contents.innerText = data.contents;
+          var setFn = function() {
+            $headurl.src = detailData.userinfo.headurl || '../../images/tab-wode/user_default.png';
+            $nickname.innerText = detailData.userinfo.nickname;
+            $createtime.innerText = detailData.creatime;
+            $contents.innerText = detailData.contents;
             $imgs.innerHTML = '';
-            if (data.cases_image) {
+            if (detailData.cases_image) {
               var caseurllist = [];
-              $.each(data.cases_image, function(i,d) {
+              $.each(detailData.cases_image, function(i,d) {
                 var img = doc.createElement('img');
                 img.src = d.image;
                 caseurllist.push(d.image);
@@ -378,48 +401,50 @@
                 $imgs.appendChild(img);
               });
             }
-            $read.innerText = data.read;
-            $comments.innerText = data.comments;
-            $thing.innerText = data.thing;
-            isfollow = data.isfollow;
-            $gzfn.innerText = isfollow == 1 ? '取消关注' : '加关注';
-            readFn();
-            plList();
+            $read.innerText = detailData.read;
+            $comments.innerText = detailData.comments;
+            $thing.innerText = detailData.thing;
+            if (detailData.isMe == 2) {
+              $gzfn.style.display = 'block';
+              $gzfn.innerText = detailData.isfollow == 1 ? '取消关注' : '加关注';
+            } else{
+              $gzfn.style.display = 'none';
+            }
           }
-          $gzfn.addEventListener('tap', function() {
-            gzFn(uid, function(d) {
-              if (d.status == 1) {
-                $gzfn.innerText = '取消关注';
-              } else {
-                $gzfn.innerText = '加关注';
-              }
-              isfollow = d.status;
-            });
-          });
           // 阅读
           var readFn = function() {
              request.loginAjax('cases/read', {
                 data: {
-                  case_id: id,
+                  case_id: detailData.id,
                 },
                 showMsg: false
               }, function(data, success) {
                 if (success) {
+                  detailData.read += 1;
+                  $read.innerText = detailData.read;
                 }
             });
           }
           // 关注
-          var gzFn = function(uid, callback) {
+          var gzFn = function(callback) {
              request.loginAjax('cases/follow', {
                 data: {
-                  touid: uid,
+                  touid: detailData.userinfo.uid,
                 }
               }, function(data, success) {
                 if (success) {
-                  callback(data);
+                  if (data.status == 1) {
+                    $gzfn.innerText = '取消关注';
+                  } else {
+                    $gzfn.innerText = '加关注';
+                  }
+                  detailData.isfollow = data.status;
                 }
             });
           }
+          $gzfn.addEventListener('tap', function() {
+            gzFn();
+          });
            /*图片预览*/
           var previewImage = function(urllist, index) {
             plus.nativeUI.previewImage(urllist, {
@@ -429,14 +454,53 @@
             });
           }
           //点赞
-          var dzFn = function(caseid, callback) {
+          var dzFn = function() {
              request.loginAjax('cases/thing', {
                 data: {
-                  case_id: caseid,
+                  case_id: detailData.id,
                 }
               }, function(data, success) {
                 if (success) {
-                  callback();
+                  detailData.thing += 1;
+                  $thing.innerText = detailData.thing;
+                }
+            });
+          }
+          doc.getElementById('dzFn').addEventListener('tap',function(e){
+            dzFn();
+          });
+          // 点赞的人
+          var $dzusers = doc.getElementById('dzusers');
+          var $dzusersmore = doc.getElementById('dzusersmore');
+          $dzusersmore.addEventListener('tap', function(e) {
+            var dzWebview = plus.webview.getWebviewById('KZ_BLX_DZ_USERS');
+            $.fire(dzWebview,'KZ_BLX_DZ_ID',{
+              id:detailData.id
+            });
+            $.openWindow({
+              id: 'KZ_BLX_DZ_USERS'
+            });
+          });
+          var dzPeople = function() {
+            $dzusers.innerHTML = '';
+            $dzusersmore.style.display = 'none';
+             request.loginAjax('cases/getThingList', {
+                data: {
+                  case_id: detailData.id,
+                  page: 1,
+                  limit: 5
+                },
+                showMsg: false
+              }, function(data, success) {
+                if (success && data && data.data.length > 0) {
+                  $.each(data.data, function(index, d) {
+                    var imgdiv = doc.createElement('div');
+                    imgdiv.className = 'img flex flex-row-center';
+                    var _url = d.user_info.headurl || '../../images/tab-wode/user_default.png';
+                    imgdiv.innerHTML = '<img src="{0}"/> '.format(_url);
+                    $dzusers.appendChild(imgdiv);
+                  });
+                  $dzusersmore.style.display = 'block';
                 }
             });
           }
@@ -445,7 +509,7 @@
           var plList = function(callback) {
              request.loginAjax('cases/getCommentsList', {
                 data: {
-                  case_id: id,
+                  case_id: detailData.id,
                   page: 1,
                   limit: 10
                 },
@@ -457,13 +521,10 @@
             });
           }
           // 发表评论
-          var plWebview = null;
           doc.getElementById('fb_pl').addEventListener('tap', function(){
-            if (!plWebview) {
-              plWebview = plus.webview.getWebviewById('KZ_BLX_PL');
-            }
+            var plWebview = plus.webview.getWebviewById('KZ_BLX_PL');
             $.fire(plWebview,'KZ_BLX_ID',{
-              id:id
+              id:detailData.id
             });
             $.openWindow({
               id: 'KZ_BLX_PL'

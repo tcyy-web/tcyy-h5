@@ -53,7 +53,7 @@
     padding-top: 10px;
   }
 
-  .main-block ul li{
+  .main-block .item{
   	float:left;
   	margin-right:10px;
   	width: 60px;
@@ -62,17 +62,18 @@
   	overflow: hidden;
   }
 
-  .main-block ul li img{
-  	width: 100%;
+  .main-block .item img{
+  	 width: 100%;
+  	 height: auto;
   }
 
   .img-file{
-  	width:calc(100% / 5);
-  	float:right;
+  margin: 0 0 10px 0;
+  	float:left;
+  	width: 60px;
   	height:60px;
   	background:burlywood;
   	border:1px dashed #666666;
-  	box-sizing: border-box;
   	background:url(../../images/blx/jia.png) center center no-repeat;
   }
 
@@ -144,13 +145,12 @@
 		<div class="main">
 			<h2>添加病例图</h2>
 			<div class="main-block clearFix">
-				<ul>
-					<li class="flex flex-row-center">
-						<img src="../../images/weibo/img.png"/>
-					</li>
-					<li class="img-file">
-					</li>
-				</ul>
+			  <div id="imglist" style="float: left;">
+			    <!--<div class="item flex flex-row-center">
+			      <img src="../../images/weibo/img.png"/>
+			    </div>-->
+			  </div>
+			  <div id="blx_pic" class="img-file"></div>
 			</div>
 		</div>
 		<div class="main main-img">
@@ -170,14 +170,37 @@
   <script src="../../js/utils.storages.js" ></script>
   <script src="../../js/utils.category.js" ></script>
   <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
   <script src="../../js/utils.request.js"></script>
   <script>
     (function($, doc) {
-        $.init();
+        var hasSaved = false;
+        $.init({
+          gestureConfig:{
+            longtap: true //长按
+          }
+        });
         $.plusReady(function() {
+          // 分类id
           var groupid = -1;
-          var $contents = doc.getElementById('contents');
           var $groupbox = doc.getElementById('group');
+          // 内容
+          var $contents = doc.getElementById('contents');
+          // 图片
+          var $imglist = doc.getElementById('imglist');
+          var imglist = [];
+          window.addEventListener('KZ_BLX_FBREFRESH', function(e){
+            if (hasSaved) {
+              $.each(doc.querySelectorAll('#group dd'), function(i, o) {
+                o.classList.remove('active');
+              });
+              groupid = -1;
+              $contents.value = '';
+              $imglist.innerHTML = '';
+              imglist.length = 0;
+            }
+            hasSaved = false;
+          });
           // 生成分类
           var category = categorys.get();
           if (category.length > 0) {
@@ -202,6 +225,27 @@
           doc.getElementById('fb_blx').addEventListener('tap', function() {
             fbFn(1);
           });
+          // 画图片
+          var paintImg = function(url) {
+             var imgdiv = doc.createElement('div');
+             imgdiv.className = 'item flex flex-row-center';
+             imgdiv.innerHTML = '<img src="{0}" />'.format(url);
+             $imglist.appendChild(imgdiv);
+          }
+          // 上传图片
+          doc.getElementById('blx_pic').addEventListener('tap', function(event) {
+            setTimeout(function(){
+              upload.showImgActionSheet(function( data ){
+                var url = config.url + "Uploads/Files";
+                upload.uploadimge( url , data.divid, function(res) {
+                   paintImg(data.abspath);
+                   imglist.push(res[0].saveUrl);
+                },{
+                  type: '3'
+                });
+              });             
+            }, 500);
+          });
           // 发表病例
           var fbFn = function(type) {
             var contents = $contents.value.trim();
@@ -218,10 +262,18 @@
                   group_id: groupid,
                   contents: contents,
                   type: type,
-                  images: []
+                  images: imglist
                 }
               }, function(data, success) {
                 if (success) {
+                  hasSaved = true;
+                  if (type == 1) {
+                     var parent = plus.webview.currentWebview().opener();
+                     $.fire(parent, 'KZ_BLX_FB_SUCCESS',{
+                       data: data
+                     });
+                  }
+                  $.back();
                 }
             });
           }
