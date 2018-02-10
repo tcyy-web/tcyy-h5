@@ -14,8 +14,12 @@
 	background:#ffffff;
 }
 
+
+.xq{ display: table; width: 100%;}
+.xq .imgbox{ display: table-cell; width: 140px; vertical-align: top;}
+.xq dl{ float: left; width: 100%; display: block; }
 .xq img{
-	height: 100%;
+	width: 100%;
 	float:left;
 	padding-right:15px;
 }
@@ -24,6 +28,7 @@
 	font-size:16px;
 	color:#000000;
 	padding-bottom: 15px;
+	display: block;
 }
 
 .xq dl dd{
@@ -34,7 +39,9 @@
 .xq dl dd a{
 	color:#ff0000;
 }
-
+.xq .price{
+	color: #555;
+}
 .main{
 	margin-top:15px;
 	border-top:1px solid #d6d6d6;
@@ -71,7 +78,7 @@
 	font-size:14px;
 	color:white;
 	background:#755fc3;
-	text-indent: -40px;
+
 	position: absolute;
 	bottom:0;
 }
@@ -88,11 +95,11 @@
 </header>
 <div class="mui-content">
 
-	<div class="xq">
-			<img src="../../images/my/duihuan.png"/>
+	   <div class="xq" id="productDetail">
+			<div class="imgbox"><img src="../../images/my/duihuan.png"/></div>
 			<dl>
 				<dt>免费使用天数</dt>
-				<dd><a href="">380积分</a> &nbsp; 38.00元</dd>
+				<dd><a>380积分</a> &nbsp; <del class="price">38.00元</del> </dd>
 				<dd>剩余100000</dd>
 			</dl>
 		</div>
@@ -100,26 +107,130 @@
 		<div class="main">
 			<form action="" method="post">
 				<div class="input-parent">
-					<span>2017/7</span>
-					<input  placeholder="输入姓名：" type="text" value=""/>
+
+					<input id="name" placeholder="输入姓名：" type="text" value=""/>
 				</div>
 				<div class="input-parent">
-					<span>2017/7</span>
-					<input  placeholder="输入姓名：" type="text" value=""/>
+
+					<input id="tel"  placeholder="输入电话：" type="text" value=""/>
 				</div>
 				<div class="input-parent">
-					<span>2017/7</span>
-					<input  placeholder="输入姓名：" type="text" value=""/>
+
+					<input id="addr" placeholder="输入地址：" type="text" value=""/>
 				</div>
 			</form>
 		</div>
 		
-		<div class="jf-bottom">
+		<div class="jf-bottom" id="saveBtn">
 			积分兑换
 		</div>
 </div>
 <script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.storages.js"></script>
+<script src="../../js/utils.auth.js"></script>
+<script src="../../js/utils.upload.js"></script>
+<script src="../../js/utils.request.js" ></script>
+<script type="text/javascript">
+(function($, doc) {
+var goodsId = null;
+var totalPoint = null;
+var dpoint = null;
+$.init();
 
+$.plusReady(function() {
+	
+	
+	window.addEventListener('point-use-id', function(e){
+        goodsId = e.detail.id;
+		getProductDetail();
+    });
+    
+    document.getElementById("saveBtn").addEventListener("tap",function(){
+    	if(!dpoint){ $.back(); return;}
+    	if( dpoint.number ==0 ){
+    		$.toast("数量不足不能兑换");
+    		return;
+    	}
+    	
+    	if( totalPoint < dpoint.point ){
+    		$.toast("积分不足不能兑换");
+    		return;
+    	}
+    	
+    	var oName = document.getElementById("name");
+    	var oTel = document.getElementById("tel");
+    	var oAddr = document.getElementById("addr");
+    	if( oName.value == "" ){
+    		$.toast("请输入姓名");
+    	}else if( oTel.value == "" ){
+    		$.toast("请输入电话");
+    	}else if( oAddr.value == "" ){
+    		$.toast("请输入地址");
+    	}
+    	
+    	saveData({
+    		goodid:goodsId,
+			phone:oTel.value,
+			realname:oName.value,
+			province:"",
+			city:"",
+			"area":"",
+			address:oAddr.value
+
+    	});
+    	
+    	
+    	
+    });
+});
+
+function saveData( data ){
+//	Point/saveBook
+	request.loginAjax('Point/saveBook', {
+	    data: data
+	  }, function(data, success) {
+	    if (success) {
+	      $.back();
+	    }
+	});
+}
+			
+function getTotalPoint(){
+request.loginAjax('point/getTotalPoint', {
+	
+  }, function(data, success) {
+    if (success) {
+		totalPoint = data.point;
+    }
+});
+}
+
+function getProductDetail(){
+request.loginAjax('Point/getDetails', {
+	data:{
+		id:goodsId
+	},
+	showMsg:false,
+	showLoading:false
+  }, function(data, success) {
+    if (success) {
+    	
+		productDetail = document.getElementById("productDetail");
+		productDetail.innerHTML=''+
+		'<div class="imgbox"><img src="'+data.image+'"/></div>'+
+		'<dl>'+
+			'<dt>'+data.title+'</dt>'+
+			'<dd><a>'+data.point+'积分</a> &nbsp; <del class="price">'+data.price+'元</del> </dd>'+
+			'<dd>剩余'+data.number+'</dd>'+
+		'</dl>';
+		dpoint = data;
+    }
+});
+}
+				
+}(mui, document));
+</script>
 </body>
 
 </html>

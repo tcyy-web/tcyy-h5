@@ -27,7 +27,7 @@
 }
 
 .main li{
-	width:calc(100% - 30px);
+	width:calc(100% - 10px);
 	padding:0 15px;
 
 	height:50px;
@@ -82,9 +82,9 @@
 </header>
 <div class="mui-content">
 	<div class="zjf">
-		<p>总积分：<a>100</a>积分</p>
+		<p>总积分：<a id="totalPoint">100</a> 积分</p>
 	</div>
-	<ul class="main mui-table-view ">
+	<ul class="main mui-table-view " id="pointList">
 		<li class="mui-table-view-cell">
 			<div class="cost zc">
 				<a href="">支出</a>
@@ -105,7 +105,80 @@
 	
 </div>
 <script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.storages.js"></script>
+<script src="../../js/utils.auth.js"></script>
+<script src="../../js/utils.upload.js"></script>
+<script src="../../js/utils.request.js" ></script>
 
+<script type="text/javascript">
+(function($, doc) {
+
+
+	$.init();
+
+	$.plusReady(function() {
+		
+		ajaxPointList();
+		
+		getTotalPoint();
+
+	});
+	
+function ajaxPointList(){
+request.loginAjax('user/pointList', {
+	data:{
+		page:1,
+		limit:200
+	},
+	showMsg:false,
+	showLoading:false
+  }, function(data, success) {
+  	
+    if (success) {
+
+		var currentContent = document.getElementById("pointList");
+		currentContent.innerHTML = "";
+		if (data && data.data) {
+			$.each(data.data, function(index,i) {
+           		createFragment(currentContent,i);
+           });
+           doc.getElementById("totaljifen").innerText = point;
+		}
+
+    }
+});
+}
+
+function createFragment( parent, data) {
+  var li = doc.createElement('li');
+  var tarr = ["签到 ","发布并列秀","点赞 ","积分商城 ","激活邀请码"];
+
+
+  li.innerHTML ='<li class="mui-table-view-cell">'+
+					'<div class="cost '+(data.status==1?"sr":"zc")+'">'+
+						'<a>'+(data.status==1?"收入":"支出")+'</a>'+
+						'<span>'+data.point+'积分</span>'+
+						'<ins>'+tarr[data.type-1]+'</ins>'+
+						'<p>'+data.times+'</p>'+
+					'</div>'+
+				'</li>';
+
+  parent.appendChild(li);
+}
+
+
+function getTotalPoint(){
+request.loginAjax('point/getTotalPoint', {
+	
+  }, function(data, success) {
+    if (success) {
+		document.getElementById("totalPoint").innerText = data.point;
+    }
+});
+}
+})(mui,document);
+</script>
 </body>
 
 </html>

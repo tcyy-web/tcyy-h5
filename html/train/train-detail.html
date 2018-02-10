@@ -80,8 +80,8 @@
 				});
 				$.plusReady(function() {
 					
-				  window.addEventListener('refresh', function(e){
-		            window.reload();
+				  window.addEventListener('refresh-train-detail', function(e){
+		            location.reload();
 		          });
 
 		          window.addEventListener('train-id', function(e){
@@ -136,7 +136,7 @@
 		      	
 		      	
 		      	//课程安排
-//		      	request.loginAjax('Curriculum/getSubjectsList', {
+//		      	request.loginAjax('Curriculum/saveSubjects', {
 //					
 //					data: {
 //						groupid: courseId,

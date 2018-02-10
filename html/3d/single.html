@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /> -->
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<title>Teeth demo</title>
+
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="js/babylon.custom.js"></script>
+	<script src="js/pep.js"></script>
+
+</head>
+
+<body>
+
+	<div class="loading">
+		<p>
+			<span>Loading</span>
+			<span class="p1">.</span>
+			<span class="p2">.</span>
+			<span class="p3">.</span>
+		</p>
+	</div>
+
+	<canvas id="renderCanvas" touch-action="none"></canvas>
+
+	<div class="view">
+		<p class="alpha" touch-action="none">牙髓</p>
+		<p class="texture" touch-action="none">牙体</p>
+	</div>
+
+	<img class="logo" src="logo.png" alt="">
+
+	<script>
+
+		// 动态REM
+		(function (doc, win) {
+			var docEl = doc.documentElement,
+				resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+				recalc = function () {
+					var clientWidth = docEl.clientWidth;
+					if (!clientWidth) return;
+					if (clientWidth >= 640) {
+						docEl.style.fontSize = clientWidth / 20 / 667 * 375 + 'px';
+					} else {
+						docEl.style.fontSize = clientWidth / 20 + 'px';
+					}
+				};
+
+			if (!doc.addEventListener) return;
+			win.addEventListener(resizeEvt, recalc, false);
+			doc.addEventListener(window.onload, recalc, false);
+		})(document, window);
+
+	</script>
+	
+	<script>
+		var parms = {
+			folder: "new/",
+			objName: getParam("id"),
+			autoRotate: true,
+			bgColor: [37, 42, 71],
+			alreadyLoaded: false,
+			initPosition: [0, 1, 0]
+		};
+		var order = [
+			[1, 1, 18],
+			[1, 1, 17],
+			[1, 1, 16],
+			[1, 1, 15],
+			[1, 1, 14],
+			[1, 1, 13],
+			[1, 1, 12], //
+			[1, 1, 11],
+			[0, 0, 21],
+			[0, 0, 22], //
+			[0, 0, 23],
+			[0, 0, 24],
+			[0, 0, 25],
+			[0, 0, 26],
+			[0, 0, 27],
+			[0, 0, 28],
+			[0, 0, 38],
+			[0, 0, 37],
+			[0, 0, 36],
+			[0, 0, 35],
+			[0, 0, 34],
+			[0, 0, 33],
+			[0, 0, 32],
+			[0, 0, 31],
+			[1, 1, 41],
+			[1, 1, 42],
+			[1, 1, 43],
+			[1, 1, 44],
+			[1, 1, 45],
+			[1, 1, 46],
+			[1, 1, 47],
+			[1, 1, 48],
+		];
+
+		// var objMap = (function () {
+		// 	var [up, down] = [[], []];
+		// 	var len = 32;
+		// 	for (var i = 0; i < len; i++) {
+		// 		if (Math.floor(i / (len / 2)) % 2 === 0) {
+		// 			up.push([
+		// 				'p' + (i + 1),
+		// 				Math.ceil((i + 1) / (len / 4)) * 10 +
+		// 				(Math.floor(i / (len / 4)) % 2 === 0 ? 8 - i : i - 8 + 1)
+		// 			]);
+		// 		} else {
+		// 			down.push([
+		// 				'p' + (i + 1),
+		// 				Math.ceil((i + 1) / (len / 4)) * 10 +
+		// 				(Math.floor(i / (len / 4)) % 2 === 0 ? 8 - i % (len / 4) : i % (len / 4) + 1)
+		// 			]);
+		// 		}
+		// 	}
+		// 	return { up, down };
+		// })();
+
+		var loading = document.querySelector('.loading');
+
+		var canvas = document.getElementById("renderCanvas"); // Get the canvas element 
+
+		var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+
+		var meshes;
+
+
+		/******* Add the create scene function ******/
+		var createScene = function () {
+
+			// Create the scene space
+			var scene = new BABYLON.Scene(engine);
+			// Set clear color by rgb, range of 0 ~ 1
+			scene.clearColor = new BABYLON.Color3(parms.bgColor[0] / 255, parms.bgColor[1] / 255, parms.bgColor[2] / 255);
+
+			// Add a camera to the scene and attach it to the canvas
+			var cameraArc = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 0, new BABYLON.Vector3.Zero(), scene);
+			cameraArc.attachControl(canvas, true);
+			cameraArc.setPosition(new BABYLON.Vector3(0, 0, -20));
+
+			if (parms.autoRotate) {
+				var autoRotationBehavior = new BABYLON.AutoRotationBehavior();
+				autoRotationBehavior.idleRotationWaitTime = 1000;
+				autoRotationBehavior.idleRotationSpeed = -0.2;
+				autoRotationBehavior.attach(cameraArc);
+			}
+
+			cameraArc.lowerRadiusLimit = 4;
+			cameraArc.upperRadiusLimit = 40;
+
+			// cameraArc.wheelPrecision = 0.01;
+			// cameraArc.pinchPrecision = 25;
+			// cameraArc.angularSensibilityX = 45.0;
+			// cameraArc.angularSensibilityY = 45.0;
+			// cameraArc.inertia = 0;
+
+			// Add lights to the scene
+			var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
+			light1.diffuse = new BABYLON.Color3(1, 1, 1);
+			light1.intensity = 0.5;
+			var light2 = new BABYLON.HemisphericLight("light2", new BABYLON.Vector3(-1, 1, 0), scene);
+			light2.diffuse = new BABYLON.Color3(1, 1, 1);
+			light2.intensity = 0.5;
+			var light3 = new BABYLON.PointLight("light3", new BABYLON.Vector3(0, 0, 0), scene);
+
+
+			// Add and manipulate meshes in the scene
+			if (parms.objName) {
+
+				BABYLON.OBJFileLoader.OPTIMIZE_WITH_UV = true; //贴图错乱解决方法
+
+				var texture = new BABYLON.Texture(getTexture(), scene);
+
+				var assetManager = new BABYLON.AssetsManager(scene);
+				assetManager.useDefaultLoadingScreen = false;
+				assetManager.onProgress = function (remainingCount, totalCount, lastFinishedTask) {
+					engine.loadingUIText = '正在加载，请稍后...';
+				};
+				assetManager.onFinish = function (a) {
+					parms.alreadyLoaded = true;
+					loading.classList.add('hide');
+					setTimeout(function() {
+						meshes.forEach(function(item) {
+							item.visibility = 1;
+						});
+					}, 100);
+				};
+				
+				var alphaObjTask = assetManager.addMeshTask("add alpha", "", parms.folder, parms.objName + ".obj");
+				// console.log(alphaObjTask)
+				alphaObjTask.onSuccess = function (task) {
+					var tmpObject = new BABYLON.Mesh(task.sceneFilename, scene);
+					meshes = task.loadedMeshes;
+					meshes.forEach(function(item) {
+						if (item.name === "inner") {
+							item.onMaterialChangedObservable.add(function (mesh) {
+								mesh.material.sideOrientation = getSide().inner;
+								mesh.material.diffuseColor = new BABYLON.Color3(0.96, 0.38, 0.38);
+							})
+						} else if (item.name === "outer") {
+							item.onMaterialChangedObservable.add(function (mesh) {
+								mesh.material.sideOrientation = getSide().outer;
+							});
+
+						}
+						item.visibility = 0;
+						item.parent = tmpObject;
+					});
+					// console.log(parms.objName)
+					if (Number(parms.objName.replace(/a/g, "")) < 30) {
+						tmpObject.position = new BABYLON.Vector3(parms.initPosition[0], -parms.initPosition[1], parms.initPosition[2]);
+						tmpObject.rotation = new BABYLON.Vector3(Math.PI, 0, 0);
+					} else {
+						tmpObject.position = new BABYLON.Vector3(parms.initPosition[0], parms.initPosition[1], parms.initPosition[2]);
+					}
+					// var inner = scene.getMeshByName("inner");
+					// var outer = scene.getMeshByName("outer");
+				};
+
+				assetManager.load();
+			}
+
+			return scene;
+		};
+
+		/******* End of the create scene function ******/
+
+		var scene = createScene(); //Call the createScene function
+
+		engine.runRenderLoop(function () { // Register a render loop to repeatedly render the scene
+			scene.render();
+		});
+
+		window.addEventListener("resize", function () { // Watch for browser/canvas resize events
+			engine.resize();
+		});
+
+		var alphaView = document.querySelector('.alpha');
+		var textureView = document.querySelector('.texture');
+		alphaView.addEventListener('pointerup', toggleView, false);
+		textureView.addEventListener('pointerup', toggleView, false);
+
+		// function mapResult() {
+		// 	var origin = parms.objName;
+		// 	var res;
+		// 	for (var prop in objMap) {
+		// 		objMap[prop].forEach(function ([a, b]) {
+		// 			if (origin === a) {
+		// 				res = b;
+		// 			}
+		// 		});
+		// 	}
+		// 	return `${res}`;
+		// }
+
+		function toggleView() {
+			if (!parms.alreadyLoaded) return;
+			var target = scene.getMeshByName("outer").material;
+			var kind = this.classList[0];
+			if (kind === 'alpha') {
+				target.alpha = 0.15;
+				target.diffuseTexture = undefined;
+			} else if (kind === "texture") {
+				target.alpha = 1;
+				target.diffuseTexture = new BABYLON.Texture(getTexture(), scene);
+			}
+		}
+
+		function getParam(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]); return null;
+		}
+
+		function getTexture() {
+			var index = parseInt(parms.objName.replace(/a/ig, ''));
+			// return index >= 1 && index <= 16 ? "models/yaA.jpg" : "models/yaB2.jpg";
+			return index >= 11 && index <= 28 ? "new/up.jpg" : "new/dang.jpg";
+		}
+
+		function getSide() {
+			var num = parseInt(parms.objName.replace(/a/ig, ''));
+			target = order.find((item) => item[2] === num);
+			var inner = target[0];
+			var outer = target[1];
+			return { inner, outer };
+		}
+	</script>
+
+</body>
+
+</html>

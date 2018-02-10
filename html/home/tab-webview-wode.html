@@ -143,17 +143,17 @@
 				</div>
 			</div>
 			<div class="count flex">
-				<div class="flex-1">
+				<div class="flex-1" id="myshoucang">
 					<p>收藏</p>
 					<p>0</p>
 				</div>
-				<div class="flex-1">
+				<div class="flex-1" id="myjifen">
 					<p>积分</p>
-					<p>0</p>
+					<p id="totalPoint">0</p>
 				</div>
 				<div id="qiandao" class="flex-1">
 					<p>签到</p>
-					<p>0</p>
+					<!--<p>0</p>-->
 				</div>
 			</div>
 			<ul class="mui-table-view mui-table-view-chevron">
@@ -214,13 +214,14 @@
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js" ></script>
 		<script>
-			window.addEventListener('refresh', function(e){
+			window.addEventListener('refresh-wode', function(e){
 		    	location.reload();
 			});
 	
 			(function($, doc) {
-				$.init();
+				$.init();     
 				$.plusReady(function() {
+					getTotalPoint();
 					
 					var user = authManage.getUser();
 					// 判断登录
@@ -269,25 +270,81 @@
 					// 我的病例秀
 					doc.getElementById('myblx').addEventListener('tap', function(e) {
 					  $.openWindow({
-              url: '../kz_blx/my-blx-list.html',
-              id: 'MY-BLX',
-              preload: true,
-              show: {
-                aniShow: 'pop-in'
-              },
-              styles: {
-                popGesture: 'hide'
-              },
-              waiting: {
-                autoShow: false
-              }
-            });
+			              url: '../kz_blx/my-blx-list.html',
+			              id: 'MY-BLX',
+			              preload: true,
+			              show: {
+			                aniShow: 'pop-in'
+			              },
+			              styles: {
+			                popGesture: 'hide'
+			              },
+			              waiting: {
+			                autoShow: false
+			              }
+			            });
+					});
+					// 我的积分
+					doc.getElementById('myjifen').addEventListener('tap', function(e) {
+					  $.openWindow({
+			              url: '../my/point.html',
+			              id: 'MY-JIFENSHANGCHENG',
+			              preload: true,
+			              show: {
+			                aniShow: 'pop-in'
+			              },
+			              styles: {
+			                popGesture: 'hide'
+			              },
+			              waiting: {
+			                autoShow: false
+			              }
+			            });
+					});
+					
+					// 我的收藏
+					doc.getElementById('myshoucang').addEventListener('tap', function(e) {
+//					  $.openWindow({
+//			              url: '../kz_blx/my-blx-list.html',
+//			              id: 'MY-BLX',
+//			              preload: true,
+//			              show: {
+//			                aniShow: 'pop-in'
+//			              },
+//			              styles: {
+//			                popGesture: 'hide'
+//			              },
+//			              waiting: {
+//			                autoShow: false
+//			              }
+//			            });
 					});
 					//qiandao
 					document.getElementById("qiandao").addEventListener("tap",function(){
-						mui.toast("签到成功");
+						request.loginAjax('user/sign', {
+					        
+					      }, function(data, success) {
+					        if (success) {
+					        	
+//					        	mui.toast("签到成功");
+
+					        }
+					    });
+	
+
 					});
 				});
+				
+				function getTotalPoint(){
+					request.loginAjax('point/getTotalPoint', {
+						
+					  }, function(data, success) {
+					    if (success) {
+							document.getElementById("totalPoint").innerText = data.point;
+					    }
+					});
+					}
+
 			}(mui, document));
 		</script>
 	</body>

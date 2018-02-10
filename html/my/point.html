@@ -133,7 +133,11 @@
 .block-two{
 	color:#7c7c7c;
 }
-
+.title{
+	height: 56px;
+	overflow: hidden;
+	line-height: 1.5;
+}
 .block-two span a{
 	color:#fe3138;
 }
@@ -178,12 +182,12 @@
 			<div class="top">
 				<div class="top-left">
 					<span>当前积分</span>
-					<ins>100</ins>
+					<ins id="totalPoint">100</ins>
 				</div>
 				<div class="top-right">
-					<h4>7月15日起</h4>
-					<p>下单即送积分（1元=1积分）活动有效期至2015年12月31日。</p>
-					<div class="btn"><a href="">查看积分明显</a> <a href="" >赚积分</a></div>
+					<!--<h4>7月15日起</h4>
+					<p>下单即送积分（1元=1积分）活动有效期至2015年12月31日。</p>-->
+					<div class="btn"><a id="jifenxiangqing">查看积分明细</a> <!--<a>赚积分</a>--></div>
 				</div>
 			</div>
 		</section>
@@ -196,12 +200,12 @@
 		
 		<section>
 			<div class="main">
-				<ul>
+				<ul id="productList">
 					<li>
 						<a href="">
 							<img src="../../images/my/xqimg.png"/>
 						</a>
-						<div class="block-one">
+						<div class="block-one title">
 							<p>松下 电子血压计 EW3106 1台松下 电子血压</p>
 						</div>
 						<div class="block-one block-two">
@@ -213,76 +217,40 @@
 							<a class="duihua" href="">兑换</a>
 						</div>
 					</li>
-					<li>
-						<a href="">
-							<img src="../../images/my/xqimg.png"/>
-						</a>
-						<div class="block-one ">
-							<p>松下 电子血压计 EW3106 1台松下 电子血压</p>
-						</div>
-						<div class="block-one block-two">
-							<span>需要 <a>300</a>积分</span>
-							<p>
-								<a href="">38元</a>
-								剩余1000
-							</p>
-							<a class="duihua" href="">兑换</a>
-						</div>
-					</li>
-					<li>
-						<a href="">
-							<img src="../../images/my/xqimg.png"/>
-						</a>
-						<div class="block-one ">
-							<p>松下 电子血压计 EW3106 1台松下 电子血压</p>
-						</div>
-						<div class="block-one block-two">
-							<span>需要 <a>300</a>积分</span>
-							<p>
-								<a href="">38元</a>
-								剩余1000
-							</p>
-							<a class="duihua" href="">兑换</a>
-						</div>
-					</li>
-					<li>
-						<a href="">
-							<img src="../../images/my/xqimg.png"/>
-						</a>
-						<div class="block-one ">
-							<p>松下 电子血压计 EW3106 1台松下 电子血压</p>
-						</div>
-						<div class="block-one block-two">
-							<span>需要 <a>300</a>积分</span>
-							<p>
-								<a href="">38元</a>
-								剩余1000
-							</p>
-							<a class="duihua" href="">兑换</a>
-						</div>
-					</li>
+				
+					
 				</ul>
 			</div>
 		</section>
 </div>
 <script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.pullToRefresh.js"></script>
+<script src="../../js/mui.pullToRefresh.material.js"></script>
 <script src="../../js/utils.config.js"></script>
-<script src="../../js/utils.storages.js"></script>
+<script src="../../js/utils.extend.js"></script>
+<script src="../../js/utils.storages.js" ></script>
+<script src="../../js/utils.category.js" ></script>
 <script src="../../js/utils.auth.js"></script>
-<script src="../../js/utils.upload.js"></script>
-<script src="../../js/utils.request.js" ></script>
+<script src="../../js/utils.request.js"></script>
 <script type="text/javascript">
 (function($, doc) {
 
-	$.init();
+	$.init({
+      preloadPages:[{
+        id:'pointUSE',
+        url: './point-use.html'
+      }]
+    });
 
 	$.plusReady(function() {
-
-	 document.getElementById("fabu").addEventListener('tap', function(event){
+		ajaxList();
+		getTotalPoint();
+	
+	 document.getElementById("jifenxiangqing").addEventListener('tap', function(event){
         $.openWindow({
-            url: './train-upload.html',
-            id: 'KZ-TRAIN-UPLOAD',
-			extras:{ courseId  : courseId},
+            url: './point-detail.html',
+            id: 'KZ-JIFENGXIANGQING',
+
             show: {
               aniShow: 'pop-in'
             },
@@ -292,10 +260,110 @@
             }
          });
      });
+//   
+//   document.getElementById("fabu").addEventListener('tap', function(event){
+//      $.openWindow({
+//          url: './train-upload.html',
+//          id: 'KZ-TRAIN-UPLOAD',
+//			extras:{ courseId  : courseId},
+//          show: {
+//            aniShow: 'pop-in'
+//          },
+//
+//          waiting: {
+//            autoShow: true
+//          }
+//       });
+//   });
+//   
+//   document.getElementById("fabu").addEventListener('tap', function(event){
+//      $.openWindow({
+//          url: './train-upload.html',
+//          id: 'KZ-TRAIN-UPLOAD',
+//			extras:{ courseId  : courseId},
+//          show: {
+//            aniShow: 'pop-in'
+//          },
+//
+//          waiting: {
+//            autoShow: true
+//          }
+//       });
+//   });
 		
 	});
+	
+	
 
-}(mui, document));	
+function ajaxList(){
+request.loginAjax('Point/getListData', {
+	data:{
+		page:1,
+		limit:200
+	}
+  }, function(data, success) {
+    if (success) {
+		var currentContent = document.getElementById("productList");
+		currentContent.innerHTML = "";
+		if (data && data.data) {
+			$.each(data.data, function(index,i) {
+           		createFragment(currentContent,i);
+           });
+		}
+
+    }
+});
+}
+var childWebview = null;
+var createFragment = function( parent, data) {
+  var li = doc.createElement('li');
+  li.innerHTML ='<a>'+
+					'<img src="'+data.image+'"/>'+
+				'</a>'+
+				'<div class="block-one title">'+
+					'<p>'+data.title+'</p>'+
+				'</div>'+
+				'<div class="block-one block-two">'+
+					'<span>需要 <a>'+data.point+'</a>积分</span>'+
+					'<p>'+
+						'<a>'+data.price+'元</a>'+
+						'剩余'+data.number+
+					'</p>'+
+					'<a class="duihua">兑换</a>'+
+				'</div>';
+		    	
+		    	
+	 li.querySelector(".duihua").addEventListener('tap', function(event){
+      if (!childWebview) {
+        childWebview = plus.webview.getWebviewById('pointUSE');
+      }
+      $.fire(childWebview,'point-use-id',{
+        id:data.id
+      });
+      $.openWindow({
+        id: 'pointUSE'
+      });
+    });
+  parent.appendChild(li);
+};
+
+function getTotalPoint(){
+request.loginAjax('point/getTotalPoint', {
+	
+	showMsg:false,
+	showLoading:false
+  }, function(data, success) {
+    if (success) {
+		document.getElementById("totalPoint").innerText = data.point;
+    }
+});
+}
+    
+ 
+}(mui, document));
+
+
+
 </script>
 </body>
 

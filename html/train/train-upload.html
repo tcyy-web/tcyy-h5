@@ -223,7 +223,7 @@
 	
 	$.init({beforeback: function() {
 		var webview_parent = plus.webview.getWebviewById("trainDetail");
-		mui.fire( webview_parent, 'refresh');
+		mui.fire( webview_parent, 'refresh-train-detail');
 	}});
 
 	
@@ -467,7 +467,7 @@ var Record = {
 		$("#record").hide();
 		$("#rtime").text( timeToStr( 0 ) )
 		clearInterval( this._timer);
-		this.recorder.stop();
+		this.recorder&&this.recorder.stop();
 	},
 	startVedio:function(){
 
