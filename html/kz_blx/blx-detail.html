@@ -376,7 +376,7 @@
             <p>
               <span>土农民</span>
               <span class="slip">回复</span>
-              <span>领馆小草：</span>
+              <!--<span>领馆小草：</span>-->
               <span class="txt">是真的额,一起去吧靓仔-_-,haobuhao!</span>
               <span>1小时前</span>
             </p>
@@ -394,7 +394,7 @@
     <div class="flex-1 flex flex-col-center flex-row-center">
       <!--<img src="../../images/blx/ft2.png" />-->
     </div>
-    <div class="flex-1 flex flex-col-center flex-row-center">
+    <div id="share" class="flex-1 flex flex-col-center flex-row-center">
       <img src="../../images/blx/ft3.png" />
     </div>
   </footer>
@@ -403,6 +403,7 @@
   <script src="../../js/utils.config.js"></script>
   <script src="../../js/utils.extend.js"></script>
   <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.share.js"></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.request.js"></script>
   <script>
@@ -449,11 +450,15 @@
           var $gzfn = doc.getElementById('gzfn');
           // 刷新详情
           window.addEventListener('KZ_BLX_DATA', function(e){
-            detailData = e.detail.data;
-            setFn();
-            readFn();
-            dzPeople();
-            plList();
+            if (e.detail.data.id != detailData.id) {
+              detailData = e.detail.data;
+              page = 1;
+              more = true;
+              setFn();
+              readFn();
+              dzPeople();
+              plList();
+            }
           });
           // 设置详情
           var setFn = function() {
@@ -580,33 +585,30 @@
           /*评论*/
           var $pllist = doc.getElementById('pllist');
           var $plmore = doc.getElementById('plmore');
-//        <div class="pl-true">
-//          <div class="pl-true-img flex">
-//            <div class="img flex flex-row-center">
-//              <img src="../../images/weibo/pltx3.png"/>
-//            </div>
-//            <div class="flex-1">
-//              <p class="p-name"><span>领馆小草</span><span class="time">5小时</span> </p>
-//              <p class="p-txt">真的假的呀？我也想去~那个大哥哥带的假的呀？我也想去~那个大哥哥带我去</p>
-//            </div>
-//          </div>
-//        <div class="pl-hf">
-//          <p>
-//            <span>土农民</span>
-//            <span class="slip">回复</span>
-//            <span>领馆小草：</span>
-//            <span class="txt">是真的额,一起去吧靓仔-_-,haobuhao!</span>
-//            <span>1小时前</span>
-//          </p>
-//        </div>
-//        </div>
-          // 画每项评论
-          var paintPl = function(data,serverNowDateStr) {
+          var beginKey = 'blx_pl_';
+          // 评论成功
+          window.addEventListener('KZ_BLX_PL_SUCCESS', function(e){
+            var _d = e.detail.data;
+            // 一级评论
+            if (_d.pid == 0) {
+              var _first = paintFirstPl(_d, e.detail.t);
+              $pllist.insertBefore(_first, $pllist.childNodes[0]);
+            } else {
+              // 二级评论
+              var _dom = doc.getElementById(beginKey + _d.pid);
+              if (_dom != null) {
+                var _second = paintSecondPl(_d, e.detail.t);
+                utils.insertAfter(_second, _dom);
+              }
+            }
+          });
+          // 画一级评论
+          var paintFirstPl = function(data, serverNowDateStr) {
             var pldiv = doc.createElement('div');
             pldiv.className = 'pl-true';
-            $pllist.appendChild(pldiv);
             // 头像及名称
             var div1 = doc.createElement('div');
+            div1.id = beginKey + data.id;
             div1.className = 'pl-true-img flex';
             var _url = data.user_info.headurl || defaultUserImage;
             div1.innerHTML = '<div class="img flex flex-row-center"><img src="{0}"/></div>'.format(_url);
@@ -615,8 +617,44 @@
             var dateStr = utils.formatDateToNow(data.times, serverNowDateStr);
             namediv.innerHTML = '<p class="p-name"><span>{0}</span><span class="time">{1}</span></p><p class="p-txt">{2}</p'.format(data.user_info.nickname,dateStr,data.contents)
             div1.appendChild(namediv);
+            div1.addEventListener('tap', function() {
+              // 发布子评论
+              var plWebview = plus.webview.getWebviewById('KZ_BLX_PL');
+              $.fire(plWebview,'KZ_BLX_ID',{
+                case_id:detailData.id,
+                pid: data.id
+              });
+              $.openWindow({
+                id: 'KZ_BLX_PL'
+              });
+            });
             pldiv.appendChild(div1);
+            return pldiv;
           }
+          //画二级评论
+          var paintSecondPl = function(data,serverNowDateStr) {
+            var divhf = doc.createElement('div');
+            divhf.className = 'pl-hf';
+            var _dateStr = utils.formatDateToNow(data.times, serverNowDateStr);
+            divhf.innerHTML = '<p><span>{0}</span><span class="slip">回复</span><span class="txt">{1}</span><span>{2}</span>'.format(data.user_info.nickname,data.contents,_dateStr);
+            return divhf;
+          }
+          // 画每项评论
+          var paintPl = function(data,serverNowDateStr) {
+            var pldiv = paintFirstPl(data,serverNowDateStr);
+            $pllist.appendChild(pldiv);
+            // 子评论
+            if (data.child_comment_count > 0) {
+              $.each(data.child_comments, function(index, childcom) {
+                var divhf = paintSecondPl(childcom, serverNowDateStr);
+                pldiv.appendChild(divhf);
+              });
+            }
+          }
+          $plmore.addEventListener('tap', function(e) {
+            page += 1;
+            plList();
+          });
           // 获取评论列表
           var plList = function() {
              if (page === 1) {
@@ -651,10 +689,19 @@
           doc.getElementById('fb_pl').addEventListener('tap', function(){
             var plWebview = plus.webview.getWebviewById('KZ_BLX_PL');
             $.fire(plWebview,'KZ_BLX_ID',{
-              id:detailData.id
+              case_id:detailData.id,
+              pid: 0
             });
             $.openWindow({
               id: 'KZ_BLX_PL'
+            });
+          });
+          // 分享
+          doc.getElementById('share').addEventListener('tap', function(e) {
+            shareApi.showActionSheet({
+              content: '分享内容',
+              thumbs: '_www/images/share/logo.png',
+              interface: 'auto'
             });
           });
         });

@@ -222,7 +222,6 @@
               $.toast('请上传图片');
               return;
             }
-            console.log(imageurl);
             request.loginAjax('project/savedata',{
               data: {
                 groupid:groupid,
@@ -236,7 +235,9 @@
               if (success){
                  //获得父页面的webview
                 var parent = plus.webview.currentWebview().opener();
-                $.fire(parent, 'project-add-success');
+                $.fire(parent, 'project-add-success',{
+                  data: data
+                });
                 $.back();                 
               }
             });

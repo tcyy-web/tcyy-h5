@@ -57,13 +57,14 @@
         $.init();
         $.plusReady(function() {
           // 病例秀id
-          var id = 0;
+          var case_id = 0;
           var pid = 0;
           var $contents = doc.getElementById('contents');
           // 评论病例秀
           window.addEventListener('KZ_BLX_ID', function(e){
-            id = e.detail.id;
-            pid = 0;
+            case_id = e.detail.case_id;
+            pid = e.detail.pid;
+            $contents.value = '';
           });
           doc.getElementById('fb_pl').addEventListener('tap', function() {
             plFn();
@@ -77,12 +78,18 @@
             }
              request.loginAjax('cases/comments', {
                 data: {
-                  case_id: id,
+                  case_id: case_id,
                   pid: pid,
                   contents: contents
                 }
-              }, function(data, success) {
+              }, function(data, success, resHead) {
                 if (success) {
+                  var parent = plus.webview.currentWebview().opener();
+                   $.fire(parent, 'KZ_BLX_PL_SUCCESS',{
+                     data: data,
+                     t: resHead.t
+                   });
+                  $.back();
                 }
             });
           }

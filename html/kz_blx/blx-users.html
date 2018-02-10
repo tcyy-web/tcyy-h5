@@ -13,11 +13,23 @@
 	  .mui-content{
 	    background-color: #fff;
 	  }
-	  .mui-table-view-cell {
-	    padding: 10px;
+	  .mui-table-view:after{
+	    height: 0;
 	  }
-	  .mui-table-view-cell:after{
-	    left: 0;
+	  .mui-table-view > li {
+	    padding: 10px;
+	    position: relative;
+	  }
+	  .mui-table-view > li:after{
+	    position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #c8c7cc;
 	  }
 	  .img{
 	    float: left;
@@ -74,7 +86,7 @@
       <div class="mui-scroll-wrapper">
         <div id="pullrefresh" class="mui-scroll">
            <ul id="datalist" class="mui-table-view">
-            <li class="mui-table-view-cell">
+            <li>
               <div class="clearFix">
                 <div class="img flex flex-row-center">
                   <img src="../../images/weibo/img.png" />
@@ -87,7 +99,7 @@
                 </div>
               </div>
             </li>
-            <li class="mui-table-view-cell">
+            <li>
               <div class="clearFix">
                 <div class="img flex flex-row-center">
                   <img src="../../images/weibo/img.png" />
@@ -134,17 +146,32 @@
           var $pullrefresh = $('#pullrefresh');
           // 页面刷新
           window.addEventListener('KZ_BLX_DZ_ID', function(e){
-            id = e.detail.id;
-            page = 1;
-            more = true;
-            $pullrefresh.pullToRefresh().refresh(true);
-            dataInit();
+            if (id != e.detail.id) {
+              id = e.detail.id;
+              page = 1;
+              more = true;
+              $pullrefresh.pullToRefresh().refresh(true);
+              dataInit();
+            }
           });
+          // 关注
+          var gzFn = function(uid,callback) {
+             request.loginAjax('cases/follow', {
+                data: {
+                  touid: uid
+                }
+              }, function(data, success) {
+                if (success) {
+                  callback(data);
+                }
+            });
+          }
           // 列表
           var $datalist = doc.getElementById('datalist');
           var paintItem = function(data) {
+            // 当前登录用户
+            var benren = authManage.getUser();
             var li = doc.createElement('li');
-            li.className = 'mui-table-view-cell';
             $datalist.appendChild(li);
             var div = doc.createElement('div');
             div.className = 'clearFix';
@@ -158,17 +185,30 @@
             infodiv.className = 'info';
             infodiv.innerHTML = '<p>{0}</p>'.format(data.user_info.nickname);
             div.appendChild(infodiv);
-            var statusdiv = doc.createElement('div');
-            statusdiv.className = 'right flex flex-row-center flex-col-center';
-            var p = doc.createElement('p');
-            if (data.cases_follow == 1) {
-              p.innerText = '已关注';
-            } else {
-//            p.className = 'btn';
-//            p.innerText = '加关注';
+            if (benren.id != data.uid) {
+              var statusdiv = doc.createElement('div');
+              statusdiv.className = 'right flex flex-row-center flex-col-center';
+              var p = doc.createElement('p');
+              if (data.cases_follow == 1) {
+                p.innerText = '已关注';
+              } else {
+                p.className = 'btn';
+                p.innerText = '加关注';
+              }
+              p.addEventListener('tap', function(){
+                gzFn(data.uid, function(_d) {
+                  if (_d.status == 1) {
+                    p.className = '';
+                    p.innerText = '已关注';
+                  } else {
+                    p.className = 'btn';
+                    p.innerText = '加关注';
+                  }
+                });
+              });
+              statusdiv.appendChild(p);
+              div.appendChild(statusdiv);
             }
-            statusdiv.appendChild(p);
-            div.appendChild(statusdiv);
           }
           var dataInit = function(callback) {
             request.loginAjax('cases/getThingList',{

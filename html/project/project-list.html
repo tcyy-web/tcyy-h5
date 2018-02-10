@@ -569,6 +569,7 @@
 		<script src="../../js/mui.min.js"></script>
     <script src="../../js/mui.pullToRefresh.js"></script>
     <script src="../../js/mui.pullToRefresh.material.js"></script>
+    <script src="../../js/utils.common.js"></script>
 		<script src="../../js/utils.config.js"></script>
 		<script src="../../js/utils.enums.js"></script>
 		<script src="../../js/utils.extend.js"></script>
@@ -600,6 +601,7 @@
 				  var groupid = 0;
 				  // 分页请求参数
 				  var listRequest = {};
+				  var beginKey = 'project_';
 				  // 跳转计划列表
           var $projectPlanList = doc.getElementById('projectPlanList');
           var projectPlanListWebview = null;
@@ -610,26 +612,6 @@
             $.fire(projectPlanListWebview,'project-plan');
             $.openWindow({
               id: 'projectPlanList'
-            });
-          });
-          // 跳转添加项目
-          var $addProject = doc.getElementById('addProject');
-          var projectAddWebview = null;
-          $addProject.addEventListener('tap', function(event) {
-            if (!projectAddWebview) {
-              projectAddWebview = plus.webview.getWebviewById('projectAdd');
-            }
-            $.fire(projectAddWebview,'project-groupid',{
-              groupid:groupid
-            });
-            $.openWindow({
-              id: 'projectAdd'
-            });
-          });
-          // 新增项目成功
-          window.addEventListener('project-add-success', function(e){
-            getProjects(1, function() {
-              $('.content-box .mui-control-content.mui-active').pullToRefresh().refresh(true);
             });
           });
 				  /***---------购物车业务 begin-------*/
@@ -805,6 +787,27 @@
               callback();
             });
           }
+          // 跳转添加项目
+          var $addProject = doc.getElementById('addProject');
+          var projectAddWebview = null;
+          $addProject.addEventListener('tap', function(event) {
+            if (!projectAddWebview) {
+              projectAddWebview = plus.webview.getWebviewById('projectAdd');
+            }
+            $.fire(projectAddWebview,'project-groupid',{
+              groupid:groupid
+            });
+            $.openWindow({
+              id: 'projectAdd'
+            });
+          });
+          // 新增项目成功
+          window.addEventListener('project-add-success', function(e){
+            var _data = e.detail.data;
+            var currenttab = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
+            var _li = createFragment(_data);
+            currenttab.insertBefore(_li, currenttab.childNodes[0]);
+          });
           //修改项目成功
           window.addEventListener('project-edit-success', function(e){
             var editData = e.detail.data;
@@ -818,14 +821,30 @@
               i.title = editData.title;
               calcPrice();
             }
-            getProjects(listRequest[groupid].page);
+            // 更改列表
+            var _id = beginKey+groupid+'-'+editData.id;
+            utils.setDomData(_id, editData);
+            var _dom = doc.getElementById(_id);
+            if (_dom != null) {
+              _dom.innerHTML = '';
+              paintDom(_dom, editData);
+            }
           });
-          // 编辑webview
-          var projectEditWebview = null;
-				  // 画每个项目
-          var createFragment = function(parent, data) {
-            var li = doc.createElement('li');
-            li.className = 'mui-table-view-cell';
+          // 编辑项目
+          var gotoEditProject = function(projectid) {
+            var _id = beginKey+groupid+'-'+projectid;
+            var data = utils.getDomData(_id);
+            var projectEditWebview = plus.webview.getWebviewById('projectEdit');
+            $.fire(projectEditWebview,'project-detail',{
+              data:data,
+              groupid: groupid
+            });
+            $.openWindow({
+              id: 'projectEdit'
+            });    
+          }
+          // 画项目内部内容
+          var paintDom = function(parent, data) {
             // 图片
             var imgDiv = doc.createElement('div');
             imgDiv.className = 'img flex flex-col-center';
@@ -835,7 +854,7 @@
               plus.nativeUI.previewImage([data.image]);
             });
             imgDiv.appendChild(img);
-            li.appendChild(imgDiv);
+            parent.appendChild(imgDiv);
             var billDiv = doc.createElement('div');
             billDiv.className = 'bill-item';
             // 标题
@@ -859,20 +878,10 @@
             // 修改
             var edit = doc.createElement('span');
             edit.className = 'flex-1 edit';
-//          edit.innerText =  data.system !== -1 ? '修改' : '改价';
             edit.innerText =  '修改';
             edit.addEventListener('tap', function(e){
               if (data.system !== -1) {
-                if (!projectEditWebview) {
-                  projectEditWebview = plus.webview.getWebviewById('projectEdit');
-                }
-                $.fire(projectEditWebview,'project-detail',{
-                  data:data,
-                  groupid: groupid
-                });
-                $.openWindow({
-                  id: 'projectEdit'
-                });                
+                gotoEditProject(data.id);            
               } else {
                 $.prompt(data.title, '请输入价格', '修改价格', null,function(obj){
                   if (obj.index === 1){
@@ -895,7 +904,7 @@
                   $.confirm(_msg,'删除项目','',function(ok){
                     if (ok.index === 1) {
                       delProject(data.id, function(){
-                        li.remove();
+                        parent.remove();
                       });
                     }
                   });
@@ -910,8 +919,17 @@
               addShopCar(data);
             });
             billDiv.appendChild(addDiv);
-            li.appendChild(billDiv);
-            parent.appendChild(li);
+            parent.appendChild(billDiv);            
+          }
+				  // 画每个项目
+          var createFragment = function(data) {
+            var _id = beginKey+groupid+'-'+data.id;
+            var li = doc.createElement('li');
+            li.className = 'mui-table-view-cell';
+            li.id = _id;
+            li.data_data = JSON.stringify(data);
+            paintDom(li, data);
+            return li;
           };
           // 获取列表
 				  var getProjects = function(page, callback) {
@@ -933,7 +951,8 @@
                    currentContent.innerHTML = '';
                  }
                  $.each(data.data, function(index,i) {
-                   createFragment(currentContent,i);
+                   var _item = createFragment(i);
+                   currentContent.appendChild(_item);
                  });
                }
                // 判断是否有下一页数据

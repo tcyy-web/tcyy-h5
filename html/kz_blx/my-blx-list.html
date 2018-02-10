@@ -135,7 +135,7 @@
 	  <div id="tabbar" class="mui-control-content mui-active">
       <div class="mui-scroll-wrapper">
         <div class="mui-scroll">
-          <ul class="mui-table-view">
+          <ul id="fabulist" class="mui-table-view">
             <!--<li>
               <div class="wb-top flex">
                 <div class="flex-1">
@@ -200,13 +200,17 @@
         preloadPages:[{
           id:'MY_BLX_DETAIL',
           url: './my-blx-detail.html'
+        },{
+          id:'MY_BLX_SAVE',
+          url: './my-blx-save.html'
         }]
       });
       $.plusReady(function() {
-        var limit = 5;
+        var limit = 6;
         // 3我发布的  2 我保存的
         var type = 3;
         var listRequest = {};
+        var beginKey = 'data_';
          /*图片预览*/
         var previewImage = function(urllist, index) {
           plus.nativeUI.previewImage(urllist, {
@@ -216,28 +220,50 @@
           });
         }
         // 详情webview
-        var detailWebView = null;
         var gotoDetail = function(data) {
-          if (!detailWebView) {
-            detailWebView = plus.webview.getWebviewById('MY_BLX_DETAIL');
+          if (data.type == 1) {
+            var detailWebView = plus.webview.getWebviewById('MY_BLX_DETAIL');
+            $.fire(detailWebView,'MY_BLX_DATA',{
+              data:data
+            });
+            $.openWindow({
+              id: 'MY_BLX_DETAIL'
+            });            
+          } else {
+            //草稿
+            var detailWebView = plus.webview.getWebviewById('MY_BLX_SAVE');
+            $.fire(detailWebView,'MY_BLX_SAVE_DATA',{
+              data:data
+            });
+            $.openWindow({
+              id: 'MY_BLX_SAVE'
+            });            
           }
-          $.fire(detailWebView,'KZ_BLX_DATA',{
-            data:data
-          });
-          $.openWindow({
-            id: 'MY_BLX_DETAIL'
-          });
         }
+        var $falist = doc.getElementById('fabulist');
+        // 草稿处理完成后
+        window.addEventListener('MY_BLX_CHANGE_STATUS', function(e){
+          var _id = beginKey+type+'_'+e.detail.data.id;
+          var _dom = doc.getElementById(_id);
+          if (_dom != null) {
+            _dom.remove();
+          }
+          if (e.detail.flag == true) {
+            // 发布
+            $falist.insertBefore(paintItem(e.detail.data), $falist.childNodes[0]);
+          } 
+        });
         // 画每一项
-        var paintItem = function(parent, data) {
+        var paintItem = function(data) {
           var li = doc.createElement('li');
-          parent.appendChild(li);
+          li.id = beginKey+type+'_'+data.id;
           // 头部用户
           var topDiv = doc.createElement('div');
           topDiv.className = 'wb-top flex';
           var infoDiv = doc.createElement('div');
           infoDiv.className = 'flex-1';
-          infoDiv.innerHTML = '<p>发表于：{0}</p>'.format(data.creatime);
+          var str = data.type == 1 ? '发表于' : '创建于';
+          infoDiv.innerHTML = '<p>{0}：{1}</p>'.format(str,data.creatime);
           infoDiv.addEventListener('tap',function(e){
             gotoDetail(data);
           });
@@ -268,7 +294,7 @@
             contentDiv.appendChild(imgDiv);
           }
           li.appendChild(contentDiv);
-          if ((type - 3) == 0) {
+          if (data.type == 1) {
             // 评论
             var plDiv = doc.createElement('div');
             plDiv.className = 'pl flex';
@@ -289,6 +315,7 @@
             plDiv.appendChild(dz);
             li.appendChild(plDiv);            
           }
+          return li;
         };
         var getList = function(page,callback){
           if (listRequest[type] && page !== 1 && listRequest[type].more === false) {
@@ -309,7 +336,8 @@
                  currentContent.innerHTML = '';
                }
                $.each(data.data, function(index,i) {
-                paintItem(currentContent,i);
+                 var _li = paintItem(i);
+                 currentContent.appendChild(_li);
                });
              }
              // 判断是否有下一页数据
