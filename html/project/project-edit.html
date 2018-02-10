@@ -166,8 +166,10 @@
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
+				  // 详情数据
+				  var detailData = {};
 				  var imageurl = null;
-				  var id = 0;
+				  // 分类id
 				  var groupid = 0;
           var numberBox = doc.getElementById('number');
           var titleBox = doc.getElementById('title');
@@ -175,14 +177,13 @@
           var $img = doc.getElementById('img');
           // 更新
           window.addEventListener('project-detail', function(e){
-            var detail = e.detail.data;
+            detailData = e.detail.data;
             groupid = e.detail.groupid;
-            imageurl = detail.image;
-            $img.src = detail.image;
-            id = detail.id;
-            numberBox.value = detail.number;
-            titleBox.value = detail.title;
-            priceBox.value = detail.price;
+            imageurl = detailData.image;
+            $img.src = detailData.image;
+            numberBox.value = detailData.number;
+            titleBox.value = detailData.title;
+            priceBox.value = detailData.price;
           });
 				  //上传图片
 				  var $addPic = doc.getElementById('addPic');
@@ -226,7 +227,7 @@
               price:price,
               title:title,
               image: imageurl,
-              id: id
+              id: detailData.id
             }
             request.loginAjax('project/savedata',{
               data: postData
@@ -235,7 +236,7 @@
                  //获得父页面的webview
                 var parent = plus.webview.currentWebview().opener();
                 $.fire(parent, 'project-edit-success', {
-                  data:postData
+                  data:data
                 });
                 $.back();                 
               }
