@@ -221,7 +221,10 @@
 <script>
 (function($,doc){
 	
-	$.init();
+	$.init({beforeback: function() {
+		var webview_parent = plus.webview.getWebviewById("trainDetail");
+		mui.fire( webview_parent, 'refresh');
+	}});
 
 	
 	var opt1 = doc.getElementById("opt1");
@@ -559,7 +562,7 @@ var Play = {
 
 function sendCourceData(courseId,title,st){
 
-	request.loginAjax('cases/comments', {
+	request.loginAjax('Curriculum/saveSubjects', {
         data: {
           cid: courseId,
           title:title,
@@ -567,8 +570,8 @@ function sendCourceData(courseId,title,st){
         }
       }, function(data, success) {
         if (success) {
-        	mui.toast("发布成功");
         	window.back();
+        	mui.toast("发布成功");
         }
     });
 }

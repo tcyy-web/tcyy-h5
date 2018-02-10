@@ -108,7 +108,7 @@
 			$.each( arr , function() {
 				var name = this.getAttribute("id");
 				if( name == "headurl"){
-					
+					this.innerHTML = "<img src="+obj["headurl"]+">";
 				}else if( name =="sex"){
 					this.innerText = obj[name]==1?"男":"女";
 				}else{

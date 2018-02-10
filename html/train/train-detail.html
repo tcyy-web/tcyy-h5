@@ -79,7 +79,10 @@
 					indicators: true //是否显示滚动条
 				});
 				$.plusReady(function() {
-		
+					
+				  window.addEventListener('refresh', function(e){
+		            window.reload();
+		          });
 
 		          window.addEventListener('train-id', function(e){
 		            courseId = e.detail.id;
@@ -92,7 +95,7 @@
 				
 				 
 				 document.getElementById("fabu").addEventListener('tap', function(event){
-		              $.openWindow({
+		            $.openWindow({
 		                url: './train-upload.html',
 		                id: 'KZ-TRAIN-UPLOAD',
 						extras:{ courseId  : courseId},

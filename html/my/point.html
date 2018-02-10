@@ -272,7 +272,30 @@
 <script src="../../js/utils.upload.js"></script>
 <script src="../../js/utils.request.js" ></script>
 <script type="text/javascript">
-	
+(function($, doc) {
+
+	$.init();
+
+	$.plusReady(function() {
+
+	 document.getElementById("fabu").addEventListener('tap', function(event){
+        $.openWindow({
+            url: './train-upload.html',
+            id: 'KZ-TRAIN-UPLOAD',
+			extras:{ courseId  : courseId},
+            show: {
+              aniShow: 'pop-in'
+            },
+
+            waiting: {
+              autoShow: true
+            }
+         });
+     });
+		
+	});
+
+}(mui, document));	
 </script>
 </body>
 
