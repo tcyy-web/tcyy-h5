@@ -10,6 +10,9 @@
 	  .mui-content{
 	    padding-bottom: 50px;
 	  }
+	  .mui-popup-button:last-child{
+	    color: #F14434 !important;
+	  }
   .mui-pull-right{line-height: 44px;}
   .main{
     padding: 0 10px;
@@ -226,10 +229,23 @@
             fbFn(1);
           });
           // 画图片
-          var paintImg = function(url) {
+          var paintImg = function(url, saveUrl) {
+             imglist.push(saveUrl);
              var imgdiv = doc.createElement('div');
              imgdiv.className = 'item flex flex-row-center';
              imgdiv.innerHTML = '<img src="{0}" />'.format(url);
+             imgdiv.addEventListener('longtap', function(e) {
+               var btnArray = ['取消', '删除'];
+               $.confirm('删除图片？', '', btnArray, function(e) {
+                if (e.index == 1) {
+                  imgdiv.remove();
+                  var _index = imglist.findIndex(function(i) {
+                    return i == saveUrl;
+                  });
+                  imglist.splice(_index, 1);
+                } 
+               },'div');
+             });
              $imglist.appendChild(imgdiv);
           }
           // 上传图片
@@ -238,8 +254,7 @@
               upload.showImgActionSheet(function( data ){
                 var url = config.url + "Uploads/Files";
                 upload.uploadimge( url , data.divid, function(res) {
-                   paintImg(data.abspath);
-                   imglist.push(res[0].saveUrl);
+                   paintImg(data.abspath, res[0].saveUrl);
                 },{
                   type: '3'
                 });
