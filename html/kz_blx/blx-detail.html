@@ -452,6 +452,8 @@
           window.addEventListener('KZ_BLX_DATA', function(e){
             if (e.detail.data.id != detailData.id) {
               detailData = e.detail.data;
+              page = 1;
+              more = true;
               setFn();
               readFn();
               dzPeople();

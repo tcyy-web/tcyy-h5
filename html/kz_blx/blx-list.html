@@ -183,7 +183,7 @@
 	<header class="mui-bar mui-bar-nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">病例秀</h1>
-		<a id="fb_blx" class="mui-pull-right">发表</a>
+		<a id="fb_blx" class="mui-pull-right">发布</a>
 	</header>
 		<div class="mui-content">
 			<div class="mui-slider mui-fullscreen">
@@ -326,8 +326,9 @@
           // 发表成功
           window.addEventListener('KZ_BLX_FB_SUCCESS', function(e){
             var _data = e.detail.data;
-            var currenttab = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
-            paintItem(currenttab, _data);
+            var _tabid = '#content'+_data.group_id+' .mui-table-view';
+            var currenttab = doc.querySelector(_tabid);
+            currenttab.insertBefore(paintItem(_data), currenttab.childNodes[0]);
           });
           // 关注
           var gzFn = function(uid, callback) {
@@ -477,13 +478,13 @@
             parent.appendChild(plDiv);
           }
           // 画每一项
-          var paintItem = function(parent, data) {
+          var paintItem = function(data) {
             var _id = beginKey+groupid+'-'+data.id;
             var li = doc.createElement('li');
             li.id = _id;
             li.data_data = JSON.stringify(data);
             paintDom(li, data);
-            parent.appendChild(li);
+            return li;
           };
           // 获取列表
           var getList = function(page,callback){
@@ -506,7 +507,7 @@
                    currentContent.innerHTML = '';
                  }
                  $.each(data.data, function(index,i) {
-                   paintItem(currentContent,i);
+                   currentContent.appendChild(paintItem(i));
                  });
                }
                // 判断是否有下一页数据
@@ -539,7 +540,7 @@
               var contentsHtml = [];
               $.each(category, function(index, item) {
                 var _controlHtml = '<a groupid={0} class="mui-control-item" href="#content{1}">{2}</a>';
-                _controlHtml = _controlHtml.format(item.id,index,item.title);
+                _controlHtml = _controlHtml.format(item.id,item.id,item.title);
                 controlsHtml.push(_controlHtml);
                 var _contentHtml = '';
                 _contentHtml += '<div id="content{0}" class="mui-slider-item mui-control-content">'+
@@ -550,7 +551,7 @@
                                 '  </div>'+
                                 ' </div>'+
                                 '</div>';
-                _contentHtml = _contentHtml.format(index, index);
+                _contentHtml = _contentHtml.format(item.id);
                 contentsHtml.push(_contentHtml);
               });
               controls.innerHTML = controlsHtml.join('');
