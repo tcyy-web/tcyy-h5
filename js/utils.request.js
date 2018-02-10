@@ -73,7 +73,7 @@
               if (data && data.header && data.header.status === 2001){
                 _success = true;
               }
-              successCallback(data.body, _success);
+              successCallback(data.body, _success, data.header);
             }
           } else {
             if (typeof successCallback === 'function') {
@@ -101,10 +101,10 @@
           }
         }
       }
-      console.log('服务器请求=============================');
-      console.log('请求地址：'+ url);
-      console.log('请求类型：'+ ajaxOptions.type);
-      console.log('请求参数：'+ JSON.stringify(defaults.data));
+//    console.log('服务器请求=============================');
+//    console.log('请求地址：'+ url);
+//    console.log('请求类型：'+ ajaxOptions.type);
+//    console.log('请求参数：'+ JSON.stringify(defaults.data));
       mui.ajax(url, ajaxOptions);
     },
     loginAjax: function(url, obj, successCallback, errorCallback) {

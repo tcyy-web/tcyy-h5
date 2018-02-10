@@ -144,7 +144,7 @@ w.upload = {
       code = user.code || '';
     }
 		var defaults = {
-		  type: '1', // 默认项目图片 1 
+		  type: '1', // 默认项目图片 1 ，头像 2， 病例秀 3 ，患者图片 4， 在线课堂 5
 		  filetype: '1', // 图片
 		  code: code
 		};

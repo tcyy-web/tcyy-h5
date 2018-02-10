@@ -124,7 +124,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">我的</h1>
-			<a id="myMsg" url="../my/my-message.html" login="yes" class="clickItem mui-pull-right msg">
+			<a class="mui-pull-right msg">
 				<img src="../../images/tab-wode/msg.png" />
 			</a>
 		</header>
@@ -143,11 +143,11 @@
 				</div>
 			</div>
 			<div class="count flex">
-				<div id="sc" url="../my/follows.html" login="yes" class="clickItem flex-1">
-					<p>关注</p>
+				<div class="flex-1">
+					<p>收藏</p>
 					<p>0</p>
 				</div>
-				<div id="jf" url="../my/point.html" login="yes" class="clickItem flex-1">
+				<div class="flex-1">
 					<p>积分</p>
 					<p>0</p>
 				</div>
@@ -156,7 +156,6 @@
 					<p>0</p>
 				</div>
 			</div>
-
 			<ul class="mui-table-view mui-table-view-chevron">
 				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/yqm.png"/>
@@ -172,11 +171,10 @@
 				</li>
 				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/wdblx.png"/>
-					<a id="myBLX" url="../weibo/list.html" login="yes"  class="clickItem mui-navigate-right">
+					<a id="myblx" class="clickItem mui-navigate-right">
 						我的病例秀
 					</a>
 				</li>
-				
 				<!--<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/bdblx.png"/>
 					<a class="mui-navigate-right" href="#">
@@ -237,20 +235,20 @@
 					}
 					loginItem.addEventListener('tap', function(event) {
 						if (authManage.checkLogin()) {
-			                $.openWindow({
-			                  url: '../my/my.html',
-			                  id: 'WDJL',
-			                  preload: true,
-			                  show: {
-			                    aniShow: 'pop-in'
-			                  },
-			                  styles: {
-			                    popGesture: 'hide'
-			                  },
-			                  waiting: {
-			                    autoShow: false
-			                  }
-			                });
+              $.openWindow({
+                url: '../my/my.html',
+                id: 'WDJL',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
 						} else {
 						  authManage.toLogin();
 						}
@@ -268,34 +266,23 @@
 							}
 						});
 					});
-					// 其它页面
-					var clickItems = $('.clickItem');
-					$.each(clickItems, function(index, item) {
-						item.addEventListener('tap', function(event) {
-							var id = this.getAttribute("id");
-							var url = this.getAttribute("url");
-							var loginFlag = this.getAttribute('login');
-							if (loginFlag === 'yes' && !authManage.checkLogin()) {
-								authManage.toLogin(url,id);
-								return;
-							}
-							$.openWindow({
-								url: url,
-								id: id,
-								preload: true,
-								show: {
-									aniShow: 'pop-in'
-								},
-								styles: {
-									popGesture: 'hide'
-								},
-								waiting: {
-									autoShow: false
-								}
-							});
-						});
+					// 我的病例秀
+					doc.getElementById('myblx').addEventListener('tap', function(e) {
+					  $.openWindow({
+              url: '../kz_blx/my-blx-list.html',
+              id: 'MY-BLX',
+              preload: true,
+              show: {
+                aniShow: 'pop-in'
+              },
+              styles: {
+                popGesture: 'hide'
+              },
+              waiting: {
+                autoShow: false
+              }
+            });
 					});
-					
 					//qiandao
 					document.getElementById("qiandao").addEventListener("tap",function(){
 						mui.toast("签到成功");

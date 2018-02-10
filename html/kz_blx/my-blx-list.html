@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+	  .mui-pull-top-tips {
+      z-index: 10;
+    }
+    .mui-bar-tab{
+      background-color: #fff;
+    }
+    .mui-bar-tab .mui-tab-item.mui-active{
+      color: #765fc3;
+    }
+    .mui-bar-tab .mui-tab-item{
+      color: #7c7c7c;
+    }
+    .mui-control-content{
+      height: 100%;
+      position: relative;
+    }
+	  .mui-content{
+	    background-color: #fff;
+	  }
+	  .mui-pull-right{
+	    line-height: 44px;
+	  }
+    .mui-table-view{
+      background-color: #f1f1f1;
+    }
+    .mui-table-view > li{
+    background-color: #fff;
+      padding:10px 10px 0 10px;
+      margin-top: 10px;
+    }
+    .mui-table-view > li:first-child{
+      margin-top: 0;
+    }
+    
+    .wb-top{
+    	position: relative;
+    }
+    .wb-top p{
+    	font-size:14px;
+    	color:#7c7c7c;
+    }
+    .word p{
+    	font-size:14px;
+    	line-height: 20px;
+    	color:#000000;
+    	padding: 10px 0;
+    }
+    .word-img{
+    	padding:10px 0;
+    	overflow: hidden;
+    }
+    .word-img img{
+    	width:100px!important;
+    	height: 100px;
+    	float:left;
+    	margin-right:10px;
+    	margin-bottom: 10px;
+    }
+    .pl{
+      position: relative;
+    }
+    .pl:before{
+      position: absolute;
+      right: -10px;
+      top: 0;
+      left: -10px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
+    }
+    .pl:after{
+      position: absolute;
+      right: -10px;
+      bottom: 0;
+      left: -10px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
+    }
+    .pl .flex-1{
+      position: relative;
+      height: 50px;
+      color: #7c7c7c;
+      font-size: 14px;
+    }
+    .pl .flex-1:before{
+      position: absolute;
+      left: 0;
+      bottom: 10px;
+      top: 10px;
+      width: 1px;
+      content: '';
+      -webkit-transform: scaleX(.5);
+      transform: scaleX(.5);
+      background-color: #d6d6d6;
+    }
+    .pl .flex-1:first-child:before{
+      display: none;
+    }
+    .pl .flex-1 img{
+      width: 20px !important;
+      margin-right: 10px;
+    }
+	</style>
+
+</head>
+
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">我的病例秀</h1>
+	</header>
+	<nav class="mui-bar mui-bar-tab">
+    <a data-type="3" class="mui-tab-item mui-active" href="#tabbar">
+      <span class="mui-tab-label">我发布的</span>
+    </a>
+    <a data-type="2" class="mui-tab-item" href="#tabbar2">
+      <span class="mui-tab-label">我的草稿</span>
+    </a>
+  </nav>
+	<div class="mui-content">
+	  <div id="tabbar" class="mui-control-content mui-active">
+      <div class="mui-scroll-wrapper">
+        <div class="mui-scroll">
+          <ul class="mui-table-view">
+            <!--<li>
+              <div class="wb-top flex">
+                <div class="flex-1">
+                  <p>发表于：2017-05-03</p>
+                </div>
+              </div>
+              <div class="word">
+                <p>深圳软件创业基地聚集大量孵化园</p>
+                <div class="word-img">
+                  <img src="../../images/weibo/img.png"/>
+                  <img src="../../images/weibo/img.png"/>
+                  <img src="../../images/weibo/img.png"/>
+                </div>
+              </div>
+              <div class="pl flex">
+                <div class="flex-1 flex flex-row-center flex-col-center">
+                  <img src="../../images/blx/pl1.png" />
+                  <span>1</span>
+                </div>
+                <div class="flex-1 flex flex-row-center flex-col-center">
+                  <img src="../../images/blx/pl2.png" />
+                   <span>1</span>
+                </div>
+                <div class="flex-1 flex flex-row-center flex-col-center">
+                  <img src="../../images/blx/pl3.png" />
+                   <span>1</span>
+                </div>
+              </div>
+            </li>-->
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="tabbar2" class="mui-control-content">
+      <div class="mui-scroll-wrapper">
+        <div class="mui-scroll">
+          <ul class="mui-table-view">
+          </ul>
+        </div>
+      </div>
+    </div>
+	</div>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/mui.pullToRefresh.js"></script>
+	<script src="../../js/mui.pullToRefresh.material.js"></script>
+	<script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.extend.js"></script>
+  <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.category.js" ></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.request.js"></script>
+  <script>
+    (function($, doc) {
+      //阻尼系数
+      var deceleration = $.os.ios?0.003:0.0009;
+      $('.mui-scroll-wrapper').scroll({
+        bounce: false,
+        indicators: true, //是否显示滚动条
+        deceleration:deceleration
+      });
+      $.init({
+        preloadPages:[{
+          id:'MY_BLX_DETAIL',
+          url: './my-blx-detail.html'
+        }]
+      });
+      $.plusReady(function() {
+        var limit = 5;
+        // 3我发布的  2 我保存的
+        var type = 3;
+        var listRequest = {};
+         /*图片预览*/
+        var previewImage = function(urllist, index) {
+          plus.nativeUI.previewImage(urllist, {
+            current: index,
+            loop: true,
+            indicator: 'number'
+          });
+        }
+        // 详情webview
+        var detailWebView = null;
+        var gotoDetail = function(data) {
+          if (!detailWebView) {
+            detailWebView = plus.webview.getWebviewById('MY_BLX_DETAIL');
+          }
+          $.fire(detailWebView,'KZ_BLX_DATA',{
+            data:data
+          });
+          $.openWindow({
+            id: 'MY_BLX_DETAIL'
+          });
+        }
+        // 画每一项
+        var paintItem = function(parent, data) {
+          var li = doc.createElement('li');
+          parent.appendChild(li);
+          // 头部用户
+          var topDiv = doc.createElement('div');
+          topDiv.className = 'wb-top flex';
+          var infoDiv = doc.createElement('div');
+          infoDiv.className = 'flex-1';
+          infoDiv.innerHTML = '<p>发表于：{0}</p>'.format(data.creatime);
+          infoDiv.addEventListener('tap',function(e){
+            gotoDetail(data);
+          });
+          topDiv.appendChild(infoDiv);
+          li.appendChild(topDiv);
+          // 内容
+          var contentDiv = doc.createElement('div');
+          contentDiv.className = 'word';
+          var cp = doc.createElement('p');
+          cp.innerText = data.contents;
+          cp.addEventListener('tap', function(){
+            gotoDetail(data);
+          });
+          contentDiv.appendChild(cp);
+          if (data.cases_image) {
+            var imgDiv = doc.createElement('div');
+            imgDiv.className = 'word-img';
+            var caseurllist = [];
+            $.each(data.cases_image, function(i,d) {
+              var img = doc.createElement('img');
+              img.src = d.image;
+              caseurllist.push(d.image);
+              img.addEventListener('tap', function() {
+                previewImage(caseurllist, i);
+              });
+            	  imgDiv.appendChild(img);
+            });
+            contentDiv.appendChild(imgDiv);
+          }
+          li.appendChild(contentDiv);
+          if ((type - 3) == 0) {
+            // 评论
+            var plDiv = doc.createElement('div');
+            plDiv.className = 'pl flex';
+            var ydDiv = doc.createElement('div');
+            ydDiv.className = 'flex-1 flex flex-row-center flex-col-center';
+            ydDiv.innerHTML = '<img src="../../images/blx/pl1.png" /><span>{0}</span>'.format(data.read);
+            var pl = doc.createElement('div');
+            pl.className = 'flex-1 flex flex-row-center flex-col-center';
+            pl.innerHTML = '<img src="../../images/blx/pl2.png" /><span>{0}</span>'.format(data.comments);
+            var dz = doc.createElement('div');
+            dz.className = 'flex-1 flex flex-row-center flex-col-center';
+            dz.innerHTML = '<img src="../../images/blx/pl3.png" />';
+            var dzSpan = doc.createElement('span');
+            dzSpan.innerText = data.thing;
+            dz.appendChild(dzSpan);
+            plDiv.appendChild(ydDiv);
+            plDiv.appendChild(pl);
+            plDiv.appendChild(dz);
+            li.appendChild(plDiv);            
+          }
+        };
+        var getList = function(page,callback){
+          if (listRequest[type] && page !== 1 && listRequest[type].more === false) {
+            return;
+          }
+          request.loginAjax('cases/getlist', {
+            data: {
+              page: page,
+              limit: limit,
+              type: type
+            },
+            showMsg: false
+          }, function(data) {
+            // 处理页面绑定
+             if (data && data.data) {
+               var currentContent = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
+               if (page === 1) {
+                 currentContent.innerHTML = '';
+               }
+               $.each(data.data, function(index,i) {
+                paintItem(currentContent,i);
+               });
+             }
+             // 判断是否有下一页数据
+             if (data && data.data && data.data.length === limit) {
+               listRequest[type] = {
+                 page: page,
+                 more: true
+               }
+             } else {
+               listRequest[type] = {
+                 page: page,
+                 more: false
+               }
+             }
+             if (typeof callback === 'function') {
+               callback();
+             }
+          }, function() {
+             if (typeof callback === 'function') {
+               callback();
+             }
+          });
+        }
+        getList(1);
+         // 切换tab
+        $.each(doc.querySelectorAll('.mui-bar-tab .mui-tab-item'), function(index, el) {
+             el.addEventListener('tap', function(e) {
+              var _type = this.getAttribute('data-type');
+              type = _type;
+              if (listRequest[type]) {
+                return;
+              }
+              getList(1);
+          });
+        });
+        //循环初始化所有下拉刷新，上拉加载。
+        $.each(doc.querySelectorAll('.mui-content .mui-scroll'), function(index, pullRefreshEl) {
+          $(pullRefreshEl).pullToRefresh({
+            down: {
+              callback: function() {
+                var self = this;
+                getList(1, function() {
+                  self.endPullDownToRefresh();
+                  $(pullRefreshEl).pullToRefresh().refresh(true);
+                });
+              }
+            },
+            up: {
+              callback: function() {
+                var self = this;
+                if (listRequest[type]) {
+                  if (listRequest[type].more === true) {
+                    var page = listRequest[type].page + 1;
+                    getList(page, function(){
+                      self.endPullUpToRefresh(false);
+                    })
+                    return;
+                  }
+                }
+                self.endPullUpToRefresh(true);
+              }
+            }
+          });
+        });
+      });
+    })(mui, document);
+  </script>
+	</body>
+
+</html>

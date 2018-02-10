@@ -7,6 +7,9 @@
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
+	  .mui-pull-top-tips {
+      z-index: 10;
+    }
 	  .mui-content{
 	    background-color: #fff;
 	  }
@@ -31,7 +34,7 @@
 	    float: left;
 	    width: calc(100% - 110px);
 	    width: -webkit-calc(100% - 110px);
-	    padding: 0 20px;
+	    padding:10px 20px;
 	  }
 	  .info p{
 	    font-size: 14px;
@@ -70,7 +73,7 @@
     <div class="mui-fullscreen">
       <div class="mui-scroll-wrapper">
         <div id="pullrefresh" class="mui-scroll">
-           <ul class="mui-table-view">
+           <ul id="datalist" class="mui-table-view">
             <li class="mui-table-view-cell">
               <div class="clearFix">
                 <div class="img flex flex-row-center">
@@ -78,7 +81,6 @@
                 </div>
                 <div class="info">
                   <p>张惠妹</p>
-                  <p>我来找我来自</p>
                 </div>
                 <div class="right flex flex-row-center flex-col-center">
                   <p class="btn">加关注</p>
@@ -92,7 +94,6 @@
                 </div>
                 <div class="info">
                   <p>张惠妹</p>
-                  <p>我来找我来自</p>
                 </div>
                 <div class="right flex flex-row-center flex-col-center">
                   <p>已关注</p>
@@ -106,8 +107,130 @@
    
   </div>
   <script src="../../js/mui.min.js"></script>
-
+  <script src="../../js/mui.pullToRefresh.js"></script>
+  <script src="../../js/mui.pullToRefresh.material.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.extend.js"></script>
+  <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.request.js"></script>
+  <script>
+    (function($, doc) {
+        //阻尼系数
+        var deceleration = mui.os.ios?0.003:0.0009;
+        $('.mui-scroll-wrapper').scroll({
+          bounce: false,
+          indicators: true, //是否显示滚动条
+          deceleration:deceleration
+        });
+        $.init();
+        $.plusReady(function() {
+          // 病例秀id
+          var id = 0;
+          // 分页参数
+          var page = 1;
+          var limit = 12;
+          var more = true;
+          var $pullrefresh = $('#pullrefresh');
+          // 页面刷新
+          window.addEventListener('KZ_BLX_DZ_ID', function(e){
+            id = e.detail.id;
+            page = 1;
+            more = true;
+            $pullrefresh.pullToRefresh().refresh(true);
+            dataInit();
+          });
+          // 列表
+          var $datalist = doc.getElementById('datalist');
+          var paintItem = function(data) {
+            var li = doc.createElement('li');
+            li.className = 'mui-table-view-cell';
+            $datalist.appendChild(li);
+            var div = doc.createElement('div');
+            div.className = 'clearFix';
+            li.appendChild(div);
+            var imgdiv = doc.createElement('div');
+            imgdiv.className = 'img flex flex-row-center';
+            var imgurl = data.user_info.headurl || '../../images/tab-wode/user_default.png'
+            imgdiv.innerHTML = '<img src="{0}" />'.format(imgurl);
+            div.appendChild(imgdiv);
+            var infodiv = doc.createElement('div');
+            infodiv.className = 'info';
+            infodiv.innerHTML = '<p>{0}</p>'.format(data.user_info.nickname);
+            div.appendChild(infodiv);
+            var statusdiv = doc.createElement('div');
+            statusdiv.className = 'right flex flex-row-center flex-col-center';
+            var p = doc.createElement('p');
+            if (data.cases_follow == 1) {
+              p.innerText = '已关注';
+            } else {
+//            p.className = 'btn';
+//            p.innerText = '加关注';
+            }
+            statusdiv.appendChild(p);
+            div.appendChild(statusdiv);
+          }
+          var dataInit = function(callback) {
+            request.loginAjax('cases/getThingList',{
+              data: {
+                case_id: id,
+                page: page,
+                limit: limit
+              },
+              showMsg: false
+            },function(data, success) {
+               // 处理页面绑定
+               if (data && data.data) {
+                 if (page === 1) {
+                   datalist.innerHTML = '';
+                 }
+                 $.each(data.data, function(index,i) {
+                   paintItem(i);
+                 });
+               }
+               // 判断是否有下一页数据
+               if (data && data.data && data.data.length === limit) {
+                 more = true;
+               } else {
+                 more = false;
+               }
+               if (typeof callback === 'function') {
+                 callback();
+               }
+            },function() {
+              if (typeof callback === 'function') {
+                 callback();
+               }
+            });
+          }
+          $pullrefresh.pullToRefresh({
+            down: {
+              callback: function() {
+                page = 1;
+                var self = this;
+                dataInit(function() {
+                  self.endPullDownToRefresh();
+                  $pullrefresh.pullToRefresh().refresh(true);
+                });
+              }
+            },
+            up: {
+              callback: function() {
+                var self = this;
+                if (more) {
+                  page = page + 1;
+                  dataInit(function() {
+                    self.endPullUpToRefresh(false);
+                  });
+                  return;
+                }
+                self.endPullUpToRefresh(true);
+              }
+            }
+          });
+        });
+      })(mui, document);
+  </script>
 </body>
-
 </html>
 
