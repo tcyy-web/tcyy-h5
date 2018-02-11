@@ -221,8 +221,9 @@
 			(function($, doc) {
 				$.init();     
 				$.plusReady(function() {
-					getTotalPoint();
-					
+				  if (authManage.checkLogin()) {
+				    getTotalPoint();
+				  }
 					var user = authManage.getUser();
 					// 判断登录
 					var loginItem = doc.getElementById('login');
