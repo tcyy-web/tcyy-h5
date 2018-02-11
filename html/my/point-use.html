@@ -163,10 +163,13 @@ $.plusReady(function() {
     	var oAddr = document.getElementById("addr");
     	if( oName.value == "" ){
     		$.toast("请输入姓名");
+    		return;
     	}else if( oTel.value == "" ){
     		$.toast("请输入电话");
+    		return;
     	}else if( oAddr.value == "" ){
     		$.toast("请输入地址");
+    		return;
     	}
     	
     	saveData({

@@ -124,7 +124,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">我的</h1>
-			<a class="mui-pull-right msg">
+			<a id="mymessage" class="mui-pull-right msg">
 				<img src="../../images/tab-wode/msg.png" />
 			</a>
 		</header>
@@ -163,16 +163,28 @@
 						我的邀请码
 					</a>
 				</li>
-				<li class="mui-table-view-cell">
+				<!--<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/jhm.png"/>
 					<a class="mui-navigate-right" href="#">
 						我的激活码
 					</a>
-				</li>
+				</li>-->
 				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/wdblx.png"/>
 					<a id="myblx" class="clickItem mui-navigate-right">
 						我的病例秀
+					</a>
+				</li>
+				
+				<li class="mui-table-view-cell">
+					<img src="../../images/tab-wode/jhm.png"/>
+					<a id="myorders" class="mui-navigate-right">我的订单</a>
+				</li>
+				
+				<li class="mui-table-view-cell">
+					<img src="../../images/tab-wode/wdblx.png"/>
+					<a id="myTelephone" class="clickItem mui-navigate-right">
+						绑定手机
 					</a>
 				</li>
 				<!--<li class="mui-table-view-cell">
@@ -302,6 +314,57 @@
 			            });
 					});
 					
+					//我的订单
+					doc.getElementById('myorders').addEventListener('tap', function(e) {
+					  $.openWindow({
+			              url: '../my/my-orders.html',
+			              id: 'MY-ORDERS',
+			              show: {
+			                aniShow: 'pop-in'
+			              },
+			              styles: {
+			                popGesture: 'hide'
+			              },
+			              waiting: {
+			                autoShow: false
+			              }
+			            });
+					});
+					
+					//我的消息
+					doc.getElementById('mymessage').addEventListener('tap', function(e) {
+					  $.openWindow({
+			              url: '../my/my-message.html',
+			              id: 'MY-MESSAGE',
+			              show: {
+			                aniShow: 'pop-in'
+			              },
+			              styles: {
+			                popGesture: 'hide'
+			              },
+			              waiting: {
+			                autoShow: false
+			              }
+			            });
+					});
+					
+					//绑定手机
+					doc.getElementById('myTelephone').addEventListener('tap', function(e) {
+					  $.openWindow({
+			              url: '../my/validate-phone.html',
+			              id: 'MY-VALIDATA-PHONE',
+			              show: {
+			                aniShow: 'pop-in'
+			              },
+			              styles: {
+			                popGesture: 'hide'
+			              },
+			              waiting: {
+			                autoShow: false
+			              }
+			            });
+					});
+					
 					// 我的收藏
 					doc.getElementById('myshoucang').addEventListener('tap', function(e) {
 //					  $.openWindow({
@@ -324,11 +387,7 @@
 						request.loginAjax('user/sign', {
 					        
 					      }, function(data, success) {
-					        if (success) {
-					        	
-//					        	mui.toast("签到成功");
-
-					        }
+					        if (success) {}
 					    });
 	
 
@@ -337,7 +396,7 @@
 				
 				function getTotalPoint(){
 					request.loginAjax('point/getTotalPoint', {
-						
+						showLoading:false
 					  }, function(data, success) {
 					    if (success) {
 							document.getElementById("totalPoint").innerText = data.point;
