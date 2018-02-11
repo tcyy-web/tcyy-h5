@@ -52,7 +52,7 @@
       var a = str.split(/[^0-9]/);
       return new Date(a[0], a[1] - 1, a[2], a[3], a[4], a[5]);
     },
-    insertAfter(newElement, targetElement){
+    insertAfter: function(newElement, targetElement){
       var parent = targetElement.parentNode;
       if (parent.lastChild == targetElement) {
         // 如果最后的节点是目标元素，则直接添加。因为默认是最后
