@@ -67,7 +67,7 @@
 				</div>
 			</div>
 			<div class="goutong-row flex">
-				<div class="gr-item flex flex-col flex-1">
+				<div id="threed" class="gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
 							<img src="../../images/tab-goutong/img4.png" />
@@ -313,6 +313,23 @@
               $.openWindow({
                 url: '../project/project-index.html',
                 id: 'PRODUCT-INDEX',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 3d
+            doc.getElementById('threed').addEventListener('tap', function(e) {
+              $.openWindow({
+                url: './three_3d_index.html',
+                id: 'THTREE_3d_index',
                 preload: true,
                 show: {
                   aniShow: 'pop-in'
