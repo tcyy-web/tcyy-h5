@@ -184,22 +184,36 @@
 						//自定义监听图标点击事件
 						var active_color = '#fff';
 						drawNativeIcon.addEventListener('click', function(e) {
-							// 重绘字体颜色
-							if(active_color == '#fff') {
-								drawNativeIcon.drawText('3D', {}, {
-									align: 'center',
-									color: '#000',
-									size: '25px'
-								}, 'icon');
-								active_color = '#000';
-							} else {
-								drawNativeIcon.drawText('3D', {}, {
-									align: 'center',
-									color: '#fff',
-									size: '25px'
-								}, 'icon');
-								active_color = '#fff';
-							}
+//							// 重绘字体颜色
+//							if(active_color == '#fff') {
+//								drawNativeIcon.drawText('3D', {}, {
+//									align: 'center',
+//									color: '#000',
+//									size: '25px'
+//								}, 'icon');
+//								active_color = '#000';
+//							} else {
+//								drawNativeIcon.drawText('3D', {}, {
+//									align: 'center',
+//									color: '#fff',
+//									size: '25px'
+//								}, 'icon');
+//								active_color = '#fff';
+//							}
+							$.openWindow({
+                url: './three_3d_index.html',
+                id: 'THTREE_3d_index',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
 						});
 						// 中间凸起图标绘制及监听点击完毕
 
