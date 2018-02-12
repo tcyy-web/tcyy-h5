@@ -10,6 +10,10 @@
 	  .mui-content{
 	    overflow: hidden;
 	  }
+	  .mui-content img{
+	    width: 100%;
+	    height: 100%;
+	  }
 	  iframe{
 	    width: 100%;
 	    height: 100%;
@@ -23,14 +27,15 @@
   	   <h1 class="mui-title">3d</h1>
   </header>
   <div class="mui-content">
-    <iframe id="iframe"></iframe>
+    <img  src="../../images/3d/index.jpg" />
+    <!--<iframe id="iframe"></iframe>-->
   </div>
   <script src="../../js/mui.min.js"></script>
   <script>
     (function($, doc) {
         $.init();
         $.plusReady(function() {
-          doc.getElementById('iframe').src = 'http://m.tianchiyueya.com:1888/3D/single.html?id=a11';
+//        doc.getElementById('iframe').src = 'http://m.tianchiyueya.com:1888/3D/single.html?id=a11';
         });
       })(mui, document);
   </script>
