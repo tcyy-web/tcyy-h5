@@ -155,11 +155,49 @@
 			undo();
 			
 		}).on("tap", ".file", function() {
-			renderBgData();
-			$(".center_opt").show();
+			
+			
+			showFile();
 			clearHB(canvas);
 			now_his_index = -1;
 		});
+		
+		function showFile(){
+			var actionbuttons = [{
+				title: "本地图库"
+			}, {
+				title: "在线图库"
+			}];
+			var actionstyle = {
+				title: "选择照片",
+				cancel: "取消",
+				buttons: actionbuttons
+			};
+			var _this = this;
+			plus.nativeUI.actionSheet(actionstyle, function(e) {
+				if(e.index == 2) {
+					renderBgData();
+					$(".center_opt").show();
+				} 
+				
+				if(e.index == 1) {
+					plus.gallery.pick(function(p) {
+						$(".center_opt").hide();
+
+						$("body").attr("src",p);
+						drawBg();
+						
+					}, function(e) {
+					  console.log('打开视频库失败：'+e.message);
+					});
+				}
+				
+				
+				if(e.index == 3) {
+					console.log("cancel")
+				}
+			});
+		}
 		
 		$(".center_opt").on("tap","li",function(){
 			var img = $(this).find("img");
@@ -169,7 +207,8 @@
 			drawBg();
 		});
 		$("body").on("tap", function() {
-			//	$(".left_opt2").hide();
+			$(".left_opt2").hide();
+			$(".center_opt").hide();
 		});
 
 		$(".left_opt").on("tap", "li", function(e) {

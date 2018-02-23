@@ -174,13 +174,15 @@ request.loginAjax('Point/getBookList', {
     if (success) {
 
 		var currentContent = document.getElementById("content");
-		currentContent.innerHTML = '<div class="noorder-box"> <div class="noorder"></div> <span class="txt">暂无订单</span> </div>';
+		currentContent.innerHTML = '';
 		if (data && data.data) {
 			$.each(data.data, function(index,i) {
            		createFragment(currentContent,i);
            });
            
 
+		}else{
+			currentContent.innerHTML = '<div class="noorder-box"> <div class="noorder"></div> <span class="txt">暂无订单</span> </div>';
 		}
 
     }
@@ -189,14 +191,14 @@ request.loginAjax('Point/getBookList', {
 
 function createFragment( parent, data) {
   var oDiv = doc.createElement('div');
-
+  console.log( JSON.stringify(data) )
   var st ='<div class="order-no">订单号：'+data.booknum+' &nbsp;&nbsp;'+data.createtime+'</div>'+
 	    '<div class="main">'+
 		'<ul>';
-			
+  var shop = data.point_shop;
 	  st+='<li>'+
-			'<img src="'+data.image+'"/>'+
-			'<p>'+data.title+'</p>'+
+			'<img src="'+shop.image+'"/>'+
+			'<p>'+shop.title+'</p>'+
 			'<ins>'+data.point+'</ins>'+
 			'<b>x1</b>'+
 		'</li>'		

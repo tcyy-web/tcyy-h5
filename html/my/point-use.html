@@ -112,7 +112,7 @@
 				</div>
 				<div class="input-parent">
 
-					<input id="tel"  placeholder="输入电话：" type="text" value=""/>
+					<input id="tel"  placeholder="输入电话：" type="number"  value=""/>
 				</div>
 				<div class="input-parent">
 
@@ -144,6 +144,7 @@ $.plusReady(function() {
 	window.addEventListener('point-use-id', function(e){
         goodsId = e.detail.id;
 		getProductDetail();
+		getTotalPoint();
     });
     
     document.getElementById("saveBtn").addEventListener("tap",function(){
@@ -152,7 +153,7 @@ $.plusReady(function() {
     		$.toast("数量不足不能兑换");
     		return;
     	}
-    	
+ 
     	if( totalPoint < dpoint.point ){
     		$.toast("积分不足不能兑换");
     		return;
