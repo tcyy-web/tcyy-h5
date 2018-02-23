@@ -106,13 +106,21 @@
 					if (saveValue !== null) {
 						inputText.value = JSON.parse();
 					}
-					var imgurl = storage.get({
-            key: imgKey
-          });
-          if (imgurl !== null) {
-            $img.src = imgurl;
+          // 从缓存读取图片
+          var getImageFromStorage = function() {
+            var imgurl = storage.get({
+              key: imgKey
+            });
+            if (imgurl !== null) {
+              $img.src = imgurl;
+            }
           }
+          // 从服务器获取图片
 					var getImage = function(callback){
+					  if (!request.getNetworkState()) {
+					    getImageFromStorage();
+					    return;
+					  }
             request.loginAjax('Project/getStartImg', {
               showMsg: false
             }, function(data, success) {

@@ -161,12 +161,12 @@
 				</div>
 			</div>
 			<ul class="mui-table-view mui-table-view-chevron">
-				<li class="mui-table-view-cell">
+				<!--<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/yqm.png"/>
 					<a class="mui-navigate-right" href="#">
 						我的邀请码
 					</a>
-				</li>
+				</li>-->
 				<!--<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/jhm.png"/>
 					<a class="mui-navigate-right" href="#">
@@ -401,7 +401,8 @@
 				
 				function getTotalPoint(){
 					request.loginAjax('point/getTotalPoint', {
-						showLoading:false
+						showLoading:false,
+						showMsg: false
 					  }, function(data, success) {
 					    if (success) {
 							document.getElementById("totalPoint").innerText = data.point;
