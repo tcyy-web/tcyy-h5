@@ -137,8 +137,9 @@
 		<script src="../../js/utils.request.js"></script>
 		<script>
 			var auth = null;
+			var courseId = null,groupId = null;
 			(function($, doc) {
-				var courseId = null,groupId = null;
+				
 				$.init();
 				$('#scroll').scroll({
 					indicators: true //是否显示滚动条
@@ -187,9 +188,9 @@
 		      	    }else{
 		      	    	var st = "";
 		      	    	if( data.auth == 1){
-		      	    		st = '<a id="qingkong" class="newbtn">删除</a>';
+		      	    		st = '<a id="qingkong" class="newbtn">清空课程详情</a>';
 		      	    	}
-		      	    	document.getElementById("item1").innerHTML = st + "<div class='pcontent'>"+data.contents+"</div>"
+		      	    	document.getElementById("item1").innerHTML =  "<div class='pcontent'>"+data.contents+"</div>" + st;
 		      	    }
 		      	    addEvent();
 		      	    auth = data.auth;
@@ -248,7 +249,7 @@
 			function addEvent(){
 				var oFB = document.getElementById("fabu"), oQK = document.getElementById("qingkong");
 				oFB&&oFB.addEventListener('tap', function(event){
-		            $.openWindow({
+		            mui.openWindow({
 		                url: './train-upload.html',
 		                id: 'KZ-TRAIN-UPLOAD',
 						extras:{ courseId  : courseId},

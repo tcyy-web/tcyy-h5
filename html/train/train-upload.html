@@ -223,7 +223,7 @@
 	
 	$.init({beforeback: function() {
 		var webview_parent = plus.webview.getWebviewById("trainDetail");
-		$.fire( webview_parent, 'refresh-train-detail');
+		webview_parent.reload(true);
 	}});
 
 	
