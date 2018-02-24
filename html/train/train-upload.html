@@ -223,7 +223,7 @@
 	
 	$.init({beforeback: function() {
 		var webview_parent = plus.webview.getWebviewById("trainDetail");
-		mui.fire( webview_parent, 'refresh-train-detail');
+		$.fire( webview_parent, 'refresh-train-detail');
 	}});
 
 	
@@ -269,7 +269,7 @@ function plusReady(){
 	}, function(e){
 		console.log('Resolve "_doc/media" failed: '+e.message);
 	} );
-}
+
 
 (function($){
 	
@@ -277,14 +277,32 @@ $(function(){
 var webview = plus.webview.currentWebview();
 
 courseId = webview.courseId;
-	
+
+//courseId&&request.loginAjax('Curriculum/details', {
+//					
+//	data: {
+//		id: courseId,
+//	},
+//	showMsg: false,
+//	
+//}, function(data, success) {
+//
+//if ( success ){
+//  document.getElementById("pcontent").innerHTML = data.contents;
+//
+//}
+//
+//});			
 		
 $("#opt2").on("tap",".s_pic",function(){
+	hideOpt();
 	uploadImage();
 }).on("tap",".s_video",function(){
+	hideOpt();
  	Record.startVedio();
+ 	
 }).on("tap",".s_audio",function(){
-
+	hideOpt();
 	Record.startAudio();
 });
 
@@ -292,6 +310,7 @@ $("#opt1").on("tap",".s_send",function(){
 	var oVal = $(".s_input").val();
 	console.log( oVal );
 	creatText(oVal);
+	hideOpt();
 	$(".s_input").val("");
 });
 
@@ -356,6 +375,11 @@ $(".pcontent").on("tap",".paudio",function(){
 });
 });
 
+function hideOpt(){
+	$(".caozuo").show();
+	$(".caozuo2").hide();
+	$(".pcontent p .cz").remove();
+}
 
 var imageurl = null;
 function uploadImage(){
@@ -586,6 +610,8 @@ function resetback(){
 }
 window.back=resetback;
 })(jQuery)
+
+}
 </script>
 </body>
 

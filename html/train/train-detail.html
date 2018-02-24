@@ -10,15 +10,20 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
+			.mui-content{
+				background: #fff;
+			}
 			.mui-bar{box-shadow: none;}
 			.mui-card .mui-control-content {
 				padding: 10px;
+				
 
 			}
 
 			.mui-control-content {
 				height: 150px;
 				padding: 5px 10px;
+				
 			}
 			.mui-segmented-control{border-color: #ccc; border-left: none; border-right: none; border-radius: 0; padding: 5px 0;}
 			.mui-segmented-control .mui-control-item{ color: #333; border-color: #ddd; overflow: visible;}
@@ -35,6 +40,65 @@
 			.mui-pull-right{
 				padding: 12px 4px;
 			}
+			
+			#item2 .dl{
+				position: relative;
+				padding: 5px 0;
+				border-bottom: 1px solid #ddd;
+			}
+			#item2 .dl>span{
+				position: absolute;
+				left:5px;
+				top:15px;
+				font-size: 18px;
+				color: #999;
+			}
+			#item2 .dl>div{
+				padding-left: 40px;
+				color: #555;
+			}
+			
+			.newbtn{ display: block; text-align: center; margin-top: 20px; border:1px solid #ddd; padding: 10px 0; color: #000;}
+		</style>
+		
+		<style type="text/css">
+		.pcontent{
+			overflow-y:auto;
+		}
+		.pcontent p{ color: #333; margin: 0; padding: 0; margin-bottom: 5px; font-size: 15px; padding: 2px 5px;}
+		.pcontent .vedio{ width: 50px; height: 50px; display: inline-block;  background: url(../../images/train/v_video.png) center center no-repeat; }
+		.pcontent .audio{ position: relative; border-radius: 30px; border:1px solid #999; width: 160px; height: 32px; display: inline-block;}
+		.pcontent .audio::before{
+			content: '';
+			position: absolute;
+			background: url(../../images/train/v_audio.png) 4px center /20px auto no-repeat;
+			width: 32px;
+			height: 32px;
+		}
+		
+		.pcontent .paudio.playing .audio::before{
+			animation: twinkling 3s infinite ease; 
+		}
+		.pcontent p {position: relative;}
+		.pcontent p .cz{position: absolute; margin-left: 12px; }
+		p .cz i{ display: inline-block; font-style: normal; color: #0062CC;}
+		
+		@-webkit-keyframes twinkling{ 
+		0%{ 
+		opacity: 0.1; 
+		} 
+		100%{ 
+		opacity: 1; 
+		} 
+		} 
+		@keyframes twinkling{ 
+		0%{ 
+		opacity: 0.1; 
+		} 
+		100%{ 
+		opacity: 1; 
+		} 
+		}
 		</style>
 	</head>
 
@@ -42,7 +106,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">课程详情</h1>
-			<a id="fabu" class="mui-pull-right">编辑详情</a>
+			<!--<a id="fabu" class="mui-pull-right">编辑详情</a>-->
 		</header>
 		<div class="mui-content">
 			<img src="../../images/my/bg.png" id="headerImg" alt="" width="100%" />
@@ -72,8 +136,9 @@
 		<script src="../../js/utils.auth.js"></script>
 		<script src="../../js/utils.request.js"></script>
 		<script>
+			var auth = null;
 			(function($, doc) {
-				var courseId = null;
+				var courseId = null,groupId = null;
 				$.init();
 				$('#scroll').scroll({
 					indicators: true //是否显示滚动条
@@ -86,6 +151,7 @@
 
 		          window.addEventListener('train-id', function(e){
 		            courseId = e.detail.id;
+		            groupid = e.detail.groupid;
 		            if(courseId){
 						ajaxData( courseId );
 					}else{
@@ -94,20 +160,7 @@
 		          });
 				
 				 
-				 document.getElementById("fabu").addEventListener('tap', function(event){
-		            $.openWindow({
-		                url: './train-upload.html',
-		                id: 'KZ-TRAIN-UPLOAD',
-						extras:{ courseId  : courseId},
-		                show: {
-		                  aniShow: 'pop-in'
-		                },
-
-		                waiting: {
-		                  autoShow: true
-		                }
-		             });
-		         });
+				 
 					
 				});
 			
@@ -128,7 +181,18 @@
      
 		      	  if ( success ){
 		      	  	document.getElementById("headerImg").setAttribute("src",data.image);
-		      	    document.getElementById("item1").innerHTML = "<div class='content'>"+data.contents+"</div>";
+		      	  	
+		      	    if( data.contents == "" ){
+		      	    	document.getElementById("item1").innerHTML = data.auth == 1 ?'<a id="fabu" class="newbtn">新增</a>':'暂无';
+		      	    }else{
+		      	    	var st = "";
+		      	    	if( data.auth == 1){
+		      	    		st = '<a id="qingkong" class="newbtn">删除</a>';
+		      	    	}
+		      	    	document.getElementById("item1").innerHTML = st + "<div class='pcontent'>"+data.contents+"</div>"
+		      	    }
+		      	    addEvent();
+		      	    auth = data.auth;
 					
 		      	  }
 //		      	  document.getElementById("item1").innerText = JSON.stringify(data);
@@ -136,21 +200,71 @@
 		      	
 		      	
 		      	//课程安排
-//		      	request.loginAjax('Curriculum/saveSubjects', {
-//					
-//					data: {
-//						groupid: courseId,
-//					},
-//					showMsg: false,
-//					
-//				}, function(data, success) {
-//   
-//		      	  if ( success ){
-//		      		cosnole.log(JSON.stringify(data))
-//					document.getElementById("item2").innerText = "无";
-//		      	  }
-//
-//		      	});
+		      	request.loginAjax('Curriculum/getSubjectsList', {
+					
+					data: {
+						groupid: courseId,
+					},
+					showMsg: false,
+					
+				}, function(data, success) {
+     
+		      	  if ( success ){
+		      		console.log(JSON.stringify(data))
+		      		var arr = data.data;
+		      		var st = "";
+		      		for(var i = 0 ; i< arr.length ; i++ ){
+		      			st+="<div class='dl'><span>"+(i+1)+"</span><div class='time'>"+arr[i].times+"</div><div class='name'><span>课程名称:</span>"+arr[i].title+"</div></div>";
+		      		}
+		      		
+					document.getElementById("item2").innerHTML = st;
+		
+		      	  }
+
+		      	});
+			}
+			
+			function deleteDetail ( courseId ){
+//				Curriculum/delSubjects
+				
+				//课程安排
+		      	request.loginAjax('Curriculum/delSubjects', {
+					
+					data: {
+						id: courseId,
+					},
+					showMsg: false,
+					
+				}, function(data, success) {
+     
+		      	  if ( success ){
+		      		document.getElementById("item1").innerHTML = data.auth == 1 ?'<a id="fabu" class="newbtn">新增</a>':'暂无';
+		      		addEvent();
+		      	  }
+
+		      	});
+			}
+			
+			function addEvent(){
+				var oFB = document.getElementById("fabu"), oQK = document.getElementById("qingkong");
+				oFB&&oFB.addEventListener('tap', function(event){
+		            $.openWindow({
+		                url: './train-upload.html',
+		                id: 'KZ-TRAIN-UPLOAD',
+						extras:{ courseId  : courseId},
+		                show: {
+		                  aniShow: 'pop-in'
+		                },
+
+		                waiting: {
+		                  autoShow: true
+		                }
+		             });
+		         });
+		         
+		         oQK&&oQK.addEventListener('tap', function(event){
+		           deleteDetail(courseId);
+		         });
 			}
 		</script>
 		

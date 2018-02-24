@@ -250,7 +250,8 @@
 		                trainDetailWebview = plus.webview.getWebviewById('trainDetail');
 		              }
 		              $.fire(trainDetailWebview,'train-id',{
-		                id:data.id
+		                id:data.id,
+		                groupid:groupid
 		              });
 		              $.openWindow({
 		                id: 'trainDetail'

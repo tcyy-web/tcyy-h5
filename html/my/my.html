@@ -33,25 +33,25 @@
 		</i></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>昵称 </span><i id="nickname" class="mui-pull-right" contenteditable="true"></i></a>
+		<a href="#about" class="mui-navigate-right"><span>昵称 </span><input id="nickname" class="mui-pull-right"></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>性别 </span><i id="sex" class="mui-pull-right"></i></a>
+		<a href="#about" class="mui-navigate-right"><span>性别 </span><i id="sex" class="mui-pull-right">男</i></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>电话 </span><i id="phone" class="mui-pull-right" contenteditable="true"></i></a>
+		<a href="#about" class="mui-navigate-right"><span>电话 </span><input id="phone" class="mui-pull-right" ></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>所在地 </span><i id="province" class="mui-pull-right" contenteditable="true"></i></a>
+		<a href="#about" class="mui-navigate-right"><span>所在地 </span><input id="province" class="mui-pull-right" ></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>微信 </span><i id="weixin" class="mui-pull-right" contenteditable="true"></i></a>
+		<a href="#about" class="mui-navigate-right"><span>微信 </span><input id="weixin" class="mui-pull-right" ></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>QQ </span><i id="qq" class="mui-pull-right" contenteditable="true"></i></a>
+		<a href="#about" class="mui-navigate-right"><span>QQ </span><input id="qq" class="mui-pull-right" ></a>
 	</li>
 	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>Email </span><i id="email" class="mui-pull-right" contenteditable="true"></i></a>
+		<a href="#about" class="mui-navigate-right"><span>Email </span><input id="email" class="mui-pull-right" ></a>
 	</li>
 </ul>
 </div>
@@ -110,9 +110,9 @@
 				if( name == "headurl"){
 					this.innerHTML = "<img src="+obj["headurl"]+">";
 				}else if( name =="sex"){
-					this.innerText = obj[name]==1?"男":"女";
+					this.value = obj[name]==1?"男":"女";
 				}else{
-					this.innerText = obj[name];
+					this.value = obj[name];
 				}
 			});
 		}
@@ -141,7 +141,7 @@
 			$.each(oTableCell, function() {
 
 				this.addEventListener("tap", function() {
-					this._text = this.innerText;
+					this._text = this.value;
 					var name = this.getAttribute("id");
 					if( name == "headurl"){
 						uploadImage( this );
@@ -152,14 +152,14 @@
 					
 				});
 				this.addEventListener("blur", function() {
-					if(this._text != this.innerText){
+					if(this._text != this.value){
 						console.log("difference");
 						var name = this.getAttribute("id");
-						var txt = this.innerText;
+						var txt = this.value;
 						
 						var callback = function(data ,sucess){
 							if(!sucess){
-								this.innerText = this._text;
+								this.value = this._text;
 							}
 						}
 						if( name == "headurl"){
