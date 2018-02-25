@@ -233,12 +233,12 @@ window.groupId = null;
 	var s_txt = doc.getElementById("s_txt");
 	var s_add = doc.getElementById("s_add");
 	
-	s_add.addEventListener("tap",function(){
+	s_add.addEventListener("click",function(){
 		opt2.style.display="table";
 		opt1.style.display="none";
 	});
 	
-	s_txt.addEventListener("tap",function(){
+	s_txt.addEventListener("click",function(){
 		opt1.style.display="table";
 		opt2.style.display="none";
 	});
@@ -296,19 +296,19 @@ groupId == webview.groupId;
 //
 //});			
 		
-$("#opt2").on("tap",".s_pic",function(){
+$("#opt2").on("click",".s_pic",function(){
 	hideOpt();
 	uploadImage();
-}).on("tap",".s_video",function(){
+}).on("click",".s_video",function(){
 	hideOpt();
  	Record.startVedio();
  	
-}).on("tap",".s_audio",function(){
+}).on("click",".s_audio",function(){
 	hideOpt();
 	Record.startAudio();
 });
 
-$("#opt1").on("tap",".s_send",function(){
+$("#opt1").on("click",".s_send",function(){
 	var oVal = $(".s_input").val();
 	console.log( oVal );
 	creatText(oVal);
@@ -316,7 +316,7 @@ $("#opt1").on("tap",".s_send",function(){
 	$(".s_input").val("");
 });
 
-$(".caozuo").on("tap",".edit",function(){
+$(".caozuo").on("click",".edit",function(){
 	$(".caozuo").toggle();
 	$(".caozuo2").toggle();
 	var tar = $('<span class="cz"><i class="delete">删除</i> </span>').appendTo(".pcontent p");
@@ -326,7 +326,7 @@ $(".caozuo").on("tap",".edit",function(){
 		$(this).css("top",(h-20)/2);
 	})
 	
-}).on("tap",".publish",function(){
+}).on("click",".publish",function(){
 	var com = mui.prompt("输入标题",function( item ){
 
 		if(!item.index){ return false; }
@@ -336,26 +336,26 @@ $(".caozuo").on("tap",".edit",function(){
 	
 });
 
-$(".caozuo2").on("tap",".sure",function(){
+$(".caozuo2").on("click",".sure",function(){
 	$(".caozuo").toggle();
 	$(".caozuo2").toggle();
 	$(".pcontent p .cz").remove();
 });
 
-$(".pcontent").on("tap",".delete",function(){
+$(".pcontent").on("click",".delete",function(){
 	$(this).parent().parent().remove();
 })
 
 
 //录音
 
-$("#record").on("tap",".stop",function(){
+$("#record").on("click",".stop",function(){
 	Record.stopAudio();
 });
 
 //播放
 
-$(".pcontent").on("tap",".paudio",function(){
+$(".pcontent").on("click",".paudio",function(){
 	var entry = $(this).data("entry");
 	var _this = this;
 	Play.resetPlay = function(){
@@ -370,7 +370,7 @@ $(".pcontent").on("tap",".paudio",function(){
 		Play.stopPlay();
 	}
 	
-}).on("tap",".pvedio",function(){
+}).on("click",".pvedio",function(){
 	var entry = $(this).data("entry");
 	Play.playVedioE( entry );	
 

@@ -169,7 +169,7 @@
 		          });
 				  var oFB = document.getElementById("fabu");
 				 
-				 oFB&&oFB.addEventListener('tap', function(event){
+				 oFB&&oFB.addEventListener('click', function(event){
 		            mui.openWindow({
 		                url: './train-upload.html',
 		                id: 'KZ-TRAIN-UPLOAD',
@@ -271,7 +271,7 @@
 		         mui.each( oQK ,function(){
 		         	var _this = this;
 		         	var id = this.getAttribute("data-id");
-		         	this.addEventListener('tap', function(event){
+		         	this.addEventListener('click', function(event){
 		         		event.stopPropagation();   
 		         		console.log( id +","+courseId );
 			           deleteDetail(id,function(){
@@ -285,7 +285,7 @@
 		         mui.each( oDL ,function(){
 		         	var _this = this;
 		         	
-		         	this.addEventListener('tap', function(event){
+		         	this.addEventListener('click', function(event){
 		         		var id = this.getAttribute("data-id");
 		         		
 		         		if (!trainArrangeWebview) {
