@@ -65,7 +65,7 @@
 	</header>
 	<div class="mui-content">
 		<h4 id="title"></h4>
-		<div id="pcontent" class="pcontent"></div>
+		<div id="cont"></div>
 	</div>
 <script src="../../js/mui.min.js"></script>
 <script src="../../js/utils.config.js"></script>
@@ -109,7 +109,7 @@ function ajaxData( arrageId ){
  
 	      	  if ( success ){
 	      	  	document.getElementById("title").innerHTML = data.title;
-	      	  	document.getElementById("pcontent").innerHTML = data.contents;
+	      	  	document.getElementById("cont").innerHTML = data.contents;
       	  }
       	  
 		
@@ -120,9 +120,10 @@ function ajaxData( arrageId ){
 
 })(mui , document);
 (function($){
+	
 $(function(){
-$(".pcontent").on("click",".paudio",function(){
-
+$("#cont").on("click",".paudio",function(){
+	
 	var link = $(this).attr("link");
 	var _this = this;
 	Play.resetPlay = function(){
@@ -138,6 +139,7 @@ $(".pcontent").on("click",".paudio",function(){
 	}
 	
 }).on("click",".pvedio",function(){
+	
 	var link = $(this).attr("link");
 	Play.playVedio( link );	
 
@@ -157,8 +159,10 @@ var Play = {
 	// 播放音频文件
   playAudio:function( url ){
   	if(!url){
-//		mui.toast("地址错误");
+		mui.toast("地址错误");
   		return;
+  	}else{
+  		mui.toast("加载中");
   	}
 	this._player = plus.audio.createPlayer(url);
 	var p = this._player;
@@ -208,8 +212,10 @@ var Play = {
 	},
 	playVedio:function( url ){
 		if(!url){
-//	  		mui.toast("地址错误");
+		mui.toast("地址错误");
 	  		return;
+	  	}else{
+	  		mui.toast("加载中");
 	  	}
 		if($("#video").length==0){
 			$("<video id='video' autoplay='autoplay' width='0' height='0'></video>").appendTo("body")
