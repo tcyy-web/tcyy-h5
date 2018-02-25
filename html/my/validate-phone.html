@@ -44,7 +44,10 @@
 <script type="text/javascript">
 (function($, doc) {
 
-$.init();
+$.init({beforeback: function() {
+	var webview_parent = plus.webview.getWebviewById("WDJL");
+	webview_parent.reload(true);
+}});
 
 $.plusReady(function() {
 

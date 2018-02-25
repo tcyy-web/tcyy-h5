@@ -219,11 +219,16 @@
 
 <script src="../../third/jquery/jquery.js"></script>
 <script>
+window.courseId = null;
+window.groupId = null;
 (function($,doc){
 	
 	$.init({beforeback: function() {
 		var webview_parent = plus.webview.getWebviewById("trainDetail");
-		webview_parent.reload(true);
+		$.fire(webview_parent,'train-id',{
+	        id:courseId,
+	        groupid:groupId
+	      });
 	}});
 
 	
@@ -255,7 +260,7 @@ if(window.plus){
 
 var gentry = null;
 var localUrl = "_doc/media/";
-window.courseId = null;
+
 function plusReady(){
   
 	// 获取音频目录对象
@@ -277,6 +282,7 @@ $(function(){
 var webview = plus.webview.currentWebview();
 
 courseId = webview.courseId;
+groupId == webview.groupId;
 
 //courseId&&request.loginAjax('Curriculum/details', {
 //					

@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
-			.mui-content{
+			body,.mui-content{
 				background: #fff;
 			}
 			.mui-bar{box-shadow: none;}
@@ -56,6 +56,13 @@
 			#item2 .dl>div{
 				padding-left: 40px;
 				color: #555;
+			}
+			#item2 .dl> a{
+				position: absolute;
+				right:5px;
+				top:15px;
+				font-size: 18px;
+
 			}
 			
 			.newbtn{ display: block; text-align: center; margin-top: 20px; border:1px solid #ddd; padding: 10px 0; color: #000;}
@@ -106,7 +113,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">课程详情</h1>
-			<!--<a id="fabu" class="mui-pull-right">编辑详情</a>-->
+			<a id="fabu" class="mui-pull-right">编辑详情</a>
 		</header>
 		<div class="mui-content">
 			<img src="../../images/my/bg.png" id="headerImg" alt="" width="100%" />
@@ -136,32 +143,46 @@
 		<script src="../../js/utils.auth.js"></script>
 		<script src="../../js/utils.request.js"></script>
 		<script>
-			var auth = null;
+			var  trainArrangeWebview = null;
 			var courseId = null,groupId = null;
 			(function($, doc) {
-				
-				$.init();
+				$.init({
+		          preloadPages:[{
+		            id:'trainArrange',
+		            url: './train-arrange.html'
+		          }]
+		        });
+
 				$('#scroll').scroll({
 					indicators: true //是否显示滚动条
 				});
 				$.plusReady(function() {
-					
-				  window.addEventListener('refresh-train-detail', function(e){
-		            location.reload();
-		          });
 
 		          window.addEventListener('train-id', function(e){
 		            courseId = e.detail.id;
-		            groupid = e.detail.groupid;
+		            groupId = e.detail.groupid;
 		            if(courseId){
 						ajaxData( courseId );
 					}else{
 						mui.toast("获取id失败");
 					}
 		          });
-				
+				  var oFB = document.getElementById("fabu");
 				 
-				 
+				 oFB&&oFB.addEventListener('tap', function(event){
+		            mui.openWindow({
+		                url: './train-upload.html',
+		                id: 'KZ-TRAIN-UPLOAD',
+						extras:{ courseId  : courseId , groupId : groupId},
+		                show: {
+		                  aniShow: 'pop-in'
+		                },
+
+		                waiting: {
+		                  autoShow: true
+		                }
+		             });
+		         });
 					
 				});
 			
@@ -170,6 +191,7 @@
 			}(mui, document));
 			
 			function ajaxData( courseId ){
+				var auth = null;
 				var courseId = courseId?courseId:2;
 				request.loginAjax('Curriculum/details', {
 					
@@ -182,21 +204,17 @@
      
 		      	  if ( success ){
 		      	  	document.getElementById("headerImg").setAttribute("src",data.image);
-		      	  	
-		      	    if( data.contents == "" ){
-		      	    	document.getElementById("item1").innerHTML = data.auth == 1 ?'<a id="fabu" class="newbtn">新增</a>':'暂无';
-		      	    }else{
-		      	    	var st = "";
-		      	    	if( data.auth == 1){
-		      	    		st = '<a id="qingkong" class="newbtn">清空课程详情</a>';
-		      	    	}
-		      	    	document.getElementById("item1").innerHTML =  "<div class='pcontent'>"+data.contents+"</div>" + st;
-		      	    }
+
+		      	    document.getElementById("item1").innerHTML =  "<div class='pcontent'>"+(data.contents?data.contents:'暂无')+"</div>";
 		      	    addEvent();
 		      	    auth = data.auth;
+		      	    if( auth == 1){
+		      	    	document.getElementById("fabu").style.display = "block";
+		      	    }else{
+		      	    	document.getElementById("fabu").style.display = "none";
+		      	    }
 					
 		      	  }
-//		      	  document.getElementById("item1").innerText = JSON.stringify(data);
 		      	});
 		      	
 		      	
@@ -207,65 +225,83 @@
 						groupid: courseId,
 					},
 					showMsg: false,
+					showLoading:false
 					
 				}, function(data, success) {
      
 		      	  if ( success ){
-		      		console.log(JSON.stringify(data))
+		      	  	
 		      		var arr = data.data;
 		      		var st = "";
 		      		for(var i = 0 ; i< arr.length ; i++ ){
-		      			st+="<div class='dl'><span>"+(i+1)+"</span><div class='time'>"+arr[i].times+"</div><div class='name'><span>课程名称:</span>"+arr[i].title+"</div></div>";
+		      			st+="<div class='dl' data-id='"+arr[i].id+"'><span>"+(i+1)+"</span><div class='time'>"+arr[i].times+"</div><div class='name'><span>课程名称:</span>"+arr[i].title+"</div> "+(auth==1?"<a data-id='"+arr[i].id+"' class='del'>删除</a>":"")+"</div>";
 		      		}
 		      		
 					document.getElementById("item2").innerHTML = st;
-		
+					addEvent();
 		      	  }
 
 		      	});
 			}
 			
-			function deleteDetail ( courseId ){
+			function deleteDetail ( id ,callback ){
 //				Curriculum/delSubjects
 				
 				//课程安排
 		      	request.loginAjax('Curriculum/delSubjects', {
 					
 					data: {
-						id: courseId,
+						id: id,
 					},
 					showMsg: false,
+					showLoading:false
 					
 				}, function(data, success) {
      
 		      	  if ( success ){
-		      		document.getElementById("item1").innerHTML = data.auth == 1 ?'<a id="fabu" class="newbtn">新增</a>':'暂无';
-		      		addEvent();
+		      		callback&&callback();
 		      	  }
 
 		      	});
 			}
 			
 			function addEvent(){
-				var oFB = document.getElementById("fabu"), oQK = document.getElementById("qingkong");
-				oFB&&oFB.addEventListener('tap', function(event){
-		            mui.openWindow({
-		                url: './train-upload.html',
-		                id: 'KZ-TRAIN-UPLOAD',
-						extras:{ courseId  : courseId},
-		                show: {
-		                  aniShow: 'pop-in'
-		                },
-
-		                waiting: {
-		                  autoShow: true
-		                }
-		             });
-		         });
+				var  oQK = document.querySelectorAll(".dl .del");
+				
+		         mui.each( oQK ,function(){
+		         	var _this = this;
+		         	var id = this.getAttribute("data-id");
+		         	this.addEventListener('tap', function(event){
+		         		event.stopPropagation();   
+		         		console.log( id +","+courseId );
+			           deleteDetail(id,function(){
+			           	 ajaxData( courseId );
+			           });
+			         });
+		         })
 		         
-		         oQK&&oQK.addEventListener('tap', function(event){
-		           deleteDetail(courseId);
-		         });
+		        var  oDL = document.querySelectorAll(".dl");
+				
+		         mui.each( oDL ,function(){
+		         	var _this = this;
+		         	
+		         	this.addEventListener('tap', function(event){
+		         		var id = this.getAttribute("data-id");
+		         		
+		         		if (!trainArrangeWebview) {
+			                trainArrangeWebview = plus.webview.getWebviewById('trainArrange');
+			              }
+			              mui.fire(trainArrangeWebview,'train-arrange-id',{
+			              	arrageId:id
+			              });
+			              mui.openWindow({
+			                id: 'trainArrange'
+			              });
+		         	})
+		         		
+		         })
+		         
+		         
 			}
 		</script>
 		

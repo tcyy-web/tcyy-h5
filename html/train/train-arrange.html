@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+			.mui-content{
+				background: #fff;
+			}
+			.mui-bar{box-shadow: none;}
+			.mui-content h4{text-align: center; padding: 10px 0;}
+		</style>
+		
+		<style type="text/css">
+		.pcontent{
+			overflow-y:auto;
+		}
+		.pcontent p{ color: #333; margin: 0; padding: 0; margin-bottom: 5px; font-size: 15px; padding: 2px 5px;}
+		.pcontent .vedio{ width: 50px; height: 50px; display: inline-block;  background: url(../../images/train/v_video.png) center center no-repeat; }
+		.pcontent .audio{ position: relative; border-radius: 30px; border:1px solid #999; width: 160px; height: 32px; display: inline-block;}
+		.pcontent .audio::before{
+			content: '';
+			position: absolute;
+			background: url(../../images/train/v_audio.png) 4px center /20px auto no-repeat;
+			width: 32px;
+			height: 32px;
+		}
+		
+		.pcontent .paudio.playing .audio::before{
+			animation: twinkling 3s infinite ease; 
+		}
+		.pcontent p {position: relative;}
+		.pcontent p .cz{position: absolute; margin-left: 12px; }
+		p .cz i{ display: inline-block; font-style: normal; color: #0062CC;}
+		
+		@-webkit-keyframes twinkling{ 
+		0%{ 
+		opacity: 0.1; 
+		} 
+		100%{ 
+		opacity: 1; 
+		} 
+		} 
+		@keyframes twinkling{ 
+		0%{ 
+		opacity: 0.1; 
+		} 
+		100%{ 
+		opacity: 1; 
+		} 
+		}
+		</style>
+	</head>
+
+	<body>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">课程安排</h1>
+	</header>
+	<div class="mui-content">
+		<h4 id="title"></h4>
+		<div id="pcontent" class="pcontent"></div>
+	</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.extend.js"></script>
+<script src="../../js/utils.storages.js" ></script>
+<script src="../../js/utils.category.js" ></script>
+<script src="../../js/utils.auth.js"></script>
+<script src="../../js/utils.request.js"></script>
+
+<script src="../../third/jquery/jquery.js"></script>
+<script type="text/javascript">
+	
+
+
+var arrageId = null;
+(function($,doc){
+	
+
+
+$.init();
+$.plusReady(function() {
+		
+
+    window.addEventListener('train-arrange-id', function(e){
+        arrageId = e.detail.arrageId;
+
+        ajaxData( arrageId );
+    });
+
+
+
+function ajaxData( arrageId ){
+	request.loginAjax('Curriculum/getSubjectsDetails', {
+					
+				data: {
+					id: arrageId,
+				},
+				showMsg: false,
+				
+			}, function(data, success) {
+ 
+	      	  if ( success ){
+	      	  	document.getElementById("title").innerHTML = data.title;
+	      	  	document.getElementById("pcontent").innerHTML = data.contents;
+      	  }
+      	  
+		
+  	  });
+    }
+});
+
+
+})(mui , document);
+(function($){
+$(function(){
+$(".pcontent").on("tap",".paudio",function(){
+	var link = $(this).attr("link");
+	var _this = this;
+	Play.resetPlay = function(){
+		$(_this).removeClass("playing");
+	}
+	if(!Play.isplay ){
+		
+		$(this).addClass("playing");
+		Play.playAudio( link );	
+	}else{
+		$(this).removeClass("playing");
+		Play.stopPlay();
+	}
+	
+}).on("tap",".pvedio",function(){
+	var link = $(this).attr("link");
+	Play.playVedio( link );	
+
+});
+});
+
+var Play = {
+	
+  _timer : null,
+  _player : null,
+  isplay : false ,
+  vedio_w: null,
+  playAudioE:function(entry){
+  	var url = localUrl + entry.name;
+  	this.playAudio( url);
+  },
+	// 播放音频文件
+  playAudio:function( url ){
+	this._player = plus.audio.createPlayer(url);
+	var p = this._player;
+	var _this = this;
+	
+	this.isplay = true;
+	p.play(function(){
+		console.log('播放完成！');
+		_this.resetPlay();
+		_this.stopPlay();
+	}, function(e){
+		console.log('播放音频文件"'+url+'"失败：'+e.message);
+	});
+	
+	// 获取总时长
+	var d = p.getDuration();
+	if(!d){
+//		pt.innerText = '00:00:00/'+timeToStr(d);
+	}
+	this._timer = setInterval(function(){
+		//渲染播放界面
+	}, 1000);
+	
+	},
+	// 停止播放
+	stopPlay:function (){
+		var p = this._player;
+		this.resetPlay();
+		clearInterval(this._timer);
+		this.isplay = false;
+		this._timer = null;
+		var _this = this;
+		setTimeout(_this.resetPlay, 500);
+		// 操作播放对象
+		if(p){
+			p.stop();
+			this._player = null;
+		}
+	},
+	resetPlay:function(){
+		
+	},
+	playVedioE:function( entry ){
+		var url = entry.toLocalURL();
+
+		this.playVedio( url );
+	},
+	playVedio:function( url ){
+		var oVedio = null;
+		if($("#video").length==0){
+			oVedio = $("<video id='video' autoplay='autoplay' width='0' height='0'></video>").appendTo("body");
+		}else{
+			oVedio = $("#video");
+		}
+		
+		oVedio = oVedio[0];
+		oVedio.src = url;
+		
+	}
+
+}
+})(jQuery);
+</script>
+		
+</body>
+
+</html>

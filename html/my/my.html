@@ -148,6 +148,20 @@
 						
 					}else if( name =="sex"){
 						selectSex.call(this);
+					}else if( name =="phone"){
+						 $.openWindow({
+			              url: '../my/validate-phone.html',
+			              id: 'MY-VALIDATA-PHONE',
+			              show: {
+			                aniShow: 'pop-in'
+			              },
+			              styles: {
+			                popGesture: 'hide'
+			              },
+			              waiting: {
+			                autoShow: false
+			              }
+			            });
 					}
 					
 				});
