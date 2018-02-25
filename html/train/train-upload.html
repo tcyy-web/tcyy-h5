@@ -224,11 +224,7 @@ window.groupId = null;
 (function($,doc){
 	
 	$.init({beforeback: function() {
-		var webview_parent = plus.webview.getWebviewById("trainDetail");
-		$.fire(webview_parent,'train-id',{
-	        id:courseId,
-	        groupid:groupId
-	      });
+		
 	}});
 
 	
@@ -413,8 +409,8 @@ function uploadFile( opt ){
 	 var url = config.url + "Uploads/Files";
 	 var divid = new Date().getTime()
       upload.uploadMedia( url , divid, function(res) {
-
-  			opt.callback&&opt.callback( res )
+			mui.toast("上传成功");
+  			opt.callback&&opt.callback( res );
         },{
           type: '5', 
 		  filetype: fileType, 
@@ -429,7 +425,7 @@ function creatText( st ){
 }
 
 function createImage( data){
-	var st = '<p class="pimg"><img style="max-width: 100%;" src='+data.abspath+'><p>'
+	var st = '<p class="pimg"><img style="max-width: 100%;" src='+data[0].showUrl+'><p>'
 	$(".pcontent").append( st );
 }
 
@@ -442,7 +438,7 @@ function createVedio( entry ){
 		type:"vedio",
 		abspath: entry.toLocalURL(),
 		callback:function( res ){
-			tar.attr("link",res.showUrl)
+			tar.attr("link",res[0].showUrl)
 		}
 	})
 	
@@ -456,7 +452,7 @@ function createAudio( entry ){
 		type:"audio",
 		abspath: entry.toLocalURL(),
 		callback:function( res ){
-			tar.attr("link",res.showUrl)
+			tar.attr("link",res[0].showUrl)
 		}
 	});
 }
@@ -533,6 +529,10 @@ var Play = {
   },
 	// 播放音频文件
   playAudio:function( url ){
+  	if(!url){
+//		mui.toast("地址错误");
+  		return;
+  	}
 	this._player = plus.audio.createPlayer(url);
 	var p = this._player;
 	var _this = this;
@@ -580,6 +580,10 @@ var Play = {
 		this.playVedio( url );
 	},
 	playVedio:function( url ){
+		if(!url){
+//	  		mui.toast("地址错误");
+	  		return;
+	  	}
 		if($("#video").length==0){
 			$("<video id='video' autoplay='autoplay' width='0' height='0'></video>").appendTo("body")
 		}
@@ -609,7 +613,11 @@ function sendCourceData(courseId,title,st){
 var _back=window.back;
 function resetback(){
 	// 停止播放
-
+	var webview_parent = plus.webview.getWebviewById("trainDetail");
+	mui.fire(webview_parent,'train-id',{
+	    id:courseId,
+	    groupid:groupId
+	  });
 	Play.stopPlay();
 	Record.stopAudio();
 	_back();

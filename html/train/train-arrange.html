@@ -121,7 +121,8 @@ function ajaxData( arrageId ){
 })(mui , document);
 (function($){
 $(function(){
-$(".pcontent").on("tap",".paudio",function(){
+$(".pcontent").on("click",".paudio",function(){
+	mui.toast("click");
 	var link = $(this).attr("link");
 	var _this = this;
 	Play.resetPlay = function(){
@@ -136,7 +137,7 @@ $(".pcontent").on("tap",".paudio",function(){
 		Play.stopPlay();
 	}
 	
-}).on("tap",".pvedio",function(){
+}).on("click",".pvedio",function(){
 	var link = $(this).attr("link");
 	Play.playVedio( link );	
 
@@ -155,6 +156,10 @@ var Play = {
   },
 	// 播放音频文件
   playAudio:function( url ){
+  	if(!url){
+//		mui.toast("地址错误");
+  		return;
+  	}
 	this._player = plus.audio.createPlayer(url);
 	var p = this._player;
 	var _this = this;
@@ -202,15 +207,15 @@ var Play = {
 		this.playVedio( url );
 	},
 	playVedio:function( url ){
-		var oVedio = null;
+		if(!url){
+//	  		mui.toast("地址错误");
+	  		return;
+	  	}
 		if($("#video").length==0){
-			oVedio = $("<video id='video' autoplay='autoplay' width='0' height='0'></video>").appendTo("body");
-		}else{
-			oVedio = $("#video");
+			$("<video id='video' autoplay='autoplay' width='0' height='0'></video>").appendTo("body")
 		}
 		
-		oVedio = oVedio[0];
-		oVedio.src = url;
+		$("#video")[0].src = url;
 		
 	}
 
