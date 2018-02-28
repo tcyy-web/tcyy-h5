@@ -337,7 +337,8 @@
 					});
 					
 					//我的消息
-					doc.getElementById('mymessage').addEventListener('tap', function(e) {
+					doc.getElementById('xiaoxi').addEventListener('tap', function(e) {
+						
 					  $.openWindow({
 			              url: '../my/my-message.html',
 			              id: 'MY-MESSAGE',
@@ -351,6 +352,7 @@
 			                autoShow: false
 			              }
 			            });
+ 					
 					});
 					
 					//绑定手机
@@ -371,7 +373,7 @@
 					});
 					
 					// 我的收藏
-					doc.getElementById('myshoucang').addEventListener('tap', function(e) {
+//					doc.getElementById('myshoucang').addEventListener('tap', function(e) {
 //					  $.openWindow({
 //			              url: '../kz_blx/my-blx-list.html',
 //			              id: 'MY-BLX',
@@ -386,7 +388,7 @@
 //			                autoShow: false
 //			              }
 //			            });
-					});
+//					});
 					//qiandao
 					document.getElementById("qiandao").addEventListener("tap",function(){
 						request.loginAjax('user/sign', {
