@@ -68,8 +68,9 @@
 <script>
 	(function($, doc) {
 		$.init({beforeback: function() {
-			var webview_parent = plus.webview.getWebviewById("WDJL");
-			mui.fire( webview_parent, 'refresh-wode');
+		  var parent = plus.webview.currentWebview().opener();
+      $.fire(parent, 'info-edit-success', {});
+			return true;
 		}});
 		$.plusReady(function() {
 			addEvent();
@@ -167,7 +168,6 @@
 				});
 				this.addEventListener("blur", function() {
 					if(this._text != this.value){
-						console.log("difference");
 						var name = this.getAttribute("id");
 						var txt = this.value;
 						

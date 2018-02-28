@@ -44,10 +44,11 @@
 <script type="text/javascript">
 (function($, doc) {
 
-$.init({beforeback: function() {
-	var webview_parent = plus.webview.getWebviewById("WDJL");
-	webview_parent.reload(true);
-}});
+$.init({
+  beforeback: function() {
+    	return true;
+  }
+});
 
 $.plusReady(function() {
 
@@ -121,8 +122,8 @@ function validateCode( phone , code ){
   }, function(data, success) {
   	
     if (success) {
-		$.toast("绑定成功");
-		$.back();
+      	$.toast("绑定成功");
+      	$.back();
     }
 });
 }
