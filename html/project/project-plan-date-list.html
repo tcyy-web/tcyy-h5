@@ -19,9 +19,18 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">预约</h1>
 		</header>
-		<div class="mui-content">
+		<div id="yuyueDate" class="mui-content" >
+		  <div class="datebox">
+		    <div class="flex">
+		    <!-- ko 'foreach':headStr -->
+        <div class="flex-1">
+          <span data-bind="text: $data"></span>
+        </div>
+        <!-- /ko -->
+        </div>
 		  </div>
 		</div>
+		<script src="../../third/knockout.js" ></script>
 		<script src="../../js/mui.min.js"></script>
     <script src="../../js/mui.pullToRefresh.js"></script>
     <script src="../../js/mui.pullToRefresh.material.js"></script>
@@ -32,10 +41,31 @@
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js"></script>
 		<script>
+		  var headStr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'];
+		  var getDays = function (year, month) {//获取月的天数
+        return 32 - new Date(year, month - 1, 32).getDate();
+      }
+		  var getDaysStr = function(year, month, data) {
+		    var _list = [];
+		    var _days = getDays(year, month);
+		  }
 			(function($, doc) {
 				$.init();
-				$.plusReady(function() {
-				});
+//				$.plusReady(function() {
+				  var viewModel = {
+            headStr: ko.observableArray(headStr),
+            MonthData: ko.observableArray([]),
+            HoverFn: function (data) {
+              ko.utils.arrayForEach(self.viewModal.MonthData(), function (obj) {
+                  if (obj.isCur && obj.dayStr != data.dayStr) {
+                      obj.Hover(false);
+                  }
+              });
+              data.isCur && data.Hover(!data.Hover());
+            }
+          };
+				  ko.applyBindings(viewModel, doc.getElementById('yuyueDate'));
+//				});
 			}(mui, document));
 		</script>
 	</body>

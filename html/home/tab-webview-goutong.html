@@ -75,7 +75,7 @@
 					</div>
 					<p>3D</p>
 				</div>
-				<div class="gr-item flex flex-col flex-1">
+				<div id="yuyue" class="gr-item flex flex-col flex-1">
 					<div class="gr-img flex flex-col-center">
 						<div class="img-box">
 							<img src="../../images/tab-goutong/img5.png" />
@@ -314,6 +314,23 @@
               $.openWindow({
                 url: '../project/project-index.html',
                 id: 'PRODUCT-INDEX',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 预约
+            doc.getElementById('yuyue').addEventListener('tap', function(event) {
+              $.openWindow({
+                url: '../project/project-plan-date-list.html',
+                id: 'PRODUCT-YUYUE',
                 preload: true,
                 show: {
                   aniShow: 'pop-in'
