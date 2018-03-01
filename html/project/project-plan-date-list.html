@@ -11,102 +11,17 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
-		  .mui-pull-right{
-  	       margin-right: -10px;
-		    margin-left: -10px;
-		    padding: 12px;
-		  }
-			.form-item {
-				position: relative;
-				background-color: #ffffff;
-				padding: 15px;
-				line-height: 20px;
-			}
-			.form-item:after{
-				position: absolute;
-		    right: 0;
-		    bottom: 0;
-		    left: 0;
-		    height: 1px;
-		    content: '';
-		    -webkit-transform: scaleY(.5);
-		    transform: scaleY(.5);
-		    background-color: #d6d6d6;
-			}
-			.form-item > p{
-				padding-left: 5px;
-				color: #7c7c7c;
-				font-size: 14px;
-			}
-			.form-item > p:first-child{
-				padding-left: 0;
-			}
-			.form-item > p:last-child{
-				width: 85px;
-				color: #ffae00;
-			}
-			.form-item > p.status2{
-        color: #f14434;
-      }
-      .form-item > p.status3{
-        color: #4cd964;
-      }
-			.form-item > p .iconfont{
-				font-size: 18px;
-				vertical-align: middle;
-				margin-right: 2px;
-			}
-		</style>
-		<style>
-		  .mui-pull-top-tips {
-        z-index: 10;
-      }
-      #topPopover {
-        position: fixed;
-        top: 16px;
-        right: 6px;
-      }
-      #topPopover .mui-popover-arrow {
-        left: auto;
-        right: 6px;
-      }
-      .mui-popover {
-        width: 180px;
-        height: 180px;
-      }
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<a class="mui-pull-right" href="#topPopover">筛选</a>
-			<h1 class="mui-title">项目计划列表</h1>
+			<h1 class="mui-title">预约</h1>
 		</header>
 		<div class="mui-content">
-		  <div class="mui-fullscreen">
-		    <div class="mui-scroll-wrapper">
-		      <div id="pullrefresh" class="mui-scroll">
-		        <div id="contentBox">
-              <!--<div class="flex form-item">
-                <p class="flex-1 flex flex-row-center">刘德华</p>
-                <p class="flex-1 flex flex-row-center">2000-10-10 00:00</p>
-                <p class="flex flex-row-center status3"><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
-              </div>-->
-            </div>
-		      </div>
-		    </div>
 		  </div>
 		</div>
-		<div id="topPopover" class="mui-popover">
-      <div class="mui-popover-arrow"></div>
-      <div class="mui-scroll-wrapper">
-        <div class="mui-scroll">
-          <ul class="mui-table-view">
-          </ul>
-        </div>
-      </div>
-    </div>
 		<script src="../../js/mui.min.js"></script>
     <script src="../../js/mui.pullToRefresh.js"></script>
     <script src="../../js/mui.pullToRefresh.material.js"></script>
@@ -118,132 +33,8 @@
     <script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
-				$.init({
-				  preloadPages:[{
-            id:'projectPlanDetail',
-            url: './project-plan-detail.html'
-          }]
-				});
-				$('.mui-scroll-wrapper').scroll();
+				$.init();
 				$.plusReady(function() {
-				  // 状态
-				  var status = -1;
-          var page = 1;
-          var limit = 20;
-          var more = true;
-          var $pullrefresh = $('#pullrefresh');
-          var $contentBox = doc.getElementById('contentBox');
-          var projectPlanDetailWebView = null;
-          var paitItem = function(data) {
-            var div = doc.createElement('div');
-            div.className = 'flex form-item';
-            div.innerHTML = '<p class="flex-1 flex flex-row-center">{name}</p><p class="flex-1 flex flex-row-center">{booktime}</p>'.format(data);
-            var p = doc.createElement('p');
-            p.className = 'flex flex-row-center status{0}'.format(data.status);
-            p.innerHTML = '<i class="iconfont icon-cshy-shizhong"></i>{0}'.format(enums.planStatus[data.status]);
-            div.appendChild(p);
-            div.addEventListener('tap', function(e) {
-              if (!projectPlanDetailWebView) {
-                projectPlanDetailWebView = plus.webview.getWebviewById('projectPlanDetail');
-              }
-              $.fire(projectPlanDetailWebView,'project-plan-id',{
-                id:data.id
-              });
-              $.openWindow({
-                id: 'projectPlanDetail'
-              });
-            })
-            $contentBox.appendChild(div);
-          }
-          var getList = function(callback) {
-            if (page !== 1 && more === false) {
-              return;
-            }
-            var data = {
-              page:page,
-              limit:limit
-            }
-            if (status !== -1 && status !== '-1'){
-              data.status = status;
-            }
-            request.loginAjax('project/getPatientList',{
-              data: data,
-              showMsg: false
-            },function(data) {
-                // 处理页面绑定
-               if (data && data.data) {
-                 if (page === 1) {
-                   $contentBox.innerHTML = '';
-                 }
-                 $.each(data.data, function(index,i) {
-                   paitItem(i);
-                 });
-               }
-               // 判断是否有下一页数据
-               if (data && data.data && data.data.length === limit) {
-                 more = true;
-               } else {
-                 more = false;
-               }
-               if (typeof callback === 'function') {
-                 callback();
-               }
-            }, function() {
-               if (typeof callback === 'function') {
-                 callback();
-               }
-            });
-          }
-          // 筛选
-          var $type = doc.querySelector('#topPopover .mui-table-view');
-          var _typeHtml = [];
-          _typeHtml.push('<li data-type="{0}" class="mui-table-view-cell"><a>{1}</a></li>'.format(-1,'全部'))
-          for (var key in enums.planStatus){
-            var _html = '<li data-type="{0}" class="mui-table-view-cell"><a>{1}</a></li>'.format(key,enums.planStatus[key]);
-            _typeHtml.push(_html);
-          }
-          $type.innerHTML = _typeHtml.join('');
-          $.each($type.querySelectorAll('.mui-table-view-cell'), function(index,i) {
-             i.addEventListener('tap', function(e){
-               status = this.getAttribute('data-type');
-               page = 1;
-               $pullrefresh.pullToRefresh().refresh(true);
-               $('#topPopover').popover('hide');
-               getList();
-             });
-          });
-          // 刷新分类
-          window.addEventListener('project-plan', function(e){
-            page = 1;
-            type = 1;
-            $pullrefresh.pullToRefresh().refresh(true);
-            getList();
-          });
-          $pullrefresh.pullToRefresh({
-            down: {
-              callback: function() {
-                page = 1;
-                var self = this;
-                getList(function() {
-                  self.endPullDownToRefresh();
-                  $pullrefresh.pullToRefresh().refresh(true);
-                });
-              }
-            },
-            up: {
-              callback: function() {
-                var self = this;
-                if (more) {
-                  page = page + 1;
-                  getList(function(){
-                    self.endPullUpToRefresh(false);
-                  });
-                  return;
-                }
-                self.endPullUpToRefresh(true);
-              }
-            }
-          });
 				});
 			}(mui, document));
 		</script>
