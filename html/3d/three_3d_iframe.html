@@ -26,16 +26,18 @@
   	   <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
   	   <h1 class="mui-title">3d</h1>
   </header>
-  <div class="mui-content">
-    <!--<img  src="../../images/3d/index.jpg" />-->
-    <iframe id="iframe"></iframe>
+  <div id="content" class="mui-content">
+    <iframe></iframe>
   </div>
   <script src="../../js/mui.min.js"></script>
   <script>
     (function($, doc) {
         $.init();
         $.plusReady(function() {
-          doc.getElementById('iframe').src = 'http://m.tianchiyueya.com:1888/3D/single.html?id=a11';
+          var $content = doc.getElementById('content');
+          window.addEventListener('T_3D_IFRAME_URL', function(e){
+            $content.innerHTML = '<iframe src="'+e.detail.url+'"></iframe>';
+          });
         });
       })(mui, document);
   </script>
