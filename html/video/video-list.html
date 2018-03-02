@@ -59,6 +59,9 @@
 			.mui-content{
 				background-color: #ffffff;
 			}
+			.mui-content{
+			  position: relative;
+			}
 			.mui-table-view{ background: none;}
 			.mui-table-view > li{
 				padding:5px 0;
@@ -113,6 +116,29 @@
     		display:inline-block;
     		background:url(../../images/video/sc11.png) no-repeat right;}
     	.lname span{ font-family:'微软雅黑'; color:#303030; font-size:1em; margin-left:15px;}
+    	.videobg{
+    	  position: absolute;
+    	  top: 0;
+    	  left: 0;
+    	  right: 0;
+    	  bottom: 0;
+    	  background-color: rgba(0,0,0,0.9);
+    	  z-index: 1000;
+    	  display: none;
+    	}
+    	.videobg video{
+    	  position: absolute;
+    	  width: 100%;
+    	  left: 0;
+    	  top: 20%;
+    	  height: 60%;
+    	}
+    	.videobg .mui-icon{
+    	  position: absolute;
+    	  color: #fff;
+    	  right: 10px;
+    	  top: 10px;
+    	}
 	</style>
 
 </head>
@@ -123,6 +149,11 @@
 		<h1 class="mui-title">视频</h1>
 	</header>
 	<div class="mui-content">
+	  <div id="videobg" class="videobg">
+	    <span class="mui-icon mui-icon-close"></span>
+	    <div id="video">
+	    </div>
+	  </div>
 		<div class="mui-slider mui-fullscreen">
 			<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 				<div class="mui-scroll" id="sliderSegmentedControl" >
@@ -207,16 +238,28 @@
 		(function($, doc) {
 			//阻尼系数
 			var deceleration = $.os.ios?0.003:0.0009;
+			var $videobg = doc.getElementById('videobg');
+      var $video = doc.getElementById('video');
 			$('.mui-scroll-wrapper').scroll({
 				bounce: false,
 				indicators: true, //是否显示滚动条
 				deceleration:deceleration
 			});
-			$.init();
+			$.init({
+        beforeback: function() {
+          $videobg.style.display = 'none';
+          $video.innerHTML = '';
+          return true;
+        }
+      });
 			$.plusReady(function() {
 			  var limit = 5;
 			  var groupid = 0;
 			  var listRequest = {};
+			  $videobg.querySelector('.mui-icon-close').addEventListener('tap', function(){
+			    $videobg.style.display = 'none';
+			    $video.innerHTML = '';
+			  });
         var createFragment = function(parent, data) {
           var li = doc.createElement('li');
           var section = doc.createElement('section');
@@ -226,22 +269,28 @@
           var img = doc.createElement('img');
           img.src = data.image;
           div.appendChild(img);
-          var video = doc.createElement('video');
-          video.src = data.url;
+//        var video = doc.createElement('video');
+//        video.src = data.url;
           section.appendChild(div);
-          section.appendChild(video);
+//        section.appendChild(video);
           var a = doc.createElement('a');
           a.className = 'lname';
           a.innerHTML = '<span>{0}</span>'.format(data.title);
           section.appendChild(a);
           a.addEventListener('tap', function(event){
-            if(section.classList.contains('active')) {
-              section.classList.remove('active');
-              video.pause();
-            } else {
-              section.classList.add('active');
-              video.play();
-            }
+            var video = doc.createElement('video');
+            video.src = data.url;
+            $videobg.style.display = 'block';
+            $video.innerHTML = '';
+            $video.appendChild(video);
+            video.play();
+//          if(section.classList.contains('active')) {
+//            section.classList.remove('active');
+//            video.pause();
+//          } else {
+//            section.classList.add('active');
+//            video.play();
+//          }
           });
           li.appendChild(section);
           parent.appendChild(li);
