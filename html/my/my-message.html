@@ -8,7 +8,7 @@
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
 .mes{
-	max-height:78px;
+	/*max-height:78px;*/
 	min-height: 58px;
 	padding:10px ;
 	border-bottom: 1px solid #d2d2d2;
@@ -27,6 +27,15 @@
 	font-size:14px;
 	color:#4a4e51;
 
+}
+.mes.unread p::before{
+	content: '';
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 100%;
+	margin-right: 5px;
+	background: #ff8d8d;
 }
 
 .mes span{
@@ -80,14 +89,14 @@
 </header>
 <div class="mui-content" id="content">
 	
-	<!--<div class="mes">
+	<div class="mes unread">
 
 		<div class="right">
 			<p>风继续吹@5</p>
 			<span>234324244 44444444444 4444444444 444444444444444 4444444 44444444</span>
 			<b>五天前</b>
 		</div>
-	</div>-->
+	</div>
 	<div class="nomes-box">
 		<div class="nomes"></div>
 		<span class="txt">暂无消息</span>
@@ -102,9 +111,17 @@
 <script src="../../js/utils.auth.js"></script>
 <script src="../../js/utils.request.js"></script>
 
+<script src="../../js/business/message-d.js"></script>
+
 <script type="text/javascript">
-	
+
 mui.plusReady(function() {
+	mui.init({beforeback: function() {
+	  var parent = plus.webview.currentWebview().opener();
+      mui.fire(parent, 'info-edit-success', {});
+		return true;
+	}});
+	readyFuntion();
 	ajaxData();
 });
 function ajaxData(){
@@ -118,7 +135,18 @@ function ajaxData(){
 	}, function(data, success) {
 	
 		if ( success ){
-			document.getElementById("content").innerHTML = renderData( data.data );
+			var arr = data.data;
+			document.getElementById("content").innerHTML = renderData( arr );
+			mui.each(document.querySelectorAll(".mes"),function(){
+				this.addEventListener("click",function(){
+					
+					var index = this.getAttribute("index");
+					var one = arr[index];
+					showMsgDetail( one );
+					
+					this.classList.remove("unread");
+				});
+			});
 	  	}
 	
 	});	
@@ -131,10 +159,9 @@ function renderData( arr ){
 	}
 	for(var i = 0 ; i< arr.length ; i++ ){
 		var one = arr[i];
-		var tmp ='<div class="mes" data-status="'+one.status+'" data-type="'+one.type+'" data-url="'+one.url+'">'+
-					
+		var tmp ='<div class="mes '+( one.status==1?"unread":"" )+'" index='+i+'>'+
 					'<div class="right">'+
-						'<p>'+one.title+'@5</p>'+
+						'<p>'+one.title+'</p>'+
 						'<span>'+one.contents+'</span>'+
 						'<b>'+one.createtime+'</b>'+
 					'</div>'+

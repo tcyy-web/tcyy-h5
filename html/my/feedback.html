@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../../css/mui.min.css">
+	<link href="../../css/style.css" rel="stylesheet" />
+	<style>
+		.mui-content{padding:15px;}
+		.mui-content p{ padding-top: 15px;}
+	</style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">意见反馈</h1>
+</header>
+<div class="mui-content">
+	<p><textarea id="content" name="" rows="10" cols=""></textarea>
+	</p>
+	<button id="queding" class="mui-btn-block mui-btn-blue">反馈</button>
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.extend.js"></script>
+<script src="../../js/utils.storages.js" ></script>
+<script src="../../js/utils.category.js" ></script>
+<script src="../../js/utils.auth.js"></script>
+<script src="../../js/utils.request.js"></script>
+
+
+<script type="text/javascript">
+	
+
+(function($,doc){
+
+$.init();
+$.plusReady(function() {
+
+document.getElementById("queding").addEventListener("tap",function(){
+	var content = document.getElementById("content").value;
+	if(content == ""){
+		mui.toast("请提交内容");
+	}else{
+		ajaxData( content );
+	}
+})
+
+
+function ajaxData( content ){
+	request.loginAjax('Feedback/saveData', {
+				data:{
+					contents:content
+				},
+				showMsg: false,
+				
+			}, function(data, success) {
+ 
+	      	  if ( success ){
+	      	  	mui.toast("反馈成功");
+		      	  mui.back();
+	      	  }
+      	  
+		
+  	  });
+    }
+});
+
+
+})(mui , document);
+
+	
+
+
+</script>
+		
+</body>
+
+</html>

@@ -121,6 +121,19 @@
 			
 			#xiaoxi,#qiandao{
 				padding-top: 10px;
+				position: relative;
+			}
+			
+			#xiaoxi #unread{
+				position: absolute;
+				margin-top: -6px;
+				margin-left: -5px;
+				padding: 0 6px;
+				line-height: 16px;
+				border-radius: 16px;
+				background: #f25d8e;
+				color: #fff;
+				
 			}
 		</style>
 	</head>
@@ -148,7 +161,7 @@
 			</div>
 			<div class="count flex">
 				<div class="flex-1" id="xiaoxi">
-					<p>消息</p>
+					<p>消息 <span id="unread">0</span></p>
 					<!--<p>0</p>-->
 				</div>
 				<div class="flex-1" id="myjifen">
@@ -161,18 +174,18 @@
 				</div>
 			</div>
 			<ul class="mui-table-view mui-table-view-chevron">
-				<!--<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/yqm.png"/>
-					<a class="mui-navigate-right" href="#">
+					<a id="myyaoqingma" class="mui-navigate-right" href="#">
 						我的邀请码
 					</a>
-				</li>-->
-				<!--<li class="mui-table-view-cell">
+				</li>
+				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/jhm.png"/>
-					<a class="mui-navigate-right" href="#">
+					<a id="myjihuoma" class="mui-navigate-right" href="#">
 						我的激活码
 					</a>
-				</li>-->
+				</li>
 				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/wdblx.png"/>
 					<a id="myblx" class="clickItem mui-navigate-right">
@@ -186,7 +199,7 @@
 				</li>
 				
 				<li class="mui-table-view-cell">
-					<img src="../../images/tab-wode/wdblx.png"/>
+					<img src="../../images/tab-wode/tk.png"/>
 					<a id="myTelephone" class="clickItem mui-navigate-right">
 						绑定手机
 					</a>
@@ -197,28 +210,22 @@
 						本地病例秀
 					</a>
 				</li>-->
-			</ul>
-
-			<!--<ul class="mui-table-view mui-table-view-chevron">
-				<li class="mui-table-view-cell">
-					<img src="../../images/tab-wode/tk.png"/>
-					<a class="mui-navigate-right">
-						本地图库
-					</a>
-				</li>
+				
 				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/fk.png"/>
-					<a class="mui-navigate-right" href="#">
+					<a id="fankui" class="mui-navigate-right" href="#">
 						意见反馈
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/gy.png"/>
-					<a class="mui-navigate-right" href="#">
+					<a id="aboutAs" class="mui-navigate-right" href="#">
 						关于我们
 					</a>
 				</li>
-			</ul>-->
+			</ul>
+
+
 			<div class="btn-padding">
 				<button id="logout" class="btn-logout">退出登录</button>
 			</div>
@@ -241,6 +248,7 @@
 				$.plusReady(function() {
 				  if (authManage.checkLogin()) {
 				    getTotalPoint();
+				    getUnread();
 				  }
 					var user = authManage.getUser();
 					// 判断登录
@@ -285,6 +293,42 @@
 							  });
 							}
 						});
+					});
+					
+					// 我的邀请码
+					doc.getElementById('myyaoqingma').addEventListener('tap', function(e) {
+					  $.openWindow({
+			              url: '../my/invite-code.html',
+			              id: 'MY-YAOQINGMA',
+			              preload: true,
+			              show: {
+			                aniShow: 'pop-in'
+			              },
+			              styles: {
+			                popGesture: 'hide'
+			              },
+			              waiting: {
+			                autoShow: false
+			              }
+			            });
+					});
+					
+					// 我的激活码
+					doc.getElementById('myjihuoma').addEventListener('tap', function(e) {
+					  $.openWindow({
+			              url: '../my/active-code.html',
+			              id: 'MY-JIHUOMA',
+			              preload: true,
+			              show: {
+			                aniShow: 'pop-in'
+			              },
+			              styles: {
+			                popGesture: 'hide'
+			              },
+			              waiting: {
+			                autoShow: false
+			              }
+			            });
 					});
 					// 我的病例秀
 					doc.getElementById('myblx').addEventListener('tap', function(e) {
@@ -373,6 +417,39 @@
 			              }
 			            });
 					});
+					//意见反馈
+					doc.getElementById('fankui').addEventListener('tap', function(e) {
+					  $.openWindow({
+			              url: '../my/feedback.html',
+			              id: 'myFeedback',
+			              show: {
+			                aniShow: 'pop-in'
+			              },
+			              styles: {
+			                popGesture: 'hide'
+			              },
+			              waiting: {
+			                autoShow: false
+			              }
+			            });
+					});
+					
+					//关于我们
+					doc.getElementById('aboutAs').addEventListener('tap', function(e) {
+					  $.openWindow({
+			              url: '../gongsi/index.html',
+			              id: 'aboutAs',
+			              show: {
+			                aniShow: 'pop-in'
+			              },
+			              styles: {
+			                popGesture: 'hide'
+			              },
+			              waiting: {
+			                autoShow: false
+			              }
+			            });
+					});
 					
 					// 我的收藏
 //					doc.getElementById('myshoucang').addEventListener('tap', function(e) {
@@ -412,7 +489,24 @@
 							document.getElementById("totalPoint").innerText = data.point;
 					    }
 					});
-					}
+				}
+				
+				function getUnread(){
+					request.loginAjax('Message/getUnread', {
+						showLoading:false,
+						showMsg: false
+					  }, function(data, success) {
+					    if (success) {
+					    	if( data.count == 0){
+					    		document.getElementById("unread").style.display = "none";
+					    	}else{
+					    		document.getElementById("unread").style.display = "block";
+					    		document.getElementById("unread").innerText = data.count;	
+					    	}
+							
+					    }
+					});
+				}
 
 			}(mui, document));
 		</script>
