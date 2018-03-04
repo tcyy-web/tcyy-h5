@@ -236,16 +236,28 @@ var Play = {
 	},
 	playVedio:function( url ){
 		if(!url){
-		mui.toast("地址错误");
+	  		mui.toast("地址错误");
 	  		return;
-	  	}else{
-	  		mui.toast("加载中");
 	  	}
-		if($("#video").length==0){
-			$("<video id='video' autoplay='autoplay' width='100' height='100' style='display: none;'></video>").appendTo("body")
+		
+		if($("#videobg").length==0){
+			$('<div id="videobg" class="videobg"> <span class="mui-icon mui-icon-close"></span> <div id="video"> </div> </div>').appendTo("body");
+			$videobg = document.getElementById("videobg");
+			$videobg.querySelector(".mui-icon-close").addEventListener("tap",function(){
+				$videobg.style.display = 'none';
+			})
 		}
 		
-		$("#video")[0].src = url;
+		$videobg = document.getElementById("videobg");
+		
+		$video = document.createElement('video');
+        $video.src = url;
+        $video.controls = true;
+        
+        $videobg.style.display = 'block';
+        $video.innerHTML = '';
+        $video.appendChild(video);
+        $video.play();
 		
 		
 	}

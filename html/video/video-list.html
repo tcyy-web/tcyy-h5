@@ -279,6 +279,7 @@
           section.appendChild(a);
           a.addEventListener('tap', function(event){
             var video = doc.createElement('video');
+            video.controls = true;
             video.src = data.url;
             $videobg.style.display = 'block';
             $video.innerHTML = '';

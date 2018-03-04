@@ -14,18 +14,19 @@
         		background: #fff;
         	}
             .mui-content .top{
-            	padding-top: 30px;
+            	padding-top: 100px;
             }
             
             .top p{
             	line-height: 1.5;
-            	margin-bottom: 10px;
+            	margin-bottom: 20px;
             	font-size: 16px;
             	color: #333;
             	text-align: center;
+            	font-size: 16px;
             }
             .bottom{
-            	padding-top: 20px;
+            	padding-top: 40px;
             }
             .pay-list {
 				display: block;
@@ -36,15 +37,18 @@
 				border:1px solid #ddd;
 				padding-left: 15px;
             }
+            .pay-list img{ margin-right: 10px;}
+           	#content{
+           		font-size:18px;
+           		font-weight: bold;
+           	}
             
-           
-            .weixin img{ margin-right: 10px;}
         </style>
     </head>
     <body>
         <header class="mui-bar mui-bar-nav white">
             <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-            <h1 class="mui-title">支付</h1>
+            <h1 class="mui-title">支付台</h1>
         </header>
         <div class="mui-content">
         	<div class="top">
@@ -55,7 +59,8 @@
                 <div class="weixin pay-list" id="weixin"> <img width="40" src="../../images/pay/weixin.png" />微信支付 </div>
 
 
-                <!--<div class="zhifubao" id="zhifubao"> 支付宝支付 </div>-->
+                <div class="zhifubao pay-list" id="zhifubao"> <img width="30" src="../../images/pay/alipay.png" /> 支付宝支付 </div>
+                                
             </div>
         </div>
     </body>
@@ -86,8 +91,18 @@ mui.plusReady(function() {
     // 获取支付通道
     plus.payment.getChannels(function(channels){
     	
-        aliChannel=channels[0];
-    	wxChannel=channels[1];
+    	for(var i in channels){
+			var channel=channels[i];
+			if( channel.id =="wxpay"){
+				wxChannel = channel;
+			}
+			
+			if( channel.id =="alipay"){
+				aliChannel = channel;
+			}
+		}
+
+    	
     },function(e){
       alert("获取支付通道失败："+e.message);
     });
@@ -98,6 +113,7 @@ mui.plusReady(function() {
     	var content = e.detail.content;
     	
     	var type = e.detail.type;
+    	
     	params = {
     		id: id,
     		price:price,
@@ -125,17 +141,22 @@ document.getElementById('weixin').addEventListener('tap',function() {
 })
 
 
-var ALIPAYSERVER='';
-var WXPAYSERVER='https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb';
+//var ALIPAYSERVER='';
+//var WXPAYSERVER='https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb';
+
+var ALIPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=0.01';
+var WXPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/wxpay.php?total=0.01';
 // 2. 发起支付请求
 function pay( id , data){
     // 从服务器请求支付订单
     var PAYSERVER='';
     if(id=='alipay'){
-        PAYSERVER=ALIPAYSERVER+"?prepay_id="+data.prepay_id+"&package="+ new Date().getTime();
+//      PAYSERVER=ALIPAYSERVER+"?prepay_id="+data.prepay_id+"&package="+ data.package;
+        PAYSERVER=ALIPAYSERVER;
         channel = aliChannel;
 	}else if(id=='wxpay'){
-        PAYSERVER=WXPAYSERVER+"?prepay_id="+data.prepay_id+"&package="+ new Date().getTime() ;
+//      PAYSERVER=WXPAYSERVER+"?prepay_id="+data.prepay_id+"&package="+ data.package;
+		PAYSERVER=WXPAYSERVER;
         channel = wxChannel;
     }else{
         plus.nativeUI.alert("不支持此支付通道！",null,"捐赠");
@@ -148,8 +169,8 @@ function pay( id , data){
             if(xhr.status==200){
                 plus.payment.request(channel,xhr.responseText,function(result){
                     plus.nativeUI.alert("支付成功！",function(){
-                    back();
-                });
+	                    back();
+	                });
                 },function(error){
                     plus.nativeUI.alert("支付失败：" + error.code);
                 });
@@ -161,8 +182,8 @@ function pay( id , data){
         break;
     }
  }
- xhr.open('GET',PAYSERVER);
-         xhr.send();
+ xhr.open('get',PAYSERVER);
+ xhr.send();
 }
         
 function ajaxData(){

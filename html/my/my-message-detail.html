@@ -48,6 +48,10 @@
 <script type="text/javascript">
 mui.plusReady(function() {
 	
+	mui.init({
+	    swipeBack:true //启用右滑关闭功能
+	});
+	
 	window.addEventListener('message-id', function(e){
 	    msgId = e.detail.id;
 	    
