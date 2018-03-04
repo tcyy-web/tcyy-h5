@@ -263,20 +263,20 @@
 					}
 					loginItem.addEventListener('tap', function(event) {
 						if (authManage.checkLogin()) {
-              $.openWindow({
-                url: '../my/my.html',
-                id: 'WDJL',
-                preload: true,
-                show: {
-                  aniShow: 'pop-in'
-                },
-                styles: {
-                  popGesture: 'hide'
-                },
-                waiting: {
-                  autoShow: false
-                }
-              });
+			              $.openWindow({
+			                url: '../my/my.html',
+			                id: 'WDJL',
+			                preload: true,
+			                show: {
+			                  aniShow: 'pop-in'
+			                },
+			                styles: {
+			                  popGesture: 'hide'
+			                },
+			                waiting: {
+			                  autoShow: false
+			                }
+			              });
 						} else {
 						  authManage.toLogin();
 						}
@@ -297,6 +297,7 @@
 					
 					// 我的邀请码
 					doc.getElementById('myyaoqingma').addEventListener('tap', function(e) {
+					  
 					  $.openWindow({
 			              url: '../my/invite-code.html',
 			              id: 'MY-YAOQINGMA',
@@ -311,10 +312,18 @@
 			                autoShow: false
 			              }
 			            });
+			            var yqmWebview = plus.webview.getWebviewById("MY-YAOQINGMA") ;
+			            $.fire( yqmWebview ,"yaoqingma",{
+			            	code:authManage.getUser().spread_code
+			            })
 					});
 					
 					// 我的激活码
-					doc.getElementById('myjihuoma').addEventListener('tap', function(e) {
+					var oJhm = doc.getElementById('myjihuoma');
+					if( authManage.getUser().top_spread_code ){
+						oJhm.style.display =="none";
+					}
+					oJhm&&oJhm.addEventListener('tap', function(e) {
 					  $.openWindow({
 			              url: '../my/active-code.html',
 			              id: 'MY-JIHUOMA',

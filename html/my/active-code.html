@@ -1,62 +1,18 @@
 <!DOCTYPE html>
-<html class="ui-page-my">
+<html>
+
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<title></title>
-	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../../css/mui.min.css">
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
-.fans{
-	height:60px;
-	padding:10px ;
-	border-bottom: 1px solid #d2d2d2;
-	background: #fff;
-}
-
-.fans img{
-	height:100%;
-	padding-right:15px;
-	float:left;
-}
-
-.fans p{
-	font-size:14px;
-	color:#4a4e51;
-
-}
-
-.fans span{
-	font-size:14px;
-	color:#4a4e51;
-	padding:5px 10px 5px 25px;
-	background:url(../../images/my/nans.png) 0 center no-repeat;
-}
-
-.nofans-box{
-	width:100px;
-	height:120px;
-	position: absolute;
-	top:50%;
-	left:50%;
-	transform: translate(-50%,-50%);
-	font-size:12px;
-	color:#8b8b8b;
-	text-align: center;
-	line-height: 30px;
-}
-
-.nofans{
-	width:100px;
-	height:100px;
-	background:url(../../images/my/fszreo.png) center center no-repeat;
-	background-size: cover;
-	
-}
-
-		
+		.mui-content{padding:15px;}
+		.mui-content p{ padding-top: 30px;}
 	</style>
-
 </head>
 
 <body>
@@ -65,10 +21,66 @@
 	<h1 class="mui-title">激活码</h1>
 </header>
 <div class="mui-content">
-	
+	<p><textarea id="content" name="" rows="1" cols="" placeholder="输入激活码"></textarea>
+	</p>
+	<button id="queding" class="mui-btn-block mui-btn-blue">输入激活码</button>
 </div>
 <script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.extend.js"></script>
+<script src="../../js/utils.storages.js" ></script>
+<script src="../../js/utils.category.js" ></script>
+<script src="../../js/utils.auth.js"></script>
+<script src="../../js/utils.request.js"></script>
 
+
+<script type="text/javascript">
+	
+
+(function($,doc){
+
+$.init();
+$.plusReady(function() {
+
+document.getElementById("queding").addEventListener("tap",function(){
+	var content = document.getElementById("content").value;
+	if(content == ""){
+		mui.toast("请输入激活码");
+	}else{
+		ajaxData( content );
+	}
+})
+
+
+function ajaxData( content ){
+	request.loginAjax('user/activationCode', {
+				data:{
+					spread_code:content
+				},
+				showMsg: false,
+				
+			}, function(data, success) {
+ 
+	      	  if ( success ){
+	      	  	mui.toast("激活成功");
+		      	  mui.back();
+	      	  }else{
+	      	  	mui.toast("激活失败");
+	      	  }
+      	  
+		
+  	  });
+    }
+});
+
+
+})(mui , document);
+
+	
+
+
+</script>
+		
 </body>
 
 </html>

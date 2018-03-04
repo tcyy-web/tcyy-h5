@@ -13,6 +13,8 @@
 		.mui-content{padding:15px;}
 		.mui-content p{ color: #333; line-height: 2;}
 		.mui-content p>span{color:#666;}
+		.kg{ height: 15px;}
+		p img{ max-width: 100%;}
 	</style>
 </head>
 
@@ -22,8 +24,9 @@
 	<h1 class="mui-title">关于我们</h1>
 </header>
 <div class="mui-content">
+	<div class="kg"></div>
 	<p><img id="logo" src=""></p>
-	
+	<div class="kg"></div>
 	<p>电话：<span id="phone"></span></p>
 	<p>网站：<span id="website"></span></p>
 	<p>QQ：<span id="qq"></span></p>
@@ -58,7 +61,7 @@ function ajaxData(  ){
 			}, function(data, success) {
  
 	      	  if ( success ){
-	      	  	document.getElementById("logo").setAttribute("src",data.log);
+	      	  	document.getElementById("logo").setAttribute("src",data.logo);
 	      	  	
 	      	  	document.getElementById("address").innerHTML = data.address;
 	      	  	document.getElementById("phone").innerHTML = data.phone;

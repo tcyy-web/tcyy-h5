@@ -1,27 +1,68 @@
 <!DOCTYPE html>
-<html class="ui-page-my">
+<html>
+
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<title></title>
-	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="../../css/mui.min.css">
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
-
+		.mui-content{ padding:15px; background: #fff;}
+		.mui-content p{ padding-top: 50px; color: #333; line-height: 2; text-align: center;}
+		.mui-content p>span{font-size: 36px; display: inline-block; padding:0 30px; letter-spacing: 2px; border:1px dashed #ccc; }
 	</style>
-
 </head>
 
 <body>
 <header class="mui-bar mui-bar-nav">
 	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	<h1 class="mui-title">我的推广码</h1>
+	<h1 class="mui-title">邀请码</h1>
 </header>
 <div class="mui-content">
-	我的推广码
+	
+	<p><span id="yaoqingma"></span></p>
+
 </div>
 <script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.extend.js"></script>
+<script src="../../js/utils.storages.js" ></script>
+<script src="../../js/utils.category.js" ></script>
+<script src="../../js/utils.auth.js"></script>
+<script src="../../js/utils.request.js"></script>
 
+
+<script type="text/javascript">
+	
+
+(function($,doc){
+
+$.init();
+$.plusReady(function() {
+
+	window.addEventListener("yaoqingma",function( e ){
+		yaoqingma = e.detail.code;
+		if(yaoqingma){
+			document.getElementById("yaoqingma").innerHTML = yaoqingma;
+			document.getElementById("yaoqingma").style.display = "inline-block";
+		}else{
+			document.getElementById("yaoqingma").style.display = "none";
+		}
+	});
+
+});
+
+
+})(mui , document);
+
+	
+
+
+</script>
+		
 </body>
 
 </html>

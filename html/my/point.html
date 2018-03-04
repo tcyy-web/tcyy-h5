@@ -192,7 +192,7 @@
 		</section>
 		
 		<div class="xq">
-			<a href="">
+			<a id="orderDetail" >
 				订单详情
 			</a>
 		</div>
@@ -258,6 +258,22 @@
               autoShow: true
             }
          });
+     });
+     
+     document.getElementById("orderDetail").addEventListener('tap', function(event){
+        $.openWindow({
+          url: '../my/my-orders.html',
+          id: 'MY-ORDERS',
+          show: {
+            aniShow: 'pop-in'
+          },
+          styles: {
+            popGesture: 'hide'
+          },
+          waiting: {
+            autoShow: false
+          }
+        });
      });
 //   
 //   document.getElementById("fabu").addEventListener('tap', function(event){

@@ -22,6 +22,7 @@ document.addEventListener( "plusready", function(){
 
 function doWithMsg( msg ) {
 
+
 	if ( msg.payload || msg.aps) {
 		 mui.openWindow({
           url: '../my/my-message.html',
