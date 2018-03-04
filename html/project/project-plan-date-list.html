@@ -3,14 +3,83 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>项目计划列表</title>
+		<title></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/iconfont.css" />
 		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/mui.picker.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
+		  .dateinfo{
+		    height: 50px;
+		    color: #626f7f;
+		    font-size: 20px;
+		    font-weight: 700;
+		    line-height: 50px;
+		  }
+		  .dateinfo .iconfont{
+		    font-size: 20px;
+		    margin: 0 40px 0 20px;
+		  }
+		  .date{
+		    color: #798694;
+		  }
+		  .date-week{
+		    padding: 0 10px;
+		    text-align: center;
+		    line-height: 30px;
+		    font-size: 12px;
+		  }
+		  .date-month-box{
+		    padding: 10px;
+		  }
+		  .date-month{
+		    border-top: 1px solid #e7ebef;
+		  }
+		  .date-month .item{
+		    padding: 0 5px;
+		    width: calc(100% / 7);
+		    width: -webkit-calc(100% / 7);
+		    height: 64px;
+		    border: 1px solid #e7ebef;
+		    float: left;
+		    border-left: 0;
+		    border-top: 0;
+		    font-size: 12px;
+		    overflow: hidden;
+		  }
+		  .date-month .item:nth-child(7n + 1){
+		    border-left: 1px solid #e7ebef;
+		  }
+		  .date-month .item ._date{
+		    color: #d8dee5;
+		    text-align: right;
+		    height: 20px;
+		    line-height: 20px;
+		  }
+		  .date-month .item.cur ._date{
+		    color: #6b7989;
+		  }
+		  .date-month .item ._item{
+		    margin-bottom: 2px;
+		    height: 5px;
+		    padding-left: 5px;
+		    max-width: 100%;
+		    -webkit-border-radius: 5px;
+		    border-radius: 5px;
+		    background-color: #0080ff;
+		    color: #fff;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
+		  }
+		  .hidebg{
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		  }
 		</style>
 	</head>
 
@@ -21,19 +90,38 @@
 		</header>
 		<div id="yuyueDate" class="mui-content" >
 		  <div class="datebox">
-		    <div class="flex">
-		    <!-- ko 'foreach':headStr -->
-        <div class="flex-1">
-          <span data-bind="text: $data"></span>
-        </div>
-        <!-- /ko -->
+		    <div id="dateinfo" class="dateinfo">
+		      <span class="iconfont icon-riliriqi"></span><span id="datetxt"></span>
+		    </div>
+		    <div class="date">
+  		    <div class="date-week flex">
+  		    <!-- ko 'foreach':headStr -->
+          <div class="flex-1">
+            <span data-bind="text: $data"></span>
+          </div>
+          <!-- /ko -->
+          </div>
+          <div class="date-month-box">
+            <div class="date-month clearFix">
+              <!-- ko 'foreach':MonthData -->
+              <div class="item cur">
+                <div class="_date" data-bind="text:dayStr"></div>
+                <!-- ko foreach:data-->
+                <div class="_item"></div>
+                <!-- /ko -->
+              </div>
+              <!-- /ko -->
+            </div>
+          </div>
         </div>
 		  </div>
 		</div>
+		<div class="hidebg">
+		  
+		</div>
 		<script src="../../third/knockout.js" ></script>
 		<script src="../../js/mui.min.js"></script>
-    <script src="../../js/mui.pullToRefresh.js"></script>
-    <script src="../../js/mui.pullToRefresh.material.js"></script>
+    <script src="../../js/mui.picker.min.js"></script>
     <script src="../../js/utils.config.js"></script>
     <script src="../../js/utils.extend.js"></script>
     <script src="../../js/utils.enums.js"></script>
@@ -41,17 +129,69 @@
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js"></script>
 		<script>
-		  var headStr = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'];
-		  var getDays = function (year, month) {//获取月的天数
-        return 32 - new Date(year, month - 1, 32).getDate();
-      }
-		  var getDaysStr = function(year, month, data) {
-		    var _list = [];
-		    var _days = getDays(year, month);
-		  }
 			(function($, doc) {
+			  var headStr = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+        var getDays = function (year, month) {//获取月的天数
+          return 32 - new Date(year, month - 1, 32).getDate();
+        }
+        var getDaysStr = function(year, month, data) {
+          var _list = [];
+          var _days = getDays(year, month);
+          for (var i = 1; i <= _days; i++) {
+            var _data = {
+                dayStr: '',//日期
+                isCur: true,// 是否本月
+                data: []
+            }
+            var dstr =i > 9 ? i : '0' + i;
+            _data.dayStr = dstr;
+            _list.push(_data);
+          }
+          var firDayW = new Date(year + '-' + month + '-01');
+          var firWeek = firDayW.getDay();
+          for (var j = 1; j < firWeek; j++) {
+            _list.unshift({
+              dayStr: '',
+              isCur: false,
+              data: []
+            })
+          }
+          return _list;
+        }
+        var getList = function(times, callback) {
+          var data = {
+            page:1,
+            times: times,
+            limit:100000
+          }
+          request.loginAjax('project/getPatientList',{
+            data: data,
+            showMsg: false
+          },function(data) {
+            if (data && data.data) {
+              callback(data.data);
+            } else {
+              callback([]);
+            }
+          }, function() {
+            callback([]);
+          });
+        }
 				$.init();
-//				$.plusReady(function() {
+				$.plusReady(function() {
+          var times = '';
+          // 修改时间
+          var $dateinfo = doc.getElementById('dateinfo');
+          var $datetxt = doc.getElementById('datetxt');
+          var datepicer = new $.DtPicker({ type: 'month' });
+          $dateinfo.addEventListener('tap', function(event) {
+            setTimeout(function(){
+              datepicer.show(function(rs) {
+                $datetxt.innerText = rs.text;
+                times = rs.text;
+              });
+            },500);
+          }, false);
 				  var viewModel = {
             headStr: ko.observableArray(headStr),
             MonthData: ko.observableArray([]),
@@ -65,7 +205,14 @@
             }
           };
 				  ko.applyBindings(viewModel, doc.getElementById('yuyueDate'));
-//				});
+				  // 初始化
+				  var _date = new Date();
+				  times = _date.getFullYear()+'-'+(_date.getMonth()+1);
+				  getList(times,function(res){
+				    var _days = getDaysStr(_date.getFullYear(),_date.getMonth()+1, res);
+				    viewModel.MonthData(_days);
+				  });
+				});
 			}(mui, document));
 		</script>
 	</body>
