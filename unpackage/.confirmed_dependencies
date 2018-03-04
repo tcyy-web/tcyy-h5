@@ -192,7 +192,8 @@
 			"html/picture/picture-folders.html",
 			"html/yanshi/yanshi.html",
 			"html/home/three_3d_index.html",
-			"html/3d/three_3d_index.html"
+			"html/3d/three_3d_index.html",
+			"html/project/project-plan-date-list.html"
 		],
 		"priority": 0
 	},
