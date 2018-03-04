@@ -612,21 +612,27 @@ var Play = {
 		if($("#videobg").length==0){
 			$('<div id="videobg" class="videobg"> <span class="mui-icon mui-icon-close"></span> <div id="video"> </div> </div>').appendTo("body");
 			$videobg = document.getElementById("videobg");
+			
 			$videobg.querySelector(".mui-icon-close").addEventListener("tap",function(){
 				$videobg.style.display = 'none';
 			})
 		}
 		
 		$videobg = document.getElementById("videobg");
+		$video = document.getElementById("video");
 		
-		$video = document.createElement('video');
-        $video.src = url;
-        $video.controls = true;
+		
+		video = document.createElement('video');
+
+        video.src = url;
+        video.controls = true;
         
-        $videobg.style.display = 'block';
+        if(plus.os.name!="iOS"){
+        	$videobg.style.display = 'block';
+        }
         $video.innerHTML = '';
         $video.appendChild(video);
-        $video.play();
+        video.play();
 		
 		
 	}

@@ -566,7 +566,8 @@
 				"priority": 1,
 				"refer": [
 					"html/train/train-detail.html",
-					"html/login/login.html"
+					"html/login/login.html",
+					"html/payment/pay.html"
 				]
 			},
 			"html/video/video-list.html": {
@@ -626,7 +627,9 @@
 					"images/my/fstx.png"
 				],
 				"priority": 1,
-				"refer": []
+				"refer": [
+					"html/my/my-message-detail.html"
+				]
 			},
 			"html/my/follows.html": {
 				"href": "html/my/follows.html",
@@ -1504,7 +1507,6 @@
 				"images/profile/fh.jpg",
 				"images/my/gd2.png",
 				"images/weibo/pl3.png",
-				"html/my/my-message-detail.html",
 				"html/profile/xx-xingbie.html",
 				"js/mui.view.js",
 				"README.md",

@@ -55,6 +55,7 @@
 		opacity: 1; 
 		} 
 		}
+		body{position: relative;}
 		
 		.videobg{
     	  position: absolute;
@@ -62,9 +63,9 @@
     	  left: 0;
     	  right: 0;
     	  bottom: 0;
-    	  background-color: rgba(0,0,0,0.9);
+    	  background-color: rgba(0,0,0,0.6);
     	  z-index: 1000;
-    	  display: none;
+		  display: none;
     	}
     	.videobg video{
     	  position: absolute;
@@ -72,6 +73,7 @@
     	  left: 0;
     	  top: 20%;
     	  height: 60%;
+
     	}
     	.videobg .mui-icon{
     	  position: absolute;
@@ -91,6 +93,7 @@
 		<h4 id="title"></h4>
 		<div id="cont"></div>
 	</div>
+	
 <script src="../../js/mui.min.js"></script>
 <script src="../../js/utils.config.js"></script>
 <script src="../../js/utils.extend.js"></script>
@@ -165,6 +168,7 @@ $("#cont").on("click",".paudio",function(){
 }).on("click",".pvedio",function(){
 	
 	var link = $(this).attr("link");
+	
 	Play.playVedio( link );	
 
 });
@@ -243,21 +247,27 @@ var Play = {
 		if($("#videobg").length==0){
 			$('<div id="videobg" class="videobg"> <span class="mui-icon mui-icon-close"></span> <div id="video"> </div> </div>').appendTo("body");
 			$videobg = document.getElementById("videobg");
+			
 			$videobg.querySelector(".mui-icon-close").addEventListener("tap",function(){
 				$videobg.style.display = 'none';
 			})
 		}
 		
 		$videobg = document.getElementById("videobg");
+		$video = document.getElementById("video");
 		
-		$video = document.createElement('video');
-        $video.src = url;
-        $video.controls = true;
+		
+		video = document.createElement('video');
+		
+        video.src = url;
+        video.controls = true;
         
-        $videobg.style.display = 'block';
+        if(plus.os.name!="iOS"){
+        	$videobg.style.display = 'block';
+        }
         $video.innerHTML = '';
         $video.appendChild(video);
-        $video.play();
+        video.play();
 		
 		
 	}
