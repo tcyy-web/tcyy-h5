@@ -36,7 +36,9 @@
         $.plusReady(function() {
           var $content = doc.getElementById('content');
           window.addEventListener('T_3D_IFRAME_URL', function(e){
-            $content.innerHTML = '<iframe src="'+e.detail.url+'"></iframe>';
+            var url =  e.detail.url;
+            var _html = '<iframe src="' + url + '"></iframe>';
+            $content.innerHTML = _html;
           });
         });
       })(mui, document);
