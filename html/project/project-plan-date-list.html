@@ -79,7 +79,59 @@
 		    position: absolute;
 		    top: 0;
 		    left: 0;
+		    right: 0;
+		    bottom: 0;
+		    z-index: 1000;
+		    background-color: rgba(0,0,0,0.5);
+		    padding: 50px 10px;
+		    display: none;
 		  }
+		  .hidebg .mui-icon{
+        position: absolute;
+        color: #fff;
+        right: 10px;
+        top: 10px;
+      }
+		  .form-item {
+        position: relative;
+        background-color: #ffffff;
+        padding: 15px;
+        line-height: 20px;
+      }
+      .form-item:after{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 1px;
+        content: '';
+        -webkit-transform: scaleY(.5);
+        transform: scaleY(.5);
+        background-color: #d6d6d6;
+      }
+      .form-item > p{
+        padding-left: 5px;
+        color: #7c7c7c;
+        font-size: 14px;
+      }
+      .form-item > p:first-child{
+        padding-left: 0;
+      }
+      .form-item > p:last-child{
+        width: 85px;
+        color: #ffae00;
+      }
+      .form-item > p.status2{
+        color: #f14434;
+      }
+      .form-item > p.status3{
+        color: #4cd964;
+      }
+      .form-item > p .iconfont{
+        font-size: 18px;
+        vertical-align: middle;
+        margin-right: 2px;
+      }
 		</style>
 	</head>
 
@@ -93,18 +145,18 @@
 		    <div id="dateinfo" class="dateinfo">
 		      <span class="iconfont icon-riliriqi"></span><span id="datetxt"></span>
 		    </div>
-		    <div class="date">
-  		    <div class="date-week flex">
-  		    <!-- ko 'foreach':headStr -->
-          <div class="flex-1">
-            <span data-bind="text: $data"></span>
-          </div>
-          <!-- /ko -->
+		    <div id="datebox" class="date">
+    		    <div class="date-week flex">
+    		      <!-- ko 'foreach':headStr -->
+            <div class="flex-1">
+              <span data-bind="text: $data"></span>
+            </div>
+            <!-- /ko -->
           </div>
           <div class="date-month-box">
             <div class="date-month clearFix">
               <!-- ko 'foreach':MonthData -->
-              <div class="item cur">
+              <div class="item cur" data-bind="click: $root.clickFn">
                 <div class="_date" data-bind="text:dayStr"></div>
                 <!-- ko foreach:data-->
                 <div class="_item"></div>
@@ -114,11 +166,18 @@
             </div>
           </div>
         </div>
-		  </div>
-		</div>
-		<div class="hidebg">
-		  
-		</div>
+	    </div>
+	    <div class="hidebg">
+        <span class="mui-icon mui-icon-close"></span>
+        <!-- ko 'foreach':popData -->
+        <div class="flex form-item" data-bind="click: $root.clickItem">
+          <p class="flex-1 flex flex-row-center" data-bind="text: name"></p>
+          <p class="flex-1 flex flex-row-center" data-bind="text: booktime"></p>
+          <p class="flex flex-row-center" data-bind="css: 'status'+ status"><i class="iconfont icon-cshy-shizhong"></i><span data-bind="text: statusStr"></span></p>
+        </div>
+        <!-- /ko -->
+      </div>
+	  </div>
 		<script src="../../third/knockout.js" ></script>
 		<script src="../../js/mui.min.js"></script>
     <script src="../../js/mui.picker.min.js"></script>
@@ -129,6 +188,9 @@
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js"></script>
 		<script>
+		  window.addEventListener('refresh', function(e){
+        location.reload();
+      });
 			(function($, doc) {
 			  var headStr = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
         var getDays = function (year, month) {//获取月的天数
@@ -137,6 +199,17 @@
         var getDaysStr = function(year, month, data) {
           var _list = [];
           var _days = getDays(year, month);
+          var _trimData = {};
+          $.each(data, function(index, o) {
+            var _d = o.booktime.split(' ')[0];
+            o.statusStr = enums.planStatus[o.status];
+            var _dlist = _d.split('-');
+            if (_trimData[_dlist[2]]) {
+              _trimData[_dlist[2]].push(o);
+            } else {
+              _trimData[_dlist[2]] = [o];
+            }
+          });
           for (var i = 1; i <= _days; i++) {
             var _data = {
                 dayStr: '',//日期
@@ -145,9 +218,12 @@
             }
             var dstr =i > 9 ? i : '0' + i;
             _data.dayStr = dstr;
+            if (_trimData[dstr]) {
+              _data.data = _trimData[dstr];
+            }
             _list.push(_data);
           }
-          var firDayW = new Date(year + '-' + month + '-01');
+          var firDayW = new Date(year, month - 1, 1);
           var firWeek = firDayW.getDay();
           for (var j = 1; j < firWeek; j++) {
             _list.unshift({
@@ -177,8 +253,15 @@
             callback([]);
           });
         }
-				$.init();
+				$.init({
+          preloadPages:[{
+            id:'projectPlanDetail',
+            url: './project-plan-detail.html'
+          }]
+        });
 				$.plusReady(function() {
+				  var $hidebg = doc.querySelector('.hidebg');
+				  var $bgclose = doc.querySelector('.mui-icon-close');
           var times = '';
           // 修改时间
           var $dateinfo = doc.getElementById('dateinfo');
@@ -189,29 +272,75 @@
               datepicer.show(function(rs) {
                 $datetxt.innerText = rs.text;
                 times = rs.text;
+                initCalendar(rs.y.value, rs.m.value);
               });
             },500);
           }, false);
 				  var viewModel = {
             headStr: ko.observableArray(headStr),
             MonthData: ko.observableArray([]),
-            HoverFn: function (data) {
-              ko.utils.arrayForEach(self.viewModal.MonthData(), function (obj) {
-                  if (obj.isCur && obj.dayStr != data.dayStr) {
-                      obj.Hover(false);
-                  }
+            popData: ko.observableArray([]),
+            clickFn: function (data) {
+              if (data.data && data.data.length > 0) {
+                $hidebg.style.display = 'block';
+                viewModel.popData(data.data);
+              }
+            },
+            clickItem: function(data) {
+              var projectPlanDetailWebView = plus.webview.getWebviewById('projectPlanDetail');
+              $.fire(projectPlanDetailWebView,'project-plan-id',{
+                id:data.id
               });
-              data.isCur && data.Hover(!data.Hover());
+              $.openWindow({
+                id: 'projectPlanDetail'
+              });
+              $hidebg.style.display = 'none';
+              viewModel.popData([]);
             }
           };
 				  ko.applyBindings(viewModel, doc.getElementById('yuyueDate'));
+				  // 关闭弹层
+				  $bgclose.addEventListener('tap', function(){
+				    $hidebg.style.display = 'none';
+				    viewModel.popData([]);
+				  });
+				  // 显示日历
+				  var initCalendar = function(year, month) {
+				    times = year+'-'+month;
+				    $datetxt.innerText = times;
+            getList(times,function(res){
+              var _days = getDaysStr(year,month, res);
+              viewModel.MonthData(_days);
+            });
+				  }
 				  // 初始化
 				  var _date = new Date();
-				  times = _date.getFullYear()+'-'+(_date.getMonth()+1);
-				  getList(times,function(res){
-				    var _days = getDaysStr(_date.getFullYear(),_date.getMonth()+1, res);
-				    viewModel.MonthData(_days);
+				  initCalendar(_date.getFullYear(), _date.getMonth()+1);
+				  // 左右滑动
+				  doc.getElementById('datebox').addEventListener('swipeleft', function(e) {
+				    var _t = times.split('-');
+				    var _year = _t[0];
+				    var _month = _t[1];
+				    if (_month == '12'){
+				      _year = eval(_year + '+ 1');;
+				      _month = 1;
+				    } else {
+				      _month = eval(_month + '+ 1');
+				    }
+				    initCalendar(_year, _month);
 				  });
+				  doc.getElementById('datebox').addEventListener('swiperight', function(e) {
+            var _t = times.split('-');
+            var _year = _t[0];
+            var _month = _t[1];
+            if (_month == '1'){
+              _year = eval(_year + '- 1');;
+              _month = 12;
+            } else {
+              _month = eval(_month + '- 1');
+            }
+            initCalendar(_year, _month);
+          });
 				});
 			}(mui, document));
 		</script>
