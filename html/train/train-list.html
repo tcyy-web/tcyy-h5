@@ -224,6 +224,12 @@
 	          }]
 	        });
 			$.plusReady(function() {
+				
+			$.preload({
+				url: '../payment/pay.html',
+				id: 'MY-PAY'
+			      
+			});
 			  var limit = 5;
 			  var groupid = 0;
 			  var listRequest = {};
@@ -246,6 +252,40 @@
 						    	
 						    	
 					 li.querySelector(".openDetail").addEventListener('tap', function(event){
+					 	
+					 
+				
+					  var auth = data.auth , type = data.type ;
+					  
+					  console.log(JSON.stringify( data ));
+					  
+					  if( auth == 2&& type != 1){
+					  	
+					  	if( type == 2){
+					  		$.openWindow({
+				              url: '../payment/beVip.html',
+				              id: 'beVip',
+				              show: {
+				                aniShow: 'pop-in'
+				              },
+				              styles: {
+				                popGesture: 'hide'
+				              },
+				              waiting: {
+				                autoShow: false
+				              }
+				            });
+					  	}else if( type == 3){
+					  		var price = data.price;
+					  		var id = data.id;
+					  		var content = "购买该课程";
+					  		openPay( id , price , content );
+					  	}
+					  	
+					  	return false;
+					  }
+					  
+					 
 		              if (!trainDetailWebview) {
 		                trainDetailWebview = plus.webview.getWebviewById('trainDetail');
 		              }
@@ -379,7 +419,21 @@
 				});
 			});
 			
-			
+function openPay( id , price ,content){
+	
+	
+	var payWebview = plus.webview.getWebviewById("MY-PAY") ;
+	
+    $.fire( payWebview ,"get-pram",{
+    	id:id,
+    	price:price,
+    	type:1,
+    	content:content
+    });
+    $.openWindow({
+    	id:"MY-PAY"
+    })
+}
 		})(mui, document);
 	</script>
 	</body>

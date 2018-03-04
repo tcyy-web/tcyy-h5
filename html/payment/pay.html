@@ -10,20 +10,21 @@
 		<link href="../../css/style.css" rel="stylesheet" />
         <!--App自定义的css-->
         <style type="text/css">
-            .head {
-                margin-top: 10px;
-            }
-            .head img{
-                width: 120px;
-                height: 120px;
-                margin-left: calc(50% - 60px);
-            }
-            .top {
-                margin-top: 40px;
+        	body,.mui-content{
+        		background: #fff;
+        	}
+            .mui-content .top{
+            	padding-top: 30px;
             }
             
-            .paynum{
-            	padding-top: 60px;
+            .top p{
+            	line-height: 1.5;
+            	margin-bottom: 10px;
+            	font-size: 16px;
+            	color: #333;
+            }
+            .bottom{
+            	padding-top: 20px;
             }
             .weixin,.zhifubao {
 				display: block;
@@ -38,6 +39,7 @@
             .mui-content{
             	text-align: center;
             }
+            .weixin img{ margin-right: 10px;}
         </style>
     </head>
     <body>
@@ -46,58 +48,88 @@
             <h1 class="mui-title">支付</h1>
         </header>
         <div class="mui-content">
-        	<div class="paynum">确认支付 <b id="price">0.01</b>元 </div>
-            <div class="top" id="testLogin">
-                <div class="weixin" id="weixin"> 微信支付 </div>
+        	<div class="top">
+        		<p id="content">购买会员三个月 </p>
+        		<p> 支付 <span id="price">0.01 </span>元</p>
+        	</div>
+            <div class="bottom" id="testLogin">
+                <div class="weixin" id="weixin"> <img width="40" src="../../images/pay/weixin.png" />微信支付 </div>
 
-                <div class="zhifubao" id="zhifubao"> 支付宝支付 </div>
+                <!--<div class="zhifubao" id="zhifubao"> 支付宝支付 </div>-->
             </div>
         </div>
     </body>
-    <script src="../../js/mui.min.js"></script>
-
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.extend.js"></script>
+<script src="../../js/utils.storages.js" ></script>
+<script src="../../js/utils.category.js" ></script>
+<script src="../../js/utils.auth.js"></script>
+<script src="../../js/utils.request.js"></script>
+	
     <script>
         var wxChannel = null; // 微信支付
         var aliChannel = null; // 支付宝支付
-        var channel = null; 
+        var channel = null;
+        var prams = {};
+        
         mui.init({
             swipeBack:true //启用右滑关闭功能
         });
 
-        mui.plusReady(function() { 
+        mui.plusReady(function() {
         	
             // 获取支付通道
             plus.payment.getChannels(function(channels){
-            	console.log(JSON.stringify( channels ))
+            	
                 aliChannel=channels[0];
             	wxChannel=channels[1];
             },function(e){
-             alert("获取支付通道失败："+e.message);
+              alert("获取支付通道失败："+e.message);
+            });
+            
+            window.addEventListener("get-pram",function( e ){
+            	var id = e.detail.id;
+            	var price = e.detail.price;
+            	var content = e.detail.content;
+            	var type = e.detail.type;
+            	prams = {
+            		id: id,
+            		price:price,
+            		content:content,
+            		type:type
+            	}
+            	
+            	document.getElementById("content").innerHTML = content;
+            	document.getElementById("price").innerHTML = price;
+            	
+            	if( !id || !price ){
+            		mui.back();
+            		mui.toast("参数不正确");
+            	}
+
             });
         })
+        
+        
 
         document.getElementById('weixin').addEventListener('tap',function() {
 
-            var cost = document.getElementById("price").innerText;
-            pay('wxpay', cost );
+            pay('wxpay', prams );
         })
-        document.getElementById('zhifubao').addEventListener('tap',function() {
-        	
-            var cost = document.getElementById("price").innerText;
-            pay('alipay', cost); 
-        })
+    
 
-        var ALIPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=';
-        var WXPAYSERVER='m.tianchiyueya.com:1888/tcyy/pay/wxpay';
+        var ALIPAYSERVER='';
+        var WXPAYSERVER='m.tianchiyueya.com:1888/tcyy/Pay/wxpay';
         // 2. 发起支付请求
-        function pay(id,cost){
+        function pay( id , data){
             // 从服务器请求支付订单
             var PAYSERVER='';
             if(id=='alipay'){
-                PAYSERVER=ALIPAYSERVER+cost;
+                PAYSERVER=ALIPAYSERVER+"?type="+data.type+"&id="+data.id;
                 channel = aliChannel;
         	}else if(id=='wxpay'){
-                PAYSERVER=WXPAYSERVER+cost;
+                PAYSERVER=WXPAYSERVER+"?type="+data.type+"&id="+data.id;;
                 channel = wxChannel;
             }else{
                 plus.nativeUI.alert("不支持此支付通道！",null,"捐赠");

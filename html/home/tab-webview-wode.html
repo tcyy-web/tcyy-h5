@@ -126,13 +126,16 @@
 			
 			#xiaoxi #unread{
 				position: absolute;
-				margin-top: -6px;
-				margin-left: -5px;
+				margin-top: -16px;
+				margin-left: 5px;
 				padding: 0 6px;
+				top:50%;
+				left:50%;
 				line-height: 16px;
 				border-radius: 16px;
 				background: #f25d8e;
 				color: #fff;
+				display: none;
 				
 			}
 		</style>
@@ -204,12 +207,12 @@
 						绑定手机
 					</a>
 				</li>
-				<!--<li class="mui-table-view-cell">
+				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/bdblx.png"/>
-					<a class="mui-navigate-right" href="#">
-						本地病例秀
+					<a id="beVip" class="mui-navigate-right" href="#">
+						充值会员
 					</a>
-				</li>-->
+				</li>
 				
 				<li class="mui-table-view-cell">
 					<img src="../../images/tab-wode/fk.png"/>
@@ -448,6 +451,23 @@
 					  $.openWindow({
 			              url: '../gongsi/index.html',
 			              id: 'aboutAs',
+			              show: {
+			                aniShow: 'pop-in'
+			              },
+			              styles: {
+			                popGesture: 'hide'
+			              },
+			              waiting: {
+			                autoShow: false
+			              }
+			            });
+					});
+					
+					//关于我们
+					doc.getElementById('beVip').addEventListener('tap', function(e) {
+					  $.openWindow({
+			              url: '../payment/beVip.html',
+			              id: 'beVip',
 			              show: {
 			                aniShow: 'pop-in'
 			              },

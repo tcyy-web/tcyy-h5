@@ -10,11 +10,15 @@
 	<link rel="stylesheet" href="../../css/mui.min.css">
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
-		.mui-content{padding:15px;}
-		.mui-content p{ color: #333; line-height: 2;}
+		.mui-bar{ box-shadow: none;}
+		body{background: #fff;}
+		.mui-content{padding:10px; background: #fff; }
+		.mui-content p{ color: #333; line-height: 2; font-size: 16px;}
 		.mui-content p>span{color:#666;}
-		.kg{ height: 15px;}
-		p img{ max-width: 100%;}
+
+		p.img{ margin-left: -10px; margin-right: -10px;}
+		p.img img{ max-width: 100%;}
+		.copyright{ text-align: center; padding-top: 40px;}
 	</style>
 </head>
 
@@ -25,13 +29,16 @@
 </header>
 <div class="mui-content">
 	<div class="kg"></div>
-	<p><img id="logo" src=""></p>
+	<p class="img"><img id="logo" src=""></p>
 	<div class="kg"></div>
-	<p>电话：<span id="phone"></span></p>
-	<p>网站：<span id="website"></span></p>
-	<p>QQ：<span id="qq"></span></p>
-	<p>地址：<span id="address"></span> <span id="counsel"></span></p>
-	<p><span id="info"></span></p>
+
+	<p>公司名称 ：<span id="title"></span></p>
+	<p>公司介绍：<span id="info"></span></p>
+	
+	<div class="copyright">
+		<p>Copyright &copy;2018</p>
+		<p> <span id="title2"></span></p>
+	</div>
 
 </div>
 <script src="../../js/mui.min.js"></script>
@@ -62,14 +69,12 @@ function ajaxData(  ){
  
 	      	  if ( success ){
 	      	  	document.getElementById("logo").setAttribute("src",data.logo);
+
 	      	  	
-	      	  	document.getElementById("address").innerHTML = data.address;
-	      	  	document.getElementById("phone").innerHTML = data.phone;
-	      	  	document.getElementById("website").innerHTML = data.website;
-	      	  	document.getElementById("qq").innerHTML = data.qq;
-	      	  	
-	      	  	document.getElementById("counsel").innerHTML = data.counsel;
 	      	  	document.getElementById("info").innerHTML = data.info;
+	      	  	document.getElementById("title").innerHTML = data.title;
+	      	  	document.getElementById("title2").innerHTML = data.title;
+	    
       	  }
       	  
 		
