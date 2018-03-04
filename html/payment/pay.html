@@ -22,23 +22,22 @@
             	margin-bottom: 10px;
             	font-size: 16px;
             	color: #333;
+            	text-align: center;
             }
             .bottom{
             	padding-top: 20px;
             }
-            .weixin,.zhifubao {
+            .pay-list {
 				display: block;
 				width: 90%;
-				margin-bottom: 20px;
+				margin-top:-1px;
 				margin-left: 5%;
 				padding: 10px 0;
-				border:1px solid #ccc;
-
+				border:1px solid #ddd;
+				padding-left: 15px;
             }
             
-            .mui-content{
-            	text-align: center;
-            }
+           
             .weixin img{ margin-right: 10px;}
         </style>
     </head>
@@ -53,7 +52,8 @@
         		<p> 支付 <span id="price">0.01 </span>元</p>
         	</div>
             <div class="bottom" id="testLogin">
-                <div class="weixin" id="weixin"> <img width="40" src="../../images/pay/weixin.png" />微信支付 </div>
+                <div class="weixin pay-list" id="weixin"> <img width="40" src="../../images/pay/weixin.png" />微信支付 </div>
+
 
                 <!--<div class="zhifubao" id="zhifubao"> 支付宝支付 </div>-->
             </div>
@@ -67,97 +67,113 @@
 <script src="../../js/utils.auth.js"></script>
 <script src="../../js/utils.request.js"></script>
 	
-    <script>
-        var wxChannel = null; // 微信支付
-        var aliChannel = null; // 支付宝支付
-        var channel = null;
-        var prams = {};
-        
-        mui.init({
-            swipeBack:true //启用右滑关闭功能
-        });
+<script>
+var wxChannel = null; // 微信支付
+var aliChannel = null; // 支付宝支付
+var channel = null;
+var params = {};
 
-        mui.plusReady(function() {
-        	
-            // 获取支付通道
-            plus.payment.getChannels(function(channels){
-            	
-                aliChannel=channels[0];
-            	wxChannel=channels[1];
-            },function(e){
-              alert("获取支付通道失败："+e.message);
-            });
-            
-            window.addEventListener("get-pram",function( e ){
-            	var id = e.detail.id;
-            	var price = e.detail.price;
-            	var content = e.detail.content;
-            	var type = e.detail.type;
-            	prams = {
-            		id: id,
-            		price:price,
-            		content:content,
-            		type:type
-            	}
-            	
-            	document.getElementById("content").innerHTML = content;
-            	document.getElementById("price").innerHTML = price;
-            	
-            	if( !id || !price ){
-            		mui.back();
-            		mui.toast("参数不正确");
-            	}
 
-            });
-        })
-        
-        
 
-        document.getElementById('weixin').addEventListener('tap',function() {
+var payParams ={};
 
-            pay('wxpay', prams );
-        })
+mui.init({
+    swipeBack:true //启用右滑关闭功能
+});
+
+mui.plusReady(function() {
+	
+    // 获取支付通道
+    plus.payment.getChannels(function(channels){
+    	
+        aliChannel=channels[0];
+    	wxChannel=channels[1];
+    },function(e){
+      alert("获取支付通道失败："+e.message);
+    });
     
+    window.addEventListener("get-pram",function( e ){
+    	var id = e.detail.id;
+    	var price = e.detail.price;
+    	var content = e.detail.content;
+    	
+    	var type = e.detail.type;
+    	params = {
+    		id: id,
+    		price:price,
+			type:type
+    	}
+    	
+    	document.getElementById("content").innerHTML = content;
+    	document.getElementById("price").innerHTML = price;
+    	
+    	if( !id || !price ){
+    		mui.back();
+    		mui.toast("参数不正确");
+    	}
+    	
+    	ajaxData();
 
-        var ALIPAYSERVER='';
-        var WXPAYSERVER='m.tianchiyueya.com:1888/tcyy/Pay/wxpay';
-        // 2. 发起支付请求
-        function pay( id , data){
-            // 从服务器请求支付订单
-            var PAYSERVER='';
-            if(id=='alipay'){
-                PAYSERVER=ALIPAYSERVER+"?type="+data.type+"&id="+data.id;
-                channel = aliChannel;
-        	}else if(id=='wxpay'){
-                PAYSERVER=WXPAYSERVER+"?type="+data.type+"&id="+data.id;;
-                channel = wxChannel;
-            }else{
-                plus.nativeUI.alert("不支持此支付通道！",null,"捐赠");
-                return;
-            }
-            var xhr=new XMLHttpRequest();
-            xhr.onreadystatechange=function(){
-                switch(xhr.readyState){
-                    case 4:
-                    if(xhr.status==200){
-                        plus.payment.request(channel,xhr.responseText,function(result){
-                            plus.nativeUI.alert("支付成功！",function(){
-                            back();
-                        });
-                        },function(error){
-                            plus.nativeUI.alert("支付失败：" + error.code);
-                        });
-                    }else{
-                        alert("获取订单信息失败！");
-                    }
-                    break;
-                default:
-                break;
-            }
-         }
-         xhr.open('GET',PAYSERVER);
-         xhr.send();
+    });
+})
+
+
+
+document.getElementById('weixin').addEventListener('tap',function() {
+
+    pay('wxpay', payParams );
+})
+
+
+var ALIPAYSERVER='';
+var WXPAYSERVER='https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb';
+// 2. 发起支付请求
+function pay( id , data){
+    // 从服务器请求支付订单
+    var PAYSERVER='';
+    if(id=='alipay'){
+        PAYSERVER=ALIPAYSERVER+"?prepay_id="+data.prepay_id+"&package="+ new Date().getTime();
+        channel = aliChannel;
+	}else if(id=='wxpay'){
+        PAYSERVER=WXPAYSERVER+"?prepay_id="+data.prepay_id+"&package="+ new Date().getTime() ;
+        channel = wxChannel;
+    }else{
+        plus.nativeUI.alert("不支持此支付通道！",null,"捐赠");
+        return;
     }
+    var xhr=new XMLHttpRequest();
+    xhr.onreadystatechange=function(){
+        switch(xhr.readyState){
+            case 4:
+            if(xhr.status==200){
+                plus.payment.request(channel,xhr.responseText,function(result){
+                    plus.nativeUI.alert("支付成功！",function(){
+                    back();
+                });
+                },function(error){
+                    plus.nativeUI.alert("支付失败：" + error.code);
+                });
+            }else{
+                alert("获取订单信息失败！");
+            }
+            break;
+        default:
+        break;
+    }
+ }
+ xhr.open('GET',PAYSERVER);
+         xhr.send();
+}
+        
+function ajaxData(){
+	request.loginAjax('Pay/wxpay',{ data:params ,showMsg: false }, function(data, success) {
+		
+	  if ( success ){
+	  	
+		 payParams = data;
+	  }
+	});
+}
 
-    </script>
+</script>
 </html>
