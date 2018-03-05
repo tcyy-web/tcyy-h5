@@ -460,6 +460,18 @@
               plList();
             }
           });
+          // 获取详情
+          var getDetail = function(id, callback) {
+            request.loginAjax('cases/getDetails', {
+                data: {
+                  id: id
+                },
+                showMsg: false
+              }, function(data, success) {
+                if (success) {
+                }
+            });
+          }
           // 设置详情
           var setFn = function() {
             $headurl.src = detailData.userinfo.headurl || defaultUserImage;
