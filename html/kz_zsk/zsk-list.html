@@ -253,6 +253,7 @@
         $.plusReady(function() {
           var limit = 10;
           var groupid = 0;
+          var groupname = '';
           var listRequest = {};
           var zskDetailWebView = null;
           var paintItem = function(parent, data) {
@@ -274,7 +275,8 @@
                 zskDetailWebView = plus.webview.getWebviewById('zskDetail');
               }
               $.fire(zskDetailWebView,'zsk-id',{
-                id:data.id
+                id:data.id,
+                groupname: groupname
               });
               $.openWindow({
                 id: 'zskDetail'
@@ -333,8 +335,8 @@
               var controlsHtml = [];
               var contentsHtml = [];
               $.each(category, function(index, item) {
-                var _controlHtml = '<a groupid={0} class="mui-control-item" href="#content{1}">{2}</a>';
-                _controlHtml = _controlHtml.format(item.id,index,item.title);
+                var _controlHtml = '<a groupid="{0}" groupname="{1}" class="mui-control-item" href="#content{2}">{3}</a>';
+                _controlHtml = _controlHtml.format(item.id,item.title,index,item.title);
                 controlsHtml.push(_controlHtml);
                 var _contentHtml = '';
                 _contentHtml += '<div id="content{0}" class="mui-slider-item mui-control-content">'+
@@ -354,13 +356,14 @@
               contents.querySelector('.mui-control-content').classList.add('mui-active');
               // 初始加载项目
               groupid = category[0].id;
+              groupname = category[0].title;
               getList(1);
           }
           // 切换tab
           doc.querySelector('.mui-slider').addEventListener('slide', function(event) {
-            var contentValue = event.detail.slideNumber;
             var currentTab = doc.querySelector('.mui-control-item.mui-active');
             groupid = currentTab.getAttribute('groupid');
+            groupname = currentTab.getAttribute('groupname');
             if (listRequest[groupid]) {
               return;
             }

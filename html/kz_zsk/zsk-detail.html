@@ -50,7 +50,7 @@
 <body>
 <header class="mui-bar mui-bar-nav">
 	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	<h1 class="mui-title">知识库详情</h1>
+	<h1 id="headTitle" class="mui-title">知识库详情</h1>
 </header>
 <div class="mui-content">
 	<div class="bt-title">
@@ -78,6 +78,7 @@
         $.init();
         $.plusReady(function() {
           var id = 0;
+          var $headTitle = doc.getElementById('headTitle');
           var $title = doc.getElementById('title');
           var $author = doc.getElementById('author');
           var $times = doc.getElementById('times');
@@ -103,6 +104,7 @@
           // 刷新详情
           window.addEventListener('zsk-id', function(e){
             id = e.detail.id;
+            $headTitle.innerText = e.detail.groupname;
             getDetail();
           });
         });

@@ -177,11 +177,17 @@
 		</header>
 		<div class="mui-content">
       <div id="listBox">
-          <div class="bill-item flex">
+          <!--<div class="bill-item flex">
             <p>01by</p>
             <p class="flex-1">牙齿修复<span>*1</span></p>
             <p class="flex-1">￥318.00<span>元</span></p>
-          </div>
+          </div>-->
+      </div>
+      <div>
+        <div class="bill-item flex">
+          <p>合计</p>
+          <p class="flex-1" id="billTotal">￥0.00<span>元</span></p>
+        </div>
       </div>
       <div class="img flex flex-col-center">
         <img id="imgurl" src="../../images/project/banner.png"  />
@@ -243,9 +249,11 @@
 				$.init({
           beforeback: function() {
             if (changeFlag){
-              //获得父页面的webview
-              var parent = plus.webview.currentWebview().opener();
-              $.fire(parent, 'project-plan');
+              //获得所有已打开webview
+              var list = plus.webview.all();
+              $.each(list, function(index,item) {
+                $.fire(item, 'project-plan');
+              });
             }
             //返回true,继续页面关闭逻辑
             return true;
@@ -265,6 +273,8 @@
           var $jzs = doc.getElementById('jzs');
           var $zzys = doc.getElementById('zzys');
           var $listBox = doc.getElementById('listBox');
+          // 合计
+          var $billTotal = doc.getElementById('billTotal');
           // 预览图片
           $img.addEventListener('tap', function() {
             plus.nativeUI.previewImage([$img.src]);
@@ -281,9 +291,12 @@
           var refreshList = function(data){
             $listBox.innerHTML = '';
             if (data) {
+              var total = 0;
               $.each(data, function(index, i) {
                  paintItem(i);
+                 total += eval(i.num + '*' + i.price);
               });
+              $billTotal.innerHTML = '￥{0}<span>元</span>'.format(total.toFixed(2)); 
             }
           }
           // 处理状态

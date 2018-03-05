@@ -1393,7 +1393,9 @@
 					"images/profile/sc6.png"
 				],
 				"priority": 3,
-				"refer": []
+				"refer": [
+					"html/kz_ppsp/product_iframe.html"
+				]
 			},
 			"html/kz_ppsp/product-list.html": {
 				"href": "html/kz_ppsp/product-list.html",
@@ -1493,6 +1495,14 @@
 				"resources": [],
 				"refer": [
 					"html/3d/three_3d_iframe.html"
+				],
+				"priority": 0
+			},
+			"html/project/project-plan-date-list.html": {
+				"resources": [],
+				"refer": [
+					"html/project/project-plan-detail.html",
+					"html/login/login.html"
 				],
 				"priority": 0
 			}
