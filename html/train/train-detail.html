@@ -106,6 +106,10 @@
 		opacity: 1; 
 		} 
 		}
+		#fabu{
+			position: relative;
+			z-index: 3;;
+		}
 		</style>
 	</head>
 
@@ -143,13 +147,18 @@
 		<script src="../../js/utils.auth.js"></script>
 		<script src="../../js/utils.request.js"></script>
 		<script>
-			var  trainArrangeWebview = null;
+			var  trainArrangeWebview = null,trainUploadWebview = null;
 			var courseId = null,groupId = null;
 			(function($, doc) {
 				$.init({
 		          preloadPages:[{
 		            id:'trainArrange',
-		            url: './train-arrange.html'
+		            url: './train-arrange.html',
+		            hardwareAccelerated:true
+		          },{
+		            url: './train-upload.html',
+		            id: 'KZ-TRAIN-UPLOAD',
+		            hardwareAccelerated:true
 		          }]
 		        });
 
@@ -169,19 +178,21 @@
 		          });
 				  var oFB = document.getElementById("fabu");
 				 
-				 oFB&&oFB.addEventListener('click', function(event){
-		            mui.openWindow({
-		                url: './train-upload.html',
-		                id: 'KZ-TRAIN-UPLOAD',
-						extras:{ courseId  : courseId , groupId : groupId},
-		                show: {
-		                  aniShow: 'pop-in'
-		                },
-
-		                waiting: {
-		                  autoShow: true
-		                }
-		             });
+				  oFB.addEventListener('tap', function(event){
+				 	
+				 	if (!trainUploadWebview) {
+		              trainUploadWebview = plus.webview.getWebviewById('KZ-TRAIN-UPLOAD');
+		            }
+		            $.fire(trainUploadWebview,'train-upload-id',{
+		                courseId :courseId,
+        				groupId : groupId
+		            });
+	             
+		            $.openWindow({
+						id: 'KZ-TRAIN-UPLOAD'
+		            });
+		               
+		             
 		         });
 					
 				});
@@ -288,7 +299,7 @@
 		         	this.addEventListener('click', function(event){
 		         		var id = this.getAttribute("data-id");
 		         		
-		         		if (!trainArrangeWebview) {
+		         		  if (!trainArrangeWebview) {
 			                trainArrangeWebview = plus.webview.getWebviewById('trainArrange');
 			              }
 			              mui.fire(trainArrangeWebview,'train-arrange-id',{

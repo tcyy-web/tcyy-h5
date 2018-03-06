@@ -294,31 +294,17 @@ function plusReady(){
 	}, function(e){
 		console.log('Resolve "_doc/media" failed: '+e.message);
 	} );
+	
+	window.addEventListener('train-upload-id', function(e){
+        courseId = e.detail.courseId;
+        groupId = e.detail.groupId;
+    });
 
 
 (function($){
 	
 $(function(){
-var webview = plus.webview.currentWebview();
-
-courseId = webview.courseId;
-groupId == webview.groupId;
-
-//courseId&&request.loginAjax('Curriculum/details', {
-//					
-//	data: {
-//		id: courseId,
-//	},
-//	showMsg: false,
-//	
-//}, function(data, success) {
-//
-//if ( success ){
-//  document.getElementById("pcontent").innerHTML = data.contents;
-//
-//}
-//
-//});			
+			
 		
 $("#opt2").on("click",".s_pic",function(){
 	hideOpt();

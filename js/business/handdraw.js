@@ -148,8 +148,10 @@
 
 		$(".opt").on("tap", ".clear", function() {
 
-			clearHB(canvas);
-			now_his_index = -1;
+//			clearHB(canvas);
+//			now_his_index = -1;
+			
+			undo();
 			
 		}).on("tap", ".undo", function() {
 			undo();
@@ -185,6 +187,7 @@
 						$(".center_opt").hide();
 
 						$("body").attr("src",p);
+						$(".opt_img").remove();
 						drawBg();
 						
 					}, function(e) {
