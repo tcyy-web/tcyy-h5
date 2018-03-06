@@ -247,6 +247,7 @@
     </div>
   </div>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../js/utils.config.js"></script>
   <script>
     (function($, doc) {
         $.init({
@@ -261,7 +262,7 @@
               var id = this.getAttribute('data-id');
               var _webview = plus.webview.getWebviewById('T_3D_IFRAME');
                $.fire(_webview,'T_3D_IFRAME_URL',{
-                 url: 'http://m.tianchiyueya.com:1888/3D/single.html?id=a'+id
+                 url: config.serverUrl + '/3D/single.html?id=a'+id
                });
                $.openWindow({
                  id: 'T_3D_IFRAME'
