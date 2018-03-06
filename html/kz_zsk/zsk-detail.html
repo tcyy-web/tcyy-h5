@@ -123,7 +123,8 @@
           doc.getElementById('share').addEventListener('tap', function(e) {
             shareApi.showActionSheet({
               href: config.serverUrl + '/s/share/knowledge?id='+ id,
-              title: $title.innerText || '我在天齿月牙APP上看到一篇非常棒的文章！',
+              title: '我在天齿月牙APP上看到一篇非常棒的文章！',
+              content: $title.innerText,
               thumbs: ['_www/images/share/logo.png'],
               interface: 'auto'
             });
