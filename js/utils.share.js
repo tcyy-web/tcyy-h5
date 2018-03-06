@@ -7,9 +7,8 @@
       return;
     }
     plus.share.getServices( function(s){
-      console.log(JSON.stringify(s));
       mui.each(s, function(index, i) {
-        if(i.authenticated) {
+        if(i.id == 'qq' || i.id == 'weixin') {
           actionbuttons.push({
             title: i.description,
             share: i

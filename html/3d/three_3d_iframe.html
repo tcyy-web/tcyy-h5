@@ -4,9 +4,17 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<title></title>
+	<link rel="stylesheet" href="../../css/iconfont.css" />
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
+	  .mui-pull-right{
+      line-height: 44px;
+      height: 44px;
+    }
+    .mui-pull-right .iconfont{
+      font-size: 20px;
+    }
 	  .mui-content{
 	    overflow: hidden;
 	  }
@@ -23,22 +31,36 @@
 </head>
 <body>
   <header class="mui-bar mui-bar-nav">
-  	   <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-  	   <h1 class="mui-title">3d</h1>
+   <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+   <h1 class="mui-title">3d</h1>
+   <a id="share" class="mui-pull-right">
+     <span class="iconfont icon-share"></span>
+   </a>
   </header>
   <div id="content" class="mui-content">
     <iframe></iframe>
   </div>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../js/utils.share.js"></script>
   <script>
     (function($, doc) {
         $.init();
         $.plusReady(function() {
+          var url = '';
           var $content = doc.getElementById('content');
           window.addEventListener('T_3D_IFRAME_URL', function(e){
-            var url =  e.detail.url;
+            url =  e.detail.url;
             var _html = '<iframe src="' + url + '"></iframe>';
             $content.innerHTML = _html;
+          });
+          // 分享
+          doc.getElementById('share').addEventListener('tap', function(e) {
+            shareApi.showActionSheet({
+              href: url,
+              title: '天齿月牙APP上的这个牙齿太逼真啦！',
+              thumbs: ['_www/images/share/logo.png'],
+              interface: 'auto'
+            });
           });
         });
       })(mui, document);

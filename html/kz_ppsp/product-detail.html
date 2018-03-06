@@ -4,9 +4,17 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<title></title>
+	<link rel="stylesheet" href="../../css/iconfont.css" />
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
+	  .mui-pull-right{
+      line-height: 44px;
+      height: 44px;
+    }
+    .mui-pull-right .iconfont{
+      font-size: 20px;
+    }
 	.company-box{ 
 	  padding: 10px;
 	  margin-bottom: 10px;
@@ -77,6 +85,9 @@
   <header class="mui-bar mui-bar-nav">
     	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     	<h1 id="headName" class="mui-title">产品详情</h1>
+    	<a id="share" class="mui-pull-right">
+        <span class="iconfont icon-share"></span>
+      </a>
   </header>
   <div class="mui-content">
     <div class="company-box flex">
@@ -101,6 +112,7 @@
   <script src="../../js/utils.storages.js" ></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.request.js"></script>
+  <script src="../../js/utils.share.js"></script>
   <script>
     (function($, doc) {
         $.init({
@@ -113,6 +125,7 @@
           // 扩展id
           var id = 0;
           var detailData = {};
+          var shareImage = '';
           var $image = doc.getElementById('image');
           var $title = doc.getElementById('title');
           var $tongdao = doc.getElementById('tongdao');
@@ -121,6 +134,7 @@
           // 页面刷新
           window.addEventListener('KZ_PPSP_PRODUCT_ID', function(e){
             id = e.detail.id;
+            shareImage = e.detail.image;
             $image.innerHTML = '<img src="{0}" />'.format(e.detail.image);
             ppInit();
           });
@@ -158,6 +172,15 @@
                 $.toast(err);
               });
             }
+          });
+          // 分享
+          doc.getElementById('share').addEventListener('tap', function(e) {
+            shareApi.showActionSheet({
+              href: config.serverUrl + '/s/share/dts?id='+ id,
+              title: '天齿月牙APP上的这个产品太棒啦！',
+              thumbs: [shareImage],
+              interface: 'auto'
+            });
           });
         });
       })(mui, document);
