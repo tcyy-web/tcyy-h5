@@ -604,11 +604,8 @@
 				  var beginKey = 'project_';
 				  // 跳转计划列表
           var $projectPlanList = doc.getElementById('projectPlanList');
-          var projectPlanListWebview = null;
           $projectPlanList.addEventListener('tap', function(event) {
-            if (!projectPlanListWebview) {
-              projectPlanListWebview = plus.webview.getWebviewById('projectPlanList');
-            }
+            var projectPlanListWebview = plus.webview.getWebviewById('projectPlanList');
             $.fire(projectPlanListWebview,'project-plan');
             $.openWindow({
               id: 'projectPlanList'
@@ -878,7 +875,7 @@
             // 修改
             var edit = doc.createElement('span');
             edit.className = 'flex-1 edit';
-            edit.innerText =  '修改';
+            edit.innerText =  '编辑';
             edit.addEventListener('tap', function(e){
               if (data.system !== -1) {
                 gotoEditProject(data.id);            

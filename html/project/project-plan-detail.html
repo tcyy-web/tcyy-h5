@@ -3,15 +3,23 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>计划详情</title>
+		<title></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/iconfont.css" />
 		<link rel="stylesheet" href="../../css/mui.min.css">
     <link rel="stylesheet" href="../../css/mui.picker.min.css">
     <link rel="stylesheet" href="../../css/mui.poppicker.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
+		  .mui-pull-right{
+        line-height: 44px;
+        height: 44px;
+      }
+      .mui-pull-right .iconfont{
+        font-size: 20px;
+      }
 			::-moz-placeholder {
 				color: #000000;
 			}
@@ -174,14 +182,23 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">计划详情</h1>
+		  <a id="share" class="mui-pull-right">
+        <span class="iconfont icon-share"></span>
+      </a>
 		</header>
 		<div class="mui-content">
       <div id="listBox">
-          <div class="bill-item flex">
+          <!--<div class="bill-item flex">
             <p>01by</p>
             <p class="flex-1">牙齿修复<span>*1</span></p>
             <p class="flex-1">￥318.00<span>元</span></p>
-          </div>
+          </div>-->
+      </div>
+      <div>
+        <div class="bill-item flex">
+          <p>合计</p>
+          <p class="flex-1" id="billTotal">￥0.00<span>元</span></p>
+        </div>
       </div>
       <div class="img flex flex-col-center">
         <img id="imgurl" src="../../images/project/banner.png"  />
@@ -237,15 +254,18 @@
     <script src="../../js/utils.storages.js" ></script>
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js"></script>
+    <script src="../../js/utils.share.js"></script>
 		<script>
 			(function($, doc) {
 			  var changeFlag = false;
 				$.init({
           beforeback: function() {
             if (changeFlag){
-              //获得父页面的webview
-              var parent = plus.webview.currentWebview().opener();
-              $.fire(parent, 'project-plan');
+              //获得所有已打开webview
+              var list = plus.webview.all();
+              $.each(list, function(index,item) {
+                $.fire(item, 'project-plan');
+              });
             }
             //返回true,继续页面关闭逻辑
             return true;
@@ -265,6 +285,8 @@
           var $jzs = doc.getElementById('jzs');
           var $zzys = doc.getElementById('zzys');
           var $listBox = doc.getElementById('listBox');
+          // 合计
+          var $billTotal = doc.getElementById('billTotal');
           // 预览图片
           $img.addEventListener('tap', function() {
             plus.nativeUI.previewImage([$img.src]);
@@ -281,9 +303,12 @@
           var refreshList = function(data){
             $listBox.innerHTML = '';
             if (data) {
+              var total = 0;
               $.each(data, function(index, i) {
                  paintItem(i);
+                 total += eval(i.num + '*' + i.price);
               });
+              $billTotal.innerHTML = '￥{0}<span>元</span>'.format(total.toFixed(2)); 
             }
           }
           // 处理状态
@@ -385,6 +410,15 @@
             id = e.detail.id;
             changeFlag = false;
             getDetail();
+          });
+          // 分享
+          doc.getElementById('share').addEventListener('tap', function(e) {
+            shareApi.showActionSheet({
+              href: config.serverUrl + '/s/share/project?id='+ id,
+              title: '天齿月牙APP上可以直接预约牙医门诊，真方便，快来试试吧！',
+              thumbs: ['_www/images/share/logo.png'],
+              interface: 'auto'
+            });
           });
 				});
 			}(mui, document));

@@ -341,6 +341,20 @@
             }
             initCalendar(_year, _month);
           });
+          // 修改刷新日历
+          window.addEventListener('project-plan', function(e){
+            var _t = times.split('-');
+            var _year = _t[0];
+            var _month = _t[1];
+            initCalendar(_year, _month);
+          });
+          // 新增刷新日历
+          window.addEventListener('bill-success', function(e){
+            var _t = times.split('-');
+            var _year = _t[0];
+            var _month = _t[1];
+            initCalendar(_year, _month);
+          });
 				});
 			}(mui, document));
 		</script>

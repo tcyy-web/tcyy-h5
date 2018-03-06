@@ -4,9 +4,17 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<title></title>
+	<link rel="stylesheet" href="../../css/iconfont.css" />
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
+	  .mui-pull-right{
+	    line-height: 44px;
+	    height: 44px;
+	  }
+	  .mui-pull-right .iconfont{
+	    font-size: 20px;
+	  }
     .mui-bar-nav{ box-shadow: none;}
     .mui-content{background: #fff;}
     .bt-title{
@@ -26,9 +34,9 @@
       	font-size:13px;
     }
     .bt-title p span.read{
-      padding-right:25px;
+      /*padding-right:25px;*/
       display: inline-block;
-      background: url(../../images/weibo/yuandian.png) right center no-repeat;
+      /*background: url(../../images/weibo/yuandian.png) right center no-repeat;*/
     }
     .content{
     	padding:10px;
@@ -50,7 +58,10 @@
 <body>
 <header class="mui-bar mui-bar-nav">
 	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	<h1 class="mui-title">知识库详情</h1>
+	<h1 id="headTitle" class="mui-title">知识库详情</h1>
+	<a id="share" class="mui-pull-right">
+	  <span class="iconfont icon-share"></span>
+	</a>
 </header>
 <div class="mui-content">
 	<div class="bt-title">
@@ -73,11 +84,13 @@
     <script src="../../js/utils.storages.js" ></script>
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js"></script>
+    <script src="../../js/utils.share.js"></script>
     <script>
       (function($, doc) {
         $.init();
         $.plusReady(function() {
           var id = 0;
+          var $headTitle = doc.getElementById('headTitle');
           var $title = doc.getElementById('title');
           var $author = doc.getElementById('author');
           var $times = doc.getElementById('times');
@@ -103,7 +116,18 @@
           // 刷新详情
           window.addEventListener('zsk-id', function(e){
             id = e.detail.id;
+            $headTitle.innerText = e.detail.groupname;
             getDetail();
+          });
+          // 分享
+          doc.getElementById('share').addEventListener('tap', function(e) {
+            shareApi.showActionSheet({
+              href: config.serverUrl + '/s/share/knowledge?id='+ id,
+              title: '我在天齿月牙APP上看到一篇非常棒的文章！',
+              content: $title.innerText,
+              thumbs: ['_www/images/share/logo.png'],
+              interface: 'auto'
+            });
           });
         });
       })(mui, document);

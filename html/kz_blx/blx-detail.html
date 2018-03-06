@@ -454,12 +454,26 @@
               detailData = e.detail.data;
               page = 1;
               more = true;
+//            console.log(JSON.stringify(detailData));
+//            getDetail(detailData.id);
               setFn();
               readFn();
               dzPeople();
               plList();
             }
           });
+          // 获取详情
+          var getDetail = function(id, callback) {
+            request.loginAjax('cases/getDetails', {
+                data: {
+                  id: id
+                },
+                showMsg: false
+              }, function(data, success) {
+                if (success) {
+                }
+            });
+          }
           // 设置详情
           var setFn = function() {
             $headurl.src = detailData.userinfo.headurl || defaultUserImage;

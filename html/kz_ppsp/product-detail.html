@@ -4,9 +4,17 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<title></title>
+	<link rel="stylesheet" href="../../css/iconfont.css" />
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
+	  .mui-pull-right{
+      line-height: 44px;
+      height: 44px;
+    }
+    .mui-pull-right .iconfont{
+      font-size: 20px;
+    }
 	.company-box{ 
 	  padding: 10px;
 	  margin-bottom: 10px;
@@ -16,15 +24,18 @@
 	.company-box .img{
 	  width: 120px;
 	  overflow: hidden;
-	  border:1px solid #d6d6d6;
+	  /*border:1px solid #d6d6d6;*/
 	}
 	.company-box img{ 
-	  width:auto; 
-	  height:100%; 
+	  width:100% !important; 
+	  height:100% !important; 
   }
 	.company-box .name{ 
 	  font-size:16px;
+	  word-break: break-all;
 	  color:#333;
+	  padding: 0 0 10px 10px;
+	  display: inline-block;
   }
 	.tl{
 	  padding: 0 10px;
@@ -51,6 +62,21 @@
 	.content img{
 	  max-width: 100%;
 	}
+	.btn-tongdao{
+	  display: none;
+	  margin-left: 10px;
+    width: 100px;
+    color: #ffffff;
+    padding: 0;
+    border: 0;
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 14px;
+    background-color: #6b51c1;
+    line-height: 30px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+	}
 	</style>
 
 </head>
@@ -58,20 +84,26 @@
 <body>
   <header class="mui-bar mui-bar-nav">
     	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    	<h1 class="mui-title">产品详情</h1>
+    	<h1 id="headName" class="mui-title">产品详情</h1>
+    	<a id="share" class="mui-pull-right">
+        <span class="iconfont icon-share"></span>
+      </a>
   </header>
   <div class="mui-content">
     <div class="company-box flex">
-      <div class="img flex flex-col-center">
-        <img id="image" src="../../images/profile/sc6.png"  />
+      <div id="image" class="img">
+        <img src="../../images/profile/sc6.png"  />
       </div>
-      <div class="flex flex-1 flex-col-center flex-row-center">
-        <span id="title" class="name">哈药集团</span>
+      <div class="flex-1">
+        <div>
+          <span id="title" class="name"></span>
+        </div>
+        <div id="tongdao" class="btn-tongdao">购买通道</div>
       </div>
     </div>
     <div class="tl">产品详情</div>
     <div id="contents" class="content">
-      	<img src="../../images/profile/sc7.png" />
+    	<img src="../../images/profile/sc7.png" />
     </div>
   </div>
   <script src="../../js/mui.min.js"></script>
@@ -80,19 +112,30 @@
   <script src="../../js/utils.storages.js" ></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.request.js"></script>
+  <script src="../../js/utils.share.js"></script>
   <script>
     (function($, doc) {
-        $.init();
+        $.init({
+          preloadPages:[{
+            id:'KZ-PPSP-PRODUCT-IFRAME',
+            url: './product_iframe.html'
+          }]
+        });
         $.plusReady(function() {
           // 扩展id
           var id = 0;
+          var detailData = {};
+          var shareImage = '';
           var $image = doc.getElementById('image');
           var $title = doc.getElementById('title');
+          var $tongdao = doc.getElementById('tongdao');
+          var $headName = doc.getElementById('headName');
           var $contents = doc.getElementById('contents');
           // 页面刷新
           window.addEventListener('KZ_PPSP_PRODUCT_ID', function(e){
             id = e.detail.id;
-            $image.src = e.detail.image;
+            shareImage = e.detail.image;
+            $image.innerHTML = '<img src="{0}" />'.format(e.detail.image);
             ppInit();
           });
           var ppInit = function() {
@@ -103,12 +146,43 @@
               showMsg: false
             },function(data, success) {
               if (success) {
+                detailData = data;
                 $title.innerText = data.title;
+                $headName.innerText = data.title;
                 $contents.innerHTML = data.contents;
+                if (data.purls != '') {
+                  $tongdao.style.display = 'inline-block';
+                }
               }
             },function() {
             });
           }
+          $tongdao.addEventListener('tap', function(e){
+            if (detailData.jump_type == 1) {
+              var _webview = plus.webview.getWebviewById('KZ-PPSP-PRODUCT-IFRAME');
+              $.fire(_webview,'PRODUCT_IFRAME',{
+                url: detailData.purls
+              });
+              $.openWindow({
+                id: 'KZ-PPSP-PRODUCT-IFRAME'
+              });
+            } else if(detailData.jump_type == 2) {
+              // 浏览器打开
+              plus.runtime.openURL(detailData.purls, function(err) {
+                $.toast(err);
+              });
+            }
+          });
+          // 分享
+          doc.getElementById('share').addEventListener('tap', function(e) {
+            shareApi.showActionSheet({
+              href: config.serverUrl + '/s/share/dts?id='+ id,
+              title: '天齿月牙APP上的这个产品太棒啦！',
+              content: detailData.title,
+              thumbs: [shareImage],
+              interface: 'auto'
+            });
+          });
         });
       })(mui, document);
   </script>

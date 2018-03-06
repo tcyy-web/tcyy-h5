@@ -269,29 +269,29 @@
           var img = doc.createElement('img');
           img.src = data.image;
           div.appendChild(img);
-//        var video = doc.createElement('video');
-//        video.src = data.url;
           section.appendChild(div);
-//        section.appendChild(video);
           var a = doc.createElement('a');
           a.className = 'lname';
           a.innerHTML = '<span>{0}</span>'.format(data.title);
           section.appendChild(a);
           a.addEventListener('tap', function(event){
-            var video = doc.createElement('video');
-            video.controls = true;
-            video.src = data.url;
-            $videobg.style.display = 'block';
-            $video.innerHTML = '';
-            $video.appendChild(video);
-            video.play();
-//          if(section.classList.contains('active')) {
-//            section.classList.remove('active');
-//            video.pause();
-//          } else {
-//            section.classList.add('active');
-//            video.play();
-//          }
+            if (mui.os.android) {
+              var Intent = plus.android.importClass("android.content.Intent");
+              var Uri = plus.android.importClass("android.net.Uri");
+              var main = plus.android.runtimeMainActivity();
+              var intent=new Intent(Intent.ACTION_VIEW);
+              var uri=Uri.parse(data.url);
+              intent.setDataAndType(uri,"video/*");
+              main.startActivity(intent);
+            } else if(mui.os.ios) {
+              var video = doc.createElement('video');
+              video.controls = true;
+              video.src = data.url;
+              $videobg.style.display = 'block';
+              $video.innerHTML = '';
+              $video.appendChild(video);
+              video.play();              
+            }
           });
           li.appendChild(section);
           parent.appendChild(li);

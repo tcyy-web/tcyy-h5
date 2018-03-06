@@ -13,6 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-share:before { content: "\e617"; }
+
 .icon-riliriqi:before { content: "\e807"; }
 
 .icon-icon:before { content: "\a666"; }

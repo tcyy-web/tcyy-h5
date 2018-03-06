@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>提交清单</title>
+		<title></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -190,11 +190,17 @@
 		</header>
 		<div class="mui-content">
 		  <div id="listBox">
-    			<div class="bill-item flex">
+    			<!--<div class="bill-item flex">
     				<p>01by</p>
     				<p class="flex-1">牙齿修复<span>*1</span></p>
     				<p class="flex-1">￥318.00<span>元</span></p>
-    			</div>
+    			</div>-->
+			</div>
+			<div>
+			  <div class="bill-item flex">
+          <p>合计</p>
+          <p class="flex-1" id="billTotal">￥0.00<span>元</span></p>
+        </div>
 			</div>
 			<form class="mui-input-group">
 				<div class="mui-input-row">
@@ -257,6 +263,8 @@
 				  var groupid = 0;
 				  var list = [];
 				  var $listBox = doc.getElementById('listBox');
+				  // 合计
+				  var $billTotal = doc.getElementById('billTotal');
 				  var $submit = doc.getElementById('submit');
 				  //
 				  var sex = null;
@@ -281,9 +289,12 @@
           // 更新清单
 				  var refreshList = function(){
 				    $listBox.innerHTML = '';
+				    var total = 0;
 				    $.each(list, function(index, i) {
 				    	 paintItem(i);
+				    	 total += eval(i.num + '*' + i.price);
 				    });
+				    $billTotal.innerHTML = '￥{0}<span>元</span>'.format(total.toFixed(2)); 
 				  }
 	        // 清单更新
           window.addEventListener('bill-refresh', function(e){
@@ -404,9 +415,11 @@
               }
             }, function(data, success) {
               if (success){
-                 //获得父页面的webview
-                var parent = plus.webview.currentWebview().opener();
-                $.fire(parent, 'bill-success');
+                //获取所有已打开webview
+                var list = plus.webview.all();
+                $.each(list, function(index,item) {
+                  $.fire(item, 'bill-success');
+                });
                 $.back();               
               }
             });
