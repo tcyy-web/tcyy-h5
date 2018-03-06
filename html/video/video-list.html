@@ -275,20 +275,23 @@
           a.innerHTML = '<span>{0}</span>'.format(data.title);
           section.appendChild(a);
           a.addEventListener('tap', function(event){
-            var Intent = plus.android.importClass("android.content.Intent");
-            var Uri = plus.android.importClass("android.net.Uri");
-            var main = plus.android.runtimeMainActivity();
-            var intent=new Intent(Intent.ACTION_VIEW);
-            var uri=Uri.parse(data.url);
-            intent.setDataAndType(uri,"video/*");
-            main.startActivity(intent);
-//          var video = doc.createElement('video');
-//          video.controls = true;
-//          video.src = data.url;
-//          $videobg.style.display = 'block';
-//          $video.innerHTML = '';
-//          $video.appendChild(video);
-//          video.play();
+            if (mui.os.android) {
+              var Intent = plus.android.importClass("android.content.Intent");
+              var Uri = plus.android.importClass("android.net.Uri");
+              var main = plus.android.runtimeMainActivity();
+              var intent=new Intent(Intent.ACTION_VIEW);
+              var uri=Uri.parse(data.url);
+              intent.setDataAndType(uri,"video/*");
+              main.startActivity(intent);
+            } else if(mui.os.ios) {
+              var video = doc.createElement('video');
+              video.controls = true;
+              video.src = data.url;
+              $videobg.style.display = 'block';
+              $video.innerHTML = '';
+              $video.appendChild(video);
+              video.play();              
+            }
           });
           li.appendChild(section);
           parent.appendChild(li);
