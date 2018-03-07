@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<title></title>
+	<link href="../../css/iconfont.css" rel="stylesheet" />
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
@@ -21,7 +22,6 @@
     }
     .wb-top{
       height:60px;
-      padding-right: 70px;
       position: relative;
     }
     .wb-top .img{
@@ -42,11 +42,24 @@
       font-weight: normal;
       padding-top:5px;
       padding-bottom: 15px; 
-      
+      padding-right: 70px;
     }
-    .wb-top h2+p{
+    .wb-top p{
       font-size:14px;
       color:#7c7c7c;
+    }
+    .wb-top p{
+      font-size:14px;
+      color:#7c7c7c;
+      padding-right: 30px;
+    }
+    .wb-top .mui-icon-trash{
+      font-size: 20px;
+      float: right;
+      position: absolute;
+      right: 0;
+      bottom: 5px;
+      z-index: 3;
     }
     .wb-top ins{
       position: absolute;
@@ -75,12 +88,18 @@
       padding:10px 0;
       overflow: hidden;
     }
-    .word-img img{
-      width:100px!important;
-      height: 100px;
+    .word-img .img{
+      width: 80px;
+      height: 80px;
       float:left;
       margin-right:10px;
       margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .word-img .img img{
+      width: 100%!important;
+      height: auto;
+      min-height: 100%;
     }
     .pl{
       position: relative;
@@ -162,18 +181,18 @@
     .pl-tx .mui-icon{
       position: absolute;
       right: 0;
-      top: 20px;
+      top: 15px;
       color: #7c7c7c;
-      font-size: 40px;
+      font-size: 30px;
       z-index: 2;
     }
     .pl-tx .img{
     	float:left;
-    	width: 60px;
-    	height: 60px;
+    	width: 40px;
+    	height: 40px;
     	-webkit-border-radius: 50%;
-    border-radius: 50%;
-    overflow: hidden;
+      border-radius: 50%;
+      overflow: hidden;
     	margin-right:10px;
     	margin-bottom: 10px;
     }
@@ -201,8 +220,8 @@
       padding: 10px 0;
     }
     .pl-true-img .img{
-    	width: 60px;
-    	height: 60px;
+    	width: 40px;
+    	height: 40px;
     	-webkit-border-radius: 50%;
     	border-radius: 50%;
     	overflow: hidden;
@@ -217,7 +236,7 @@
     	font-size:14px;
     	color:#195ea4;
     	padding-right: 60px;
-    	padding-bottom:10px;
+    	padding-bottom:5px;
     }
     .p-name span.time{
       position: absolute;
@@ -233,7 +252,7 @@
     .pl-hf{
       position: relative;
       	padding:10px 0;
-      	padding-left: 70px;
+      	padding-left: 50px;
       	background: #fff;
     }
     .pl-hf:before{
@@ -309,6 +328,16 @@
     .ft span{
       margin-left: 10px;
     }
+    .ft .flex{
+      height: 100%;
+      padding: 0 20px;
+    }
+    .ft .flex:first-child{
+      float: left;
+    }
+    .ft .flex:last-child{
+      float: right;
+    }
 	</style>
 </head>
 <body>
@@ -325,15 +354,18 @@
         </div>
         <div class="flex-1">
           <h2 id="nickname">王医生</h2>
-          <p>发表于：<span id="createtime">2017-05-03</span></p>
+          <p>发表于：<span id="createtime"></span></p>
         </div>
+        <i class="mui-icon mui-icon-trash"></i>
         <ins id="gzfn" class="flex flex-row-center">加关注</ins>
       </div>
 			<!-- 中间文字 AND 图片 -->
 			<div class="word">
 				<p id="contents"></p>
 				<div id="imgs" class="word-img">
-					<img src="../../images/weibo/img.png"/>
+				  <!--<div class="img">
+				    <img src="../../images/weibo/img.png"/>
+				  </div>-->
 				</div>
 			</div>
       <!-- 点赞评论 -->
@@ -362,40 +394,38 @@
 			</div>
 			<!-- 发表的评论 -->
 			<div id="pllist">
-    			<div class="pl-true">
-    				<div class="pl-true-img flex">
-    				  <div class="img flex flex-row-center">
-    				    <img src="../../images/weibo/pltx3.png"/>
-    				  </div>
-    				  <div class="flex-1">
-    				    <p class="p-name"><span>领馆小草</span><span class="time">5小时</span> </p>
-                <p class="p-txt">真的假的呀？我也想去~那个大哥哥带的假的呀？我也想去~那个大哥哥带我去</p>
-    				  </div>
-    				</div>
+  			<div class="pl-true">
+  				<div class="pl-true-img flex">
+  				  <div class="img flex flex-row-center">
+  				    <img src="../../images/weibo/pltx3.png"/>
+  				  </div>
+  				  <div class="flex-1">
+  				    <p class="p-name"><span>领馆小草</span><span class="time">5小时</span> </p>
+              <p class="p-txt">真的假的呀？我也想去~那个大哥哥带的假的呀？我也想去~那个大哥哥带我去</p>
+  				  </div>
+  				</div>
           <div class="pl-hf">
             <p>
               <span>土农民</span>
               <span class="slip">回复</span>
-              <!--<span>领馆小草：</span>-->
+              <span>领馆小草：</span>
               <span class="txt">是真的额,一起去吧靓仔-_-,haobuhao!</span>
               <span>1小时前</span>
             </p>
           </div>
-    			</div>
+  			</div>
 			</div>
 			<p id="plmore" class="pl-more">更多</p>
 		</div>
   </div>
-  <footer class="ft flex" >
-    <div id="fb_pl" class="flex-1 flex flex-col-center flex-row-center">
+  <footer class="ft clearFix" >
+    <div id="fb_pl" class="flex flex-col-center flex-row-center">
       <img src="../../images/blx/ft1.png" />
       <span>写评论</span>
     </div>
-    <div class="flex-1 flex flex-col-center flex-row-center">
-      <!--<img src="../../images/blx/ft2.png" />-->
-    </div>
-    <div id="share" class="flex-1 flex flex-col-center flex-row-center">
-      <img src="../../images/blx/ft3.png" />
+    <div id="share" class="flex flex-row-center">
+      <i style="font-size: 25px;" class="iconfont icon-share"></i>
+      <!--<img src="../../images/blx/ft3.png" />-->
     </div>
   </footer>
   <script src="../../js/mui.min.js"></script>
@@ -406,8 +436,10 @@
   <script src="../../js/utils.share.js"></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.request.js"></script>
+  <script src="../../js/business/blx.js" ></script>
   <script>
     (function($, doc) {
+        var caseid = 0;
         var detailData = {};
         $.init({
           preloadPages:[{
@@ -418,7 +450,7 @@
             url: './blx-users.html'
           }],
           beforeback: function() {
-    　　　　 //获得父页面的webview
+    　　　　     //获得父页面的webview
             var parent = plus.webview.currentWebview().opener();
             $.fire(parent, 'BLX_DETAIL_CHANGE', {
               data: detailData
@@ -450,30 +482,18 @@
           var $gzfn = doc.getElementById('gzfn');
           // 刷新详情
           window.addEventListener('KZ_BLX_DATA', function(e){
-            if (e.detail.data.id != detailData.id) {
-              detailData = e.detail.data;
+            if (e.detail.caseid != caseid) {
+              caseid = e.detail.caseid;
               page = 1;
               more = true;
-//            console.log(JSON.stringify(detailData));
-//            getDetail(detailData.id);
-              setFn();
-              readFn();
-              dzPeople();
-              plList();
+              $dzusers.innerHTML = '';
+              $dzusersmore.style.display = 'none';
+              blxFn.detailFn(caseid, function(res) {
+                setFn();
+                plList();
+              });
             }
           });
-          // 获取详情
-          var getDetail = function(id, callback) {
-            request.loginAjax('cases/getDetails', {
-                data: {
-                  id: id
-                },
-                showMsg: false
-              }, function(data, success) {
-                if (success) {
-                }
-            });
-          }
           // 设置详情
           var setFn = function() {
             $headurl.src = detailData.userinfo.headurl || defaultUserImage;
@@ -484,8 +504,9 @@
             if (detailData.cases_image) {
               var caseurllist = [];
               $.each(detailData.cases_image, function(i,d) {
-                var img = doc.createElement('img');
-                img.src = d.image;
+                var img = doc.createElement('div');
+                img.className = 'img';
+                img.innerHTML = '<img src="{0}" />'.format(d.image);
                 caseurllist.push(d.image);
                 img.addEventListener('tap', function() {
                   previewImage(caseurllist, i);
@@ -502,19 +523,16 @@
             } else{
               $gzfn.style.display = 'none';
             }
-          }
-          // 阅读
-          var readFn = function() {
-             request.loginAjax('cases/read', {
-                data: {
-                  case_id: detailData.id,
-                },
-                showMsg: false
-              }, function(data, success) {
-                if (success) {
-                  detailData.read += 1;
-                  $read.innerText = detailData.read;
-                }
+            // 获取点赞人
+            blxFn.dzUsersFn(caseid, function(users) {
+              $.each(users, function(index, d) {
+                var imgdiv = doc.createElement('div');
+                imgdiv.className = 'img flex flex-row-center';
+                var _url = d.user_info.headurl || defaultUserImage;
+                imgdiv.innerHTML = '<img src="{0}"/> '.format(_url);
+                $dzusers.appendChild(imgdiv);
+              });
+              $dzusersmore.style.display = 'block';
             });
           }
           // 关注
@@ -535,6 +553,7 @@
             });
           }
           $gzfn.addEventListener('tap', function() {
+            blxFn.gzFn(cas)
             gzFn();
           });
            /*图片预览*/
@@ -573,29 +592,6 @@
               id: 'KZ_BLX_DZ_USERS'
             });
           });
-          var dzPeople = function() {
-            $dzusers.innerHTML = '';
-            $dzusersmore.style.display = 'none';
-             request.loginAjax('cases/getThingList', {
-                data: {
-                  case_id: detailData.id,
-                  page: 1,
-                  limit: 5
-                },
-                showMsg: false
-              }, function(data, success) {
-                if (success && data && data.data.length > 0) {
-                  $.each(data.data, function(index, d) {
-                    var imgdiv = doc.createElement('div');
-                    imgdiv.className = 'img flex flex-row-center';
-                    var _url = d.user_info.headurl || defaultUserImage;
-                    imgdiv.innerHTML = '<img src="{0}"/> '.format(_url);
-                    $dzusers.appendChild(imgdiv);
-                  });
-                  $dzusersmore.style.display = 'block';
-                }
-            });
-          }
           /*评论*/
           var $pllist = doc.getElementById('pllist');
           var $plmore = doc.getElementById('plmore');

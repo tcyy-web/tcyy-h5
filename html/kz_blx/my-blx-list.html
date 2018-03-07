@@ -48,6 +48,19 @@
     	font-size:14px;
     	color:#7c7c7c;
     }
+    .wb-top p{
+      font-size:14px;
+      color:#7c7c7c;
+      padding-right: 30px;
+    }
+    .wb-top .mui-icon-trash{
+      font-size: 20px;
+      float: right;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+    }
     .word p{
     	font-size:14px;
     	line-height: 20px;
@@ -58,12 +71,18 @@
     	padding:10px 0;
     	overflow: hidden;
     }
-    .word-img img{
-    	width:100px!important;
-    	height: 100px;
-    	float:left;
-    	margin-right:10px;
-    	margin-bottom: 10px;
+    .word-img .img{
+      width: 80px;
+      height: 80px;
+      float:left;
+      margin-right:10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .word-img .img img{
+      width: 100%!important;
+      height: auto;
+      min-height: 100%;
     }
     .pl{
       position: relative;
@@ -136,18 +155,19 @@
       <div class="mui-scroll-wrapper">
         <div class="mui-scroll">
           <ul id="fabulist" class="mui-table-view">
-            <!--<li>
+            <li>
               <div class="wb-top flex">
                 <div class="flex-1">
                   <p>发表于：2017-05-03</p>
                 </div>
+                <i class="mui-icon mui-icon-trash"></i>
               </div>
               <div class="word">
                 <p>深圳软件创业基地聚集大量孵化园</p>
                 <div class="word-img">
-                  <img src="../../images/weibo/img.png"/>
-                  <img src="../../images/weibo/img.png"/>
-                  <img src="../../images/weibo/img.png"/>
+                  <div class="img">
+                    <img src="../../images/weibo/img.png"/>
+                  </div>
                 </div>
               </div>
               <div class="pl flex">
@@ -164,7 +184,7 @@
                    <span>1</span>
                 </div>
               </div>
-            </li>-->
+            </li>
           </ul>
         </div>
       </div>
@@ -283,13 +303,14 @@
             imgDiv.className = 'word-img';
             var caseurllist = [];
             $.each(data.cases_image, function(i,d) {
-              var img = doc.createElement('img');
-              img.src = d.image;
+              var img = doc.createElement('div');
+              img.className = 'img';
+              img.innerHTML = '<img src="{0}" />'.format(d.image);
               caseurllist.push(d.image);
               img.addEventListener('tap', function() {
                 previewImage(caseurllist, i);
               });
-            	  imgDiv.appendChild(img);
+            	imgDiv.appendChild(img);
             });
             contentDiv.appendChild(imgDiv);
           }

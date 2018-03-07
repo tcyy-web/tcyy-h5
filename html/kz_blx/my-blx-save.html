@@ -73,12 +73,18 @@
       padding:10px 0;
       overflow: hidden;
     }
-    .word-img img{
-      width:100px!important;
-      height: 100px;
+    .word-img .img{
+      width: 80px;
+      height: 80px;
       float:left;
       margin-right:10px;
       margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .word-img .img img{
+      width: 100%!important;
+      height: auto;
+      min-height: 100%;
     }
     .btns {
         position: fixed;
@@ -118,7 +124,9 @@
       <div class="word">
         <p id="contents"></p>
         <div id="imgs" class="word-img">
-          <img src="../../images/weibo/img.png"/>
+          <div class="img">
+            <img src="../../images/weibo/img.png"/>
+          </div>
         </div>
       </div>
     </div>
@@ -160,8 +168,9 @@
           if (detailData.cases_image) {
             var caseurllist = [];
             $.each(detailData.cases_image, function(i,d) {
-              var img = doc.createElement('img');
-              img.src = d.image;
+              var img = doc.createElement('div');
+              img.className = 'img';
+              img.innerHTML = '<img src="{0}" />'.format(d.image);
               caseurllist.push(d.image);
               img.addEventListener('tap', function() {
                 previewImage(caseurllist, i);
@@ -187,7 +196,6 @@
             }, function(data, success) {
               if (success) {
                 detailData.type = 1;
-                console.log(111111111);
                 var parent = plus.webview.currentWebview().opener();
                  $.fire(parent, 'MY_BLX_CHANGE_STATUS',{
                    data: detailData,
