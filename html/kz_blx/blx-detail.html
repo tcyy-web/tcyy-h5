@@ -331,6 +331,7 @@
     .ft .flex{
       height: 100%;
       padding: 0 20px;
+      white-space: nowrap;
     }
     .ft .flex:first-child{
       float: left;
@@ -356,7 +357,7 @@
           <h2 id="nickname">王医生</h2>
           <p>发表于：<span id="createtime"></span></p>
         </div>
-        <i class="mui-icon mui-icon-trash"></i>
+        <!--<i class="mui-icon mui-icon-trash"></i>-->
         <ins id="gzfn" class="flex flex-row-center">加关注</ins>
       </div>
 			<!-- 中间文字 AND 图片 -->
@@ -439,7 +440,6 @@
   <script src="../../js/business/blx.js" ></script>
   <script>
     (function($, doc) {
-        var caseid = 0;
         var detailData = {};
         $.init({
           preloadPages:[{
@@ -450,10 +450,12 @@
             url: './blx-users.html'
           }],
           beforeback: function() {
-    　　　　     //获得父页面的webview
-            var parent = plus.webview.currentWebview().opener();
-            $.fire(parent, 'BLX_DETAIL_CHANGE', {
-              data: detailData
+            //获得所有已打开webview
+            var list = plus.webview.all();
+            $.each(list, function(index,item) {
+              $.fire(item, 'BLX_DETAIL_CHANGE', {
+                data: detailData
+              });
             });
             return true;
           }
@@ -482,79 +484,68 @@
           var $gzfn = doc.getElementById('gzfn');
           // 刷新详情
           window.addEventListener('KZ_BLX_DATA', function(e){
-            if (e.detail.caseid != caseid) {
-              caseid = e.detail.caseid;
-              page = 1;
-              more = true;
-              $dzusers.innerHTML = '';
-              $dzusersmore.style.display = 'none';
-              blxFn.detailFn(caseid, function(res) {
-                setFn();
-                plList();
-              });
-            }
+            page = 1;
+            more = true;
+            blxFn.detailFn(e.detail.caseid, function(res) {
+              detailData = res;
+              setFn();
+              plList();
+            });
           });
           // 设置详情
           var setFn = function() {
-            $headurl.src = detailData.userinfo.headurl || defaultUserImage;
-            $nickname.innerText = detailData.userinfo.nickname;
-            $createtime.innerText = detailData.creatime;
-            $contents.innerText = detailData.contents;
-            $imgs.innerHTML = '';
-            if (detailData.cases_image) {
-              var caseurllist = [];
-              $.each(detailData.cases_image, function(i,d) {
-                var img = doc.createElement('div');
-                img.className = 'img';
-                img.innerHTML = '<img src="{0}" />'.format(d.image);
-                caseurllist.push(d.image);
-                img.addEventListener('tap', function() {
-                  previewImage(caseurllist, i);
+            if (detailData.id > 0) {
+              $headurl.src = detailData.userinfo.headurl || defaultUserImage;
+              $nickname.innerText = detailData.userinfo.nickname;
+              $createtime.innerText = detailData.creatime;
+              $contents.innerText = detailData.contents;
+              $imgs.innerHTML = '';
+              if (detailData.cases_image) {
+                var caseurllist = [];
+                $.each(detailData.cases_image, function(i,d) {
+                  var img = doc.createElement('div');
+                  img.className = 'img';
+                  img.innerHTML = '<img src="{0}" />'.format(d.image);
+                  caseurllist.push(d.image);
+                  img.addEventListener('tap', function() {
+                    previewImage(caseurllist, i);
+                  });
+                  $imgs.appendChild(img);
                 });
-                $imgs.appendChild(img);
+              }
+              $read.innerText = detailData.read;
+              $comments.innerText = detailData.comments;
+              $thing.innerText = detailData.thing;
+              if (detailData.isMe == 2) {
+                $gzfn.style.display = 'block';
+                $gzfn.innerText = detailData.isfollow == 1 ? '取消关注' : '加关注';
+              } else{
+                $gzfn.style.display = 'none';
+              }
+              // 获取点赞人
+              $dzusers.innerHTML = '';
+              $dzusersmore.style.display = 'none';
+              blxFn.dzUsersFn(detailData.id, function(users) {
+                $.each(users, function(index, d) {
+                  var imgdiv = doc.createElement('div');
+                  imgdiv.className = 'img flex flex-row-center';
+                  var _url = d.user_info.headurl || defaultUserImage;
+                  imgdiv.innerHTML = '<img src="{0}"/> '.format(_url);
+                  $dzusers.appendChild(imgdiv);
+                });
+                $dzusersmore.style.display = 'block';
               });
             }
-            $read.innerText = detailData.read;
-            $comments.innerText = detailData.comments;
-            $thing.innerText = detailData.thing;
-            if (detailData.isMe == 2) {
-              $gzfn.style.display = 'block';
-              $gzfn.innerText = detailData.isfollow == 1 ? '取消关注' : '加关注';
-            } else{
-              $gzfn.style.display = 'none';
-            }
-            // 获取点赞人
-            blxFn.dzUsersFn(caseid, function(users) {
-              $.each(users, function(index, d) {
-                var imgdiv = doc.createElement('div');
-                imgdiv.className = 'img flex flex-row-center';
-                var _url = d.user_info.headurl || defaultUserImage;
-                imgdiv.innerHTML = '<img src="{0}"/> '.format(_url);
-                $dzusers.appendChild(imgdiv);
-              });
-              $dzusersmore.style.display = 'block';
-            });
-          }
-          // 关注
-          var gzFn = function(callback) {
-             request.loginAjax('cases/follow', {
-                data: {
-                  touid: detailData.userinfo.uid,
-                }
-              }, function(data, success) {
-                if (success) {
-                  if (data.status == 1) {
-                    $gzfn.innerText = '取消关注';
-                  } else {
-                    $gzfn.innerText = '加关注';
-                  }
-                  detailData.isfollow = data.status;
-                }
-            });
           }
           $gzfn.addEventListener('tap', function() {
-            blxFn.gzFn(cas)
-            gzFn();
+            blxFn.gzFn(detailData.id, function(res) {
+              if (res.status == 1) {
+                $gzfn.innerText = '取消关注';
+              } else {
+                $gzfn.innerText = '加关注';
+              }
+              detailData.isfollow = res.status;
+            });
           });
            /*图片预览*/
           var previewImage = function(urllist, index) {
@@ -709,8 +700,10 @@
           // 分享
           doc.getElementById('share').addEventListener('tap', function(e) {
             shareApi.showActionSheet({
-              content: '分享内容',
-              thumbs: '_www/images/share/logo.png',
+              href: config.serverUrl + '/s/share/cases?id='+ id,
+              title: '天齿月牙APP上的这篇病例秀太精彩了！',
+              content: detailData.contents,
+              thumbs: ['_www/images/share/logo.png'],
               interface: 'auto'
             });
           });

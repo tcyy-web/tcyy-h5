@@ -5,7 +5,7 @@
     detailFn: function(caseid, callback) {
       request.loginAjax('cases/getDetails', {
         data: {
-          id: id
+          id: caseid
         },
         showMsg: false
       }, function(data, success) {

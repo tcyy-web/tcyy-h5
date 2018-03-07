@@ -368,14 +368,14 @@
           }
           // 详情页更改后返回列表
           window.addEventListener('BLX_DETAIL_CHANGE', function(e){
-//          var _d = e.detail.data;
-//          var _id = beginKey+groupid+'-'+_d.id;
-//          utils.setDomData(_id, _d);
-//          var _dom = doc.getElementById(_id);
-//          if (_dom != null) {
-//            _dom.innerHTML = '';
-//            paintDom(_dom, _d);
-//          }
+            var _d = e.detail.data;
+            var _id = beginKey+groupid+'-'+_d.id;
+            utils.setDomData(_id, _d);
+            var _dom = doc.getElementById(_id);
+            if (_dom != null) {
+              _dom.innerHTML = '';
+              paintDom(_dom, _d);
+            }
           });
           // 画内部项
           var paintDom = function(parent, data){
