@@ -136,6 +136,7 @@
             id = e.detail.id;
             shareImage = e.detail.image;
             $image.innerHTML = '<img src="{0}" />'.format(e.detail.image);
+            $tongdao.style.display = 'none';
             ppInit();
           });
           var ppInit = function() {
