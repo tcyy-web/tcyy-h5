@@ -249,6 +249,7 @@
   </div>
   <script src="../../js/mui.min.js"></script>
   <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.request.js"></script>
   <script>
     (function($, doc) {
         $.init({
@@ -261,6 +262,9 @@
           $.each(doc.querySelectorAll('.yachi img'), function(index, o) {
             o.addEventListener('tap', function(){
               var id = this.getAttribute('data-id');
+              if (!request.getNetworkState()) {
+                return;
+              }
               var _webview = plus.webview.getWebviewById('T_3D_IFRAME');
                $.fire(_webview,'T_3D_IFRAME_URL',{
                  url: config.serverUrl + '/3D/single.html?id=a'+id

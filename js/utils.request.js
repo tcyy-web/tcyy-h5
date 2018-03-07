@@ -3,15 +3,15 @@
   w.request = {
     /*判断是否有网络*/
     getNetworkState:function(){
-      	if(plus.networkinfo.getCurrentType()==plus.networkinfo.CONNECTION_NONE){
-      		return false;
-      	}else{
-      		return true;
-      	}
+    	if(plus.networkinfo.getCurrentType()==plus.networkinfo.CONNECTION_NONE){
+    	  mui.toast("无网络");
+    		return false;
+    	}else{
+    		return true;
+    	}
     },
     ajax:function( url,obj, successCallback, errorCallback ){
       if (!this.getNetworkState()) {
-        mui.toast("当前网络不给力，请稍后再试");
         return;
       }
       var defaults = {

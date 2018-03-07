@@ -160,6 +160,9 @@
           }
           $tongdao.addEventListener('tap', function(e){
             if (detailData.jump_type == 1) {
+              if (!request.getNetworkState()) {
+                return;
+              }
               var _webview = plus.webview.getWebviewById('KZ-PPSP-PRODUCT-IFRAME');
               $.fire(_webview,'PRODUCT_IFRAME',{
                 url: detailData.purls
