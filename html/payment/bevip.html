@@ -43,7 +43,7 @@
 	
   ajaxData();
   
-  window.addEventListener("back",function( e ){
+ window.addEventListener("back",function( e ){
 
 	$.back();
  });
@@ -90,7 +90,7 @@ function renderData( arr ){
 }
 
 function openPay( id , price ,content){
-	
+	var currentWebview = plus.webview.currentWebview();
 	
 	var payWebview = plus.webview.getWebviewById("MY-PAY") ;
 	
@@ -98,7 +98,8 @@ function openPay( id , price ,content){
     	id:id,
     	price:price,
     	type:1,
-    	content:content
+    	content:content,
+    	webview: currentWebview
     });
     $.openWindow({
     	id:"MY-PAY"
