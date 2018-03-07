@@ -41,9 +41,18 @@
       padding-bottom: 15px; 
       
     }
-    .wb-top h2+p{
+    .wb-top p{
       font-size:14px;
       color:#7c7c7c;
+      padding-right: 30px;
+    }
+    .wb-top .mui-icon-trash{
+      font-size: 20px;
+      float: right;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
     }
     .wb-top ins{
       position: absolute;
@@ -72,12 +81,18 @@
       padding:10px 0;
       overflow: hidden;
     }
-    .word-img img{
-      width:100px!important;
-      height: 100px;
+    .word-img .img{
+      width: 80px;
+      height: 80px;
       float:left;
       margin-right:10px;
       margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .word-img .img img{
+      width: 100%!important;
+      height: auto;
+      min-height: 100%;
     }
     .pl{
       position: relative;
@@ -159,15 +174,15 @@
     .pl-tx .mui-icon{
       position: absolute;
       right: 0;
-      top: 20px;
+      top: 15px;
       color: #7c7c7c;
-      font-size: 40px;
+      font-size: 30px;
       z-index: 2;
     }
     .pl-tx .img{
       float:left;
-      width: 60px;
-      height: 60px;
+      width: 40px;
+      height: 40px;
       -webkit-border-radius: 50%;
     border-radius: 50%;
     overflow: hidden;
@@ -198,8 +213,8 @@
       padding: 10px 0;
     }
     .pl-true-img .img{
-      width: 60px;
-      height: 60px;
+      width: 40px;
+      height: 40px;
       -webkit-border-radius: 50%;
       border-radius: 50%;
       overflow: hidden;
@@ -214,7 +229,7 @@
       font-size:14px;
       color:#195ea4;
       padding-right: 60px;
-      padding-bottom:10px;
+      padding-bottom:5px;
     }
     .p-name span.time{
       position: absolute;
@@ -230,7 +245,7 @@
     .pl-hf{
       position: relative;
         padding:10px 0;
-        padding-left: 70px;
+        padding-left: 50px;
         background: #fff;
     }
     .pl-hf:before{
@@ -320,12 +335,15 @@
         <div class="flex-1">
           <p>发表于：<span id="createtime">2017-05-03</span></p>
         </div>
+        <i class="mui-icon mui-icon-trash"></i>
       </div>
       <!-- 中间文字 AND 图片 -->
       <div class="word">
         <p id="contents"></p>
         <div id="imgs" class="word-img">
-          <img src="../../images/weibo/img.png"/>
+          <div class="img">
+            <img src="../../images/weibo/img.png"/>
+          </div>
         </div>
       </div>
       <!-- 点赞评论 -->
@@ -435,8 +453,9 @@
             if (detailData.cases_image) {
               var caseurllist = [];
               $.each(detailData.cases_image, function(i,d) {
-                var img = doc.createElement('img');
-                img.src = d.image;
+                var img = doc.createElement('div');
+                img.className = 'img';
+                img.innerHTML = '<img src="{0}" />'.format(d.image);
                 caseurllist.push(d.image);
                 img.addEventListener('tap', function() {
                   previewImage(caseurllist, i);

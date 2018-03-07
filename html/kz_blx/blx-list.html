@@ -69,7 +69,6 @@
     }
     .wb-top{
     	height:60px;
-    	padding-right: 70px;
     	position: relative;
     }
     .wb-top .img{
@@ -90,10 +89,20 @@
     	font-weight: normal;
     	padding-top:5px;
     	padding-bottom: 15px;	
+    	padding-right: 70px;
     }
-    .wb-top h2+p{
+    .wb-top p{
     	font-size:14px;
     	color:#7c7c7c;
+    	padding-right: 30px;
+    }
+    .wb-top .mui-icon-trash{
+      font-size: 20px;
+      float: right;
+      position: absolute;
+      right: 0;
+      bottom: 5px;
+      z-index: 3;
     }
     .wb-top ins{
     	position: absolute;
@@ -119,12 +128,18 @@
     	padding:10px 0;
     	overflow: hidden;
     }
-    .word-img img{
-    	width:100px!important;
-    	height: 100px;
-    	float:left;
-    	margin-right:10px;
-    	margin-bottom: 10px;
+    .word-img .img{
+      width: 80px;
+      height: 80px;
+      float:left;
+      margin-right:10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .word-img .img img{
+    	width: 100%!important;
+    	height: auto;
+    	min-height: 100%;
     }
     .pl{
       position: relative;
@@ -223,29 +238,29 @@
 										    <h2>口腔门诊王医生</h2>
                         <p>发表于：2017-05-03</p>
 										  </div>
+										  <i class="mui-icon mui-icon-trash"></i>
 										  <ins class="flex flex-row-center">加关注</ins>
 										</div>
 										<div class="word">
 											<p>深圳软件创业基地聚集大量孵化园</p>
 											<div class="word-img">
-												<img src="../../images/weibo/img.png"/>
-												<img src="../../images/weibo/img.png"/>
-												<img src="../../images/weibo/img.png"/>
-												<img src="../../images/weibo/img.png"/>
+											  <div class="img">
+											    <img src="../../images/weibo/img.png"/>
+											  </div>
 											</div>
 										</div>
 										<div class="pl flex">
 										  <div class="flex-1 flex flex-row-center flex-col-center">
 										    <img src="../../images/blx/pl1.png" />
-										    <span>111111</span>
+										    <span>1</span>
 										  </div>
 										  <div class="flex-1 flex flex-row-center flex-col-center">
 										    <img src="../../images/blx/pl2.png" />
-										     <span>111111</span>
+										     <span>1</span>
 										  </div>
 										  <div class="flex-1 flex flex-row-center flex-col-center">
 										    <img src="../../images/blx/pl3.png" />
-										     <span>111111</span>
+										     <span>1</span>
 										  </div>
 										</div>
 									</li>-->
@@ -291,6 +306,7 @@
     <script src="../../js/utils.category.js" ></script>
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js"></script>
+    <script src="../../js/business/blx.js"></script>
 		<script>
       (function($, doc) {
         //阻尼系数
@@ -330,18 +346,6 @@
             var currenttab = doc.querySelector(_tabid);
             currenttab.insertBefore(paintItem(_data), currenttab.childNodes[0]);
           });
-          // 关注
-          var gzFn = function(uid, callback) {
-             request.loginAjax('cases/follow', {
-                data: {
-                  touid: uid,
-                }
-              }, function(data, success) {
-                if (success) {
-                  callback(data);
-                }
-            });
-          }
            /*图片预览*/
           var previewImage = function(urllist, index) {
             plus.nativeUI.previewImage(urllist, {
@@ -350,25 +354,13 @@
               indicator: 'number'
             });
           }
-          //点赞
-          var dzFn = function(caseid, callback) {
-             request.loginAjax('cases/thing', {
-                data: {
-                  case_id: caseid,
-                }
-              }, function(data, success) {
-                if (success) {
-                  callback();
-                }
-            });
-          }
           // 详情webview
           var gotoDetail = function(id) {
             var _id = beginKey+groupid+'-'+id;
             var data = utils.getDomData(_id);
             var detailWebView = plus.webview.getWebviewById('KZ_BLX_DETAIL');
             $.fire(detailWebView,'KZ_BLX_DATA',{
-              data:data
+              caseid:data.id
             });
             $.openWindow({
               id: 'KZ_BLX_DETAIL'
@@ -400,12 +392,23 @@
               gotoDetail(data.id);
             });
             topDiv.appendChild(infoDiv);
+            // 删除个人病例秀
+            if (data.isMe == 1) {
+              var _del = doc.createElement('i');
+              _del.className = 'mui-icon mui-icon-trash';
+              _del.addEventListener('tap', function(e) {
+                blxFn.delFn(data.id, function() {
+                  parent.remove();
+                });
+              });
+              topDiv.appendChild(_del);
+            }
             if (data.isMe == 2) {
               var ins = doc.createElement('ins');
               ins.className = 'flex flex-row-center';
               ins.innerText = data.isfollow == 1 ? '取消关注' : '加关注';
               ins.addEventListener('tap', function() {
-                gzFn(data.userinfo.uid, function(_res){
+                blxFn.gzFn(data.userinfo.uid, function(_res){
                   if (_res.status == 1) {
                     ins.innerText = '取消关注';
                   } else {
@@ -435,13 +438,14 @@
               imgDiv.className = 'word-img';
               var caseurllist = [];
               $.each(data.cases_image, function(i,d) {
-                var img = doc.createElement('img');
-                img.src = d.image;
+                var _imgdiv = doc.createElement('div');
+                _imgdiv.className = 'img';
+                _imgdiv.innerHTML = '<img src="{0}" />'.format(d.image);
                 caseurllist.push(d.image);
-                img.addEventListener('tap', function() {
+                _imgdiv.addEventListener('tap', function() {
                   previewImage(caseurllist, i);
                 });
-                imgDiv.appendChild(img);
+                imgDiv.appendChild(_imgdiv);
               });
               contentDiv.appendChild(imgDiv);
             }
@@ -458,11 +462,12 @@
             var dz = doc.createElement('div');
             dz.className = 'flex-1 flex flex-row-center flex-col-center';
             dz.innerHTML = '<img src="../../images/blx/pl3.png" />';
+            // 点赞
             var dzSpan = doc.createElement('span');
             dzSpan.innerText = data.thing;
             dz.appendChild(dzSpan);
             dz.addEventListener('tap', function() {
-              dzFn(data.id, function(){
+              blxFn.dzFn(data.id, function(){
                 dzSpan.innerText = data.thing + 1;
                 var _d = utils.getDomData(_id);
                 if (_d != null) {

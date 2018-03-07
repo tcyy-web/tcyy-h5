@@ -126,6 +126,7 @@
   <script src="../../js/utils.storages.js" ></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.request.js"></script>
+  <script src="../../js/business/blx.js" ></script>
   <script>
     (function($, doc) {
         //阻尼系数
@@ -154,18 +155,6 @@
               dataInit();
             }
           });
-          // 关注
-          var gzFn = function(uid,callback) {
-             request.loginAjax('cases/follow', {
-                data: {
-                  touid: uid
-                }
-              }, function(data, success) {
-                if (success) {
-                  callback(data);
-                }
-            });
-          }
           // 列表
           var $datalist = doc.getElementById('datalist');
           var paintItem = function(data) {
@@ -196,7 +185,7 @@
                 p.innerText = '加关注';
               }
               p.addEventListener('tap', function(){
-                gzFn(data.uid, function(_d) {
+                blxFn.gzFn(data.uid, function(_d) {
                   if (_d.status == 1) {
                     p.className = '';
                     p.innerText = '已关注';

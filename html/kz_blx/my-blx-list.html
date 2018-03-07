@@ -48,6 +48,19 @@
     	font-size:14px;
     	color:#7c7c7c;
     }
+    .wb-top p{
+      font-size:14px;
+      color:#7c7c7c;
+      padding-right: 30px;
+    }
+    .wb-top .mui-icon-trash{
+      font-size: 20px;
+      float: right;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+    }
     .word p{
     	font-size:14px;
     	line-height: 20px;
@@ -58,12 +71,18 @@
     	padding:10px 0;
     	overflow: hidden;
     }
-    .word-img img{
-    	width:100px!important;
-    	height: 100px;
-    	float:left;
-    	margin-right:10px;
-    	margin-bottom: 10px;
+    .word-img .img{
+      width: 80px;
+      height: 80px;
+      float:left;
+      margin-right:10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .word-img .img img{
+      width: 100%!important;
+      height: auto;
+      min-height: 100%;
     }
     .pl{
       position: relative;
@@ -125,10 +144,10 @@
 	</header>
 	<nav class="mui-bar mui-bar-tab">
     <a data-type="3" class="mui-tab-item mui-active" href="#tabbar">
-      <span class="mui-tab-label">我发布的</span>
+      <span class="mui-tab-label">已共享</span>
     </a>
     <a data-type="2" class="mui-tab-item" href="#tabbar2">
-      <span class="mui-tab-label">我的草稿</span>
+      <span class="mui-tab-label">未共享</span>
     </a>
   </nav>
 	<div class="mui-content">
@@ -141,13 +160,14 @@
                 <div class="flex-1">
                   <p>发表于：2017-05-03</p>
                 </div>
+                <i class="mui-icon mui-icon-trash"></i>
               </div>
               <div class="word">
                 <p>深圳软件创业基地聚集大量孵化园</p>
                 <div class="word-img">
-                  <img src="../../images/weibo/img.png"/>
-                  <img src="../../images/weibo/img.png"/>
-                  <img src="../../images/weibo/img.png"/>
+                  <div class="img">
+                    <img src="../../images/weibo/img.png"/>
+                  </div>
                 </div>
               </div>
               <div class="pl flex">
@@ -187,6 +207,7 @@
   <script src="../../js/utils.category.js" ></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.request.js"></script>
+  <script src="../../js/business/blx.js"></script>
   <script>
     (function($, doc) {
       //阻尼系数
@@ -267,6 +288,16 @@
           infoDiv.addEventListener('tap',function(e){
             gotoDetail(data);
           });
+          if (data.type == 1) {
+            var _del = doc.createElement('i');
+            _del.className = 'mui-icon mui-icon-trash';
+            _del.addEventListener('tap', function(e) {
+              blxFn.delFn(data.id, function() {
+                li.remove();
+              });
+            });
+            topDiv.appendChild(_del);
+          }
           topDiv.appendChild(infoDiv);
           li.appendChild(topDiv);
           // 内容
@@ -283,13 +314,14 @@
             imgDiv.className = 'word-img';
             var caseurllist = [];
             $.each(data.cases_image, function(i,d) {
-              var img = doc.createElement('img');
-              img.src = d.image;
+              var img = doc.createElement('div');
+              img.className = 'img';
+              img.innerHTML = '<img src="{0}" />'.format(d.image);
               caseurllist.push(d.image);
               img.addEventListener('tap', function() {
                 previewImage(caseurllist, i);
               });
-            	  imgDiv.appendChild(img);
+            	imgDiv.appendChild(img);
             });
             contentDiv.appendChild(imgDiv);
           }

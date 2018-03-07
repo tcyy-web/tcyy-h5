@@ -106,7 +106,7 @@ w.upload = {
 		plus.zip.compressImage({
 			src: path, //src: (String 类型 )压缩转换原始图片的路径
 			dst: zippath, //压缩转换目标图片的路径
-			quality: 40, //quality: (Number 类型 )压缩图片的质量.取值范围为1-100
+			quality: 60, //quality: (Number 类型 )压缩图片的质量.取值范围为1-100
 			overwrite: true //overwrite: (Boolean 类型 )覆盖生成新文件
 		},
 		function(event) {

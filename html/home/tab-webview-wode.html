@@ -511,26 +511,28 @@
 				
 				function getTotalPoint(){
 					request.loginAjax('point/getTotalPoint', {
+					  statusFlag: false,
 						showLoading:false,
 						showMsg: false
-					  }, function(data, success) {
-					    if (success) {
-							document.getElementById("totalPoint").innerText = data.point;
+					  }, function(data) {
+					    if (data && data.header && data.header.status === 2001) {
+							 document.getElementById("totalPoint").innerText = data.body.point;
 					    }
 					});
 				}
 				
 				function getUnread(){
 					request.loginAjax('Message/getUnread', {
+					  statusFlag: false,
 						showLoading:false,
 						showMsg: false
-					  }, function(data, success) {
-					    if (success) {
+					  }, function(data) {
+					    if (data && data.header && data.header.status === 2001) {
 					    	if( data.count == 0){
 					    		document.getElementById("unread").style.display = "none";
 					    	}else{
 					    		document.getElementById("unread").style.display = "block";
-					    		document.getElementById("unread").innerText = data.count;	
+					    		document.getElementById("unread").innerText = data.body.count;	
 					    	}
 							
 					    }
