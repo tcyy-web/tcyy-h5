@@ -68,12 +68,11 @@
       margin-top: 0;
     }
     .wb-top{
-    	height:60px;
     	position: relative;
     }
     .wb-top .img{
-      width: 60px;
-    	height:60px;
+      width: 50px;
+    	height:50px;
     	-webkit-border-radius: 50%;
     	border-radius: 50%;
     	overflow: hidden;
@@ -88,7 +87,7 @@
     	color: #010101;
     	font-weight: normal;
     	padding-top:5px;
-    	padding-bottom: 15px;	
+    	padding-bottom: 5px;	
     	padding-right: 70px;
     }
     .wb-top p{
@@ -125,7 +124,6 @@
     	padding: 10px 0;
     }
     .word-img{
-    	padding:10px 0;
     	overflow: hidden;
     }
     .word-img .img{
@@ -459,6 +457,9 @@
             var pl = doc.createElement('div');
             pl.className = 'flex-1 flex flex-row-center flex-col-center';
             pl.innerHTML = '<img src="../../images/blx/pl2.png" /><span>{0}</span>'.format(data.comments);
+            pl.addEventListener('tap', function(e) {
+              gotoDetail(data.id);
+            });
             var dz = doc.createElement('div');
             dz.className = 'flex-1 flex flex-row-center flex-col-center';
             dz.innerHTML = '<img src="../../images/blx/pl3.png" />';

@@ -45,7 +45,7 @@
         return humanize(diff);
       }
       // 大于则直接显示时间
-      return dateStr;
+      return dateStr.split(' ')[0];
     },
     //将"yyyy-mm-dd HH:MM:ss"格式的字符串，转化为一个Date对象
     parseDate: function(str) { 

@@ -74,11 +74,7 @@
       color:#000000;
       padding: 10px 0;
     }
-    .word p:first-child{
-      padding-bottom: 0;
-    }
     .word-img{
-      padding:10px 0;
       overflow: hidden;
     }
     .word-img .img{
@@ -174,18 +170,18 @@
     .pl-tx .mui-icon{
       position: absolute;
       right: 0;
-      top: 15px;
+      top: 10px;
       color: #7c7c7c;
       font-size: 30px;
       z-index: 2;
     }
     .pl-tx .img{
       float:left;
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       -webkit-border-radius: 50%;
-    border-radius: 50%;
-    overflow: hidden;
+      border-radius: 50%;
+      overflow: hidden;
       margin-right:10px;
       margin-bottom: 10px;
     }
@@ -197,7 +193,9 @@
     .pl-true{
       position: relative;
     }
-
+    .pl-true .mui-icon-trash{
+      font-size: 20px;
+    }
     .pl-true:before{
       position: absolute;
       right: -10px;
@@ -213,8 +211,8 @@
       padding: 10px 0;
     }
     .pl-true-img .img{
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       -webkit-border-radius: 50%;
       border-radius: 50%;
       overflow: hidden;
@@ -228,8 +226,7 @@
       position: relative;
       font-size:14px;
       color:#195ea4;
-      padding-right: 60px;
-      padding-bottom:5px;
+      padding-right: 100px;
     }
     .p-name span.time{
       position: absolute;
@@ -244,9 +241,9 @@
     }
     .pl-hf{
       position: relative;
-        padding:10px 0;
-        padding-left: 50px;
-        background: #fff;
+      padding:10px 0;
+      padding-left: 40px;
+      background: #fff;
     }
     .pl-hf:before{
       position: absolute;
@@ -335,7 +332,7 @@
         <div class="flex-1">
           <p>发表于：<span id="createtime">2017-05-03</span></p>
         </div>
-        <i class="mui-icon mui-icon-trash"></i>
+        <!--<i id="delBlx" class="mui-icon mui-icon-trash"></i>-->
       </div>
       <!-- 中间文字 AND 图片 -->
       <div class="word">
@@ -378,17 +375,18 @@
                 <img src="../../images/weibo/pltx3.png"/>
               </div>
               <div class="flex-1">
-                <p class="p-name"><span>领馆小草</span><span class="time">5小时</span> </p>
-                <p class="p-txt">真的假的呀？我也想去~那个大哥哥带的假的呀？我也想去~那个大哥哥带我去</p>
+                <p class="p-name"><span>领馆小草</span><span class="time">5小时<i class="mui-icon mui-icon-trash"></i></span> </p>
+                <p class="p-txt">真的假的呀？</p>
               </div>
             </div>
           <div class="pl-hf">
             <p>
               <span>土农民</span>
               <span class="slip">回复</span>
-              <!--<span>领馆小草：</span>-->
+              <span>领馆小草：</span>
               <span class="txt">是真的额,一起去吧靓仔-_-,haobuhao!</span>
               <span>1小时前</span>
+              <i class="mui-icon mui-icon-trash"></i>
             </p>
           </div>
           </div>
@@ -404,6 +402,7 @@
   <script src="../../js/utils.share.js"></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.request.js"></script>
+  <script src="../../js/business/blx.js"></script>
   <script>
     (function($, doc) {
         var detailData = {};

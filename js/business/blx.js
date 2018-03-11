@@ -68,6 +68,18 @@
           callback(data.data);
         }
       });
+    },
+    // 删除评论
+    delPlFn: function(plid, callback) {
+      request.loginAjax('cases/delComment', {
+        data: {
+          id: plid
+        }
+      }, function(data, success) {
+        if (success) {
+          callback(data);
+        }
+      });
     }
   }
 })(window);

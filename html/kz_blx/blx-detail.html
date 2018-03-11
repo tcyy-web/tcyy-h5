@@ -21,12 +21,11 @@
       padding: 10px;
     }
     .wb-top{
-      height:60px;
       position: relative;
     }
     .wb-top .img{
-      width: 60px;
-      height:60px;
+      width: 50px;
+      height:50px;
       -webkit-border-radius: 50%;
       border-radius: 50%;
       overflow: hidden;
@@ -41,7 +40,7 @@
       color: #010101;
       font-weight: normal;
       padding-top:5px;
-      padding-bottom: 15px; 
+      padding-bottom:5px; 
       padding-right: 70px;
     }
     .wb-top p{
@@ -81,11 +80,7 @@
       color:#000000;
       padding: 10px 0;
     }
-    .word p:first-child{
-      padding-bottom: 0;
-    }
     .word-img{
-      padding:10px 0;
       overflow: hidden;
     }
     .word-img .img{
@@ -181,15 +176,15 @@
     .pl-tx .mui-icon{
       position: absolute;
       right: 0;
-      top: 15px;
+      top: 10px;
       color: #7c7c7c;
       font-size: 30px;
       z-index: 2;
     }
     .pl-tx .img{
     	float:left;
-    	width: 40px;
-    	height: 40px;
+    	width: 30px;
+    	height: 30px;
     	-webkit-border-radius: 50%;
       border-radius: 50%;
       overflow: hidden;
@@ -206,7 +201,6 @@
     }
     .pl-true .mui-icon-trash{
       font-size: 20px;
-      margin-left: 5px;
     }
     .pl-true:before{
       position: absolute;
@@ -223,8 +217,8 @@
       padding: 10px 0;
     }
     .pl-true-img .img{
-    	width: 40px;
-    	height: 40px;
+    	width: 30px;
+    	height: 30px;
     	-webkit-border-radius: 50%;
     	border-radius: 50%;
     	overflow: hidden;
@@ -236,10 +230,9 @@
     }
     .p-name{
       position: relative;
-    	font-size:14px;
-    	color:#195ea4;
-    	padding-right: 60px;
-    	padding-bottom:5px;
+    	 font-size:14px;
+    	 color:#195ea4;
+      	padding-right: 100px;
     }
     .p-name span.time{
       position: absolute;
@@ -255,7 +248,7 @@
     .pl-hf{
       position: relative;
       	padding:10px 0;
-      	padding-left: 50px;
+      	padding-left: 40px;
       	background: #fff;
     }
     .pl-hf:before{
@@ -279,13 +272,15 @@
     }
     
     .pl-hf p span.slip{
-      margin: 0 8px;
-    	color:#195ea4;
+    	 color:#195ea4;
+    	 margin: 0 5px;
     }
     
     .pl-hf p span.txt{
-    	color:#000;
-    	margin-right: 10px;
+    	 color:#000;
+    }
+    .pl-hf p span.time{
+      margin-left: 10px;
     }
     .pl-more{
       position: relative;
@@ -403,8 +398,8 @@
   				    <img src="../../images/weibo/pltx3.png"/>
   				  </div>
   				  <div class="flex-1">
-  				    <p class="p-name"><span>领馆小草</span><span class="time">5小时</span> </p>
-            <p class="p-txt"><span>真的假的呀？</span><i class="mui-icon mui-icon-trash"></i></p>
+  				    <p class="p-name"><span>领馆小草</span><span class="time">2018-03-05<i class="mui-icon mui-icon-trash"></i></span> </p>
+            <p class="p-txt"><span>真的假的呀？</span></p>
   				  </div>
   				</div>
           <div class="pl-hf">
@@ -413,7 +408,7 @@
               <span class="slip">回复</span>
               <span>领馆小草：</span>
               <span class="txt">是真的额,一起去吧靓仔-_-,haobuhao!</span>
-              <span>1小时前</span>
+              <span class="time">1小时前</span>
               <i class="mui-icon mui-icon-trash"></i>
             </p>
           </div>
@@ -598,6 +593,19 @@
               }
             }
           });
+          // 发布评论 pid > 0 子评论
+          var fbPlFn = function(opts) {
+            var plWebview = plus.webview.getWebviewById('KZ_BLX_PL');
+            $.fire(plWebview,'KZ_BLX_ID',{
+              case_id:detailData.id,
+              pid: opts.pid,
+              touid: opts.touid,
+              nickname: opts.nickname
+            });
+            $.openWindow({
+              id: 'KZ_BLX_PL'
+            });
+          }
           // 画一级评论
           var paintFirstPl = function(data, serverNowDateStr) {
             var pldiv = doc.createElement('div');
@@ -610,34 +618,45 @@
             div1.innerHTML = '<div class="img flex flex-row-center"><img src="{0}"/></div>'.format(_url);
             var namediv = doc.createElement('div');
             namediv.className = 'flex-1';
+            // 评论用户
+            var _userp = doc.createElement('p');
+            _userp.className = 'p-name';
             var dateStr = utils.formatDateToNow(data.times, serverNowDateStr);
-            namediv.innerHTML = '<p class="p-name"><span>{0}</span><span class="time">{1}</span></p>'.format(data.user_info.nickname,dateStr)
-            var _contentp = doc.createElement('p');
-            _contentp.className = 'p-txt';
-            _contentp.innerText = data.contents;
+            var _userspan = doc.createElement('span');
+            _userp.appendChild(_userspan);
+            _userspan.innerText = data.user_info.nickname;
+            _userspan.addEventListener('tap', function(e) {
+              fbPlFn({
+                pid:data.id,
+                nickname: data.user_info.nickname
+              });
+            });
+            var _timespan = doc.createElement('span');
+            _userp.appendChild(_timespan);
+            _timespan.className = 'time';
+            _timespan.innerText = dateStr;
             // 删除评论
             if (benren.id == data.uid) {
               var _del = doc.createElement('i');
               _del.className = 'mui-icon mui-icon-trash';
               _del.addEventListener('tap', function(){
-                
+                blxFn.delPlFn(data.id, function(_res){
+                  $comments.innerText = _res.count;
+                  detailData.contents = _res.count;
+                  pldiv.remove();
+                });
               });
-              _contentp.appendChild(_del);
+              _timespan.appendChild(_del);
             }
+            namediv.appendChild(_userp);
+            // 评论内容
+            var _contentp = doc.createElement('p');
+            _contentp.className = 'p-txt';
+            var _contentspan = doc.createElement('span');
+            _contentspan.innerText = data.contents;
+            _contentp.appendChild(_contentspan);
             namediv.appendChild(_contentp);
-            // 删除评论
             div1.appendChild(namediv);
-            div1.addEventListener('tap', function() {
-              // 发布子评论
-              var plWebview = plus.webview.getWebviewById('KZ_BLX_PL');
-              $.fire(plWebview,'KZ_BLX_ID',{
-                case_id:detailData.id,
-                pid: data.id
-              });
-              $.openWindow({
-                id: 'KZ_BLX_PL'
-              });
-            });
             pldiv.appendChild(div1);
             return pldiv;
           }
@@ -646,7 +665,60 @@
             var divhf = doc.createElement('div');
             divhf.className = 'pl-hf';
             var _dateStr = utils.formatDateToNow(data.times, serverNowDateStr);
-            divhf.innerHTML = '<p><span>{0}</span><span class="slip">回复</span><span class="txt">{1}</span><span>{2}</span>'.format(data.user_info.nickname,data.contents,_dateStr);
+            var _plP = doc.createElement('p');
+            divhf.appendChild(_plP);
+            // 评论发起人
+            var _plrenSpan = doc.createElement('span');
+            _plrenSpan.innerText = data.user_info.nickname;
+            _plP.appendChild(_plrenSpan);
+            _plrenSpan.addEventListener('tap', function() {
+              fbPlFn({
+                pid:data.pid,
+                touid: data.uid,
+                nickname: data.user_info.nickname
+              });
+            });
+            if (data.to_user_info && data.to_user_info.id > 0) {
+              // 回复
+              var _hfSpan = doc.createElement('span');
+              _plP.appendChild(_hfSpan);
+              _hfSpan.className = 'slip';
+              _hfSpan.innerText = '回复';
+              // 被回复的人
+              var _plhfSpan = doc.createElement('span');
+              _plP.appendChild(_plhfSpan);
+              _plhfSpan.innerText = data.to_user_info.nickname;
+              _plhfSpan.addEventListener('tap', function() {
+                fbPlFn({
+                  pid:data.pid,
+                  touid: data.to_user_info.uid,
+                  nickname: data.to_user_info.nickname
+                });
+              });
+            }
+            // 内容
+            var _plconSpan = doc.createElement('span');
+            _plconSpan.className = 'txt';
+            _plconSpan.innerText = '：' + data.contents;
+            _plP.appendChild(_plconSpan);
+            // 时间
+            var _pltimeSpan = doc.createElement('span');
+            _pltimeSpan.className = 'time';
+            _pltimeSpan.innerText = _dateStr;
+            _plP.appendChild(_pltimeSpan);
+            // 删除评论
+            if (benren.id == data.uid) {
+              var _del = doc.createElement('i');
+              _del.className = 'mui-icon mui-icon-trash';
+              _del.addEventListener('tap', function(){
+                blxFn.delPlFn(data.id, function(_res){
+                  $comments.innerText = _res.count;
+                  detailData.contents = _res.count;
+                  divhf.remove();
+                });
+              });
+              _plP.appendChild(_del);
+            }
             return divhf;
           }
           // 画每项评论
@@ -697,13 +769,8 @@
           }
           // 发表一级评论
           doc.getElementById('fb_pl').addEventListener('tap', function(){
-            var plWebview = plus.webview.getWebviewById('KZ_BLX_PL');
-            $.fire(plWebview,'KZ_BLX_ID',{
-              case_id:detailData.id,
+            fbPlFn({
               pid: 0
-            });
-            $.openWindow({
-              id: 'KZ_BLX_PL'
             });
           });
           // 分享
