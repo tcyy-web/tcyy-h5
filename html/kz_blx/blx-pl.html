@@ -36,7 +36,7 @@
 <body>
   <header class="mui-bar mui-bar-nav">
   	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-  	<h1 class="mui-title">发表评论</h1>
+  	<h1 class="mui-title">评论</h1>
   </header>
   <div class="mui-content">
     <div class="textarea">
@@ -59,12 +59,25 @@
           // 病例秀id
           var case_id = 0;
           var pid = 0;
+          var touid = 0;
           var $contents = doc.getElementById('contents');
           // 评论病例秀
           window.addEventListener('KZ_BLX_ID', function(e){
+            console.log(JSON.stringify(e.detail));
             case_id = e.detail.case_id;
             pid = e.detail.pid;
+            touid = e.detail.touid;
             $contents.value = '';
+            var _placeholder = '想说点什么'
+            if (pid > 0) {
+              if (touid > 0) {
+                // 回复某人
+                _placeholder = '回复：' + e.detail.nickname;
+              } else {
+                _placeholder = '评论：' + e.detail.nickname;
+              }
+            }
+            $contents.setAttribute('placeholder', _placeholder);
           });
           doc.getElementById('fb_pl').addEventListener('tap', function() {
             plFn();
@@ -76,12 +89,17 @@
               $.toast('请输入评论');
               return;
             }
+            var postData = {
+              case_id: case_id,
+              pid: pid,
+              contents: contents
+            }
+            if (touid > 0) {
+              postData.touid = touid;
+            }
              request.loginAjax('cases/comments', {
-                data: {
-                  case_id: case_id,
-                  pid: pid,
-                  contents: contents
-                }
+                data: postData,
+                showMsg: false
               }, function(data, success, resHead) {
                 if (success) {
                   var parent = plus.webview.currentWebview().opener();
@@ -89,7 +107,7 @@
                      data: data,
                      t: resHead.t
                    });
-                  $.back();
+                   $.back();
                 }
             });
           }
