@@ -244,7 +244,7 @@
           if (data.type == 1) {
             var detailWebView = plus.webview.getWebviewById('MY_BLX_DETAIL');
             $.fire(detailWebView,'MY_BLX_DATA',{
-              data:data
+              caseid:data.id
             });
             $.openWindow({
               id: 'MY_BLX_DETAIL'
