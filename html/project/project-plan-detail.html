@@ -261,11 +261,15 @@
 				$.init({
           beforeback: function() {
             if (changeFlag){
-              //获得所有已打开webview
-              var list = plus.webview.all();
-              $.each(list, function(index,item) {
-                $.fire(item, 'project-plan');
-              });
+              // 关联预约页 及 计划列表页
+              var _yuyueWebview = plus.webview.getWebviewById('PRODUCT-YUYUE');
+              if (_yuyueWebview != null) {
+                $.fire(_yuyueWebview, 'project-plan');
+              }
+              var _listWebview = plus.webview.getWebviewById('projectPlanList');
+              if (_listWebview != null) {
+                $.fire(_listWebview, 'project-plan');
+              }
             }
             //返回true,继续页面关闭逻辑
             return true;
@@ -413,9 +417,14 @@
           });
           // 分享
           doc.getElementById('share').addEventListener('tap', function(e) {
+            var storageKey = '$projetIndex';
+            var saveValue = storage.get({
+              key: storageKey
+            });
             shareApi.showActionSheet({
               href: config.serverUrl + '/s/share/project?id='+ id,
-              title: '天齿月牙APP上可以直接预约牙医门诊，真方便，快来试试吧！',
+              title: saveValue || '天齿月牙APP',
+              content: '给您的诊疗清单！',
               thumbs: ['_www/images/share/logo.png'],
               interface: 'auto'
             });
