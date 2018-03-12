@@ -17,25 +17,25 @@
     }
 	.company-box{ 
 	  padding: 10px;
+	  height: 60px;
 	  margin-bottom: 10px;
 	  background-color: #fff;
-	  height: 100px;
 	}
 	.company-box .img{
-	  width: 120px;
+	  width: 80px;
 	  overflow: hidden;
-	  /*border:1px solid #d6d6d6;*/
 	}
 	.company-box img{ 
 	  width:100% !important; 
-	  height:100% !important; 
+	  height:auto; 
   }
 	.company-box .name{ 
 	  font-size:16px;
+	  font-weight: 700;
 	  word-break: break-all;
 	  color:#333;
-	  padding: 0 0 10px 10px;
-	  display: inline-block;
+	  line-height: 40px;
+	  padding-left: 10px;
   }
 	.tl{
 	  padding: 0 10px;
@@ -73,7 +73,7 @@
     margin-bottom: 0;
     font-size: 14px;
     background-color: #6b51c1;
-    line-height: 30px;
+    line-height: 40px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
 	}
@@ -86,24 +86,24 @@
     	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     	<h1 id="headName" class="mui-title">产品详情</h1>
     	<a id="share" class="mui-pull-right">
-        <span class="iconfont icon-share"></span>
-      </a>
+      <span class="iconfont icon-share"></span>
+    </a>
   </header>
   <div class="mui-content">
     <div class="company-box flex">
-      <div id="image" class="img">
-        <img src="../../images/profile/sc6.png"  />
+      <div id="image" class="img flex flex-row-center">
+        <!--<img src="../../images/profile/sc6.png"  />-->
       </div>
-      <div class="flex-1">
-        <div>
+      <div class="flex-1 flex">
+        <div class="flex-1" style="overflow: hidden;">
           <span id="title" class="name"></span>
         </div>
-        <div id="tongdao" class="btn-tongdao">购买通道</div>
+        <div id="tongdao" class="btn-tongdao">接入通道</div>
       </div>
     </div>
-    <div class="tl">产品详情</div>
+    <!--<div class="tl">产品详情</div>-->
     <div id="contents" class="content">
-    	<img src="../../images/profile/sc7.png" />
+    	   <!--<img src="../../images/profile/sc7.png" />-->
     </div>
   </div>
   <script src="../../js/mui.min.js"></script>
@@ -126,6 +126,7 @@
           var id = 0;
           var detailData = {};
           var shareImage = '';
+          var shareTitle = '';
           var $image = doc.getElementById('image');
           var $title = doc.getElementById('title');
           var $tongdao = doc.getElementById('tongdao');
@@ -134,6 +135,7 @@
           // 页面刷新
           window.addEventListener('KZ_PPSP_PRODUCT_ID', function(e){
             id = e.detail.id;
+            shareTitle = e.detail.title;
             shareImage = e.detail.image;
             $image.innerHTML = '<img src="{0}" />'.format(e.detail.image);
             $tongdao.style.display = 'none';
@@ -181,8 +183,8 @@
           doc.getElementById('share').addEventListener('tap', function(e) {
             shareApi.showActionSheet({
               href: config.serverUrl + '/s/share/dts?id='+ id,
-              title: '天齿月牙APP上的这个产品太棒啦！',
-              content: detailData.title,
+              title: shareTitle,
+              content: '速度来围观！',
               thumbs: [shareImage],
               interface: 'auto'
             });
