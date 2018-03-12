@@ -32,7 +32,7 @@
 <body>
   <header class="mui-bar mui-bar-nav">
    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-   <h1 class="mui-title">3d</h1>
+   <h1 id="title" class="mui-title">3D</h1>
    <a id="share" class="mui-pull-right">
      <span class="iconfont icon-share"></span>
    </a>
@@ -48,10 +48,12 @@
         $.plusReady(function() {
           var url = '';
           var $content = doc.getElementById('content');
+          var $title = doc.getElementById('title');
           window.addEventListener('T_3D_IFRAME_URL', function(e){
             url =  e.detail.url;
             var _html = '<iframe src="' + url + '"></iframe>';
             $content.innerHTML = _html;
+            $title.innerText = e.detail.id;
           });
           // 分享
           doc.getElementById('share').addEventListener('tap', function(e) {
