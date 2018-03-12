@@ -67,11 +67,11 @@
 	<div class="bt-title">
 		<h1 id="title"></h1>
 		<p>
-		  <span>来源：</span><span id="author" style="margin-right: 10px;">3</span>
-		  <span>发布时间：</span><span id="times">3</span> 
+		  <span>来源：</span><span id="author" style="margin-right: 10px;"></span>
+		  <!--<span>发布时间：</span><span id="times">3</span>--> 
 		</p>
     <p>
-      <span>阅读量：</span><span id="read" class="read">3</span>
+      <span>阅读量：</span><span id="read" class="read"></span>
     </p>
 	</div>
 	
@@ -90,10 +90,13 @@
         $.init();
         $.plusReady(function() {
           var id = 0;
+          var share_title = '';
+          var share_content = '';
+          var share_img = '';
           var $headTitle = doc.getElementById('headTitle');
           var $title = doc.getElementById('title');
           var $author = doc.getElementById('author');
-          var $times = doc.getElementById('times');
+//        var $times = doc.getElementById('times');
           var $read = doc.getElementById('read');
           var $contents = doc.getElementById('contents');
           var getDetail = function(callback){
@@ -107,7 +110,7 @@
                if (data) {
                  $title.innerText = data.title;
                  $author.innerText = data.author;
-                 $times.innerText = data.times;
+//               $times.innerText = data.times;
                  $read.innerText = data.read;
                  $contents.innerHTML = data.contents;
                }
@@ -116,16 +119,20 @@
           // 刷新详情
           window.addEventListener('zsk-id', function(e){
             id = e.detail.id;
+            share_title = e.detail.share_title;
+            share_content = e.detail.share_content;
+            share_img = e.detail.share_img;
             $headTitle.innerText = e.detail.groupname;
             getDetail();
           });
           // 分享
           doc.getElementById('share').addEventListener('tap', function(e) {
+            var _share_img = share_img || '_www/images/share/logo.png';
             shareApi.showActionSheet({
               href: config.serverUrl + '/s/share/knowledge?id='+ id,
-              title: '我在天齿月牙APP上看到一篇非常棒的文章！',
-              content: $title.innerText,
-              thumbs: ['_www/images/share/logo.png'],
+              title: share_title,
+              content: share_content,
+              thumbs: [_share_img],
               interface: 'auto'
             });
           });
