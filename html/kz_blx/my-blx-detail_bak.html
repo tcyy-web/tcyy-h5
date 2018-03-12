@@ -143,7 +143,7 @@
       position: relative;
       padding-top: 10px;
         padding-right: 40px;
-        margin-top: 10px;
+        margin: 10px 0;
     }
     .pl-tx:before{
       position: absolute;
@@ -267,6 +267,7 @@
     }
     
     .pl-hf p span.slip{
+      margin: 0 8px;
       color:#195ea4;
     }
     
@@ -324,92 +325,75 @@
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">病例秀详情</h1>
   </header>
-  <div id="mainContent" class="mui-content">
+  <div class="mui-content">
     <div class="main">
       <!-- 顶部头像名字 -->
       <div class="wb-top flex">
         <div class="flex-1">
-          <p>发表于：<span data-bind="text: detailData().creatime"></span></p>
+          <p>发表于：<span id="createtime">2017-05-03</span></p>
         </div>
         <!--<i id="delBlx" class="mui-icon mui-icon-trash"></i>-->
       </div>
       <!-- 中间文字 AND 图片 -->
       <div class="word">
-        <p data-bind="text: detailData().contents"></p>
-        <div class="word-img">
-          <!-- ko 'foreach':detailData().cases_image -->
+        <p id="contents"></p>
+        <div id="imgs" class="word-img">
           <div class="img">
-            <img data-bind="attr: {src: image}" />
+            <img src="../../images/weibo/img.png"/>
           </div>
-          <!-- /ko -->
         </div>
       </div>
       <!-- 点赞评论 -->
       <div class="pl flex">
         <div class="flex-1 flex flex-row-center flex-col-center">
           <img src="../../images/blx/pl1.png" />
-          <span data-bind="text: detailData().read"></span>
+          <span id="read">1</span>
         </div>
         <div class="flex-1 flex flex-row-center flex-col-center">
           <img src="../../images/blx/pl2.png" />
-           <span data-bind="text: detailData().comments"></span>
+           <span id="comments">1</span>
         </div>
         <div id="dzFn" class="flex-1 flex flex-row-center flex-col-center">
           <img src="../../images/blx/pl3.png" />
-           <span data-bind="text: detailData().thing"></span>
+           <span id="thing">1</span>
         </div>
       </div>      
-      <!-- 点赞的人 -->
-      <!-- ko if:dzList().length > 0 -->
-      <div class="pl-tx">
-        <div class="clearFix">
-          <!-- ko 'foreach':dzList -->
+      <!-- 下面的评论 -->
+      <div id="dzusersmore" class="pl-tx">
+        <div id="dzusers" class="clearFix">
           <div class="img flex flex-row-center">
-            <img data-bind="attr:{src: user_info.headurl || $root.defaultUserImage() }" />
+            <img src="../../images/weibo/pltx1.png"/>
           </div>
-          <!-- /ko -->
         </div>
-        <span data-bind="click: $root.dzListFn" class="mui-icon mui-icon-arrowright"></span>
+        <span class="mui-icon mui-icon-arrowright"></span>
       </div>
-      <!-- /ko -->
       <!-- 发表的评论 -->
-      <div id="pllist" style="margin-top: 10px;">
-        <!-- ko 'foreach':plList -->
-        <div class="pl-true">
-          <div class="pl-true-img flex">
-            <div class="img flex flex-row-center">
-              <img data-bind="attr: {src: user_info.headurl || $root.defaultUserImage() }" />
+      <div id="pllist">
+          <div class="pl-true">
+            <div class="pl-true-img flex">
+              <div class="img flex flex-row-center">
+                <img src="../../images/weibo/pltx3.png"/>
+              </div>
+              <div class="flex-1">
+                <p class="p-name"><span>领馆小草</span><span class="time">5小时<i class="mui-icon mui-icon-trash"></i></span> </p>
+                <p class="p-txt">真的假的呀？</p>
+              </div>
             </div>
-            <div class="flex-1">
-              <p class="p-name">
-                <span data-bind="text: user_info.nickname, click: $root.hfFn.bind(null, {pid:id,touid:user_info.uid,nickname:user_info.nickname})"></span>
-                <span class="time"><span data-bind="text: _timestr"></span><i data-bind="visible: _del,click: $root.delPlFn" class="mui-icon mui-icon-trash"></i></span> 
-              </p>
-              <p class="p-txt" data-bind="text: contents"></p>
-            </div>
-          </div>
-          <!-- ko 'foreach':child_comments -->
           <div class="pl-hf">
             <p>
-              <span data-bind="click: $root.hfFn.bind(null, {pid:pid,touid:user_info.uid,nickname:user_info.nickname}),text: _hf ? user_info.nickname :  user_info.nickname + ':'"></span>
-              <span data-bind="visible: _hf" class="slip">回复</span>
-              <span data-bind="click: $root.hfFn.bind(null, {pid:pid,touid:to_user_info.uid,nickname:to_user_info.nickname }),visible: _hf,text: to_user_info.nickname + ':'"></span>
-              <span data-bind="text: contents" class="txt"></span>
-              <span data-bind="text: _timestr"></span>
-              <i data-bind="visible: _del,click: $root.delPlFn" class="mui-icon mui-icon-trash"></i>
+              <span>土农民</span>
+              <span class="slip">回复</span>
+              <span>领馆小草：</span>
+              <span class="txt">是真的额,一起去吧靓仔-_-,haobuhao!</span>
+              <span>1小时前</span>
+              <i class="mui-icon mui-icon-trash"></i>
             </p>
           </div>
-          <!-- /ko -->
-        </div>
-        <!-- /ko -->
+          </div>
       </div>
-      <p data-bind="visible: moreData,click: $root.getMore" class="pl-more">更多</p>
+      <p id="plmore" class="pl-more">更多</p>
     </div>
   </div>
-  <script src="../../third/knockout.js" ></script>
-  <script src="../../third/ko.mapping.js"></script>
-  <script src="../../third/knockout.extend.js"></script>
-  <script src="../../third/fastclick.js"></script>
   <script src="../../js/mui.min.js"></script>
   <script src="../../js/utils.common.js"></script>
   <script src="../../js/utils.config.js"></script>
@@ -420,9 +404,6 @@
   <script src="../../js/utils.request.js"></script>
   <script src="../../js/business/blx.js"></script>
   <script>
-    window.addEventListener('load', function() {
-      FastClick.attach(document.body);
-    }, false);
     (function($, doc) {
         var detailData = {};
         $.init({
@@ -432,20 +413,59 @@
           }, {
             id:'MY_BLX_DZ_USERS',
             url: './blx-users.html'
-          }],
-          beforeback: function() {
-//          //获得所有已打开webview
-//          var list = plus.webview.all();
-//          $.each(list, function(index,item) {
-//            $.fire(item, 'BLX_DETAIL_CHANGE', {
-//              data: detailData
-//            });
-//          });
-//          return true;
-          }
+          }]
         });
         $.plusReady(function() {
-          var benren = authManage.getUser();
+          // 默认头像
+          var defaultUserImage = '../../images/tab-wode/user_default.png';
+          //一级评论分页参数
+          var page = 1;
+          var limit = 6;
+          var more = true;
+          // 用户信息
+          var $createtime = doc.getElementById('createtime');
+          // 内容
+          var $contents = doc.getElementById('contents');
+          var $imgs = doc.getElementById('imgs');
+          // 阅读量
+          var $read = doc.getElementById('read');
+          // 评论数
+          var $comments = doc.getElementById('comments');
+          // 点赞数
+          var $thing = doc.getElementById('thing');
+          // 刷新详情
+          window.addEventListener('MY_BLX_DATA', function(e){
+            if (e.detail.data.id != detailData.id) {
+              page = 1;
+              more = true;
+              detailData = e.detail.data;
+              setFn();
+              dzPeople();
+              plList();
+            }
+          });
+          // 设置详情
+          var setFn = function() {
+            $createtime.innerText = detailData.creatime;
+            $contents.innerText = detailData.contents;
+            $imgs.innerHTML = '';
+            if (detailData.cases_image) {
+              var caseurllist = [];
+              $.each(detailData.cases_image, function(i,d) {
+                var img = doc.createElement('div');
+                img.className = 'img';
+                img.innerHTML = '<img src="{0}" />'.format(d.image);
+                caseurllist.push(d.image);
+                img.addEventListener('tap', function() {
+                  previewImage(caseurllist, i);
+                });
+                $imgs.appendChild(img);
+              });
+            }
+            $read.innerText = detailData.read;
+            $comments.innerText = detailData.comments;
+            $thing.innerText = detailData.thing;
+          }
            /*图片预览*/
           var previewImage = function(urllist, index) {
             plus.nativeUI.previewImage(urllist, {
@@ -454,114 +474,123 @@
               indicator: 'number'
             });
           }
-          var caseimglist = [];
-          //一级评论分页参数
-          var page = 1;
-          var limit = 6;
-          var viewModel = {
-            // 默认头像
-            defaultUserImage: ko.observable('../../images/tab-wode/user_default.png'),
-            detailData: ko.observable({}), // 详情数据
-            dzList: ko.observableArray([]), // 点赞的人
-            dzListFn: function() {
-              var dzWebview = plus.webview.getWebviewById('MY_BLX_DZ_USERS');
-              $.fire(dzWebview,'KZ_BLX_DZ_ID',{
-                id:detailData.id
-              });
-              $.openWindow({
-                id: 'MY_BLX_DZ_USERS'
-              });
-            },
-            plList: ko.observableArray([]), //评论
-            moreData: ko.observable(false),
-            getMore: function() {
-              page += 1;
-              plListFn(detailData.id);
-            },
-            delPlFn: function(data) {
-              var _index = viewModel.plList().findIndex(function(i){
-                return i.id == data.id || data.pid == i.id
-              });
-              blxFn.delPlFn(data.id, function(_res) {
-                if (data.pid > 0) {
-                  // 删除的二级评论
-                  var _pl = viewModel.plList()[_index];
-                  var _index2 = _pl.child_comments().findIndex(function(i){
-                    return data.id == i.id;
+          // 点赞的人
+          var $dzusers = doc.getElementById('dzusers');
+          var $dzusersmore = doc.getElementById('dzusersmore');
+          $dzusersmore.addEventListener('tap', function(e) {
+            var dzWebview = plus.webview.getWebviewById('MY_BLX_DZ_USERS');
+            $.fire(dzWebview,'KZ_BLX_DZ_ID',{
+              id:detailData.id
+            });
+            $.openWindow({
+              id: 'MY_BLX_DZ_USERS'
+            });
+          });
+          var dzPeople = function() {
+            $dzusers.innerHTML = '';
+            $dzusersmore.style.display = 'none';
+             request.loginAjax('cases/getThingList', {
+                data: {
+                  case_id: detailData.id,
+                  page: 1,
+                  limit: 5
+                },
+                showMsg: false
+              }, function(data, success) {
+                if (success && data && data.data.length > 0) {
+                  $.each(data.data, function(index, d) {
+                    var imgdiv = doc.createElement('div');
+                    imgdiv.className = 'img flex flex-row-center';
+                    var _url = d.user_info.headurl || defaultUserImage;
+                    imgdiv.innerHTML = '<img src="{0}"/> '.format(_url);
+                    $dzusers.appendChild(imgdiv);
                   });
-                  _pl.child_comments.splice(_index2, 1);
-                  viewModel.plList(viewModel.plList());
-                } else {
-                  // 删除的一级评论
-                  detailData.comments = _res.count;
-                  viewModel.detailData(detailData);
-                  viewModel.plList.splice(_index, 1);
+                  $dzusersmore.style.display = 'block';
                 }
-              });
-            },
-            hfFn:function(data) {
-              console.log(JSON.stringify(data));
+            });
+          }
+          /*评论*/
+          var $pllist = doc.getElementById('pllist');
+          var $plmore = doc.getElementById('plmore');
+          var beginKey = 'blx_pl_';
+          // 评论成功
+          window.addEventListener('KZ_BLX_PL_SUCCESS', function(e){
+            var _d = e.detail.data;
+            // 一级评论
+            if (_d.pid == 0) {
+              var _first = paintFirstPl(_d, e.detail.t);
+              $pllist.insertBefore(_first, $pllist.childNodes[0]);
+            } else {
+              // 二级评论
+              var _dom = doc.getElementById(beginKey + _d.pid);
+              if (_dom != null) {
+                var _second = paintSecondPl(_d, e.detail.t);
+                utils.insertAfter(_second, _dom);
+              }
+            }
+          });
+          // 画一级评论
+          var paintFirstPl = function(data, serverNowDateStr) {
+            var pldiv = doc.createElement('div');
+            pldiv.className = 'pl-true';
+            // 头像及名称
+            var div1 = doc.createElement('div');
+            div1.id = beginKey + data.id;
+            div1.className = 'pl-true-img flex';
+            var _url = data.user_info.headurl || defaultUserImage;
+            div1.innerHTML = '<div class="img flex flex-row-center"><img src="{0}"/></div>'.format(_url);
+            var namediv = doc.createElement('div');
+            namediv.className = 'flex-1';
+            var dateStr = utils.formatDateToNow(data.times, serverNowDateStr);
+            namediv.innerHTML = '<p class="p-name"><span>{0}</span><span class="time">{1}</span></p><p class="p-txt">{2}</p'.format(data.user_info.nickname,dateStr,data.contents)
+            div1.appendChild(namediv);
+            div1.addEventListener('tap', function() {
+              // 发布子评论
               var plWebview = plus.webview.getWebviewById('MY_BLX_PL');
               $.fire(plWebview,'KZ_BLX_ID',{
-                case_id: detailData.id,
-                pid: data.pid,
-                touid: data.touid,
-                nickname: data.nickname
+                case_id:detailData.id,
+                pid: data.id
               });
               $.openWindow({
                 id: 'MY_BLX_PL'
               });
+            });
+            pldiv.appendChild(div1);
+            return pldiv;
+          }
+          //画二级评论
+          var paintSecondPl = function(data,serverNowDateStr) {
+            var divhf = doc.createElement('div');
+            divhf.className = 'pl-hf';
+            var _dateStr = utils.formatDateToNow(data.times, serverNowDateStr);
+            divhf.innerHTML = '<p><span>{0}</span><span class="slip">回复</span><span class="txt">{1}</span><span>{2}</span>'.format(data.user_info.nickname,data.contents,_dateStr);
+            return divhf;
+          }
+          // 画每项评论
+          var paintPl = function(data,serverNowDateStr) {
+            var pldiv = paintFirstPl(data,serverNowDateStr);
+            $pllist.appendChild(pldiv);
+            // 子评论
+            if (data.child_comment_count > 0) {
+              $.each(data.child_comments, function(index, childcom) {
+                var divhf = paintSecondPl(childcom, serverNowDateStr);
+                pldiv.appendChild(divhf);
+              });
             }
           }
-          ko.applyBindings(viewModel, doc.getElementById('mainContent'));
-          // 刷新详情
-          window.addEventListener('MY_BLX_DATA', function(e){
-            // 清空之前数据
-            viewModel.detailData({});
-            viewModel.dzList([]);
-            viewModel.moreData(false);
-            viewModel.plList([]);
-            caseimglist.length = 0;
-            page = 1;
-            // 重新加载数据
-            blxFn.detailFn(e.detail.caseid, function(_res) {
-              detailData = _res;
-              viewModel.detailData(detailData);
-              $.each(detailData.cases_image, function(i,d) {
-                caseimglist.push(d.image);
-              });
-            });
-            blxFn.dzUsersFn(e.detail.caseid, function(_res) {
-              $.each(_res, function(index, d) {
-              	 d.user_info.headurl 
-              });
-              viewModel.dzList(_res);
-            });
-            plListFn(e.detail.caseid);
-          });
-          // 评论成功
-          window.addEventListener('KZ_BLX_PL_SUCCESS', function(e){
-            var _d = e.detail.data;
-            _d._timestr = utils.formatDateToNow(_d.times, e.detail.t);
-            _d._del = benren.id == _d.uid ? true : false;
-            _d._hf = _d.to_user_info.id > 0;
-            var _index = viewModel.plList().find(function(i){
-              return _d.pid == i.id
-            });
-            if (_index) {
-              _index.child_comments.unshift(_d);
-              viewModel.plList(viewModel.plList());
-            }
+          $plmore.addEventListener('tap', function(e) {
+            page += 1;
+            plList();
           });
           // 获取评论列表
-          var plListFn = function(caseid) {
+          var plList = function() {
              if (page === 1) {
-               viewModel.moreData(false);
-               viewModel.plList([]);
+               $pllist.innerHTML = '';
+               $plmore.style.display = 'none';
              }
              request.loginAjax('cases/getCommentsList', {
                 data: {
-                  case_id: caseid,
+                  case_id: detailData.id,
                   page: page,
                   limit: limit
                 },
@@ -570,22 +599,16 @@
                // 处理页面绑定
                if (data && data.data) {
                  $.each(data.data, function(index,i) {
-                   i._timestr = utils.formatDateToNow(i.times, resHead.t);
-                   i._del = benren.id == i.uid ? true : false;
-                   $.each(i.child_comments, function(_index, _i) {
-                   	_i._timestr = utils.formatDateToNow(_i.times, resHead.t);
-                   	_i._del = benren.id == _i.uid ? true : false;
-                   	_i._hf = _i.to_user_info.id > 0;
-                   });
-                   i.child_comments = ko.observableArray(i.child_comments);
-                   viewModel.plList.push(i);
+                   paintPl(i, resHead.t);
                  });
                }
                // 判断是否有下一页数据
                if (data && data.data && data.data.length === limit) {
-                 viewModel.moreData(true);
+                 more = true;
+                 $plmore.style.display = 'block';
                } else {
-                 viewModel.moreData(false);
+                 more = false;
+                 $plmore.style.display = 'none';
                }
             });
           }

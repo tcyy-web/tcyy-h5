@@ -415,11 +415,15 @@
               }
             }, function(data, success) {
               if (success){
-                //获取所有已打开webview
-                var list = plus.webview.all();
-                $.each(list, function(index,item) {
-                  $.fire(item, 'bill-success');
-                });
+                // 关联预约页 及 项目列表页
+                var _yuyueWebview = plus.webview.getWebviewById('PRODUCT-YUYUE');
+                if (_yuyueWebview != null) {
+                  $.fire(_yuyueWebview, 'bill-success');
+                }
+                var _listWebview = plus.webview.getWebviewById('PRODUCT-LIST');
+                if (_listWebview != null) {
+                  $.fire(_listWebview, 'bill-success');
+                }
                 $.back();               
               }
             });

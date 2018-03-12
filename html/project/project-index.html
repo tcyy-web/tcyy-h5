@@ -138,12 +138,10 @@
 					getImage();
 					projectList.addEventListener('tap', function(event) {
 						var currentValue = inputText.value.trim();
-						if (currentValue !== '' && currentValue !== saveValue) {
-							storage.save({
-								key:storageKey,
-								value: currentValue
-							});
-						}
+						storage.save({
+              key:storageKey,
+              value: currentValue
+            });
 						$.openWindow({
               url: './project-list.html',
               id: 'PRODUCT-LIST',

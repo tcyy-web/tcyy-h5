@@ -255,7 +255,6 @@
           var groupid = 0;
           var groupname = '';
           var listRequest = {};
-          var zskDetailWebView = null;
           var paintItem = function(parent, data) {
             var li = doc.createElement('li');
             li.className = 'item';
@@ -263,7 +262,7 @@
             clearDiv.className = 'clearFix';
             var leftDiv = doc.createElement('div');
             leftDiv.className = 'ileft';
-            leftDiv.innerHTML = '<h2>{title}</h2><p>{info}</p><div class="zh"><span>{times}</span><span>{read}</span></div>'.format(data);
+            leftDiv.innerHTML = '<h2>{title}</h2><p>{info}</p><div class="zh"><span>{read}</span></div>'.format(data);
             var rightDiv = doc.createElement('div');
             rightDiv.className = 'iright';
             rightDiv.innerHTML = '<img src="{0}" />'.format(data.image);
@@ -271,11 +270,12 @@
             clearDiv.appendChild(rightDiv);
             li.appendChild(clearDiv);
             li.addEventListener('tap', function(event){
-              if (!zskDetailWebView) {
-                zskDetailWebView = plus.webview.getWebviewById('zskDetail');
-              }
+              var zskDetailWebView = plus.webview.getWebviewById('zskDetail');
               $.fire(zskDetailWebView,'zsk-id',{
                 id:data.id,
+                share_img: data.image,
+                share_title: data.title,
+                share_content: data.info,
                 groupname: groupname
               });
               $.openWindow({

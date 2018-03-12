@@ -62,6 +62,12 @@
 		  .date-month .item.cur ._date{
 		    color: #6b7989;
 		  }
+		  .date-month .item.today{
+		    background-color: #765fc3;
+		  }
+		  .date-month .item.today ._date{
+		    color: #fff;
+		  }
 		  .date-month .item ._item{
 		    margin-bottom: 2px;
 		    height: 5px;
@@ -156,7 +162,7 @@
           <div class="date-month-box">
             <div class="date-month clearFix">
               <!-- ko 'foreach':MonthData -->
-              <div class="item cur" data-bind="click: $root.clickFn">
+              <div class="item cur" data-bind="click: $root.clickFn, css: { today: _today }">
                 <div class="_date" data-bind="text:dayStr"></div>
                 <!-- ko foreach:data-->
                 <div class="_item"></div>
@@ -197,6 +203,9 @@
           return 32 - new Date(year, month - 1, 32).getDate();
         }
         var getDaysStr = function(year, month, data) {
+          var _curDate = new Date();
+          var _curDay = _curDate.getDate();
+          var _curMonth = _curDate.getMonth() + 1;
           var _list = [];
           var _days = getDays(year, month);
           var _trimData = {};
@@ -214,12 +223,16 @@
             var _data = {
                 dayStr: '',//日期
                 isCur: true,// 是否本月
-                data: []
+                data: [],
+                _today: false
             }
             var dstr =i > 9 ? i : '0' + i;
             _data.dayStr = dstr;
             if (_trimData[dstr]) {
               _data.data = _trimData[dstr];
+            }
+            if (i == _curDay && _curMonth == month) {
+              _data._today = true;
             }
             _list.push(_data);
           }
@@ -229,6 +242,7 @@
             _list.unshift({
               dayStr: '',
               isCur: false,
+              _today: false,
               data: []
             })
           }

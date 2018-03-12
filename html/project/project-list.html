@@ -358,14 +358,14 @@
 			}
 			.shop-car .sc-box .sc-item .clearFix > p.name {
 				color:#292929;
-				width: 50%;
+				width: 40%;
 				padding-right: 10px;
 			}
 			.shop-car .sc-box .sc-item .clearFix > p.money {
 				color:#f34336;
 				word-break: break-all;
-				width: calc(50% - 100px);
-				width: -webkit-calc(50% - 100px);
+				width: calc(60% - 100px);
+				width: -webkit-calc(60% - 100px);
 			}
 			.shop-car .sc-box .sc-item .tools {
 				float: right;
@@ -489,7 +489,7 @@
 				<div id="segmentedControlContents" class="content-box">
 					<div id="content1" class="mui-control-content mui-active">
   						<ul class="mui-table-view">
-  							<li class="mui-table-view-cell">
+  							<!--<li class="mui-table-view-cell">
   								<div class="img flex flex-col-center">
   									<img src="../../images/project/banner.png" />
   								</div>
@@ -518,7 +518,7 @@
   									<p>¥<span>318</span><span>元</span></p>
   									<div class="bill-add"></div>
   								</div>
-  							</li>
+  							</li>-->
   						</ul>
 					</div>
 					<div id="content3" class="mui-control-content">
@@ -543,7 +543,7 @@
 					<div id="shopCarList" class="sc-box">
 						<!--<div class="sc-item">
 							<div class="clearFix">
-								<p class="name">口腔修复</p>
+								<p class="name"><i class="mui-icon mui-icon-trash"></i>口腔修复</p>
 								<p class="money">￥0</p>
 								<div class="tools flex flex-row-center">
 									<div class="item item-jian"></div>
@@ -658,7 +658,29 @@
             boxDiv.className = 'sc-item';
             var _div = doc.createElement('div');
             _div.className = 'clearFix';
-            _div.innerHTML = '<p class="name">{0}</p><p class="money">￥{1}</p>'.format(data.title,data.price);
+            var _namep = doc.createElement('p');
+            _namep.className = 'name';
+            _namep.innerText = data.title;
+            // 删除某项
+            var _delitem = doc.createElement('i');
+            _delitem.className = 'mui-icon mui-icon-trash';
+            _namep.insertBefore(_delitem, _namep.childNodes[0]);
+            _delitem.addEventListener('tap', function(e) {
+              var _index = carList.findIndex(function(i){
+                return i.pid === data.pid;
+              });
+              if (_index > -1) {
+                boxDiv.remove();
+                carList.splice(_index, 1);
+                calcPrice();
+                $shopCarTotal.innerText = carList.length > 99 ? '99+' : carList.length;
+              }
+            });
+            _div.appendChild(_namep);
+            var _pricep = doc.createElement('p');
+            _pricep.className = 'money';
+            _pricep.innerText = '¥' + data.price;
+            _div.appendChild(_pricep);
             // 数量修改
             var toolDiv = doc.createElement('div');
             toolDiv.className = 'tools flex flex-row-center';

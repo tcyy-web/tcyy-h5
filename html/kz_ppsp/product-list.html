@@ -10,18 +10,35 @@
 	  .mui-content{
 	    background-color: #fff;
 	  }
-    .search-bar { width:100%; margin-bottom:0; height:50px; background-color:#FFF;}
-    .search-bar input{margin-bottom: 0; width:80%; float:left; height:48PX; border:none;  outline: none;  font-size:0.9em;  font-family:'微软雅黑'; color:#7c7c7c;}
-    .search-bar .button{ 
-      float: right;
-      width:20%; height:50px; 
-      background:url(../../images/profile/ss.png) no-repeat center; 
-      border:none;  outline: none; 
+    .search-bar { 
+      width:100%;
+      height:40px; 
+      line-height: 40px;
+      background-color:#fff;
+      padding-right: 50px;
+      position: relative;
+    }
+    .search-bar input{
+      margin-bottom: 0; 
+      width:100%; 
+      float:left; 
+      border:none;  
+      outline: none;  
+      font-size:0.9em;  
+      color:#7c7c7c;
+    }
+    .search-bar .mui-icon-search {
+      font-size: 30px;
+      position: absolute;
+      right: 8px;
+      top: 5px;
+      z-index: 2;
+      color:#7c7c7c;
     }
     .scroll-box{
       position: relative;
-      height: calc(100% - 50px);
-      height: -webkit-calc(100% - 50px);
+      height: calc(100% - 40px);
+      height: -webkit-calc(100% - 40px);
     }
     .product-lists{ 
       padding: 5px;
@@ -39,12 +56,13 @@
       overflow: hidden;
     }
     .item .img{ 
-      width: 100%; height:150px; 
+      width: 100%; 
+      height:150px; 
       overflow: hidden;
     }
     .item .img img{
-      height: 100%;
-      width: auto;
+      height: auto !important;
+      width: 100% !important;
     }
     .item .txt{ 
       font-size: 14px;
@@ -53,6 +71,7 @@
       height: 50px;
       padding:5px 10px; 
       overflow: hidden;
+      line-height: 1.1;
     }
 	</style>
   <style>
@@ -84,14 +103,14 @@
   <div class="mui-content">
     	<div class="search-bar clearFix">
       <input id="searchValue" type="text" />
-      <div id="search" class="button"></div>
+      <i id="search" class="mui-icon mui-icon-search"></i>
     </div>
     <div class="scroll-box">
       <div class="mui-scroll-wrapper">
         <div id="pullrefresh" class="mui-scroll">
           <div id="productList" class="product-lists clearFix">
             <!--<div class="item">
-              <div class="img flex flex-col-center">
+              <div class="img flex flex-row-center">
                 <img src="../../images/profile/sc5.png"  />
               </div>
               <p class="txt flex flex-row-center flex-col-center">攀高 颈椎治疗仪PG-260</p>
@@ -131,7 +150,8 @@
           preloadPages:[{
             id:'KZ-PPSP-PRODUCT-DETAIL',
             url: './product-detail.html'
-          }]
+          }],
+          swipeBack:true
         });
         $.plusReady(function() {
           // 扩展id
@@ -209,7 +229,7 @@
             var div = doc.createElement('div');
             div.className = 'item';
             var imgdiv = doc.createElement('div');
-            imgdiv.className = 'img flex flex-col-center';
+            imgdiv.className = 'img flex flex-row-center';
             imgdiv.innerHTML = '<img src="{0}"  />'.format(data.image);
             div.appendChild(imgdiv);
             var p = doc.createElement('p');
@@ -220,7 +240,8 @@
               var fbWebview = plus.webview.getWebviewById('KZ-PPSP-PRODUCT-DETAIL');
               $.fire(fbWebview,'KZ_PPSP_PRODUCT_ID',{
                 id: data.id,
-                image: data.image
+                image: data.image,
+                title: data.title
               });
               $.openWindow({
                 id: 'KZ-PPSP-PRODUCT-DETAIL'

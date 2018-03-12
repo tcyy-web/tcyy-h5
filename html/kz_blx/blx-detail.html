@@ -775,11 +775,15 @@
           });
           // 分享
           doc.getElementById('share').addEventListener('tap', function(e) {
+            var shareImg = '_www/images/share/logo.png';
+            if (detailData.cases_image && detailData.cases_image.length > 0) {
+              shareImg = detailData.cases_image[0]
+            }
             shareApi.showActionSheet({
-              href: config.serverUrl + '/s/share/cases?id='+ id,
-              title: '天齿月牙APP上的这篇病例秀太精彩了！',
+              href: config.serverUrl + '/s/share/cases?id='+ detailData.id,
+              title: '天齿月牙APP',
               content: detailData.contents,
-              thumbs: ['_www/images/share/logo.png'],
+              thumbs: [shareImg],
               interface: 'auto'
             });
           });
