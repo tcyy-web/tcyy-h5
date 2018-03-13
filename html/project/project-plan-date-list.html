@@ -194,9 +194,6 @@
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js"></script>
 		<script>
-		  window.addEventListener('refresh', function(e){
-        location.reload();
-      });
 			(function($, doc) {
 			  var headStr = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
         var getDays = function (year, month) {//获取月的天数
@@ -257,7 +254,7 @@
           request.loginAjax('project/getPatientList',{
             data: data,
             showMsg: false
-          },function(data) {
+          },function(data, success) {
             if (data && data.data) {
               callback(data.data);
             } else {
@@ -323,6 +320,7 @@
 				    times = year+'-'+month;
 				    $datetxt.innerText = times;
             getList(times,function(res){
+              console.log(JSON.stringify(res));
               var _days = getDaysStr(year,month, res);
               viewModel.MonthData(_days);
             });
@@ -364,6 +362,13 @@
           });
           // 新增刷新日历
           window.addEventListener('bill-success', function(e){
+            var _t = times.split('-');
+            var _year = _t[0];
+            var _month = _t[1];
+            initCalendar(_year, _month);
+          });
+          // 登录刷新
+          window.addEventListener('refresh', function(e){
             var _t = times.split('-');
             var _year = _t[0];
             var _month = _t[1];

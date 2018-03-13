@@ -313,7 +313,8 @@
 				      return;
 				    }
             request.ajax('Extendgroup/getList',{
-              showMsg: false
+              showMsg: false,
+              showLoading: false
             },function(data, success) {
               if (success) {
                 if (data && data.length && data.length > 0) {

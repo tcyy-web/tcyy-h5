@@ -89,10 +89,6 @@
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js"></script>
 		<script>
-      // 登录刷新
-      window.addEventListener('refresh', function(e){
-        location.reload();
-      });
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
@@ -157,7 +153,11 @@
                 autoShow: false
               }
             });
-					});					
+					});	
+					// 登录刷新
+          window.addEventListener('refresh', function(e){
+            getImage();
+          });
 				});
 			}(mui, document));
 		</script>
