@@ -66,10 +66,10 @@
 		      <div id="pullrefresh" class="mui-scroll">
 						<div id="contentBox" class="mui-row">
 			        <!--<div class="mui-col-xs-6">
-	            	<div class="pic-item flex flex-row-center flex-col-center">
-	            		<img src="../../images/video/sc10.png" />
-	            	</div>
-	            	<p class="flex flex-row-center flex-col-center">刷牙方法</p>
+    	            	<div class="pic-item flex flex-row-center flex-col-center">
+    	            		<img src="../../images/video/sc10.png" data-preview-src="" data-preview-group="1" />
+    	            	</div>
+    	            	<p class="flex flex-row-center flex-col-center">刷牙方法</p>
 			        </div>
 			        <div class="mui-col-xs-6">
 	              <div class="pic-item upload flex flex-row-center flex-col-center">
@@ -83,6 +83,8 @@
 		  </div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+	  <script src="../../js/mui.zoom.js"></script>
+    <script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script src="../../js/utils.config.js"></script>
@@ -101,7 +103,7 @@
 				});
 				$.init();
 				$.plusReady(function() {
-			  	var folderid = 0;
+			   	var folderid = 0;
  					var page = 1;
           var limit = 10;
           var more = true;
@@ -159,6 +161,7 @@
 	               $.each(data.data, function(index,i) {
 	                 paintItem(i);
 	               });
+//	               $.previewImage();
 	               picturePre();
 	             }
 	             // 判断是否有下一页数据
