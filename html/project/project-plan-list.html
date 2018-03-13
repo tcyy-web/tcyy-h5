@@ -16,25 +16,17 @@
 		    margin-left: -10px;
 		    padding: 12px;
 		  }
-		  .mui-table-view-cell{
+		  #contentBox .mui-table-view-cell{
 		    padding: 0;
+		  }
+		  #contentBox .mui-table-view-cell:after{
+		    left: 0;
 		  }
 			.form-item {
 				position: relative;
 				background-color: #ffffff;
 				padding: 15px;
 				line-height: 20px;
-			}
-			.form-item:after{
-				position: absolute;
-		    right: 0;
-		    bottom: 0;
-		    left: 0;
-		    height: 1px;
-		    content: '';
-		    -webkit-transform: scaleY(.5);
-		    transform: scaleY(.5);
-		    background-color: #d6d6d6;
 			}
 			.form-item > p{
 				padding-left: 5px;
@@ -91,7 +83,7 @@
 		    <div class="mui-scroll-wrapper">
 		      <div id="pullrefresh" class="mui-scroll">
 		        <ul id="contentBox" class="mui-table-view">
-		          <li class="mui-table-view-cell">
+		          <!--<li class="mui-table-view-cell">
                 <div class="mui-slider-right mui-disabled">
                   <a class="mui-btn mui-btn-red">删除</a>
                 </div>
@@ -102,15 +94,8 @@
                     <p class="flex flex-row-center status3"><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
                   </div>
                 </div>
-              </li>
+              </li>-->
             </ul>
-		        <!--<div id="contentBox">
-              <div class="flex form-item">
-                <p class="flex-1 flex flex-row-center">刘德华</p>
-                <p class="flex-1 flex flex-row-center">2000-10-10 00:00</p>
-                <p class="flex flex-row-center status3"><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
-              </div>
-            </div>-->
 		      </div>
 		    </div>
 		  </div>
