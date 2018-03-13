@@ -15,6 +15,17 @@
       padding-right: 50px;
       position: relative;
     }
+    .search-bar:before{
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #d6d6d6;
+    }
     .search-bar input{
       margin-bottom: 0; 
       width:100%; 
@@ -123,7 +134,7 @@
     	<a class="mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
   </header>
   <div class="mui-content">
-    	<div class="search-bar clearFix">
+    	<div class="search-bar">
     		<input id="searchValue" type="text" />
     		<i id="search" class="mui-icon mui-icon-search"></i>
     	</div>
