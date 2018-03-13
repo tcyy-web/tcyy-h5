@@ -353,26 +353,24 @@
             }
             initCalendar(_year, _month);
           });
-          // 修改刷新日历
-          window.addEventListener('project-plan', function(e){
+          var refreshCal = function() {
             var _t = times.split('-');
             var _year = _t[0];
             var _month = _t[1];
             initCalendar(_year, _month);
+          }
+          // 修改刷新日历
+          window.addEventListener('project-plan', function(e){
+            refreshCal();
           });
           // 新增刷新日历
           window.addEventListener('bill-success', function(e){
-            var _t = times.split('-');
-            var _year = _t[0];
-            var _month = _t[1];
-            initCalendar(_year, _month);
+            refreshCal();
           });
+          // 删除刷新日历
           // 登录刷新
           window.addEventListener('refresh', function(e){
-            var _t = times.split('-');
-            var _year = _t[0];
-            var _month = _t[1];
-            initCalendar(_year, _month);
+            refreshCal();
           });
 				});
 			}(mui, document));
