@@ -230,17 +230,17 @@
         ko.applyBindings(viewModel, doc.getElementById('mainContent'));
         var $imgbox = doc.getElementById('imgbox')
         $imgbox.addEventListener('swipeleft', function(e) {
-          var _index = viewModel.curIndex()
+          var _index = viewModel.curIndex();
           if (_index < viewModel.total()) {
             viewModel.curIndex(_index+1);
             viewModel.current(viewModel['list'+ groupid]()[_index]);
           }
         });
         $imgbox.addEventListener('swiperight', function(e) {
-          var _index = viewModel.curIndex()
+          var _index = viewModel.curIndex();
           if (_index > 1) {
             viewModel.curIndex(_index-1);
-            viewModel.current(viewModel['list'+ groupid]()[_index]);
+            viewModel.current(viewModel['list'+ groupid]()[_index - 2]);
           }
         });
         var getList = function(page,callback){
