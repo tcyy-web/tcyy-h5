@@ -201,7 +201,7 @@
         </div>
       </div>
       <div class="img flex flex-col-center">
-        <img id="imgurl" src="../../images/project/banner.png"  />
+        <img id="imgurl" src="../../images/project/banner.png" data-preview-src="" data-preview-group="1" />
       </div>
 			<form class="mui-input-group">
 				<div class="mui-input-row">
@@ -246,6 +246,8 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+    <script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/mui.picker.min.js"></script>
     <script src="../../js/mui.poppicker.js"></script>
 		<script src="../../js/utils.config.js"></script>
@@ -291,10 +293,7 @@
           var $listBox = doc.getElementById('listBox');
           // 合计
           var $billTotal = doc.getElementById('billTotal');
-          // 预览图片
-          $img.addEventListener('tap', function() {
-            plus.nativeUI.previewImage([$img.src]);
-          });
+          $.previewImage();
           // 画清单每项
           var paintItem = function(data) {
             var boxDiv = doc.createElement('div');

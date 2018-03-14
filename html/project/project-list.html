@@ -567,6 +567,8 @@
 			<div class="shop-car-bg"></div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+    <script src="../../js/mui.previewimage.js"></script>
     <script src="../../js/mui.pullToRefresh.js"></script>
     <script src="../../js/mui.pullToRefresh.material.js"></script>
     <script src="../../js/utils.common.js"></script>
@@ -602,6 +604,7 @@
 				  // 分页请求参数
 				  var listRequest = {};
 				  var beginKey = 'project_';
+				  $.previewImage();
 				  // 跳转计划列表
           var $projectPlanList = doc.getElementById('projectPlanList');
           $projectPlanList.addEventListener('tap', function(event) {
@@ -867,12 +870,7 @@
             // 图片
             var imgDiv = doc.createElement('div');
             imgDiv.className = 'img flex flex-col-center';
-            var img = doc.createElement('img');
-            img.src = data.image;
-            img.addEventListener('tap', function(e){
-              plus.nativeUI.previewImage([data.image]);
-            });
-            imgDiv.appendChild(img);
+            imgDiv.innerHTML = '<img src="{0}" data-preview-src="" data-preview-group="{1}" />'.format(data.image, data.id);
             parent.appendChild(imgDiv);
             var billDiv = doc.createElement('div');
             billDiv.className = 'bill-item';
