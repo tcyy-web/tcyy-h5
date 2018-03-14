@@ -260,6 +260,25 @@
 			    $videobg.style.display = 'none';
 			    $video.innerHTML = '';
 			  });
+			  var bofan = function(url) {
+			    if (mui.os.android) {
+            var Intent = plus.android.importClass("android.content.Intent");
+            var Uri = plus.android.importClass("android.net.Uri");
+            var main = plus.android.runtimeMainActivity();
+            var intent=new Intent(Intent.ACTION_VIEW);
+            var uri=Uri.parse(url);
+            intent.setDataAndType(uri,"video/*");
+            main.startActivity(intent);
+          } else if(mui.os.ios) {
+            var video = doc.createElement('video');
+            video.controls = true;
+            video.src = url;
+            $videobg.style.display = 'block';
+            $video.innerHTML = '';
+            $video.appendChild(video);
+            video.play();              
+          }
+			  }
         var createFragment = function(parent, data) {
           var li = doc.createElement('li');
           var section = doc.createElement('section');
@@ -268,6 +287,9 @@
           div.className = 'img flex flex-col-center';
           var img = doc.createElement('img');
           img.src = data.image;
+          img.addEventListener('tap', function(event){
+            bofan(data.url);
+          });
           div.appendChild(img);
           section.appendChild(div);
           var a = doc.createElement('a');
@@ -275,23 +297,7 @@
           a.innerHTML = '<span>{0}</span>'.format(data.title);
           section.appendChild(a);
           a.addEventListener('tap', function(event){
-            if (mui.os.android) {
-              var Intent = plus.android.importClass("android.content.Intent");
-              var Uri = plus.android.importClass("android.net.Uri");
-              var main = plus.android.runtimeMainActivity();
-              var intent=new Intent(Intent.ACTION_VIEW);
-              var uri=Uri.parse(data.url);
-              intent.setDataAndType(uri,"video/*");
-              main.startActivity(intent);
-            } else if(mui.os.ios) {
-              var video = doc.createElement('video');
-              video.controls = true;
-              video.src = data.url;
-              $videobg.style.display = 'block';
-              $video.innerHTML = '';
-              $video.appendChild(video);
-              video.play();              
-            }
+            bofan(data.url);
           });
           li.appendChild(section);
           parent.appendChild(li);

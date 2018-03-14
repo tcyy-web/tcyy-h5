@@ -12,6 +12,9 @@
 		<link rel="stylesheet" href="../../css/mui.picker.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
+		  .mui-pull-right{
+		    line-height: 44px;
+		  }
 		  .dateinfo{
 		    height: 50px;
 		    color: #626f7f;
@@ -145,6 +148,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">预约</h1>
+			<a id="xinzeng" class="mui-pull-right">新增</a>
 		</header>
 		<div id="yuyueDate" class="mui-content" >
 		  <div class="datebox">
@@ -329,6 +333,22 @@
               viewModel.MonthData(_days);
             });
 				  }
+				  doc.getElementById('xinzeng').addEventListener('tap', function(){
+				    $.openWindow({
+              url: './project-list.html',
+              id: 'PRODUCT-LIST',
+              preload: true,
+              show: {
+                aniShow: 'pop-in'
+              },
+              styles: {
+                popGesture: 'hide'
+              },
+              waiting: {
+                autoShow: false
+              }
+            });
+				  });
 				  // 初始化
 				  var _date = new Date();
 				  initCalendar(_date.getFullYear(), _date.getMonth()+1);

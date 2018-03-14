@@ -416,14 +416,14 @@
           });
           // 分享
           doc.getElementById('share').addEventListener('tap', function(e) {
-            var storageKey = '$projetIndex';
-            var saveValue = storage.get({
-              key: storageKey
-            });
+//          var storageKey = '$projetIndex';
+//          var saveValue = storage.get({
+//            key: storageKey
+//          });
             shareApi.showActionSheet({
               href: config.serverUrl + '/s/share/project?id='+ id,
-              title: saveValue || '天齿月牙APP',
-              content: '给您的诊疗清单！',
+              title: '您有一份诊疗清单！',
+              content: '唇齿之间 关爱无限',
               thumbs: ['_www/images/share/logo.png'],
               interface: 'auto'
             });
