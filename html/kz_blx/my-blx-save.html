@@ -132,6 +132,8 @@
     </div>
   </div>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../js/mui.zoom.js"></script>
+  <script src="../../js/mui.previewimage.js"></script>
   <script src="../../js/utils.common.js"></script>
   <script src="../../js/utils.config.js"></script>
   <script src="../../js/utils.extend.js"></script>
@@ -149,6 +151,7 @@
         // 内容
         var $contents = doc.getElementById('contents');
         var $imgs = doc.getElementById('imgs');
+        $.previewImage();
         // 刷新详情
         window.addEventListener('MY_BLX_SAVE_DATA', function(e){
           if (e.detail.data.id != detailData.id) {
@@ -162,15 +165,10 @@
           $contents.innerText = detailData.contents;
           $imgs.innerHTML = '';
           if (detailData.cases_image) {
-            var caseurllist = [];
             $.each(detailData.cases_image, function(i,d) {
               var img = doc.createElement('div');
               img.className = 'img';
-              img.innerHTML = '<img src="{0}" />'.format(d.image);
-              caseurllist.push(d.image);
-              img.addEventListener('tap', function() {
-                previewImage(caseurllist, i);
-              });
+              img.innerHTML = '<img src="{0}" data-preview-src="" data-preview-group="{1}" />'.format(d.image, detailData.id);
               $imgs.appendChild(img);
             });
           }

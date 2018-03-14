@@ -295,6 +295,8 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+    <script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script src="../../js/utils.common.js"></script>
@@ -329,6 +331,7 @@
           // 分页参数缓存
           var listRequest = {};
           var beginKey = 'data-';
+          $.previewImage();
           //发表
           doc.getElementById('fb_blx').addEventListener('tap', function(){
             var fbWebview = plus.webview.getWebviewById('KZ_BLX_FB');
@@ -344,14 +347,6 @@
             var currenttab = doc.querySelector(_tabid);
             currenttab.insertBefore(paintItem(_data), currenttab.childNodes[0]);
           });
-           /*图片预览*/
-          var previewImage = function(urllist, index) {
-            plus.nativeUI.previewImage(urllist, {
-              current: index,
-              loop: true,
-              indicator: 'number'
-            });
-          }
           // 详情webview
           var gotoDetail = function(id) {
             var _id = beginKey+groupid+'-'+id;
@@ -434,15 +429,10 @@
             if (data.cases_image) {
               var imgDiv = doc.createElement('div');
               imgDiv.className = 'word-img';
-              var caseurllist = [];
               $.each(data.cases_image, function(i,d) {
                 var _imgdiv = doc.createElement('div');
                 _imgdiv.className = 'img';
-                _imgdiv.innerHTML = '<img src="{0}" />'.format(d.image);
-                caseurllist.push(d.image);
-                _imgdiv.addEventListener('tap', function() {
-                  previewImage(caseurllist, i);
-                });
+                _imgdiv.innerHTML = '<img src="{0}" data-preview-src="" data-preview-group="{1}" />'.format(d.image, data.id);
                 imgDiv.appendChild(_imgdiv);
               });
               contentDiv.appendChild(imgDiv);

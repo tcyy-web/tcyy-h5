@@ -154,7 +154,7 @@
       <div class="mui-scroll-wrapper">
         <div class="mui-scroll">
           <ul id="fabulist" class="mui-table-view">
-            <li>
+            <!--<li>
               <div class="wb-top flex">
                 <div class="flex-1">
                   <p>发表于：2017-05-03</p>
@@ -183,7 +183,7 @@
                    <span>1</span>
                 </div>
               </div>
-            </li>
+            </li>-->
           </ul>
         </div>
       </div>
@@ -198,6 +198,8 @@
     </div>
 	</div>
 	<script src="../../js/mui.min.js"></script>
+  <script src="../../js/mui.zoom.js"></script>
+  <script src="../../js/mui.previewimage.js"></script>
 	<script src="../../js/mui.pullToRefresh.js"></script>
 	<script src="../../js/mui.pullToRefresh.material.js"></script>
 	<script src="../../js/utils.config.js"></script>
@@ -231,14 +233,7 @@
         var type = 3;
         var listRequest = {};
         var beginKey = 'data_';
-         /*图片预览*/
-        var previewImage = function(urllist, index) {
-          plus.nativeUI.previewImage(urllist, {
-            current: index,
-            loop: true,
-            indicator: 'number'
-          });
-        }
+        $.previewImage();
         // 详情webview
         var gotoDetail = function(data) {
           if (data.type == 1) {
@@ -311,15 +306,10 @@
           if (data.cases_image) {
             var imgDiv = doc.createElement('div');
             imgDiv.className = 'word-img';
-            var caseurllist = [];
             $.each(data.cases_image, function(i,d) {
               var img = doc.createElement('div');
               img.className = 'img';
-              img.innerHTML = '<img src="{0}" />'.format(d.image);
-              caseurllist.push(d.image);
-              img.addEventListener('tap', function() {
-                previewImage(caseurllist, i);
-              });
+              img.innerHTML = '<img src="{0}" data-preview-src="" data-preview-group="{1}" />'.format(d.image, data.id);
             	imgDiv.appendChild(img);
             });
             contentDiv.appendChild(imgDiv);

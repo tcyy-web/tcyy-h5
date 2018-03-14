@@ -392,16 +392,16 @@
 			</div>
 			<!-- 发表的评论 -->
 			<div id="pllist">
-  			<div class="pl-true">
-  				<div class="pl-true-img flex">
-  				  <div class="img flex flex-row-center">
-  				    <img src="../../images/weibo/pltx3.png"/>
-  				  </div>
-  				  <div class="flex-1">
-  				    <p class="p-name"><span>领馆小草</span><span class="time">2018-03-05<i class="mui-icon mui-icon-trash"></i></span> </p>
-            <p class="p-txt"><span>真的假的呀？</span></p>
-  				  </div>
-  				</div>
+  			  <!--<div class="pl-true">
+    				<div class="pl-true-img flex">
+    				  <div class="img flex flex-row-center">
+    				    <img src="../../images/weibo/pltx3.png"/>
+    				  </div>
+    				  <div class="flex-1">
+    				    <p class="p-name"><span>领馆小草</span><span class="time">2018-03-05<i class="mui-icon mui-icon-trash"></i></span> </p>
+              <p class="p-txt"><span>真的假的呀？</span></p>
+    				  </div>
+    				</div>
           <div class="pl-hf">
             <p>
               <span>土农民</span>
@@ -412,7 +412,7 @@
               <i class="mui-icon mui-icon-trash"></i>
             </p>
           </div>
-  			</div>
+  			   </div>-->
 			</div>
 			<p id="plmore" class="pl-more">更多</p>
 		</div>
@@ -428,6 +428,8 @@
     </div>
   </footer>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../js/mui.zoom.js"></script>
+  <script src="../../js/mui.previewimage.js"></script>
   <script src="../../js/utils.common.js"></script>
   <script src="../../js/utils.config.js"></script>
   <script src="../../js/utils.extend.js"></script>
@@ -482,6 +484,7 @@
           var $thing = doc.getElementById('thing');
           // 关注
           var $gzfn = doc.getElementById('gzfn');
+          $.previewImage();
           // 刷新详情
           window.addEventListener('KZ_BLX_DATA', function(e){
             page = 1;
@@ -501,15 +504,10 @@
               $contents.innerText = detailData.contents;
               $imgs.innerHTML = '';
               if (detailData.cases_image) {
-                var caseurllist = [];
                 $.each(detailData.cases_image, function(i,d) {
                   var img = doc.createElement('div');
                   img.className = 'img';
-                  img.innerHTML = '<img src="{0}" />'.format(d.image);
-                  caseurllist.push(d.image);
-                  img.addEventListener('tap', function() {
-                    previewImage(caseurllist, i);
-                  });
+                  img.innerHTML = '<img src="{0}" data-preview-src="" data-preview-group="{1}" />'.format(d.image, detailData.id);
                   $imgs.appendChild(img);
                 });
               }
@@ -547,14 +545,6 @@
               detailData.isfollow = res.status;
             });
           });
-           /*图片预览*/
-          var previewImage = function(urllist, index) {
-            plus.nativeUI.previewImage(urllist, {
-              current: index,
-              loop: true,
-              indicator: 'number'
-            });
-          }
           doc.getElementById('dzFn').addEventListener('tap',function(e){
             blxFn.dzFn(detailData.id, function() {
               detailData.thing += 1;

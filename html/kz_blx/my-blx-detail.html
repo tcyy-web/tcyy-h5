@@ -339,7 +339,7 @@
         <div class="word-img">
           <!-- ko 'foreach':detailData().cases_image -->
           <div class="img">
-            <img data-bind="attr: {src: image}" />
+            <img data-bind="attr: {src: image}" data-preview-src="" data-preview-group="1" />
           </div>
           <!-- /ko -->
         </div>
@@ -407,10 +407,10 @@
     </div>
   </div>
   <script src="../../third/knockout.js" ></script>
-  <script src="../../third/ko.mapping.js"></script>
-  <script src="../../third/knockout.extend.js"></script>
   <script src="../../third/fastclick.js"></script>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../js/mui.zoom.js"></script>
+  <script src="../../js/mui.previewimage.js"></script>
   <script src="../../js/utils.common.js"></script>
   <script src="../../js/utils.config.js"></script>
   <script src="../../js/utils.extend.js"></script>
@@ -446,14 +446,7 @@
         });
         $.plusReady(function() {
           var benren = authManage.getUser();
-           /*图片预览*/
-          var previewImage = function(urllist, index) {
-            plus.nativeUI.previewImage(urllist, {
-              current: index,
-              loop: true,
-              indicator: 'number'
-            });
-          }
+          $.previewImage();
           var caseimglist = [];
           //一级评论分页参数
           var page = 1;
