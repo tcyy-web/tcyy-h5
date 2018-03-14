@@ -48,8 +48,56 @@
       overflow: hidden;
     }
     .item .img img{
+      height: auto;
+      width: 100%;
+    }
+    .imgbg{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 100;
+      background-color: rgba(0,0,0,0.9);
+    }
+    .imgbg.hide{
+      display: none;
+    }
+    .imgbg .mui-icon-close{
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      z-index: 10;
+      color: #fff;
+    }
+    .imgbg .img{
       height: 100%;
-      width: auto;
+      width: 100%;
+      overflow: hidden;
+    }
+    .imgbg .img img{
+      width: 100%;
+      height: auto;
+    }
+    .imgbg .tip{
+      position: absolute;
+      width: 100%;
+      bottom: 40px;
+      left: 0;
+      text-align: center;
+      color: #fff;
+      font-size: 16px;
+      z-index: 10;
+    }
+    .imgbg .imgbtn{
+      position: absolute;
+      bottom: 0;
+      right: 10px;
+      color: #fff;
+      z-index: 10;
+      color: #765fc3;
+      line-height: 40px;
+      font-size: 20px;
     }
   </style>
 </head>
@@ -67,16 +115,18 @@
       <span class="mui-tab-label"><i class="iconfont icon-qysj"></i>前沿设计</span>
     </a>
   </nav>
-  <div class="mui-content">
+  <div id="mainContent" class="mui-content">
     <div id="tabbar" class="mui-control-content mui-active">
       <div class="mui-scroll-wrapper">
         <div class="mui-scroll">
           <div class="lists clearFix">
-            <!--<div class="item">
-              <div class="img flex flex-col-center">
-                <img src="../../images/profile/sc5.png"  />
+            <!-- ko 'foreach':list2 -->
+            <div class="item">
+              <div class="img flex flex-row-center">
+                <img data-bind="attr: {src: image} ,click: $root.previewFn.bind(null,$data, $index())" />
               </div>
-            </div>-->
+            </div>
+            <!-- /ko -->
           </div>
         </div>
       </div>
@@ -85,21 +135,45 @@
       <div class="mui-scroll-wrapper">
         <div class="mui-scroll">
           <div class="lists clearFix">
+            <!-- ko 'foreach':list1 -->
+            <div class="item">
+              <div class="img flex flex-row-center">
+                <img data-bind="attr: {src: image}, click: $root.previewFn.bind(null,$data, $index())" />
+              </div>
+            </div>
+            <!-- /ko -->
           </div>
         </div>
       </div>
     </div>
+    <div class="imgbg hide" data-bind="css:{ 'hide': hide}">
+      <i data-bind="click: $root.hideFn" class="mui-icon mui-icon-close"></i>
+      <div id="imgbox" class="img flex flex-row-center">
+        <img data-bind="attr: {src: current().image}" />
+      </div>
+      <div class="tip"><span data-bind="text: curIndex"></span><span>/</span><span data-bind="text: total"></span></div>
+      <div class="imgbtn">
+        <i data-bind="click: $root.downloadFn" class="mui-icon mui-icon-download"></i>
+        <i data-bind="click: $root.shareFn" class="iconfont icon-share"></i>
+      </div>
+    </div>
   </div>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/fastclick.js"></script>
   <script src="../../js/mui.min.js"></script>
   <script src="../../js/mui.pullToRefresh.js"></script>
   <script src="../../js/mui.pullToRefresh.material.js"></script>
   <script src="../../js/utils.config.js"></script>
   <script src="../../js/utils.extend.js"></script>
   <script src="../../js/utils.storages.js" ></script>
+  <script src="../../js/utils.share.js"></script>
   <script src="../../js/utils.category.js" ></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.request.js"></script>
   <script>
+    window.addEventListener('load', function() {
+      FastClick.attach(document.body);
+    }, false);
     (function($, doc) {
       //阻尼系数
       var deceleration = $.os.ios?0.003:0.0009;
@@ -112,33 +186,63 @@
       $.plusReady(function() {
         var limit = 6;
         var groupid = 2;
-        // 图片预览数据
-        var images = {
-          2: [], //创意设计
-          1: [] //前沿设计
-        }
         // 请求参数存储
         var listRequest = {};
-         /*图片预览*/
-        var previewImage = function(index) {
-          plus.nativeUI.previewImage(images[groupid], {
-            current: index,
-            loop: true,
-            indicator: 'number'
-          });
+        var viewModel = {
+          list2: ko.observableArray([]), // 创意无限
+          list1: ko.observableArray([]), // 前沿设计
+          hide: ko.observable(true),
+          hideFn: function() {
+            viewModel.hide(true);
+            viewModel.current({});
+            viewModel.curIndex(0);
+            viewModel.total(0);
+          },
+          previewFn: function(data, index) {
+            viewModel.hide(false);
+            viewModel.current(data);
+            viewModel.curIndex(index + 1);
+            viewModel.total(viewModel['list'+groupid]().length);
+          },
+          current: ko.observable({}),
+          curIndex: ko.observable(0),
+          total: ko.observable(0),
+          downloadFn: function() {
+            var dtask = plus.downloader.createDownload(viewModel.current().image, 
+              {filename: '_downloads/tcyy/'}, 
+            function ( d, status ) {
+              if ( status == 200 ) { 
+                $.toast( "保存成功");
+              }
+            });
+            dtask.start(); 
+          },
+          shareFn: function() {
+            var shareImg = viewModel.current().image;
+            shareApi.showActionSheet({
+              title: '',
+              content: '',
+              thumbs: [shareImg],
+              interface: 'auto'
+            });
+          }
         }
-        // 画每一项
-        var paintItem = function(parent, data) {
-          images[groupid].push(data.image);
-          var len = images[groupid].length;
-          var div = doc.createElement('div');
-          div.className = 'item';
-          div.innerHTML = '<div class="img flex flex-col-center"><img src="{0}" /></div>'.format(data.image);
-          div.addEventListener('tap', function(){
-            previewImage(len - 1);
-          });
-          parent.appendChild(div);
-        };
+        ko.applyBindings(viewModel, doc.getElementById('mainContent'));
+        var $imgbox = doc.getElementById('imgbox')
+        $imgbox.addEventListener('swipeleft', function(e) {
+          var _index = viewModel.curIndex()
+          if (_index < viewModel.total()) {
+            viewModel.curIndex(_index+1);
+            viewModel.current(viewModel['list'+ groupid]()[_index]);
+          }
+        });
+        $imgbox.addEventListener('swiperight', function(e) {
+          var _index = viewModel.curIndex()
+          if (_index > 1) {
+            viewModel.curIndex(_index-1);
+            viewModel.current(viewModel['list'+ groupid]()[_index]);
+          }
+        });
         var getList = function(page,callback){
           if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
             return;
@@ -153,13 +257,11 @@
           }, function(data) {
             // 处理页面绑定
              if (data && data.data) {
-               var currentContent = doc.querySelector('.mui-control-content.mui-active .lists');
-               if (page === 1) {
-                 currentContent.innerHTML = '';
-                 images[groupid] = [];
+               if (page == 1) {
+                 viewModel['list'+groupid]([]);
                }
                $.each(data.data, function(index,i) {
-                 paintItem(currentContent,i);
+                 viewModel['list'+groupid].push(i);
                });
              }
              // 判断是否有下一页数据
