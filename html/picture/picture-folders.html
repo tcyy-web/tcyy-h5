@@ -172,6 +172,7 @@
 				</div>
 			</div>
 		</div>
+		<script src="../../third/knockout.js"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
@@ -198,9 +199,9 @@
 				});
 				$.plusReady(function() {
 					var limit = 5;
-			  	var groupid = 0;
-			  	var listRequest = {};
-			  	var pictureListWebView = null;
+			  	  var groupid = 0;
+			  	  var listRequest = {};
+			  	  var pictureListWebView = null;
 	        var paintItem = function(parent, data) {
 	          var boxDiv = doc.createElement('div');
 	          boxDiv.className = 'mui-col-xs-4';

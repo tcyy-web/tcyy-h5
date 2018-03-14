@@ -24,11 +24,13 @@
 			-moz-border-radius: 3px;
 			border-radius: 3px;
 			overflow: hidden;
-    	-webkit-box-shadow: #ccc 0px 2px 5px -1px;
-    	box-shadow: #ccc 0px 2px 5px -1px;
+  	   -webkit-box-shadow: #ccc 0px 2px 5px -1px;
+  	   box-shadow: #ccc 0px 2px 5px -1px;
 		}
 		.pic-item{
 			text-align: center;
+			height: 150px;
+			overflow: hidden;
 		}
 		.pic-item img{
 			width: 100%;
@@ -36,7 +38,6 @@
 		}
 		.pic-item.upload{
 			text-align: center;
-			height: 100px;
 			background-color: #f4f4f4;
 		}
 		.pic-item.upload img {
@@ -46,13 +47,14 @@
 			color: #303030;
 			height: 40px;
 			padding: 5px;
-			line-height: 15px;
+			line-height: 1.1;
+			overflow: hidden;
+			word-break: break-all;
 		}
 		.mui-row .mui-col-xs-6 p.p {
 			color: #bababa;
 		}
 	</style>
-
 </head>
 
 <body>
@@ -60,28 +62,31 @@
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">图片</h1>
 	</header>
-		<div class="mui-content">
+		<div id="mainContent" class="mui-content">
 			<div class="mui-fullscreen">
 		    <div class="mui-scroll-wrapper">
 		      <div id="pullrefresh" class="mui-scroll">
-						<div id="contentBox" class="mui-row">
-			        <!--<div class="mui-col-xs-6">
+						<div class="mui-row">
+						  <!-- ko 'foreach':pictureList -->
+			        <div class="mui-col-xs-6">
     	            	<div class="pic-item flex flex-row-center flex-col-center">
-    	            		<img src="../../images/video/sc10.png" data-preview-src="" data-preview-group="1" />
+    	            		<img data-bind="attr:{src: image}" data-preview-src="" data-preview-group="1" />
     	            	</div>
-    	            	<p class="flex flex-row-center flex-col-center">刷牙方法</p>
+    	            	<p class="flex flex-row-center flex-col-center" data-bind="text:title"></p>
 			        </div>
+			        <!-- /ko -->
 			        <div class="mui-col-xs-6">
 	              <div class="pic-item upload flex flex-row-center flex-col-center">
-	              	<img src="../../images/picture/bg1.png" />
+	              	  <img src="../../images/picture/bg1.png" />
 	              </div>
 	              <p class="p flex flex-row-center flex-col-center">上传图片</p>
-			        </div>-->
+			        </div>
 				    </div>
 		      </div>
 		    </div>
 		  </div>
 		</div>
+		<script src="../../third/knockout.js"></script>
 		<script src="../../js/mui.min.js"></script>
 	  <script src="../../js/mui.zoom.js"></script>
     <script src="../../js/mui.previewimage.js"></script>
@@ -108,43 +113,15 @@
           var limit = 10;
           var more = true;
           var $pullrefresh = $('#pullrefresh');
-          var $contentBox = doc.getElementById('contentBox');
-          /*图片预览*/
-          var urls = [];
-          var images = [];
-					var picturePre = function(){
-						urls.length = 0;
-						// 获取图片地址列表
-					  images = doc.querySelectorAll('.pic-item img');
-					  for(var i = 0; i < images.length; i++) {
-					    urls.push(images[i].src);
-					  }
-					}
-				  // 监听图片的点击
-				  $('body').on('tap', 'img', function() {
-				    // 查询图片在列表中的位置
-				    // 由于dom节点列表是伪数组，需要处理一下
-				    var index = [].slice.call(images).indexOf(this);
-				    plus.nativeUI.previewImage(urls, {
-				      current: index,
-				      loop: true,
-				      indicator: 'number'
-				    });
-				  });
-	        var paintItem = function(data) {
-	          var boxDiv = doc.createElement('div');
-	          boxDiv.className = 'mui-col-xs-6';
-	          var imgDiv = doc.createElement('div');
-	          imgDiv.className = 'pic-item flex flex-row-center flex-col-center';
-	          imgDiv.innerHTML = '<img src="{0}" />'.format(data.image);
-	          boxDiv.appendChild(imgDiv);
-	          var p = doc.createElement('p');
-	          p.className = 'flex flex-row-center flex-col-center';
-	          p.innerText =  data.title;
-	          boxDiv.appendChild(p);
-	          $contentBox.appendChild(boxDiv);
-	        };
+          var viewModel = {
+            pictureList: ko.observableArray([])
+          }
+          ko.applyBindings(viewModel, doc.getElementById('mainContent'));
+          $.previewImage();
 					var getList = function(callback){
+					  if (page === 1) {
+               viewModel.pictureList([]);
+             }
 						request.ajax('Picture/getlist', {
 							data: {
 								folderid: folderid,
@@ -155,14 +132,9 @@
 						}, function(data) {
                 // 处理页面绑定
 	             if (data && data.data) {
-	               if (page === 1) {
-	                 $contentBox.innerHTML = '';
-	               }
 	               $.each(data.data, function(index,i) {
-	                 paintItem(i);
+	                 viewModel.pictureList.push(i);
 	               });
-//	               $.previewImage();
-	               picturePre();
 	             }
 	             // 判断是否有下一页数据
 	             if (data && data.data && data.data.length === limit) {
