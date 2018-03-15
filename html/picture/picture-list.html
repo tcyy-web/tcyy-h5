@@ -68,14 +68,14 @@
 		      <div id="pullrefresh" class="mui-scroll">
 						<div class="mui-row">
 						  <!-- ko 'foreach':pictureList -->
-			        <div class="mui-col-xs-6">
+			        <div data-bind="attr:{imgid: id}" class="mui-col-xs-6 delimg">
     	            	<div class="pic-item flex flex-row-center flex-col-center">
     	            		<img data-bind="attr:{src: image}" data-preview-src="" data-preview-group="1" />
     	            	</div>
     	            	<p class="flex flex-row-center flex-col-center" data-bind="text:title"></p>
 			        </div>
 			        <!-- /ko -->
-			        <div class="mui-col-xs-6">
+			        <div id="uploadImg" data-bind="visible: createFlag" class="mui-col-xs-6">
 	              <div class="pic-item upload flex flex-row-center flex-col-center">
 	              	  <img src="../../images/picture/bg1.png" />
 	              </div>
@@ -95,6 +95,7 @@
 		<script src="../../js/utils.config.js"></script>
 	  <script src="../../js/utils.extend.js"></script>
 	  <script src="../../js/utils.storages.js" ></script>
+	  <script src="../../js/utils.upload.js"></script>
 	  <script src="../../js/utils.auth.js"></script>
 	  <script src="../../js/utils.request.js"></script>
 		<script>
@@ -106,7 +107,11 @@
 					indicators: true, //是否显示滚动条
 					deceleration:deceleration
 				});
-				$.init();
+				$.init({
+				  gestureConfig: {
+            longtap: true
+          }
+				});
 				$.plusReady(function() {
 			   	var folderid = 0;
  					var page = 1;
@@ -114,7 +119,8 @@
           var more = true;
           var $pullrefresh = $('#pullrefresh');
           var viewModel = {
-            pictureList: ko.observableArray([])
+            pictureList: ko.observableArray([]),
+            createFlag: ko.observable(false) // 是否可新增
           }
           ko.applyBindings(viewModel, doc.getElementById('mainContent'));
           $.previewImage();
@@ -122,12 +128,18 @@
 					  if (page === 1) {
                viewModel.pictureList([]);
              }
-						request.ajax('Picture/getlist', {
-							data: {
-								folderid: folderid,
-								page: page,
-								limit: limit
-							},
+					  var _postData = {
+					    folderid: folderid,
+              page: page,
+              limit: limit,
+              type: 1
+					  }
+					  if (viewModel.createFlag()) {
+					    _postData.type = 2,
+					    _postData.code = authManage.getUser().code;
+					  }
+						request.loginAjax('Picture/getlist', {
+							data: _postData,
 							showMsg: false
 						}, function(data) {
                 // 处理页面绑定
@@ -154,10 +166,69 @@
 	        // 刷新分类
           window.addEventListener('picture-folderid', function(e){
             folderid = e.detail.folderid;
+            if (e.detail.isuser == true) {
+              viewModel.createFlag(true);
+            } else {
+              viewModel.createFlag(false);
+            }
             page = 1;
             more = true;
             $pullrefresh.pullToRefresh().refresh(true);
             getList();
+          });
+          // 上传图片
+          var addImg = function(imgname, imgurl) {
+            request.loginAjax('Picture/addImg', {
+              data: {
+                fid: folderid,
+                name: imgname,
+                image: imgurl
+              }
+            }, function(data, success) {
+               if (success) {
+                 viewModel.pictureList.unshift(data);
+               }
+            }, function() {
+            });
+          }
+          doc.getElementById('uploadImg').addEventListener('tap', function(){
+            $.prompt('', '请输入图片名称', '上传图片', null,function(obj){
+              if (obj.index == 1){
+                if (obj.value == '') {
+                  $.toast('请输入图片名称');
+                  return;
+                }
+                var imgname = obj.value;
+                upload.showImgActionSheet(function( data ){
+                  var url = config.url + "Uploads/Files";
+                  upload.uploadimge( url , data.divid, function(res) {
+                    addImg(imgname, res[0].saveUrl);
+                  },{
+                    type: '6'
+                  });
+                });
+              }
+            }, 'div');
+          });
+          // 删除图片
+          $('#mainContent').on('longtap', '.delimg', function(e) {
+            var imgid = this.getAttribute('imgid');
+            mui.confirm('确定删除？', '删除图片', null, function(obj){
+              if (obj.index === 1){
+                request.loginAjax('Picture/delImg', {
+                  data: {
+                    id: imgid
+                  }
+                }, function(data, success) {
+                  if (success) {
+                    var _index = viewModel.pictureList().findIndex(function(i){
+                      return i.id == imgid;
+                    });
+                    viewModel.pictureList.splice(_index, 1);
+                  }
+                });
+              }
+            }, 'div');
           });
 					$pullrefresh.pullToRefresh({
             down: {
