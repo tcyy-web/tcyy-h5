@@ -117,6 +117,26 @@
 						// 获取基础分类
 						categorys.getServer();
 						/******APP初始化 end******/
+						var goto3D = function(){
+						  if (authManage.checkLogin()) {
+						    $.openWindow({
+                  url: '../3d/three_3d_index.html',
+                  id: 'THTREE_3d_index',
+                  preload: true,
+                  show: {
+                    aniShow: 'pop-in'
+                  },
+                  styles: {
+                    popGesture: 'hide'
+                  },
+                  waiting: {
+                    autoShow: false
+                  }
+                });
+						  } else {
+						    authManage.toLogin();
+						  }
+						}
 						var self = plus.webview.currentWebview(),
 						leftPos = Math.ceil((window.innerWidth - 60) / 2); // 设置凸起大图标为水平居中
 						var drawNativeIcon = util.drawNative('icon', {
@@ -201,20 +221,7 @@
 //								}, 'icon');
 //								active_color = '#fff';
 //							}
-							$.openWindow({
-                url: '../3d/three_3d_index.html',
-                id: 'THTREE_3d_index',
-                preload: true,
-                show: {
-                  aniShow: 'pop-in'
-                },
-                styles: {
-                  popGesture: 'hide'
-                },
-                waiting: {
-                  autoShow: false
-                }
-              });
+               goto3D();
 						});
 						// 中间凸起图标绘制及监听点击完毕
 
@@ -346,20 +353,7 @@
             });
             // 3d
             doc.getElementById('threed').addEventListener('tap', function(e) {
-              $.openWindow({
-                url: '../3d/three_3d_index.html',
-                id: 'THTREE_3d_index',
-                preload: true,
-                show: {
-                  aniShow: 'pop-in'
-                },
-                styles: {
-                  popGesture: 'hide'
-                },
-                waiting: {
-                  autoShow: false
-                }
-              });
+              goto3D();
             });
 					});
 				}(mui, document));
