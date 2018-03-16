@@ -123,7 +123,7 @@
             <!-- ko 'foreach':list2 -->
             <div class="item">
               <div class="img flex flex-row-center">
-                <img data-bind="attr: {src: image} ,click: $root.previewFn.bind(null,$data, $index())" />
+                <img data-bind="attr: {src: image,index: $index()} " />
               </div>
             </div>
             <!-- /ko -->
@@ -138,7 +138,7 @@
             <!-- ko 'foreach':list1 -->
             <div class="item">
               <div class="img flex flex-row-center">
-                <img data-bind="attr: {src: image}, click: $root.previewFn.bind(null,$data, $index())" />
+                <img data-bind="attr: {src: image, index: $index()}" />
               </div>
             </div>
             <!-- /ko -->
@@ -147,19 +147,18 @@
       </div>
     </div>
     <div class="imgbg hide" data-bind="css:{ 'hide': hide}">
-      <i data-bind="click: $root.hideFn" class="mui-icon mui-icon-close"></i>
+      <i id="imgclose" class="mui-icon mui-icon-close"></i>
       <div id="imgbox" class="img flex flex-row-center">
-        <img data-bind="attr: {src: current().image}" />
+        <img data-bind="attr: {src: current}" />
       </div>
       <div class="tip"><span data-bind="text: curIndex"></span><span>/</span><span data-bind="text: total"></span></div>
       <div class="imgbtn">
-        <i data-bind="click: $root.downloadFn" class="mui-icon mui-icon-download"></i>
-        <i data-bind="click: $root.shareFn" class="iconfont icon-share"></i>
+        <i id="imgdownload" class="mui-icon mui-icon-download"></i>
+        <i id="imgshare" class="iconfont icon-share"></i>
       </div>
     </div>
   </div>
   <script src="../../third/knockout.js"></script>
-  <script src="../../third/fastclick.js"></script>
   <script src="../../js/mui.min.js"></script>
   <script src="../../js/mui.pullToRefresh.js"></script>
   <script src="../../js/mui.pullToRefresh.material.js"></script>
@@ -171,10 +170,16 @@
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.request.js"></script>
   <script>
-    window.addEventListener('load', function() {
-      FastClick.attach(document.body);
-    }, false);
     (function($, doc) {
+      var viewModel = {
+        list2: ko.observableArray([]), // 创意无限
+        list1: ko.observableArray([]), // 前沿设计
+        hide: ko.observable(true),
+        current: ko.observable(''),
+        curIndex: ko.observable(0),
+        total: ko.observable(0)
+      }
+      ko.applyBindings(viewModel, doc.getElementById('mainContent'));
       //阻尼系数
       var deceleration = $.os.ios?0.003:0.0009;
       $('.mui-scroll-wrapper').scroll({
@@ -182,66 +187,66 @@
         indicators: true, //是否显示滚动条
         deceleration:deceleration
       });
-      $.init();
+      $.init({
+        beforeback: function(){
+          viewModel.hide(true);
+          viewModel.current('');
+          viewModel.curIndex(0);
+          viewModel.total(0);
+        }
+      });
       $.plusReady(function() {
         var limit = 6;
         var groupid = 2;
         // 请求参数存储
         var listRequest = {};
-        var viewModel = {
-          list2: ko.observableArray([]), // 创意无限
-          list1: ko.observableArray([]), // 前沿设计
-          hide: ko.observable(true),
-          hideFn: function() {
-            viewModel.hide(true);
-            viewModel.current({});
-            viewModel.curIndex(0);
-            viewModel.total(0);
-          },
-          previewFn: function(data, index) {
-            viewModel.hide(false);
-            viewModel.current(data);
-            viewModel.curIndex(index + 1);
-            viewModel.total(viewModel['list'+groupid]().length);
-          },
-          current: ko.observable({}),
-          curIndex: ko.observable(0),
-          total: ko.observable(0),
-          downloadFn: function() {
-            var dtask = plus.downloader.createDownload(viewModel.current().image, 
-              {filename: '_downloads/tcyy/'}, 
-            function ( d, status ) {
-              if ( status == 200 ) { 
-                $.toast( "保存成功");
-              }
-            });
-            dtask.start(); 
-          },
-          shareFn: function() {
-            var shareImg = viewModel.current().image;
-            shareApi.showActionSheet({
-              title: '',
-              content: '',
-              thumbs: [shareImg],
-              interface: 'auto'
-            });
-          }
-        }
-        ko.applyBindings(viewModel, doc.getElementById('mainContent'));
-        var $imgbox = doc.getElementById('imgbox')
+        var $imgbox = doc.getElementById('imgbox');
         $imgbox.addEventListener('swipeleft', function(e) {
           var _index = viewModel.curIndex();
           if (_index < viewModel.total()) {
             viewModel.curIndex(_index+1);
-            viewModel.current(viewModel['list'+ groupid]()[_index]);
+            viewModel.current(viewModel['list'+ groupid]()[_index].image);
           }
         });
         $imgbox.addEventListener('swiperight', function(e) {
           var _index = viewModel.curIndex();
           if (_index > 1) {
             viewModel.curIndex(_index-1);
-            viewModel.current(viewModel['list'+ groupid]()[_index - 2]);
+            viewModel.current(viewModel['list'+ groupid]()[_index - 2].image);
           }
+        });
+        $('#mainContent').on('tap', '.img img', function(e){
+          var index = this.getAttribute('index');
+          var src = this.getAttribute('src');
+          viewModel.hide(false);
+          viewModel.current(src);
+          viewModel.curIndex(eval(index + '+1'));
+          viewModel.total(viewModel['list'+groupid]().length);
+        });
+        doc.getElementById('imgclose').addEventListener('tap', function(){
+          viewModel.hide(true);
+          viewModel.current('');
+          viewModel.curIndex(0);
+          viewModel.total(0);
+        });
+        doc.getElementById('imgdownload').addEventListener('tap', function(){
+          var dtask = plus.downloader.createDownload(viewModel.current(), 
+            {filename: '_downloads/tcyy/'}, 
+          function ( d, status ) {
+            if ( status == 200 ) { 
+              $.toast( "保存成功");
+            }
+          });
+          dtask.start(); 
+        });
+        doc.getElementById('imgshare').addEventListener('tap', function(){
+          var shareImg = viewModel.current();
+          shareApi.showActionSheet({
+            title: '',
+            content: '',
+            thumbs: [shareImg],
+            interface: 'auto'
+          });
         });
         var getList = function(page,callback){
           if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
