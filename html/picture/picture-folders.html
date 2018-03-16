@@ -407,7 +407,7 @@
 	        // 切换tab
 	        doc.querySelector('.mui-slider').addEventListener('slide', function(event) {
 	          var currentTab = doc.querySelector('.mui-control-item.mui-active');
-	          groupid = currentTab.getAttribute('groupid');
+	          var groupid = currentTab.getAttribute('groupid');
 	          viewModel.groupid(groupid);
 	        });
 					//循环初始化所有下拉刷新，上拉加载。

@@ -6,6 +6,7 @@
 	<title></title>
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/blx.css" />
 	<style>
        #sliderSegmentedControl{
         height: 50px;
@@ -67,129 +68,7 @@
     .mui-table-view > li:first-child{
       margin-top: 0;
     }
-    .wb-top{
-    	position: relative;
-    }
-    .wb-top .img{
-      width: 50px;
-    	height:50px;
-    	-webkit-border-radius: 50%;
-    	border-radius: 50%;
-    	overflow: hidden;
-    	margin-right: 10px;
-    }
-    .wb-top .img img{
-      width: auto;
-      height: 100%;
-    }
-    .wb-top h2{
-    	font-size:16px;
-    	color: #010101;
-    	font-weight: normal;
-    	padding-top:5px;
-    	padding-bottom: 5px;	
-    	padding-right: 70px;
-    }
-    .wb-top p{
-    	font-size:14px;
-    	color:#7c7c7c;
-    	padding-right: 30px;
-    }
-    .wb-top .mui-icon-trash{
-      font-size: 20px;
-      float: right;
-      position: absolute;
-      right: 0;
-      bottom: 5px;
-      z-index: 3;
-    }
-    .wb-top ins{
-    	position: absolute;
-    	top:5px;
-    	right:0;
-    	z-index: 3;
-    	text-decoration: none;
-    	padding:0 5px;
-    	background:#f4f4f4;
-    	height: 20px;
-    	border-radius: 5px;
-    	-webkit-border-radius: 5px;
-    	font-size:12px;
-    	color:#6d6d6d;
-    }
-    .word p{
-    	font-size:14px;
-    	line-height: 20px;
-    	color:#000000;
-    	padding: 10px 0;
-    }
-    .word-img{
-    	overflow: hidden;
-    }
-    .word-img .img{
-      width: 80px;
-      height: 80px;
-      float:left;
-      margin-right:10px;
-      margin-bottom: 10px;
-      overflow: hidden;
-    }
-    .word-img .img img{
-    	width: 100%!important;
-    	height: auto;
-    	min-height: 100%;
-    }
-    .pl{
-      position: relative;
-    }
-    .pl:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl:after{
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl .flex-1{
-      position: relative;
-      height: 50px;
-      color: #7c7c7c;
-      font-size: 14px;
-    }
-    .pl .flex-1:before{
-      position: absolute;
-      left: 0;
-      bottom: 10px;
-      top: 10px;
-      width: 1px;
-      content: '';
-      -webkit-transform: scaleX(.5);
-      transform: scaleX(.5);
-      background-color: #d6d6d6;
-    }
-    .pl .flex-1:first-child:before{
-      display: none;
-    }
-    .pl .flex-1 img{
-      width: 20px !important;
-      margin-right: 10px;
-    }
 	</style>
-
 </head>
 
 <body>
@@ -198,102 +77,72 @@
 		<h1 class="mui-title">病例秀</h1>
 		<a id="fb_blx" class="mui-pull-right">发布</a>
 	</header>
-		<div class="mui-content">
+		<div id="mainContent" class="mui-content">
 			<div class="mui-slider mui-fullscreen">
 				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll" id="sliderSegmentedControl">
-						<a class="mui-control-item mui-active" href="#content1">
-              口腔种植
+						<!-- ko 'foreach':category -->
+            <a data-bind="text: title,attr:{href:'#content'+id, groupid: id},css:{'mui-active': $index() == 0}" class="mui-control-item">
             </a>
-            <a class="mui-control-item" href="#content2">
-              口腔正畸
-            </a>
-            <a class="mui-control-item" href="#content3">
-              口腔修复
-            </a>
-            <a class="mui-control-item" href="#content4">
-              口腔外科
-            </a>
-            <a class="mui-control-item" href="#content5">
-              口腔内科
-            </a>
-            <a class="mui-control-item" href="#content6">
-              口腔美容
-            </a>
+            <!-- /ko -->
 					</div>
 				</div>
 				<div class="mui-slider-group" id="sliderSegmentedContent">
-					<div id="content1" class="mui-slider-item mui-control-content mui-active">
+				  <!-- ko 'foreach':category -->
+					<div data-bind="attr:{id: 'content'+id},css:{'mui-active': $index() == 0}" class="mui-slider-item mui-control-content">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<ul class="mui-table-view">
-									<!--<li>
+								  <!-- ko 'foreach': _list -->
+									<li>
 										<div class="wb-top flex">
 										  <div class="img flex flex-row-center">
-										    <img src="../../images/weibo/tx.png"/>
+										    <img data-bind="attr:{src: userinfo.headurl || $root.defaultUserImage() }" />
 										  </div>
-										  <div class="flex-1">
-										    <h2>口腔门诊王医生</h2>
-                        <p>发表于：2017-05-03</p>
+										  <div data-bind="attr:{caseid: id}" class="flex-1 detailfn">
+										    <h2 data-bind="text: userinfo.nickname"></h2>
+                        <p data-bind="text: '发表于：'+ creatime"></p>
 										  </div>
-										  <i class="mui-icon mui-icon-trash"></i>
-										  <ins class="flex flex-row-center">加关注</ins>
+										  <i data-bind="visible: isMe == 1,attr:{caseid: id}" class="mui-icon mui-icon-trash delfn"></i>
+										  <ins data-bind="visible: isMe == 2,
+								          text: isfollow() ==1 ? '取消关注':'加关注',
+								          attr:{touid: userinfo.uid}" class="flex flex-row-center gzfn"></ins>
 										</div>
 										<div class="word">
-											<p>深圳软件创业基地聚集大量孵化园</p>
+											<p data-bind="text: contents,attr:{caseid: id}" class="detailfn"></p>
 											<div class="word-img">
-											  <div class="img">
-											    <img src="../../images/weibo/img.png"/>
+											  <!-- ko 'foreach': cases_image -->
+											  <div class="img flex flex-row-center">
+											    <img data-bind="attr:{ src:image, 'data-preview-group': $parent.id }" data-preview-src="" />
 											  </div>
+											  <!-- /ko -->
 											</div>
 										</div>
 										<div class="pl flex">
 										  <div class="flex-1 flex flex-row-center flex-col-center">
 										    <img src="../../images/blx/pl1.png" />
-										    <span>1</span>
+										    <span data-bind="text:read "></span>
 										  </div>
-										  <div class="flex-1 flex flex-row-center flex-col-center">
+										  <div data-bind="attr:{caseid: id}" class="detailfn flex-1 flex flex-row-center flex-col-center">
 										    <img src="../../images/blx/pl2.png" />
-										     <span>1</span>
+										     <span data-bind="text:comments "></span>
 										  </div>
-										  <div class="flex-1 flex flex-row-center flex-col-center">
+										  <div data-bind="attr:{caseid: id}" class="dzfn flex-1 flex flex-row-center flex-col-center">
 										    <img src="../../images/blx/pl3.png" />
-										     <span>1</span>
+										     <span data-bind="text:thing "></span>
 										  </div>
 										</div>
-									</li>-->
+									</li>
+									<!-- /ko -->
 								</ul>
 							</div>
 						</div>
 					</div>
-					<div id="content2" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
-            </div>
-          </div>
-          <div id="content3" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
-            </div>
-          </div>
-          <div id="content4" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
-            </div>
-          </div>
-          <div id="content5" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
-            </div>
-          </div>
-          <div id="content6" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><ul class="mui-table-view"></ul></div>
-            </div>
-          </div>
+					<!-- /ko -->
 				</div>
 			</div>
 		</div>
+		<script src="../../third/knockout.js"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.zoom.js"></script>
     <script src="../../js/mui.previewimage.js"></script>
@@ -309,13 +158,6 @@
     <script src="../../js/business/blx.js"></script>
 		<script>
       (function($, doc) {
-        //阻尼系数
-        var deceleration = $.os.ios?0.003:0.0009;
-        $('.mui-scroll-wrapper').scroll({
-          bounce: false,
-          indicators: true, //是否显示滚动条
-          deceleration:deceleration
-        });
         $.init({
           preloadPages:[{
             id:'KZ_BLX_DETAIL',
@@ -327,12 +169,125 @@
         });
         $.plusReady(function() {
           var limit = 5;
-          var groupid = 0;
           // 分页参数缓存
           var listRequest = {};
-          var beginKey = 'data-';
+          var viewModel = {
+            // 默认头像
+            defaultUserImage: ko.observable('../../images/tab-wode/user_default.png'),
+            category: ko.observableArray([]),
+            groupid: ko.observable(0),
+          }
+          viewModel.groupid.subscribe(function(newValue) {
+            var cur = viewModel.category().find(function(i){
+               return i.id == newValue;
+            });
+            if (cur) {
+              if (!cur._load) {
+                getList(1);
+              }
+            }
+          });
+          ko.applyBindings(viewModel, doc.getElementById('mainContent'));
+          // 初始化图片预览
           $.previewImage();
-          //发表
+          // 处理数据
+          var trimData = function(data){
+            data.isfollow = ko.observable(data.isfollow);
+            data.thing = ko.observable(data.thing);
+            data.read = ko.observable(data.read);
+            data.comments = ko.observable(data.comments);
+            return data
+          }
+          // 通知我的病例秀改变
+          var noticeMyBlx = function(opts) {
+            /*
+             type: 
+             1、点赞数变化 extra:{caseid:0,thing:0}
+             2、删除病例秀 extra:{caseid:0}
+             */
+            var myBlxWebview = plus.webview.getWebviewById('MY-BLX');
+            if (myBlxWebview != null) {
+              $.fire(myBlxWebview, 'BLX_LIST_CHANGE_EVENT', opts);
+            }
+          }
+          // 改变关注 
+          var checkGz = function(uid, status){
+            ko.utils.arrayForEach(viewModel.category(), function(_c){
+              ko.utils.arrayForEach(_c._list(), function(_i){
+                if (_i.userinfo.uid == uid) {
+                  _i.isfollow(status);
+                }
+              });
+            });
+          }
+          /* 绑定事件*/
+          // 关注事件
+          $('#sliderSegmentedContent').on('tap', '.gzfn', function(e){
+            var touid = this.getAttribute('touid');
+            blxFn.gzFn(touid, function(_res){
+              checkGz(touid, _res.status);
+            });
+          });
+          // 删除事件
+          $('#sliderSegmentedContent').on('tap', '.delfn', function(e){
+            var caseid = this.getAttribute('caseid');
+            blxFn.delFn(caseid, function() {
+              var groupid = viewModel.groupid();
+              var cur = viewModel.category().find(function(i){
+                 return i.id == groupid;
+              });
+              if (cur) {
+                var _index = cur._list().findIndex(function(i){
+                  return i.id == caseid;
+                });
+                cur._list.splice(_index, 1);
+                noticeMyBlx({
+                  type: 2,
+                  extra: {
+                    caseid: caseid
+                  }
+                });
+              }
+            });
+          });
+          // 点赞
+          $('#sliderSegmentedContent').on('tap', '.dzfn', function(e){
+            var caseid = this.getAttribute('caseid');
+            blxFn.dzFn(caseid, function() {
+              var groupid = viewModel.groupid();
+              var cur = viewModel.category().find(function(i){
+                 return i.id == groupid;
+              });
+              if (cur) {
+                var _index = cur._list().find(function(i){
+                  return i.id == caseid;
+                });
+                var _thing = _index.thing()+1;
+                _index.thing(_thing);
+                if (_index.isMe == 1) {
+                  noticeMyBlx({
+                    type: 1,
+                    extra: {
+                      caseid: caseid,
+                      thing: _thing
+                    }
+                  });
+                }
+              }
+            });
+          });
+          // 跳转详情
+          $('#sliderSegmentedContent').on('tap', '.detailfn', function(e){
+            var caseid = this.getAttribute('caseid');
+            var detailWebView = plus.webview.getWebviewById('KZ_BLX_DETAIL');
+            $.fire(detailWebView,'KZ_BLX_DATA',{
+              caseid:caseid
+            });
+            $.openWindow({
+              id: 'KZ_BLX_DETAIL'
+            });
+          });
+          // 跳转发表
           doc.getElementById('fb_blx').addEventListener('tap', function(){
             var fbWebview = plus.webview.getWebviewById('KZ_BLX_FB');
             $.fire(fbWebview,'KZ_BLX_FBREFRESH',{});
@@ -340,232 +295,98 @@
               id: 'KZ_BLX_FB'
             });
           });
+          /*接收 事件*/
           // 发表成功
           window.addEventListener('KZ_BLX_FB_SUCCESS', function(e){
-            var _data = e.detail.data;
-            var _tabid = '#content'+_data.group_id+' .mui-table-view';
-            var currenttab = doc.querySelector(_tabid);
-            currenttab.insertBefore(paintItem(_data), currenttab.childNodes[0]);
+            var _data = trimData(e.detail.data);
+            var _cur = viewModel.category().find(function(i){
+              return i.id == _data.group_id;
+            })
+            if (_cur) {
+              _cur._list.unshift(_data);
+            }
           });
-          // 详情webview
-          var gotoDetail = function(id) {
-            var _id = beginKey+groupid+'-'+id;
-            var data = utils.getDomData(_id);
-            var detailWebView = plus.webview.getWebviewById('KZ_BLX_DETAIL');
-            $.fire(detailWebView,'KZ_BLX_DATA',{
-              caseid:data.id
-            });
-            $.openWindow({
-              id: 'KZ_BLX_DETAIL'
-            });
-          }
           // 详情页更改后返回列表
-          window.addEventListener('BLX_DETAIL_CHANGE', function(e){
-            var _d = e.detail.data;
-            var _id = beginKey+groupid+'-'+_d.id;
-            utils.setDomData(_id, _d);
-            var _dom = doc.getElementById(_id);
-            if (_dom != null) {
-              _dom.innerHTML = '';
-              paintDom(_dom, _d);
+          window.addEventListener('BLX_DETAIL_TO_LIST', function(e){
+            var _d = e.detail;
+            if (_d.caseid > 0) {
+              $.each(viewModel.category(), function(index, _o) {
+              	  var _case = _o._list().find(function(i){
+              	    return i.id == _d.caseid;
+              	  })
+              	  if (_case) {
+              	    _case.read(_d.read);
+              	    _case.thing(_d.thing);
+              	    _case.comments(_d.comments);
+              	    return false;
+              	  }
+              });
             }
           });
-          // 画内部项
-          var paintDom = function(parent, data){
-            var _id = beginKey+groupid+'-'+data.id;
-            // 头部用户
-            var topDiv = doc.createElement('div');
-            topDiv.className = 'wb-top flex';
-            var userimage = data.userinfo.headurl || '../../images/tab-wode/user_default.png'
-            topDiv.innerHTML = '<div class="img flex flex-row-center"><img src="{0}"/></div>'.format(userimage);
-            var infoDiv = doc.createElement('div');
-            infoDiv.className = 'flex-1';
-            infoDiv.innerHTML = '<h2>{0}</h2><p>发表于：{1}</p>'.format(data.userinfo.nickname,data.creatime);
-            infoDiv.addEventListener('tap',function(e){
-              gotoDetail(data.id);
-            });
-            topDiv.appendChild(infoDiv);
-            // 删除个人病例秀
-            if (data.isMe == 1) {
-              var _del = doc.createElement('i');
-              _del.className = 'mui-icon mui-icon-trash';
-              _del.addEventListener('tap', function(e) {
-                blxFn.delFn(data.id, function() {
-                  parent.remove();
-                });
-              });
-              topDiv.appendChild(_del);
-            }
-            if (data.isMe == 2) {
-              var ins = doc.createElement('ins');
-              ins.className = 'flex flex-row-center';
-              ins.innerText = data.isfollow == 1 ? '取消关注' : '加关注';
-              ins.addEventListener('tap', function() {
-                blxFn.gzFn(data.userinfo.uid, function(_res){
-                  if (_res.status == 1) {
-                    ins.innerText = '取消关注';
-                  } else {
-                    ins.innerText = '加关注';
-                  }
-                  var _d = utils.getDomData(_id);
-                  if (_d != null) {
-                    _d.isfollow = _res.status;
-                    utils.setDomData(_id,_d);
-                  }
-                });
-              });
-              topDiv.appendChild(ins);             
-            }
-            parent.appendChild(topDiv);
-            // 内容
-            var contentDiv = doc.createElement('div');
-            contentDiv.className = 'word';
-            var cp = doc.createElement('p');
-            cp.innerText = data.contents;
-            cp.addEventListener('tap', function(){
-              gotoDetail(data.id);
-            });
-            contentDiv.appendChild(cp);
-            if (data.cases_image) {
-              var imgDiv = doc.createElement('div');
-              imgDiv.className = 'word-img';
-              $.each(data.cases_image, function(i,d) {
-                var _imgdiv = doc.createElement('div');
-                _imgdiv.className = 'img';
-                _imgdiv.innerHTML = '<img src="{0}" data-preview-src="" data-preview-group="{1}" />'.format(d.image, data.id);
-                imgDiv.appendChild(_imgdiv);
-              });
-              contentDiv.appendChild(imgDiv);
-            }
-            parent.appendChild(contentDiv);
-            // 评论
-            var plDiv = doc.createElement('div');
-            plDiv.className = 'pl flex';
-            var ydDiv = doc.createElement('div');
-            ydDiv.className = 'flex-1 flex flex-row-center flex-col-center';
-            ydDiv.innerHTML = '<img src="../../images/blx/pl1.png" /><span>{0}</span>'.format(data.read);
-            var pl = doc.createElement('div');
-            pl.className = 'flex-1 flex flex-row-center flex-col-center';
-            pl.innerHTML = '<img src="../../images/blx/pl2.png" /><span>{0}</span>'.format(data.comments);
-            pl.addEventListener('tap', function(e) {
-              gotoDetail(data.id);
-            });
-            var dz = doc.createElement('div');
-            dz.className = 'flex-1 flex flex-row-center flex-col-center';
-            dz.innerHTML = '<img src="../../images/blx/pl3.png" />';
-            // 点赞
-            var dzSpan = doc.createElement('span');
-            dzSpan.innerText = data.thing;
-            dz.appendChild(dzSpan);
-            dz.addEventListener('tap', function() {
-              blxFn.dzFn(data.id, function(){
-                dzSpan.innerText = data.thing + 1;
-                var _d = utils.getDomData(_id);
-                if (_d != null) {
-                  _d.thing += 1;
-                  dzSpan.innerText = _d.thing;
-                  utils.setDomData(_id,_d);
-                }
-              });
-            });
-            plDiv.appendChild(ydDiv);
-            plDiv.appendChild(pl);
-            plDiv.appendChild(dz);
-            parent.appendChild(plDiv);
-          }
-          // 画每一项
-          var paintItem = function(data) {
-            var _id = beginKey+groupid+'-'+data.id;
-            var li = doc.createElement('li');
-            li.id = _id;
-            li.data_data = JSON.stringify(data);
-            paintDom(li, data);
-            return li;
-          };
+          // 关注变化
+          window.addEventListener('KZ_BLX_GZ_CHANGE', function(e){
+            checkGz(e.detail.uid, e.detail.status);
+          });
           // 获取列表
-          var getList = function(page,callback){
+          var getList = function(page){
             if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
               return;
             }
-            request.loginAjax('cases/getlist', {
-              data: {
-                groupid: groupid,
-                page: page,
-                limit: limit,
-                type: 1
-              },
-              showMsg: false
-            }, function(data) {
-               // 处理页面绑定
-               if (data && data.data) {
-                 var currentContent = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
-                 if (page === 1) {
-                   currentContent.innerHTML = '';
-                 }
-                 $.each(data.data, function(index,i) {
-                   currentContent.appendChild(paintItem(i));
-                 });
-               }
-               // 判断是否有下一页数据
-               if (data && data.data && data.data.length === limit) {
-                 listRequest[groupid] = {
-                   page: page,
-                   more: true
-                 }
-               } else {
-                 listRequest[groupid] = {
-                   page: page,
-                   more: false
-                 }
-               }
-               if (typeof callback === 'function') {
-                 callback();
-               }
-            }, function() {
-               if (typeof callback === 'function') {
-                 callback();
-               }
+            var groupid = viewModel.groupid();
+            var cur = viewModel.category().find(function(i){
+               return i.id == groupid;
             });
-          }
-          // 分类
-          var category = categorys.get();
-          if (category.length > 0) {
-              var controls = doc.getElementById("sliderSegmentedControl");
-              var contents = doc.getElementById("sliderSegmentedContent");
-              var controlsHtml = [];
-              var contentsHtml = [];
-              $.each(category, function(index, item) {
-                var _controlHtml = '<a groupid={0} class="mui-control-item" href="#content{1}">{2}</a>';
-                _controlHtml = _controlHtml.format(item.id,item.id,item.title);
-                controlsHtml.push(_controlHtml);
-                var _contentHtml = '';
-                _contentHtml += '<div id="content{0}" class="mui-slider-item mui-control-content">'+
-                                ' <div class="mui-scroll-wrapper">'+
-                                '  <div class="mui-scroll">'+
-                                '   <ul class="mui-table-view">'+
-                                '   </ul>'+
-                                '  </div>'+
-                                ' </div>'+
-                                '</div>';
-                _contentHtml = _contentHtml.format(item.id);
-                contentsHtml.push(_contentHtml);
+            if (cur) {
+              cur._load = true;
+              if (page == 1) {
+                cur._list([]);
+              }
+              request.loginAjax('cases/getlist', {
+                 data: {
+                  groupid: groupid,
+                  page: page,
+                  limit: limit,
+                  type: 1
+                },
+                showMsg: false
+              }, function(data) {
+                // 处理页面绑定
+                 if (data && data.data) {
+                   $.each(data.data, function(index,i) {
+                     cur._list.push(trimData(i));
+                   });
+                 }
+                 // 判断是否有下一页数据
+                 if (data && data.data && data.data.length === limit) {
+                   listRequest[groupid] = {
+                     page: page,
+                     more: true
+                   }
+                 } else {
+                   listRequest[groupid] = {
+                     page: page,
+                     more: false
+                   }
+                 }
+              }, function() {
               });
-              controls.innerHTML = controlsHtml.join('');
-              contents.innerHTML = contentsHtml.join('');
-              controls.querySelector('.mui-control-item').classList.add('mui-active');
-              contents.querySelector('.mui-control-content').classList.add('mui-active');
-              // 初始加载项目
-              groupid = category[0].id;
-              getList(1);
+            }
+          }
+          // 初始化
+          var _category = categorys.get();
+          if (_category.length > 0) {
+            viewModel.groupid(_category[0].id);
+            $.each(_category, function(index, _c) {
+              _c._list = ko.observableArray([]);
+            });
+            viewModel.category(_category);
+            getList(1);
           }
           // 切换tab
           doc.querySelector('.mui-slider').addEventListener('slide', function(event) {
             var currentTab = doc.querySelector('.mui-control-item.mui-active');
-            groupid = currentTab.getAttribute('groupid');
-            if (listRequest[groupid]) {
-              return;
-            }
-            getList(1);
+            var groupid = currentTab.getAttribute('groupid');
+            viewModel.groupid(groupid);
           });
           //循环初始化所有下拉刷新，上拉加载。
           $.each(doc.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
@@ -573,25 +394,28 @@
               down: {
                 callback: function() {
                   var self = this;
-                  getList(1, function() {
+                  setTimeout(function(){
                     self.endPullDownToRefresh();
                     $(pullRefreshEl).pullToRefresh().refresh(true);
-                  });
+                  }, 500);
+                  getList(1);
                 }
               },
               up: {
                 callback: function() {
                   var self = this;
-                  if (listRequest[groupid]) {
-                    if (listRequest[groupid].more === true) {
-                      var page = listRequest[groupid].page + 1;
-                      getList(page, function(){
-                        self.endPullUpToRefresh(false);
-                      })
-                      return;
+                  var groupid = viewModel.groupid();
+                  setTimeout(function(){
+                    if (listRequest[groupid] && listRequest[groupid].more === true) {
+                      self.endPullUpToRefresh(false);
+                    } else {
+                      self.endPullUpToRefresh(true);
                     }
+                  }, 300);
+                  if (listRequest[groupid] && listRequest[groupid].more === true) {
+                    var page = listRequest[groupid].page + 1;
+                    getList(page);
                   }
-                  self.endPullUpToRefresh(true);
                 }
               }
             });

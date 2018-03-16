@@ -147,13 +147,11 @@
           var $pullrefresh = $('#pullrefresh');
           // 页面刷新
           window.addEventListener('KZ_BLX_DZ_ID', function(e){
-            if (id != e.detail.id) {
-              id = e.detail.id;
-              page = 1;
-              more = true;
-              $pullrefresh.pullToRefresh().refresh(true);
-              dataInit();
-            }
+            id = e.detail.id;
+            page = 1;
+            more = true;
+            $pullrefresh.pullToRefresh().refresh(true);
+            dataInit();
           });
           // 列表
           var $datalist = doc.getElementById('datalist');
@@ -192,6 +190,19 @@
                   } else {
                     p.className = 'btn';
                     p.innerText = '加关注';
+                  }
+                  // 通知列表页 及 详情页
+                  var fireData = {
+                    uid: data.uid,
+                    status: _d.status
+                  }
+                  var blxWebview = plus.webview.getWebviewById('KZ-BLX');
+                  if (blxWebview != null) {
+                    $.fire(blxWebview, 'KZ_BLX_GZ_CHANGE', fireData);
+                  }
+                  var blxDetailWebview = plus.webview.getWebviewById('KZ_BLX_DETAIL');
+                  if (blxDetailWebview != null) {
+                    $.fire(blxDetailWebview, 'KZ_BLX_GZ_CHANGE', fireData);
                   }
                 });
               });

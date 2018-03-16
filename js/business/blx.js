@@ -80,6 +80,6 @@
           callback(data);
         }
       });
-    }
+    },
   }
 })(window);
