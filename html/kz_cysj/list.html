@@ -74,6 +74,8 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
+      position: relative;
+      z-index: 5;
     }
     .imgbg .img img{
       width: 100%;
@@ -97,6 +99,12 @@
       z-index: 10;
       color: #765fc3;
       line-height: 40px;
+      font-size: 20px;
+    }
+    .imgbg .imgbtn .mui-icon{
+      font-size: 30px;
+    }
+    .imgbg .imgbtn .iconfont{
       font-size: 20px;
     }
   </style>
@@ -215,7 +223,7 @@
             viewModel.current(viewModel['list'+ groupid]()[_index - 2].image);
           }
         });
-        $('#mainContent').on('tap', '.img img', function(e){
+        $('#mainContent').on('tap', '.mui-control-content .img img', function(e){
           var index = this.getAttribute('index');
           var src = this.getAttribute('src');
           viewModel.hide(false);
@@ -230,23 +238,39 @@
           viewModel.total(0);
         });
         doc.getElementById('imgdownload').addEventListener('tap', function(){
-          var dtask = plus.downloader.createDownload(viewModel.current(), 
-            {filename: '_downloads/tcyy/'}, 
-          function ( d, status ) {
-            if ( status == 200 ) { 
-              $.toast( "保存成功");
-            }
-          });
-          dtask.start(); 
+          var cur = viewModel['list'+groupid]()[viewModel.curIndex()-1];
+          if (cur.id > 0) {
+            plus.gallery.save(cur.image, function(){
+              $.toast('保存成功');
+            });
+          }
         });
         doc.getElementById('imgshare').addEventListener('tap', function(){
-          var shareImg = viewModel.current();
-          shareApi.showActionSheet({
-            title: '',
-            content: '',
-            thumbs: [shareImg],
-            interface: 'auto'
-          });
+          var cur = viewModel['list'+groupid]()[viewModel.curIndex()-1];
+          if (cur.id > 0) {
+            var img = cur.image;
+            var _lsIdx = img.lastIndexOf('.');
+            var shareImg = '_downloads/tcyy/cysj/'+cur.id+img.substring(_lsIdx, img.length);
+            plus.io.resolveLocalFileSystemURL(shareImg, function(entry) {
+              shareApi.showActionSheet({
+                pictures: [shareImg],
+                interface: 'auto'
+              });
+            }, function(e) {
+              // 读不到文件则下载
+              var dtask = plus.downloader.createDownload(viewModel.current(), 
+                {filename: shareImg}, 
+              function ( d, status ) {
+                if ( status == 200 ) { 
+                  shareApi.showActionSheet({
+                    pictures: [shareImg],
+                    interface: 'auto'
+                  });
+                }
+              });
+              dtask.start();
+            });
+          }
         });
         var getList = function(page,callback){
           if (listRequest[groupid] && page !== 1 && listRequest[groupid].more === false) {
