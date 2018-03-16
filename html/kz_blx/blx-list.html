@@ -306,6 +306,25 @@
               _cur._list.unshift(_data);
             }
           });
+          // 我的病例秀通知病例秀列表
+          window.addEventListener('BLX_LIST_CHANGE_EVENT', function(e){
+            /*
+             type: 
+             1、点赞数变化 extra:{caseid:0,thing:0}
+             2、删除病例秀 extra:{caseid:0}
+             */
+            if(e.detail.type == 2){
+              $.each(viewModel.category(), function(index, _o) {
+                var _index = _o._list().findIndex(function(i){
+                  return i.id == e.detail.extra.caseid;
+                })
+                if (_index > -1) {
+                  _o._list.splice(_index, 1);
+                  return false;
+                }
+              });
+            }
+          });
           // 详情页更改后返回列表
           window.addEventListener('BLX_DETAIL_TO_LIST', function(e){
             var _d = e.detail;

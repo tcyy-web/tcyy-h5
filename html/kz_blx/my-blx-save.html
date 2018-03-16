@@ -6,6 +6,7 @@
   <title></title>
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/blx.css" />
   <style>
     body{
       background-color: #fff;
@@ -18,69 +19,6 @@
     .mui-pull-right{line-height: 44px;}
     .main{
       padding: 10px;
-    }
-    .wb-top{
-      position: relative;
-    }
-    .wb-top .img{
-      width: 60px;
-      height:60px;
-      -webkit-border-radius: 50%;
-      border-radius: 50%;
-      overflow: hidden;
-      margin-right: 10px;
-    }
-    .wb-top .img img{
-      width: auto;
-      height: 100%;
-    }
-    .wb-top h2{
-      font-size:16px;
-      color: #010101;
-      font-weight: normal;
-      padding-top:5px;
-      padding-bottom: 15px; 
-      
-    }
-    .wb-top h2+p{
-      font-size:14px;
-      color:#7c7c7c;
-    }
-    .wb-top ins{
-      position: absolute;
-      top:5px;
-      right:0;
-      z-index: 3;
-      text-decoration: none;
-      padding:0 5px;
-      background:#f4f4f4;
-      height: 20px;
-      border-radius: 5px;
-      -webkit-border-radius: 5px;
-      font-size:12px;
-      color:#6d6d6d;
-    }
-    .word p{
-      font-size:14px;
-      line-height: 20px;
-      color:#000000;
-      padding: 10px 0;
-    }
-    .word-img{
-      overflow: hidden;
-    }
-    .word-img .img{
-      width: 80px;
-      height: 80px;
-      float:left;
-      margin-right:10px;
-      margin-bottom: 10px;
-      overflow: hidden;
-    }
-    .word-img .img img{
-      width: 100%!important;
-      height: auto;
-      min-height: 100%;
     }
     .btns {
         position: fixed;
@@ -173,14 +111,6 @@
             });
           }
         }
-         /*图片预览*/
-        var previewImage = function(urllist, index) {
-          plus.nativeUI.previewImage(urllist, {
-            current: index,
-            loop: true,
-            indicator: 'number'
-          });
-        }
         // 发布
         doc.getElementById('sure').addEventListener('tap', function(e){
           request.loginAjax('cases/releaseDraft', {
@@ -190,11 +120,19 @@
             }, function(data, success) {
               if (success) {
                 detailData.type = 1;
-                var parent = plus.webview.currentWebview().opener();
-                 $.fire(parent, 'MY_BLX_CHANGE_STATUS',{
-                   data: detailData,
-                   flag: true
-                 });
+                var blxWebview = plus.webview.getWebviewById('KZ-BLX');
+                if (blxWebview != null) {
+                  $.fire(blxWebview, 'KZ_BLX_FB_SUCCESS', {
+                    data: detailData
+                  });
+                }
+                var myBlxWebview = plus.webview.getWebviewById('MY-BLX');
+                if (myBlxWebview != null) {
+                  $.fire(myBlxWebview, 'KZ_BLX_FB_SUCCESS', {
+                    data: detailData,
+                    fromsave: true
+                  });
+                }
                 $.back();
               }
           });
@@ -207,10 +145,12 @@
               }
             }, function(data, success) {
               if (success) {
-                var parent = plus.webview.currentWebview().opener();
-                 $.fire(parent, 'MY_BLX_CHANGE_STATUS',{
-                   data: detailData
-                 });
+                var myBlxWebview = plus.webview.getWebviewById('MY-BLX');
+                if (myBlxWebview != null) {
+                  $.fire(myBlxWebview, 'MY_BLX_CHANGE_STATUS', {
+                    caseid: detailData.id
+                  });
+                }
                 $.back();
               }
           });

@@ -138,7 +138,7 @@
 <body>
   <header class="mui-bar mui-bar-nav">
   	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-  	<h1 class="mui-title">病例编辑</h1>
+  	<h1 style="pointer-events: none;" class="mui-title">病例编辑</h1>
   <a id="bc_blx" class="mui-pull-right">保存到本地</a>
   </header>
   <div class="mui-content">
@@ -283,11 +283,26 @@
               }, function(data, success) {
                 if (success) {
                   hasSaved = true;
+                  // 通知我的列表 及列表页
+                  var myBlxWebview = plus.webview.getWebviewById('MY-BLX');
                   if (type == 1) {
-                     var parent = plus.webview.currentWebview().opener();
-                     $.fire(parent, 'KZ_BLX_FB_SUCCESS',{
-                       data: data
-                     });
+                    var blxWebview = plus.webview.getWebviewById('KZ-BLX');
+                    if (blxWebview != null) {
+                      $.fire(blxWebview, 'KZ_BLX_FB_SUCCESS', {
+                        data: data
+                      });
+                    }
+                    if (myBlxWebview != null) {
+                      $.fire(myBlxWebview, 'KZ_BLX_FB_SUCCESS', {
+                        data: data
+                      });
+                    }
+                  } else {
+                    if (myBlxWebview != null) {
+                      $.fire(myBlxWebview, 'KZ_BLX_SAVE_SUCCESS', {
+                        data: data
+                      });
+                    }
                   }
                   $.back();
                 }

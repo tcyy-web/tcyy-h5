@@ -6,6 +6,7 @@
   <title></title>
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/blx.css" />
   <style>
     body{
       background-color: #fff;
@@ -17,305 +18,6 @@
     .mui-pull-right{line-height: 44px;}
     .main{
       padding: 10px;
-    }
-    .wb-top{
-      position: relative;
-    }
-    .wb-top .img{
-      width: 60px;
-      height:60px;
-      -webkit-border-radius: 50%;
-      border-radius: 50%;
-      overflow: hidden;
-      margin-right: 10px;
-    }
-    .wb-top .img img{
-      width: auto;
-      height: 100%;
-    }
-    .wb-top h2{
-      font-size:16px;
-      color: #010101;
-      font-weight: normal;
-      padding-top:5px;
-      padding-bottom: 15px; 
-      
-    }
-    .wb-top p{
-      font-size:14px;
-      color:#7c7c7c;
-      padding-right: 30px;
-    }
-    .wb-top .mui-icon-trash{
-      font-size: 20px;
-      float: right;
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      z-index: 3;
-    }
-    .wb-top ins{
-      position: absolute;
-      top:5px;
-      right:0;
-      z-index: 3;
-      text-decoration: none;
-      padding:0 5px;
-      background:#f4f4f4;
-      height: 20px;
-      border-radius: 5px;
-      -webkit-border-radius: 5px;
-      font-size:12px;
-      color:#6d6d6d;
-    }
-    .word p{
-      font-size:14px;
-      line-height: 20px;
-      color:#000000;
-      padding: 10px 0;
-    }
-    .word-img{
-      overflow: hidden;
-    }
-    .word-img .img{
-      width: 80px;
-      height: 80px;
-      float:left;
-      margin-right:10px;
-      margin-bottom: 10px;
-      overflow: hidden;
-    }
-    .word-img .img img{
-      width: 100%!important;
-      height: auto;
-      min-height: 100%;
-    }
-    .pl{
-      position: relative;
-    }
-    .pl:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl:after{
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl .flex-1{
-      position: relative;
-      height: 50px;
-      color: #7c7c7c;
-      font-size: 14px;
-    }
-    .pl .flex-1:before{
-      position: absolute;
-      left: 0;
-      bottom: 10px;
-      top: 10px;
-      width: 1px;
-      content: '';
-      -webkit-transform: scaleX(.5);
-      transform: scaleX(.5);
-      background-color: #d6d6d6;
-    }
-    .pl .flex-1:first-child:before{
-      display: none;
-    }
-    .pl .flex-1 img{
-      width: 20px !important;
-      margin-right: 10px;
-    }
-    .pl-tx{
-      position: relative;
-      padding-top: 10px;
-        padding-right: 40px;
-        margin-top: 10px;
-    }
-    .pl-tx:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl-tx:after{
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl-tx .mui-icon{
-      position: absolute;
-      right: 0;
-      top: 10px;
-      color: #7c7c7c;
-      font-size: 30px;
-      z-index: 2;
-    }
-    .pl-tx .img{
-      float:left;
-      width: 30px;
-      height: 30px;
-      -webkit-border-radius: 50%;
-      border-radius: 50%;
-      overflow: hidden;
-      margin-right:10px;
-      margin-bottom: 10px;
-    }
-    .pl-tx .img img{
-      width: 100% !important;
-      height: auto;
-    }
-    
-    .pl-true{
-      position: relative;
-    }
-    .pl-true .mui-icon-trash{
-      font-size: 20px;
-    }
-    .pl-true:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl-true-img{
-      padding: 10px 0;
-    }
-    .pl-true-img .img{
-      width: 30px;
-      height: 30px;
-      -webkit-border-radius: 50%;
-      border-radius: 50%;
-      overflow: hidden;
-      margin-right: 10px;
-    }
-    .pl-true-img .img img{
-      width: 100% !important;
-      height: auto;
-    }
-    .p-name{
-      position: relative;
-      font-size:14px;
-      color:#195ea4;
-      padding-right: 100px;
-    }
-    .p-name span.time{
-      position: absolute;
-      right: 0;
-      top: 0;
-      color:#7c7c7c;
-    }
-
-    .p-txt{
-      color: #000000;
-        font-size:14px;
-    }
-    .pl-hf{
-      position: relative;
-      padding:10px 0;
-      padding-left: 40px;
-      background: #fff;
-    }
-    .pl-hf:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-
-    .pl-hf p{
-      font-size:14px;
-      color:#000000;
-    }
-    
-    .pl-hf p span{
-      color:#7c7c7c;
-    }
-    
-    .pl-hf p span.slip{
-      color:#195ea4;
-    }
-    
-    .pl-hf p span.txt{
-      color:#000;
-      margin-right: 10px;
-    }
-    .pl-more{
-      position: relative;
-      padding: 10px 0;
-      text-align: center;
-    }
-    .pl-more:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl-more:after{
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .ft{
-      width:100%;
-      background:#765fc3;
-      position: fixed;
-      bottom: 0;
-      font-size: 14px;
-      color: #fff;
-      height: 50px;
-    }
-    .ft img{
-      width: auto;
-      height: 20px;
-    }
-    .ft span{
-      margin-left: 10px;
     }
   </style>
 </head>
@@ -424,7 +126,62 @@
       FastClick.attach(document.body);
     }, false);
     (function($, doc) {
-        var detailData = {};
+        var viewModel = {
+          // 默认头像
+          defaultUserImage: ko.observable('../../images/tab-wode/user_default.png'),
+          detailData: ko.observable({}), // 详情数据
+          dzList: ko.observableArray([]), // 点赞的人
+          dzListFn: function() {
+            var dzWebview = plus.webview.getWebviewById('MY_BLX_DZ_USERS');
+            $.fire(dzWebview,'KZ_BLX_DZ_ID',{
+              id:detailData.id
+            });
+            $.openWindow({
+              id: 'MY_BLX_DZ_USERS'
+            });
+          },
+          plList: ko.observableArray([]), //评论
+          moreData: ko.observable(false),
+          getMore: function() {
+            page += 1;
+            plListFn(detailData.id);
+          },
+          delPlFn: function(data) {
+            var _index = viewModel.plList().findIndex(function(i){
+              return i.id == data.id || data.pid == i.id
+            });
+            blxFn.delPlFn(data.id, function(_res) {
+              if (data.pid > 0) {
+                // 删除的二级评论
+                var _pl = viewModel.plList()[_index];
+                var _index2 = _pl.child_comments().findIndex(function(i){
+                  return data.id == i.id;
+                });
+                _pl.child_comments.splice(_index2, 1);
+                viewModel.plList(viewModel.plList());
+              } else {
+                // 删除的一级评论
+                detailData.comments = _res.count;
+                viewModel.detailData(detailData);
+                viewModel.plList.splice(_index, 1);
+              }
+            });
+          },
+          hfFn:function(data) {
+            console.log(JSON.stringify(data));
+            var plWebview = plus.webview.getWebviewById('MY_BLX_PL');
+            $.fire(plWebview,'KZ_BLX_ID',{
+              case_id: detailData.id,
+              pid: data.pid,
+              touid: data.touid,
+              nickname: data.nickname
+            });
+            $.openWindow({
+              id: 'MY_BLX_PL'
+            });
+          }
+        }
+        ko.applyBindings(viewModel, doc.getElementById('mainContent'));
         $.init({
           preloadPages:[{
             id:'MY_BLX_PL',
@@ -434,95 +191,44 @@
             url: './blx-users.html'
           }],
           beforeback: function() {
-//          //获得所有已打开webview
-//          var list = plus.webview.all();
-//          $.each(list, function(index,item) {
-//            $.fire(item, 'BLX_DETAIL_CHANGE', {
-//              data: detailData
-//            });
-//          });
-//          return true;
+            var _detailData = viewModel.detailData();
+            if (_detailData.id > 0) {
+              var fireData = {
+                caseid: _detailData.id,
+                read: _detailData.read,
+                thing: _detailData.thing,
+                comments: _detailData.comments
+              }
+              // 通知我的列表 及列表页
+              var myBlxWebview = plus.webview.getWebviewById('MY-BLX');
+              if (myBlxWebview != null) {
+                $.fire(myBlxWebview, 'BLX_DETAIL_TO_LIST', fireData);
+              }
+              var blxWebview = plus.webview.getWebviewById('KZ-BLX');
+              if (blxWebview != null) {
+                $.fire(blxWebview, 'BLX_DETAIL_TO_LIST', fireData);
+              }
+            }
+            viewModel.detailData({});
+            viewModel.dzList([]);
+            viewModel.plList([]);
+            viewModel.moreData(false);
+            return true;
           }
         });
         $.plusReady(function() {
           var benren = authManage.getUser();
           $.previewImage();
-          var caseimglist = [];
           //一级评论分页参数
           var page = 1;
           var limit = 6;
-          var viewModel = {
-            // 默认头像
-            defaultUserImage: ko.observable('../../images/tab-wode/user_default.png'),
-            detailData: ko.observable({}), // 详情数据
-            dzList: ko.observableArray([]), // 点赞的人
-            dzListFn: function() {
-              var dzWebview = plus.webview.getWebviewById('MY_BLX_DZ_USERS');
-              $.fire(dzWebview,'KZ_BLX_DZ_ID',{
-                id:detailData.id
-              });
-              $.openWindow({
-                id: 'MY_BLX_DZ_USERS'
-              });
-            },
-            plList: ko.observableArray([]), //评论
-            moreData: ko.observable(false),
-            getMore: function() {
-              page += 1;
-              plListFn(detailData.id);
-            },
-            delPlFn: function(data) {
-              var _index = viewModel.plList().findIndex(function(i){
-                return i.id == data.id || data.pid == i.id
-              });
-              blxFn.delPlFn(data.id, function(_res) {
-                if (data.pid > 0) {
-                  // 删除的二级评论
-                  var _pl = viewModel.plList()[_index];
-                  var _index2 = _pl.child_comments().findIndex(function(i){
-                    return data.id == i.id;
-                  });
-                  _pl.child_comments.splice(_index2, 1);
-                  viewModel.plList(viewModel.plList());
-                } else {
-                  // 删除的一级评论
-                  detailData.comments = _res.count;
-                  viewModel.detailData(detailData);
-                  viewModel.plList.splice(_index, 1);
-                }
-              });
-            },
-            hfFn:function(data) {
-              console.log(JSON.stringify(data));
-              var plWebview = plus.webview.getWebviewById('MY_BLX_PL');
-              $.fire(plWebview,'KZ_BLX_ID',{
-                case_id: detailData.id,
-                pid: data.pid,
-                touid: data.touid,
-                nickname: data.nickname
-              });
-              $.openWindow({
-                id: 'MY_BLX_PL'
-              });
-            }
-          }
-          ko.applyBindings(viewModel, doc.getElementById('mainContent'));
           // 刷新详情
           window.addEventListener('MY_BLX_DATA', function(e){
-            // 清空之前数据
-            viewModel.detailData({});
-            viewModel.dzList([]);
-            viewModel.moreData(false);
-            viewModel.plList([]);
-            caseimglist.length = 0;
             page = 1;
             // 重新加载数据
             blxFn.detailFn(e.detail.caseid, function(_res) {
               detailData = _res;
               viewModel.detailData(detailData);
-              $.each(detailData.cases_image, function(i,d) {
-                caseimglist.push(d.image);
-              });
             });
             blxFn.dzUsersFn(e.detail.caseid, function(_res) {
               $.each(_res, function(index, d) {

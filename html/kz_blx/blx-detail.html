@@ -219,12 +219,12 @@
             page = 1;
             blxFn.detailFn(e.detail.caseid, function(res) {
               viewModel.detailData(res);
-              blxFn.dzUsersFn(e.detail.caseid, function(_res){
-                _res.isfollow = ko.observable(_res.isfollow);
-                viewModel.dzlist(_res);
-              });
-              plListFn(e.detail.caseid);
             });
+            blxFn.dzUsersFn(e.detail.caseid, function(_res){
+              _res.isfollow = ko.observable(_res.isfollow);
+              viewModel.dzlist(_res);
+            });
+            plListFn(e.detail.caseid);
           });
           // 评论成功
           window.addEventListener('KZ_BLX_PL_SUCCESS', function(e){
