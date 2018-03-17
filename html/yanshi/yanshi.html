@@ -12,13 +12,13 @@
     html,body{ height: 100%; margin: 0; padding: 0; }
     body{ background:#252a47; position: relative; overflow: hidden;}
     
-    .mui-bar{ height: 52px; background: none; box-shadow: none; }
-    .mui-bar .mui-icon{padding-top: 16px; font-size: 30px;}
+    .mui-bar{ height: 48px; background: none; box-shadow: none; }
+    .mui-bar .mui-icon{padding-top: 8px; font-size: 30px;}
     .mui-tooltip{ display: none;}
     .top_opt{ position: fixed; top: 0; left:0; }
-    .controller{ margin-left: 40px; position: relative; z-index: 3; }
-    .controller>span{ display: inline-block; border:1px solid #000; width: 40px; height: 40px; border-radius: 40px;}
-    .controller>span.current{ border: 1px solid #555; }
+    .controller{ margin-left: 40px; position: relative; z-index: 3; top:4px }
+    .controller>span{ display: inline-block; box-shadow: 0 0 3px #252a47; width: 32px; height: 32px; border-radius: 32px; margin-left: 3px;}
+    .controller>span.current{ border:1px solid #000; }
     .controller>span.red{ background: #d21277; }
     .controller>span.blue{ background: #21abb8; }
     .controller>span.yellow{ background: yellow; }
@@ -28,10 +28,10 @@
     .controller>span.white{ background: white; }
 
     .fl{ float: left;}
-    .top_opt{ padding: 8px 10px; background: #222743; display: block; width: 100%;}
+    .top_opt{ padding: 2px 10px; background: #222743; display: block; width: 100%;}
     .mui-input-range{ margin-left: 20px; margin-top: 3px;}
     
-    .opt span{ width: 40px; height: 40px; background: red; display: inline-block; float: left; margin-left: 20px;}
+    .opt span{ width: 30px; height: 40px; background: red; display: inline-block; float: left; margin-left: 20px;}
     .opt span.clear{ background: url(../../images/yangshi/xp.png) center center/100% auto no-repeat;}
     .opt span.file{ background: url(../../images/yangshi/wjj.png) center center/100% auto no-repeat;}
     .opt span.add{ background: url(../../images/yangshi/add.png) center center/100% auto no-repeat;}
@@ -39,19 +39,24 @@
     .opt span.undo{ background: url(../../images/yangshi/undo.png) center center/100% auto no-repeat;}
     .opt span.file{ margin-left: 60px;}
     
-    .left_opt{ z-index:3;position: fixed; top: 61px; left: 0; bottom:0; overflow-y: auto; width: 80px; text-align: center; background: #1c223f; color: #fff;}
-    .left_opt2{z-index:3; display: none; position: fixed; top: 61px; left: 80px; bottom:0; overflow-y: auto; width: 80px; text-align: center; background: #252a47; color: #fff; border-right: 1px solid #555; }
+    .left_opt{ z-index:3;position: fixed; top: 48px; left: 0; bottom:0; overflow-y: auto; width: 60px; text-align: center; background: #1c223f; color: #fff;}
+    .left_opt2{background: #252a47; display: none; margin-top:10px; }
     
     .left_opt li{padding: 10px 2px;}
     .left_opt li.active{ background: url(../../images/yangshi/a_l.png) 65px center no-repeat; }
     .left_opt2 li{ padding:10px;}
     .left_opt2 li>img{ width: 100%;}
-    .opt_img{ display: inline-block;}
     
+    .opt_img{ display: inline-block; position: relative; border:1px solid red;};
+    .opt_img p{ max-width: 88px; max-height: 88px;}
+    .opt_img.taped p{ outline: 1px solid #ccc;}
+    .opt_img img{ width: 100%; }
+    .opt_img{ display: inline-block; }
+    .opt_img.taped>i{position: absolute; width: 40px; height: 40px; right: -20px; top: -20px; box-shadow: 0 0 3px #333; border-radius: 40px; background:#fff;}
     .opt_img .delete{ color: #fff; font-size: 20px; position: absolute; right: -15px; top: -15px;}
-    .opt_img.active{ border:1px solid #ccc;}
     
-    .center_opt{z-index:3; display: none; position: fixed; top: 61px;left: 80px; bottom: 0; right: 0; background: #222743; overflow-y:auto;}
+    
+    .center_opt{z-index:3; display: none; position: fixed; top: 47px;left: 60px; bottom: 0; right: 0; background: #222743; overflow-y:auto;}
     .center_opt li{ width: 30%; margin-top: 3%; margin-left: 3%; float: left;}
     .center_opt li img{ width: 100%;}
     canvas#bg { position: absolute; z-index: 1; top: 0; left: 0;}
@@ -69,7 +74,7 @@
 		    <span class="red"  color="#d21277"></span>
 		    <span class="blue" color="#21abb8"></span>
 		  </div>
-		  <div class="mui-input-range fl"><input type="range" min="2" value="2" max="10"/></div>
+		  <div class="mui-input-range fl"><input type="range" min="1" value="1" max="10"/></div>
 		  <div class="opt">
 		  	<span class="clear"></span>
 		  	<!--<span class="undo"></span>-->
@@ -84,7 +89,7 @@
 
 
 <ul class="left_opt" id="left_list"> </ul>
-<ul class="left_opt2"> </ul>
+
   
 <ul class="center_opt"> </ul>
   
@@ -95,7 +100,8 @@
 
 <script src="../../third/jquery/jquery.js"></script>
 <script src="../../third/hammer/hammer.min.js"></script>
-<script src="../../js/business/hammer-opt.js"></script>
+
+<script src="../../js/business/dragElement.js"></script>
 <script src="../../js/business/handdraw.js"></script>
 
 <script>
@@ -124,13 +130,13 @@
       			window._yanshi_data = data;
       			
       	    var leftEle = doc.getElementById("left_list");
+      	    
       	    for( var i in obj){
       	    	var tar = obj[i];
       	    	var oli = doc.createElement("li");
-      	    	oli.innerText = tar.title;
+      	    	oli.innerHTML = "<span>"+tar.title+"</span>" +"<ul class='left_opt2'></ul>";
       	    	oli.setAttribute("cid",tar.id);
       	    	leftEle.appendChild( oli );
-      	
       	    }
       	  }
       	});

@@ -106,7 +106,7 @@
 		opacity: 1; 
 		} 
 		}
-		#fabu{
+		#fabu2{
 			position: relative;
 			z-index: 3;
 
@@ -121,7 +121,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">课程详情</h1>
-			<a id="fabu" class="mui-pull-right">我的课程</a>
+			<a id="fabu2" class="mui-pull-right">添加课程</a>
 		</header>
 		<div class="mui-content">
 			<img src="../../images/my/bg.png" id="headerImg" alt="" width="100%" />
@@ -154,22 +154,25 @@
 			var  trainArrangeWebview = null,trainUploadWebview = null;
 			var courseId = null,groupId = null;
 			(function($, doc) {
-				$.init({
-		          preloadPages:[{
-		            id:'trainArrange',
-		            url: './train-arrange.html',
-		            hardwareAccelerated:true
-		          },{
-		            url: './train-upload.html',
-		            id: 'KZ-TRAIN-UPLOAD',
-		            hardwareAccelerated:true
-		          }]
-		        });
+				$.init();
 
 				$('#scroll').scroll({
 					indicators: true //是否显示滚动条
 				});
 				$.plusReady(function() {
+				
+				$.preload({
+					 id:'trainArrange',
+		            url: './train-arrange.html',
+		            hardwareAccelerated:true
+
+				});
+				$.preload({
+					url: './train-upload.html',
+		            id: 'KZ-TRAIN-UPLOAD2',
+
+
+				});
 
 		          window.addEventListener('train-id', function(e){
 		            courseId = e.detail.id;
@@ -180,26 +183,11 @@
 						mui.toast("获取id失败");
 					}
 		          });
-				  var oFB = document.getElementById("fabu");
-				 
-				  oFB.addEventListener('tap', function(event){
-				 	
-				 	if (!trainUploadWebview) {
-		              trainUploadWebview = plus.webview.getWebviewById('KZ-TRAIN-UPLOAD');
-		            }
-		            $.fire(trainUploadWebview,'train-upload-id',{
-		                courseId :courseId,
-        				groupId : groupId
-		            });
-	             
-		            $.openWindow({
-						id: 'KZ-TRAIN-UPLOAD'
-		            });
-		               
-		             
-		         });
+				  
 					
 				});
+	
+			  
 			
 				
 				
@@ -224,9 +212,27 @@
 		      	    addEvent();
 		      	    auth = data.auth;
 		      	    if( auth == 1){
-		      	    	document.getElementById("fabu").style.display = "block";
+
+		      	    	document.getElementById("fabu2").addEventListener('click', function(event){
+			 	
+						 	if (!trainUploadWebview) {
+				              trainUploadWebview = plus.webview.getWebviewById('KZ-TRAIN-UPLOAD2');
+				            }
+				            mui.fire(trainUploadWebview,'train-upload-id',{
+				                courseId :courseId,
+			    				groupId : groupId
+				            });
+			             
+				            mui.openWindow({
+								id: 'KZ-TRAIN-UPLOAD2'
+				            });
+			
+				             
+				         });
+				         
+				         document.getElementById("fabu2").style.display = "inline-block";
 		      	    }else{
-		      	    	document.getElementById("fabu").style.display = "none";
+		      	    	document.getElementById("fabu2").style.display = "none";
 		      	    }
 					
 		      	  }

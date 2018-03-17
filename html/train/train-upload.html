@@ -132,6 +132,9 @@
 		.pcontent{
 			overflow-y:auto;
 		}
+		.pcontent .ptext{ display: inline-block; background: #fff; margin-left: 10px; padding: 5px 10px; border:1px solid #ccc; border-radius: 3px; position: relative;}
+		.pcontent .ptext::before{ content: ''; position: absolute; top:50%; left:-10px; margin-top: -5px; border-width:5px; border-style: solid; border-color: transparent #aaa transparent transparent;}
+		.pcontent .ptext::after{ content: ''; position: absolute; top:50%; left:-9px; margin-top: -5px; border-width:5px; border-style: solid; border-color: transparent #fff transparent transparent;}
 		.pcontent p{ color: #333; margin: 0; padding: 0; margin-bottom: 5px; font-size: 15px; padding: 2px 5px;}
 		.pcontent .vedio{ width: 50px; height: 50px; display: inline-block;  background: url(../../images/train/v_video.png) center center no-repeat; }
 		.pcontent .audio{ position: relative; border-radius: 30px; border:1px solid #999; width: 160px; height: 32px; display: inline-block;}
@@ -205,6 +208,7 @@
 
 <div class="mui-content">
 	<div id="pcontent" class="pcontent"></div>
+	
 </div>
 
 <div class="opt-bar">
@@ -282,6 +286,7 @@ var gentry = null;
 var localUrl = "_doc/media/";
 
 function plusReady(){
+
   
 	// 获取音频目录对象
 	plus.io.resolveLocalFileSystemURL('_doc/', function(entry){
@@ -401,7 +406,7 @@ function uploadImage(){
         var url = config.url + "Uploads/Files";
         upload.uploadimge( url , data.divid, function(res) {
         	
-  			createImage( data , res );
+  			createImage( res );
         },{
         	type: '5', 
 		    filetype: "1",
@@ -430,11 +435,16 @@ function uploadFile( opt ){
 }
 
 function creatText( st ){
-	var str = '<p class="ptext">'+st+'</p>';
+	if( st == "" ){
+		mui.toast("请输入内容");
+		return;
+	}
+	var str = '<p><span class="ptext">'+st+'</span></p>';
 	$(".pcontent").append( str );
 }
 
 function createImage( data){
+	
 	var st = '<p class="pimg"><img style="max-width: 100%;" src='+data[0].showUrl+'><p>'
 	$(".pcontent").append( st );
 }
@@ -649,11 +659,12 @@ function resetback(){
 	    id:courseId,
 	    groupid:groupId
 	  });
+	document.getElementById("pcontent").innerHTML = "";
 	Play.stopPlay();
 	Record.stopAudio();
 	_back();
 }
-window.back=resetback;
+window.back = resetback;
 })(jQuery)
 
 }

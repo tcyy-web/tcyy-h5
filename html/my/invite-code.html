@@ -3,16 +3,22 @@
 
 <head>
 	<meta charset="utf-8">
-	<title></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<link rel="stylesheet" href="../../css/mui.min.css">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+	<link rel="stylesheet" href="../../css/iconfont.css" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
 	<style>
 		.mui-content{ padding:15px; background: #fff;}
 		.mui-content p{ padding-top: 50px; color: #333; line-height: 2; text-align: center;}
 		.mui-content p>span{font-size: 36px; display: inline-block; padding:0 30px; letter-spacing: 2px; border:1px dashed #ccc; }
+		.mui-pull-right{
+	      line-height: 44px;
+	      height: 44px;
+	    }
+	    .mui-pull-right .iconfont{
+	      font-size: 20px;
+	    }
 	</style>
 </head>
 
@@ -20,6 +26,9 @@
 <header class="mui-bar mui-bar-nav">
 	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title">邀请码</h1>
+	<a id="share" class="mui-pull-right">
+	    <span class="iconfont icon-share"></span>
+	</a>
 </header>
 <div class="mui-content">
 	
@@ -33,7 +42,7 @@
 <script src="../../js/utils.category.js" ></script>
 <script src="../../js/utils.auth.js"></script>
 <script src="../../js/utils.request.js"></script>
-
+<script src="../../js/utils.share.js"></script>
 
 <script type="text/javascript">
 	
@@ -52,6 +61,16 @@ $.plusReady(function() {
 			document.getElementById("yaoqingma").style.display = "none";
 		}
 	});
+	
+	 // 分享
+	  doc.getElementById('share').addEventListener('tap', function(e) {
+	    shareApi.showActionSheet({
+	      href: url,
+	      title: '邀请你一起加入保护牙齿大家庭',
+	      thumbs: ['_www/images/share/logo.png'],
+	      interface: 'auto'
+	    });
+	  });
 
 });
 

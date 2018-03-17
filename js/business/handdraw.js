@@ -13,7 +13,7 @@
 		y: 0
 	};
 	var strokeColor = "#000";
-	var lineWidth = 2;
+	var lineWidth = 1;
 	
 	var historyArr = [];// 储存历史记录img
 	var now_his_index = -1;
@@ -103,7 +103,7 @@
     
     function drawBg(){
     	var link = $("body").attr("src");
-		drawImage(bgCanvas,link , 80 , 62);
+		drawImage(bgCanvas,link , 60 , 48);
     }
 
 	function addEventListener() {
@@ -210,12 +210,15 @@
 			drawBg();
 		});
 		$("body").on("tap", function() {
-			$(".left_opt2").hide();
+
 			$(".center_opt").hide();
 		});
-
-		$(".left_opt").on("tap", "li", function(e) {
+		
+		var index = 2;
+		
+		$(".left_opt").on("click", ">li", function(e) {
 			e.stopPropagation();
+			e.preventDefault();
 			var cid = $(this).attr("cid");
 			var tar = null;
 			for(var i in _yanshi_data) {
@@ -225,50 +228,47 @@
 					break;
 				}
 			}
-
-			renderLeftOpt2(tar["dome_image"]);
-			$(".left_opt2").show();
-		})
-
-		function renderLeftOpt2(arr) {
-			var oList = [];
-			for(var i in arr) {
-				var link = arr[i].image;
-				oList.push("<li><img src=" + link + "></li>");
-			}
-			$(".left_opt2").html(arr.length == 0 ? '' : oList.join(""));
-		}
-		var index = 2;
-		$(".left_opt2").on("tap", "li", function(e) {
+			
+			var oChild = $(this).find(".left_opt2")
+			renderLeftOpt2( tar["dome_image"] , oChild );
+			$(".left_opt2").hide()
+			oChild.show();
+			
+		}).on("click", ".left_opt2 li", function(e) {
+			
 			e.stopPropagation();
+			e.preventDefault();
+			
 			var oImg = $(this).find("img");
 			var sLink = oImg.attr("src");
 			var w = oImg.width(),
 				h = oImg.height();
 			var l = ($(window).width() - w) / 2,
 				t = ($(window).height() - h) / 2;
-			var oTar = $("<div class='opt_img'> <i></i><img width='100px' height='100px' src=" + sLink + "></div>").appendTo("body");
+			var oTar = $("<div class='opt_img'><p><img src=" + sLink + "></p> <i></i></div>").appendTo("body");
 			oTar.css({
 				"position": "absolute",
 				"left": 0,
 				"top":  0,
-				"width": w,
-				"height": h,
 				"z-index": index++
 			})
 			
-			oTar.find("i").css({
-				"position": "absolute",
-				"left": -w*2,
-				"top":  -h*2,
-				"width": w*8,
-				"height": h*8,
-				"z-index": index++
-			})
-		
-			$(".left_opt2").hide();
-			move(oTar[0])
+			var d = new Drag( oTar );
+				d.init();
+//			move(oTar[0])
 		});
+
+		function renderLeftOpt2(arr, tgt ) {
+			var oList = [];
+			
+			for( var i in arr ) {
+				var link = arr[i].image;
+				oList.push("<li><img src=" + link + "></li>");
+			}
+			
+			$(tgt).html( arr.length == 0 ? '' : oList.join(""));
+		}
+		
 
 		$("body").on('tap', ".del", function() {
 			$(this).parent().remove();

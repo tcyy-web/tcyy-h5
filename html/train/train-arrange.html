@@ -20,7 +20,11 @@
 			overflow-y:auto;
 			padding: 0 10px;
 		}
-		.pcontent p{ color: #333; margin: 0;  margin-bottom: 5px; font-size: 15px; padding: 2px 5px;}
+		.pcontent .ptext{ display: inline-block; background: #fff; margin-left: 10px; padding: 5px 10px; border:1px solid #ccc; border-radius: 3px; position: relative;}
+		.pcontent .ptext::before{ content: ''; position: absolute; top:50%; left:-10px; margin-top: -5px; border-width:5px; border-style: solid; border-color: transparent #aaa transparent transparent;}
+		.pcontent .ptext::after{ content: ''; position: absolute; top:50%; left:-9px; margin-top: -5px; border-width:5px; border-style: solid; border-color: transparent #fff transparent transparent;}
+		.pcontent p{ color: #333; margin: 0; padding: 0; margin-bottom: 5px; font-size: 15px; padding: 2px 5px;}
+		
 		.pcontent .vedio{ width: 50px; height: 50px; display: inline-block;  background: url(../../images/train/v_video.png) center center no-repeat; }
 		.pcontent .audio{ position: relative; border-radius: 30px; border:1px solid #999; width: 160px; height: 32px; display: inline-block;}
 		.pcontent .audio::before{
