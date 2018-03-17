@@ -86,11 +86,16 @@ Drag.prototype = {
 		
 		mc.on("panstart panmove", self.onPan.bind(self));
 		
-		mcClose.on("panstart panmove", self.onPanClose.bind(self));
+		mcClose.on("panstart panmove panend", self.onPanClose.bind(self));
 		
 		
 		
 		$(this.target).on("tap",function( ev ){
+			
+			if( $(this).hasClass("taped") ){
+				$(this).removeClass("taped");
+				return;
+			}
 			
 			$(".opt_img").removeClass("taped");
 			$(this).addClass("taped");
@@ -114,12 +119,37 @@ Drag.prototype = {
 	onPanClose: function( ev ){
 		var y = Math.sqrt( this.width/2 * this.width/2 + this.height/2 * this.height/2 );
 		var cal_x = this.width/2 + ev.deltaX , cal_y = this.height/2 + ev.deltaY;
-		var x = Math.sqrt( cal_x*cal_x + cal_y*cal_y)
-		this.scale =  (this.width + ev.deltaX)/this.width; 
+		var x = Math.sqrt( cal_x*cal_x + cal_y*cal_y);
+//		
+		this.scale =  (this.width + ev.deltaX*2)/this.width; 
 		
-		this.transform.scale = this.initScale * this.scale;
-		console.log( this.scale )
+
+//		console.log( this.transform.scale )
 //		console.log( ev.deltaX , ev.deltaY)
+
+//		this.initAngle = 0; //旋转角度
+//		this.initScale = 1; //放大倍数
+		
+		if( ev.type =="panstart"){
+			
+			this._y = ev.deltaY;
+			
+			this.initScale = this.transform.scale || 1;
+			
+		}else if( ev.type =="panmove"){
+			
+			this.transform.scale = this.initScale * this.scale;
+	
+			this._temp = this.initAngle - this._y + ev.deltaY;
+		
+			
+			this.transform.angle = this._temp;
+		}else if( ev.type =="panend"){
+			
+			this.initAngle = this._temp;
+			this._y = null;
+			
+		}
 		this.requestElementUpdate();
 		
 	},
@@ -129,15 +159,19 @@ Drag.prototype = {
 		var value = [
 			'translate3d(' + this.transform.translate.x + 'px, ' + this.transform.translate.y + 'px, 0)',
 			'scale(' + this.transform.scale + ', ' + this.transform.scale + ')',
-			'rotate3d(' + this.transform.rx + ',' + this.transform.ry + ',' + this.transform.rz + ',' + this.transform.angle + 'deg)'
+//			'rotate3d(' + this.transform.rx + ',' + this.transform.ry + ',' + this.transform.rz + ',' + this.transform.angle + 'deg)'
+			'rotate(' + this.transform.angle + 'deg)'
 		];
 		
-		$(this.target).css(
-			{
-				"transform": value.join(" "),
-				"z-index": this.index
-			}
-		)
+		var tgt = this.target[0];
+		
+		value = value.join(" ");
+		
+		tgt.style.webkitTransform = value; /*为Chrome/Safari*/
+		tgt.style.mozTransform = value; /*为Firefox*/
+		tgt.style.transform = value; /*IE Opera?*/
+		tgt.style.zIndex = this.index;
+		
 		
 		
 		this.ticking = false;
@@ -162,6 +196,8 @@ Drag.prototype = {
 			ry: 0,
 			rz: 0
 		}
+		
+		
 		this.requestElementUpdate();
 	}
 }
