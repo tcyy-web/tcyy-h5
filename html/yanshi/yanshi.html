@@ -122,7 +122,10 @@
   	
     
     function ajaxData(){
-      	request.ajax('domes/getGroup', {showMsg: false }, function(data, success) {
+      	request.ajax('domes/getGroup', {
+      	  showMsg: false,
+      	  showLoading:false
+      	}, function(data, success) {
       	
       	  if ( success ){
       	    var obj = data;

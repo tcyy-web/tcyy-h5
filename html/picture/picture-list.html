@@ -24,11 +24,13 @@
 			-moz-border-radius: 3px;
 			border-radius: 3px;
 			overflow: hidden;
-    	-webkit-box-shadow: #ccc 0px 2px 5px -1px;
-    	box-shadow: #ccc 0px 2px 5px -1px;
+  	   -webkit-box-shadow: #ccc 0px 2px 5px -1px;
+  	   box-shadow: #ccc 0px 2px 5px -1px;
 		}
 		.pic-item{
 			text-align: center;
+			height: 150px;
+			overflow: hidden;
 		}
 		.pic-item img{
 			width: 100%;
@@ -36,7 +38,6 @@
 		}
 		.pic-item.upload{
 			text-align: center;
-			height: 100px;
 			background-color: #f4f4f4;
 		}
 		.pic-item.upload img {
@@ -46,13 +47,14 @@
 			color: #303030;
 			height: 40px;
 			padding: 5px;
-			line-height: 15px;
+			line-height: 1.1;
+			overflow: hidden;
+			word-break: break-all;
 		}
 		.mui-row .mui-col-xs-6 p.p {
 			color: #bababa;
 		}
 	</style>
-
 </head>
 
 <body>
@@ -60,34 +62,40 @@
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">图片</h1>
 	</header>
-		<div class="mui-content">
+		<div id="mainContent" class="mui-content">
 			<div class="mui-fullscreen">
 		    <div class="mui-scroll-wrapper">
 		      <div id="pullrefresh" class="mui-scroll">
-						<div id="contentBox" class="mui-row">
-			        <!--<div class="mui-col-xs-6">
-	            	<div class="pic-item flex flex-row-center flex-col-center">
-	            		<img src="../../images/video/sc10.png" />
-	            	</div>
-	            	<p class="flex flex-row-center flex-col-center">刷牙方法</p>
+						<div class="mui-row">
+						  <!-- ko 'foreach':pictureList -->
+			        <div data-bind="attr:{imgid: id}" class="mui-col-xs-6 delimg">
+    	            	<div class="pic-item flex flex-row-center flex-col-center">
+    	            		<img data-bind="attr:{src: image}" data-preview-src="" data-preview-group="1" />
+    	            	</div>
+    	            	<p class="flex flex-row-center flex-col-center" data-bind="text:title"></p>
 			        </div>
-			        <div class="mui-col-xs-6">
+			        <!-- /ko -->
+			        <div id="uploadImg" data-bind="visible: createFlag" class="mui-col-xs-6">
 	              <div class="pic-item upload flex flex-row-center flex-col-center">
-	              	<img src="../../images/picture/bg1.png" />
+	              	  <img src="../../images/picture/bg1.png" />
 	              </div>
 	              <p class="p flex flex-row-center flex-col-center">上传图片</p>
-			        </div>-->
+			        </div>
 				    </div>
 		      </div>
 		    </div>
 		  </div>
 		</div>
+		<script src="../../third/knockout.js"></script>
 		<script src="../../js/mui.min.js"></script>
+	  <script src="../../js/mui.zoom.js"></script>
+    <script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script src="../../js/utils.config.js"></script>
 	  <script src="../../js/utils.extend.js"></script>
 	  <script src="../../js/utils.storages.js" ></script>
+	  <script src="../../js/utils.upload.js"></script>
 	  <script src="../../js/utils.auth.js"></script>
 	  <script src="../../js/utils.request.js"></script>
 		<script>
@@ -99,67 +107,46 @@
 					indicators: true, //是否显示滚动条
 					deceleration:deceleration
 				});
-				$.init();
+				$.init({
+				  gestureConfig: {
+            longtap: true
+          }
+				});
 				$.plusReady(function() {
-			  	var folderid = 0;
+			   	var folderid = 0;
  					var page = 1;
           var limit = 10;
           var more = true;
           var $pullrefresh = $('#pullrefresh');
-          var $contentBox = doc.getElementById('contentBox');
-          /*图片预览*/
-          var urls = [];
-          var images = [];
-					var picturePre = function(){
-						urls.length = 0;
-						// 获取图片地址列表
-					  images = doc.querySelectorAll('.pic-item img');
-					  for(var i = 0; i < images.length; i++) {
-					    urls.push(images[i].src);
-					  }
-					}
-				  // 监听图片的点击
-				  $('body').on('tap', 'img', function() {
-				    // 查询图片在列表中的位置
-				    // 由于dom节点列表是伪数组，需要处理一下
-				    var index = [].slice.call(images).indexOf(this);
-				    plus.nativeUI.previewImage(urls, {
-				      current: index,
-				      loop: true,
-				      indicator: 'number'
-				    });
-				  });
-	        var paintItem = function(data) {
-	          var boxDiv = doc.createElement('div');
-	          boxDiv.className = 'mui-col-xs-6';
-	          var imgDiv = doc.createElement('div');
-	          imgDiv.className = 'pic-item flex flex-row-center flex-col-center';
-	          imgDiv.innerHTML = '<img src="{0}" />'.format(data.image);
-	          boxDiv.appendChild(imgDiv);
-	          var p = doc.createElement('p');
-	          p.className = 'flex flex-row-center flex-col-center';
-	          p.innerText =  data.title;
-	          boxDiv.appendChild(p);
-	          $contentBox.appendChild(boxDiv);
-	        };
+          var viewModel = {
+            pictureList: ko.observableArray([]),
+            createFlag: ko.observable(false) // 是否可新增
+          }
+          ko.applyBindings(viewModel, doc.getElementById('mainContent'));
+          $.previewImage();
 					var getList = function(callback){
-						request.ajax('Picture/getlist', {
-							data: {
-								folderid: folderid,
-								page: page,
-								limit: limit
-							},
+					  if (page === 1) {
+               viewModel.pictureList([]);
+             }
+					  var _postData = {
+					    folderid: folderid,
+              page: page,
+              limit: limit,
+              type: 1
+					  }
+					  if (viewModel.createFlag()) {
+					    _postData.type = 2,
+					    _postData.code = authManage.getUser().code;
+					  }
+						request.loginAjax('Picture/getlist', {
+							data: _postData,
 							showMsg: false
 						}, function(data) {
                 // 处理页面绑定
 	             if (data && data.data) {
-	               if (page === 1) {
-	                 $contentBox.innerHTML = '';
-	               }
 	               $.each(data.data, function(index,i) {
-	                 paintItem(i);
+	                 viewModel.pictureList.push(i);
 	               });
-	               picturePre();
 	             }
 	             // 判断是否有下一页数据
 	             if (data && data.data && data.data.length === limit) {
@@ -179,10 +166,69 @@
 	        // 刷新分类
           window.addEventListener('picture-folderid', function(e){
             folderid = e.detail.folderid;
+            if (e.detail.isuser == true) {
+              viewModel.createFlag(true);
+            } else {
+              viewModel.createFlag(false);
+            }
             page = 1;
             more = true;
             $pullrefresh.pullToRefresh().refresh(true);
             getList();
+          });
+          // 上传图片
+          var addImg = function(imgname, imgurl) {
+            request.loginAjax('Picture/addImg', {
+              data: {
+                fid: folderid,
+                name: imgname,
+                image: imgurl
+              }
+            }, function(data, success) {
+               if (success) {
+                 viewModel.pictureList.unshift(data);
+               }
+            }, function() {
+            });
+          }
+          doc.getElementById('uploadImg').addEventListener('tap', function(){
+            $.prompt('', '请输入图片名称', '上传图片', null,function(obj){
+              if (obj.index == 1){
+                if (obj.value == '') {
+                  $.toast('请输入图片名称');
+                  return;
+                }
+                var imgname = obj.value;
+                upload.showImgActionSheet(function( data ){
+                  var url = config.url + "Uploads/Files";
+                  upload.uploadimge( url , data.divid, function(res) {
+                    addImg(imgname, res[0].saveUrl);
+                  },{
+                    type: '6'
+                  });
+                });
+              }
+            }, 'div');
+          });
+          // 删除图片
+          $('#mainContent').on('longtap', '.delimg', function(e) {
+            var imgid = this.getAttribute('imgid');
+            mui.confirm('确定删除？', '删除图片', null, function(obj){
+              if (obj.index === 1){
+                request.loginAjax('Picture/delImg', {
+                  data: {
+                    id: imgid
+                  }
+                }, function(data, success) {
+                  if (success) {
+                    var _index = viewModel.pictureList().findIndex(function(i){
+                      return i.id == imgid;
+                    });
+                    viewModel.pictureList.splice(_index, 1);
+                  }
+                });
+              }
+            }, 'div');
           });
 					$pullrefresh.pullToRefresh({
             down: {

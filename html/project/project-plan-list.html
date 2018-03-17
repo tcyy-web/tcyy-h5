@@ -16,22 +16,17 @@
 		    margin-left: -10px;
 		    padding: 12px;
 		  }
+		  #contentBox .mui-table-view-cell{
+		    padding: 0;
+		  }
+		  #contentBox .mui-table-view-cell:after{
+		    left: 0;
+		  }
 			.form-item {
 				position: relative;
 				background-color: #ffffff;
 				padding: 15px;
 				line-height: 20px;
-			}
-			.form-item:after{
-				position: absolute;
-		    right: 0;
-		    bottom: 0;
-		    left: 0;
-		    height: 1px;
-		    content: '';
-		    -webkit-transform: scaleY(.5);
-		    transform: scaleY(.5);
-		    background-color: #d6d6d6;
 			}
 			.form-item > p{
 				padding-left: 5px;
@@ -87,13 +82,20 @@
 		  <div class="mui-fullscreen">
 		    <div class="mui-scroll-wrapper">
 		      <div id="pullrefresh" class="mui-scroll">
-		        <div id="contentBox">
-              <!--<div class="flex form-item">
-                <p class="flex-1 flex flex-row-center">刘德华</p>
-                <p class="flex-1 flex flex-row-center">2000-10-10 00:00</p>
-                <p class="flex flex-row-center status3"><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
-              </div>-->
-            </div>
+		        <ul id="contentBox" class="mui-table-view">
+		          <!--<li class="mui-table-view-cell">
+                <div class="mui-slider-right mui-disabled">
+                  <a class="mui-btn mui-btn-red">删除</a>
+                </div>
+                <div class="mui-slider-handle">
+                  <div class="flex form-item">
+                    <p class="flex-1 flex flex-row-center">刘德华</p>
+                    <p class="flex-1 flex flex-row-center">2000-10-10 00:00</p>
+                    <p class="flex flex-row-center status3"><i class="iconfont icon-cshy-shizhong"></i>等待就诊</p>
+                  </div>
+                </div>
+              </li>-->
+            </ul>
 		      </div>
 		    </div>
 		  </div>
@@ -133,9 +135,45 @@
           var more = true;
           var $pullrefresh = $('#pullrefresh');
           var $contentBox = doc.getElementById('contentBox');
-          var projectPlanDetailWebView = null;
+          // 删除档案
+          var delFn = function(id, callback) {
+            request.loginAjax('project/delProjectUser', {
+              data: {
+                id: id
+              }
+            }, function(data, success) {
+              if (success){
+                callback();
+              }
+            });
+          }
           var paitItem = function(data) {
+            var li = doc.createElement('li');
+            li.className = 'mui-table-view-cell';
+            // 删除
+            var _deldiv = doc.createElement('div');
+            li.appendChild(_deldiv);
+            _deldiv.className = 'mui-slider-right mui-disabled';
+            var _dela = doc.createElement('a');
+            _deldiv.appendChild(_dela);
+            _dela.className = 'mui-btn mui-btn-red';
+            _dela.innerText = '删除';
+            _dela.addEventListener('tap', function(e) {
+              delFn(data.id, function() {
+                li.remove();
+                // 关联预约页
+                var _yuyueWebview = plus.webview.getWebviewById('PRODUCT-YUYUE');
+                if (_yuyueWebview != null) {
+                  $.fire(_yuyueWebview, 'project-plan');
+                }
+              });
+            });
+            // 内容
+            var _boxdiv = doc.createElement('div');
+            _boxdiv.className = 'mui-slider-handle';
+            li.appendChild(_boxdiv);
             var div = doc.createElement('div');
+            _boxdiv.appendChild(div);
             div.className = 'flex form-item';
             div.innerHTML = '<p class="flex-1 flex flex-row-center">{name}</p><p class="flex-1 flex flex-row-center">{booktime}</p>'.format(data);
             var p = doc.createElement('p');
@@ -143,9 +181,7 @@
             p.innerHTML = '<i class="iconfont icon-cshy-shizhong"></i>{0}'.format(enums.planStatus[data.status]);
             div.appendChild(p);
             div.addEventListener('tap', function(e) {
-              if (!projectPlanDetailWebView) {
-                projectPlanDetailWebView = plus.webview.getWebviewById('projectPlanDetail');
-              }
+              var  projectPlanDetailWebView = plus.webview.getWebviewById('projectPlanDetail');
               $.fire(projectPlanDetailWebView,'project-plan-id',{
                 id:data.id
               });
@@ -153,7 +189,7 @@
                 id: 'projectPlanDetail'
               });
             })
-            $contentBox.appendChild(div);
+            $contentBox.appendChild(li);
           }
           var getList = function(callback) {
             if (page !== 1 && more === false) {

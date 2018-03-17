@@ -62,6 +62,9 @@
 		.mui-row{
 			padding: 0 5px;
 		}
+		.mui-pull-right{
+		  line-height: 44px;
+		}
 		.mui-row .mui-col-xs-4{
 			margin: 0 5px 10px 5px;
 			width: calc(33.33333333% - 10px);
@@ -69,8 +72,8 @@
 			-moz-border-radius: 3px;
 			border-radius: 3px;
 			overflow: hidden;
-    	-webkit-box-shadow: #ccc 0px 2px 5px -1px;
-    	box-shadow: #ccc 0px 2px 5px -1px;
+    	  -webkit-box-shadow: #ccc 0px 2px 5px -1px;
+      	box-shadow: #ccc 0px 2px 5px -1px;
 		}
 		.pic-item{
 			background-color: #f4f4f4;
@@ -98,80 +101,58 @@
 	<header class="mui-bar mui-bar-nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">图片文件夹</h1>
+		<!--<a class="mui-pull-right">新增</a>-->
 	</header>
-		<div class="mui-content">
+		<div id="mainContent" class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
 				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 					<div class="mui-scroll" id="sliderSegmentedControl">
-						<a class="mui-control-item mui-active" href="#content1">
-              口腔种植
+					  <!-- ko 'foreach':category -->
+						<a data-bind="text: title,attr:{href:'#content'+id, groupid: id},css:{'mui-active': $index() == 0}" class="mui-control-item">
             </a>
-            <a class="mui-control-item" href="#content2">
-              口腔正畸
-            </a>
-            <a class="mui-control-item" href="#content3">
-              口腔修复
-            </a>
-            <a class="mui-control-item" href="#content4">
-              口腔外科
-            </a>
-            <a class="mui-control-item" href="#content5">
-              口腔内科
-            </a>
-            <a class="mui-control-item" href="#content6">
-              口腔美容
-            </a>
+            <!-- /ko -->
 					</div>
 				</div>
 				<div class="mui-slider-group" id="sliderSegmentedContent">
-					<div class="mui-slider-item mui-control-content mui-active">
+				  <!-- ko 'foreach':category -->
+					<div data-bind="attr:{id: 'content'+id},css:{'mui-active': $index() == 0}" class="mui-slider-item mui-control-content">
 						<div class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 								<div class="mui-row">
-					        <!--<div class="mui-col-xs-4">
-			            	<div class="pic-item flex flex-row-center flex-col-center">
-			            		<img src="../../images/picture/bg.png" />
-			            	</div>
-			            	<p class="flex flex-row-center flex-col-center">刷牙方法</p>
-					        </div>-->
-									<!--<div class="mui-col-xs-4">
+								  <!-- ko 'foreach':_systemlist -->
+					        <div data-bind="attr:{folderid:id}" class="mui-col-xs-4 systemdetail">
+    			            	<div class="pic-item flex flex-row-center flex-col-center">
+    			            		<img src="../../images/picture/bg.png" />
+    			            	</div>
+    			            	<p data-bind="text: title" class="flex flex-row-center flex-col-center"></p>
+					        </div>
+					        <!-- /ko -->
+					        <!-- ko 'foreach':_userlist -->
+                  <div data-bind="attr:{folderid:id,foldername:title}" class="mui-col-xs-4 userdetail">
+                    <div class="pic-item flex flex-row-center flex-col-center">
+                      <img src="../../images/picture/bg.png" />
+                    </div>
+                    <p data-bind="text: title" class="flex flex-row-center flex-col-center"></p>
+                  </div>
+                  <!-- /ko -->
+					        <!-- ko 'if':$root.createFlag -->
+									<div  class="mui-col-xs-4 addfolder">
 			              <div class="pic-item flex flex-row-center flex-col-center">
-			              	<img src="../../images/picture/bg1.png" />
+			              	  <img src="../../images/picture/bg1.png" />
 			              </div>
 			              <p class="p flex flex-row-center flex-col-center">创建文件夹</p>
-					        </div>-->
+					        </div>
+					        <!-- /ko -->
 						    </div>
 							</div>
 						</div>
 					</div>
-					<div id="content2" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><div class="mui-row"></div></div>
-            </div>
-          </div>
-          <div id="content3" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><div class="mui-row"></div></div>
-            </div>
-          </div>
-          <div id="content4" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><div class="mui-row"></div></div>
-            </div>
-          </div>
-          <div id="content5" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><div class="mui-row"></div></div>
-            </div>
-          </div>
-          <div id="content6" class="mui-slider-item mui-control-content">
-            <div class="mui-scroll-wrapper">
-              <div class="mui-scroll"><div class="mui-row"></div></div>
-            </div>
-          </div>
+					<!-- /ko -->
 				</div>
 			</div>
 		</div>
+		<script src="../../third/knockout.js"></script>
+		<script src="../../third/fastclick.js"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
@@ -182,6 +163,9 @@
 	  <script src="../../js/utils.auth.js"></script>
 	  <script src="../../js/utils.request.js"></script>
 		<script>
+		  window.addEventListener('load', function() {
+        FastClick.attach(document.body);
+      }, false);
 			(function($, doc) {
 				//阻尼系数
 				var deceleration = mui.os.ios?0.003:0.0009;
@@ -194,102 +178,237 @@
 					preloadPages:[{
             id:'pictureList',
             url: './picture-list.html'
-          }]
+          }],
+          gestureConfig: {
+            longtap: true
+          }
 				});
 				$.plusReady(function() {
-					var limit = 5;
-			  	var groupid = 0;
-			  	var listRequest = {};
-			  	var pictureListWebView = null;
-	        var paintItem = function(parent, data) {
-	          var boxDiv = doc.createElement('div');
-	          boxDiv.className = 'mui-col-xs-4';
-	          var imgDiv = doc.createElement('div');
-	          imgDiv.className = 'pic-item flex flex-row-center flex-col-center';
-	          imgDiv.innerHTML = '<img src="../../images/picture/bg.png" />';
-	          boxDiv.appendChild(imgDiv);
-	          var p = doc.createElement('p');
-	          p.className = 'flex flex-row-center flex-col-center';
-	          p.innerText =  data.title;
-	          boxDiv.appendChild(p);
-	          boxDiv.addEventListener('tap', function(event){
-              if (!pictureListWebView) {
-                pictureListWebView = plus.webview.getWebviewById('pictureList');
+				  var viewModel = {
+				    createFlag: ko.observable(false), // 是否可新增
+				    category: ko.observableArray([]),
+				    groupid: ko.observable(0),
+				  }
+				  viewModel.groupid.subscribe(function(newValue) {
+            var cur = viewModel.category().find(function(i){
+               return i.id == newValue;
+            });
+            if (cur) {
+              if (!cur._load) {
+                getSystemList(function(){
+                  getUserList();
+                });
               }
-              $.fire(pictureListWebView,'picture-folderid',{
-                folderid:data.id
+            }
+          });
+				  ko.applyBindings(viewModel, doc.getElementById('mainContent'));
+				  // 新增文件夹
+				  $('#mainContent').on('tap', '.addfolder', function() {
+				    $.prompt('', '请输入文件夹名称', '创建文件夹', null,function(obj){
+              if (obj.index == 1){
+                if (obj.value == '') {
+                  $.toast('请输入文件夹名称');
+                  return;
+                }
+                addFolder(obj.value);
+              }
+            }, 'div');
+				  });
+				  // 新增文件夹
+				  var addFolder = function(title) {
+				    var groupid = viewModel.groupid();
+				    request.loginAjax('Picture/addFolder', {
+                data: {
+                  groupid: groupid,
+                  title: title
+                }
+              }, function(data, success) {
+                 if (success) {
+                   var cur = viewModel.category().find(function(i){
+                     return i.id == groupid;
+                   });
+                   if (cur) {
+                     cur._userlist.unshift(data);
+                   }
+                 }
+              }, function() {
               });
-              $.openWindow({
-                id: 'pictureList'
+				  }
+				  // 删除文件夹
+          var delFolder = function(folderid) {
+            var groupid = viewModel.groupid();
+            request.loginAjax('Picture/delFolder', {
+              data: {
+                id: folderid
+              }
+            }, function(data, success) {
+               if (success) {
+                 var cur = viewModel.category().find(function(i){
+                   return i.id == groupid;
+                 });
+                 if (cur) {
+                   var _index = cur._userlist().findIndex(function(i){
+                     return i.id = folderid
+                   });
+                   cur._userlist.splice(_index, 1);
+                 }
+               }
+            }, function() {
+            });
+          }
+          // 修改文件夹
+          var editFolder = function(folderid, foldername) {
+            var groupid = viewModel.groupid();
+            request.loginAjax('Group/editFolder', {
+              data: {
+                id: folderid,
+                title: foldername
+              }
+            }, function(data, success) {
+               if (success) {
+                 var cur = viewModel.category().find(function(i){
+                   return i.id == groupid;
+                 });
+                 if (cur) {
+                   var _index = cur._userlist().findIndex(function(i){
+                     return i.id == folderid
+                   });
+                   if (_index > -1) {
+                     var _newfolder = {
+                       id: folderid,
+                       title: foldername
+                     };
+                     cur._userlist.splice(_index, 1, _newfolder);
+                   }
+                 }
+               }
+            }, function() {
+            });
+          }
+				  // 系统文件夹
+				  $('#mainContent').on('tap', '.systemdetail', function(e) {
+				    var folderid = this.getAttribute('folderid');
+				    var _webview = plus.webview.getWebviewById('pictureList');
+				    $.fire(_webview, 'picture-folderid', {
+				      folderid: folderid,
+				      isuser: false
+				    });
+				    $.openWindow({
+				      id: 'pictureList'
+				    });
+          });
+          // 用户文件夹
+          $('#mainContent').on('tap', '.userdetail', function(e) {
+            var folderid = this.getAttribute('folderid');
+            var _webview = plus.webview.getWebviewById('pictureList');
+            $.fire(_webview, 'picture-folderid', {
+              folderid: folderid,
+              isuser: true
+            });
+            $.openWindow({
+              id: 'pictureList'
+            });
+          });
+          $('#mainContent').on('longtap', '.userdetail', function(e) {
+            var folderid = this.getAttribute('folderid');
+            var foldername = this.getAttribute('foldername');
+            var actionstyle = {
+              title: "操作",
+              cancel: "取消",
+              buttons: [{
+                title: '修改'
+              },{
+                title: '删除'
+              }]
+            };
+            plus.nativeUI.actionSheet(actionstyle, function(e) {
+              if (e.index == 1) {
+                // 修改
+                $.prompt('', foldername, '修改文件夹', null,function(obj){
+                  if (obj.index == 1){
+                    if (obj.value == '') {
+                      $.toast('请输入文件夹名称');
+                      return;
+                    }
+                    editFolder(folderid,obj.value);
+                  }
+                }, 'div');
+              } else if (e.index == 2) {
+                // 删除
+                delFolder(folderid);
+              }
+            });
+          });
+				  // 获取系统文件夹
+          var getSystemList = function(callback){
+            var groupid = viewModel.groupid();
+            var cur = viewModel.category().find(function(i){
+               return i.id == groupid;
+            });
+            if (cur) {
+               cur._systemlist([]);
+               cur._load = true;
+               request.ajax('group/getPictureFolder', {
+                data: {
+                  groupid: groupid
+                },
+                showMsg: false
+              }, function(data) {
+                 if (data && data.length > 0) {
+                   $.each(data, function(index, _d){
+                     cur._systemlist.push(_d);
+                   });
+                 }
+                 callback();
+              }, function() {
+                callback();
               });
-	          });
-	          parent.appendChild(boxDiv);
-	        };
-					var getList = function(callback){
-						request.ajax('group/getPictureFolder', {
-							data: {
-								groupid: groupid
-							},
-							showMsg: false
-						}, function(data) {
-						  // 处理页面绑定
-	             if (data) {
-	               var currentContent = doc.querySelector('.mui-control-content.mui-active .mui-row');
-	               currentContent.innerHTML = '';
-	               $.each(data, function(index,i) {
-	               	paintItem(currentContent,i);
-	               });
-	               listRequest[groupid] = groupid;
-	             }
-	             if (typeof callback === 'function') {
-	               callback();
-	             }
-						}, function() {
-	             if (typeof callback === 'function') {
-	               callback();
-	             }
-						});
-					}
-	        // 分类
-	        var category = categorys.get();
-	        if (category.length > 0) {
-	            var controls = doc.getElementById("sliderSegmentedControl");
-	            var contents = doc.getElementById("sliderSegmentedContent");
-	            var controlsHtml = [];
-	            var contentsHtml = [];
-	            $.each(category, function(index, item) {
-	              var _controlHtml = '<a groupid={0} class="mui-control-item" href="#content{1}">{2}</a>';
-	              _controlHtml = _controlHtml.format(item.id,index,item.title);
-	              controlsHtml.push(_controlHtml);
-	              var _contentHtml = '';
-	              _contentHtml += '<div id="content{0}" class="mui-slider-item mui-control-content">'+
-	                              ' <div class="mui-scroll-wrapper">'+
-	                              '  <div class="mui-scroll">'+
-	                              '   <div class="mui-row">'+
-	                              '   </div>'+
-	                              '  </div>'+
-	                              ' </div>'+
-	                              '</div>';
-	              _contentHtml = _contentHtml.format(index, index);
-	              contentsHtml.push(_contentHtml);
-	            });
-	            controls.innerHTML = controlsHtml.join('');
-	            contents.innerHTML = contentsHtml.join('');
-	            controls.querySelector('.mui-control-item').classList.add('mui-active');
-	            contents.querySelector('.mui-control-content').classList.add('mui-active');
-	            // 初始加载项目
-	            groupid = category[0].id;
-	            getList();
-	        }
+            }
+          }
+          // 获取用户文件夹
+          var getUserList = function(){
+            var groupid = viewModel.groupid();
+            var cur = viewModel.category().find(function(i){
+               return i.id == groupid;
+             });
+            if (cur) {
+               cur._userlist([]);
+               request.loginAjax('group/getUserFolder', {
+                data: {
+                  groupid: groupid
+                },
+                showMsg: false
+              }, function(data) {
+                 if (data && data.length > 0) {
+                   $.each(data, function(index, _d){
+                     cur._userlist.push(_d);
+                   });
+                 }
+              }, function() {
+              });
+            }
+          }
+				  // 初始化
+				  var _category = categorys.get();
+				  if (_category.length > 0) {
+				    viewModel.groupid(_category[0].id);
+				    $.each(_category, function(index, _c) {
+				      _c._systemlist = ko.observableArray([]);
+				      _c._userlist = ko.observableArray([]);
+				    });
+				    viewModel.category(_category);
+				    getSystemList(function(){
+				      getUserList();
+				    });
+				    if (authManage.checkLogin()) {
+              viewModel.createFlag(true);
+            }
+				  }
 	        // 切换tab
 	        doc.querySelector('.mui-slider').addEventListener('slide', function(event) {
-	          var contentValue = event.detail.slideNumber;
 	          var currentTab = doc.querySelector('.mui-control-item.mui-active');
-	          groupid = currentTab.getAttribute('groupid');
-	          if (listRequest[groupid]) {
-	            return;
-	          }
-	          getList();
+	          var groupid = currentTab.getAttribute('groupid');
+	          viewModel.groupid(groupid);
 	        });
 					//循环初始化所有下拉刷新，上拉加载。
 					$.each(doc.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
@@ -297,9 +416,12 @@
 							down: {
 								callback: function() {
 	                var self = this;
-								  getList(function() {
-								    self.endPullDownToRefresh();
-								  });
+	                setTimeout(function(){
+	                  self.endPullDownToRefresh();
+	                }, 500);
+								  getSystemList(function(){
+                    getUserList();
+                  });
 								}
 							}
 						});

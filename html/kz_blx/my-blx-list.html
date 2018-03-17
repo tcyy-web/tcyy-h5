@@ -6,6 +6,7 @@
 	<title></title>
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/blx.css" />
 	<style>
 	  .mui-pull-top-tips {
       z-index: 10;
@@ -40,98 +41,6 @@
     .mui-table-view > li:first-child{
       margin-top: 0;
     }
-    
-    .wb-top{
-    	position: relative;
-    }
-    .wb-top p{
-    	font-size:14px;
-    	color:#7c7c7c;
-    }
-    .wb-top p{
-      font-size:14px;
-      color:#7c7c7c;
-      padding-right: 30px;
-    }
-    .wb-top .mui-icon-trash{
-      font-size: 20px;
-      float: right;
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      z-index: 3;
-    }
-    .word p{
-    	font-size:14px;
-    	line-height: 20px;
-    	color:#000000;
-    	padding: 10px 0;
-    }
-    .word-img{
-    	overflow: hidden;
-    }
-    .word-img .img{
-      width: 80px;
-      height: 80px;
-      float:left;
-      margin-right:10px;
-      margin-bottom: 10px;
-      overflow: hidden;
-    }
-    .word-img .img img{
-      width: 100%!important;
-      height: auto;
-      min-height: 100%;
-    }
-    .pl{
-      position: relative;
-    }
-    .pl:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl:after{
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl .flex-1{
-      position: relative;
-      height: 50px;
-      color: #7c7c7c;
-      font-size: 14px;
-    }
-    .pl .flex-1:before{
-      position: absolute;
-      left: 0;
-      bottom: 10px;
-      top: 10px;
-      width: 1px;
-      content: '';
-      -webkit-transform: scaleX(.5);
-      transform: scaleX(.5);
-      background-color: #d6d6d6;
-    }
-    .pl .flex-1:first-child:before{
-      display: none;
-    }
-    .pl .flex-1 img{
-      width: 20px !important;
-      margin-right: 10px;
-    }
 	</style>
 
 </head>
@@ -149,41 +58,45 @@
       <span class="mui-tab-label">未共享</span>
     </a>
   </nav>
-	<div class="mui-content">
+	<div id="mainContent" class="mui-content">
 	  <div id="tabbar" class="mui-control-content mui-active">
       <div class="mui-scroll-wrapper">
         <div class="mui-scroll">
-          <ul id="fabulist" class="mui-table-view">
+          <ul class="mui-table-view">
+            <!-- ko 'foreach':fblist -->
             <li>
               <div class="wb-top flex">
                 <div class="flex-1">
-                  <p>发表于：2017-05-03</p>
+                  <p data-bind="text: '发表于：'+creatime,attr:{caseid: id}" class="detailfn"></p>
                 </div>
-                <i class="mui-icon mui-icon-trash"></i>
+                <i data-bind="attr:{caseid: id}" class="delfn mui-icon mui-icon-trash"></i>
               </div>
               <div class="word">
-                <p>深圳软件创业基地聚集大量孵化园</p>
+                <p data-bind="text: contents,attr:{caseid: id}" class="detailfn"></p>
                 <div class="word-img">
-                  <div class="img">
-                    <img src="../../images/weibo/img.png"/>
+                  <!-- ko 'foreach':cases_image -->
+                  <div class="img flex flex-row-center">
+                    <img data-bind="attr:{ src:image, 'data-preview-group': $parent.id }" data-preview-src=""/>
                   </div>
+                  <!-- /ko -->
                 </div>
               </div>
               <div class="pl flex">
                 <div class="flex-1 flex flex-row-center flex-col-center">
                   <img src="../../images/blx/pl1.png" />
-                  <span>1</span>
+                  <span data-bind="text:read "></span>
                 </div>
                 <div class="flex-1 flex flex-row-center flex-col-center">
                   <img src="../../images/blx/pl2.png" />
-                   <span>1</span>
+                   <span data-bind="text:comments "></span>
                 </div>
                 <div class="flex-1 flex flex-row-center flex-col-center">
                   <img src="../../images/blx/pl3.png" />
-                   <span>1</span>
+                   <span data-bind="text:thing "></span>
                 </div>
               </div>
             </li>
+            <!-- /ko -->
           </ul>
         </div>
       </div>
@@ -192,12 +105,34 @@
       <div class="mui-scroll-wrapper">
         <div class="mui-scroll">
           <ul class="mui-table-view">
+            <!-- ko 'foreach':savelist -->
+            <li>
+              <div class="wb-top flex">
+                <div class="flex-1">
+                  <p data-bind="text: '创建于：'+creatime,attr:{caseid: id}" class="detailsavefn"></p>
+                </div>
+              </div>
+              <div class="word">
+                <p data-bind="text: contents,attr:{caseid: id}" class="detailsavefn"></p>
+                <div class="word-img">
+                  <!-- ko 'foreach':cases_image -->
+                  <div class="img flex flex-row-center">
+                    <img data-bind="attr:{ src:image, 'data-preview-group': $parent.id }" data-preview-src=""/>
+                  </div>
+                  <!-- /ko -->
+                </div>
+              </div>
+            </li>
+            <!-- /ko -->
           </ul>
         </div>
       </div>
     </div>
 	</div>
+	<script src="../../third/knockout.js"></script>
 	<script src="../../js/mui.min.js"></script>
+  <script src="../../js/mui.zoom.js"></script>
+  <script src="../../js/mui.previewimage.js"></script>
 	<script src="../../js/mui.pullToRefresh.js"></script>
 	<script src="../../js/mui.pullToRefresh.material.js"></script>
 	<script src="../../js/utils.config.js"></script>
@@ -230,127 +165,133 @@
         // 3我发布的  2 我保存的
         var type = 3;
         var listRequest = {};
-        var beginKey = 'data_';
-         /*图片预览*/
-        var previewImage = function(urllist, index) {
-          plus.nativeUI.previewImage(urllist, {
-            current: index,
-            loop: true,
-            indicator: 'number'
-          });
+        $.previewImage();
+        // 处理数据
+        var trimData = function(data){
+          data.thing = ko.observable(data.thing);
+          data.read = ko.observable(data.read);
+          data.comments = ko.observable(data.comments);
+          return data
         }
-        // 详情webview
-        var gotoDetail = function(data) {
-          if (data.type == 1) {
-            var detailWebView = plus.webview.getWebviewById('MY_BLX_DETAIL');
-            $.fire(detailWebView,'MY_BLX_DATA',{
-              caseid:data.id
-            });
-            $.openWindow({
-              id: 'MY_BLX_DETAIL'
-            });            
-          } else {
-            //草稿
+        var viewModel = {
+          fblist: ko.observableArray([]),
+          savelist: ko.observableArray([])
+        }
+        ko.applyBindings(viewModel, doc.getElementById('mainContent'));
+        /*绑定事件*/
+        // 跳转发布详情
+        $('#mainContent').on('tap', '.detailfn', function(e){
+          var caseid = this.getAttribute('caseid');
+          var detailWebView = plus.webview.getWebviewById('MY_BLX_DETAIL');
+          $.fire(detailWebView,'MY_BLX_DATA',{
+            caseid:caseid
+          });
+          $.openWindow({
+            id: 'MY_BLX_DETAIL'
+          });
+        });
+        // 跳转草稿详情
+        $('#mainContent').on('tap', '.detailsavefn', function(e){
+          var caseid = this.getAttribute('caseid');
+          var data = viewModel.savelist().find(function(i){
+            return i.id  == caseid;
+          });
+          if (data) {
             var detailWebView = plus.webview.getWebviewById('MY_BLX_SAVE');
             $.fire(detailWebView,'MY_BLX_SAVE_DATA',{
               data:data
             });
             $.openWindow({
               id: 'MY_BLX_SAVE'
-            });            
+            });
           }
-        }
-        var $falist = doc.getElementById('fabulist');
-        // 草稿处理完成后
-        window.addEventListener('MY_BLX_CHANGE_STATUS', function(e){
-          var _id = beginKey+type+'_'+e.detail.data.id;
-          var _dom = doc.getElementById(_id);
-          if (_dom != null) {
-            _dom.remove();
-          }
-          if (e.detail.flag == true) {
-            // 发布
-            $falist.insertBefore(paintItem(e.detail.data), $falist.childNodes[0]);
-          } 
         });
-        // 画每一项
-        var paintItem = function(data) {
-          var li = doc.createElement('li');
-          li.id = beginKey+type+'_'+data.id;
-          // 头部用户
-          var topDiv = doc.createElement('div');
-          topDiv.className = 'wb-top flex';
-          var infoDiv = doc.createElement('div');
-          infoDiv.className = 'flex-1';
-          var str = data.type == 1 ? '发表于' : '创建于';
-          infoDiv.innerHTML = '<p>{0}：{1}</p>'.format(str,data.creatime);
-          infoDiv.addEventListener('tap',function(e){
-            gotoDetail(data);
-          });
-          if (data.type == 1) {
-            var _del = doc.createElement('i');
-            _del.className = 'mui-icon mui-icon-trash';
-            _del.addEventListener('tap', function(e) {
-              blxFn.delFn(data.id, function() {
-                li.remove();
-              });
+        // 删除事件
+        $('#mainContent').on('tap', '.delfn', function(e){
+          var caseid = this.getAttribute('caseid');
+          blxFn.delFn(caseid, function() {
+            var _index = viewModel.fblist().findIndex(function(i){
+              return i.id == caseid;
             });
-            topDiv.appendChild(_del);
-          }
-          topDiv.appendChild(infoDiv);
-          li.appendChild(topDiv);
-          // 内容
-          var contentDiv = doc.createElement('div');
-          contentDiv.className = 'word';
-          var cp = doc.createElement('p');
-          cp.innerText = data.contents;
-          cp.addEventListener('tap', function(){
-            gotoDetail(data);
-          });
-          contentDiv.appendChild(cp);
-          if (data.cases_image) {
-            var imgDiv = doc.createElement('div');
-            imgDiv.className = 'word-img';
-            var caseurllist = [];
-            $.each(data.cases_image, function(i,d) {
-              var img = doc.createElement('div');
-              img.className = 'img';
-              img.innerHTML = '<img src="{0}" />'.format(d.image);
-              caseurllist.push(d.image);
-              img.addEventListener('tap', function() {
-                previewImage(caseurllist, i);
+            viewModel.fblist.splice(_index, 1);
+            var blxWebview = plus.webview.getWebviewById('KZ-BLX');
+            if (blxWebview != null) {
+              $.fire(blxWebview, 'BLX_LIST_CHANGE_EVENT', {
+                type: 2,
+                extra: {
+                  caseid: caseid
+                }
               });
-            	imgDiv.appendChild(img);
+            }
+          });
+        });
+        // 草稿删除
+        window.addEventListener('MY_BLX_CHANGE_STATUS', function(e){
+          var _index = viewModel.savelist().findIndex(function(i){
+            return i.id == e.detail.caseid;
+          });
+          viewModel.savelist.splice(_index,1);
+        });
+        // 详情页更改后返回列表
+        window.addEventListener('BLX_DETAIL_TO_LIST', function(e){
+          var _d = e.detail;
+          if (_d.caseid > 0) {
+            var _case = viewModel.fblist().find(function(i){
+              return i.id == _d.caseid;
             });
-            contentDiv.appendChild(imgDiv);
+            if (_case) {
+              _case.read(_d.read);
+              _case.thing(_d.thing);
+              _case.comments(_d.comments);
+            }
           }
-          li.appendChild(contentDiv);
-          if (data.type == 1) {
-            // 评论
-            var plDiv = doc.createElement('div');
-            plDiv.className = 'pl flex';
-            var ydDiv = doc.createElement('div');
-            ydDiv.className = 'flex-1 flex flex-row-center flex-col-center';
-            ydDiv.innerHTML = '<img src="../../images/blx/pl1.png" /><span>{0}</span>'.format(data.read);
-            var pl = doc.createElement('div');
-            pl.className = 'flex-1 flex flex-row-center flex-col-center';
-            pl.innerHTML = '<img src="../../images/blx/pl2.png" /><span>{0}</span>'.format(data.comments);
-            var dz = doc.createElement('div');
-            dz.className = 'flex-1 flex flex-row-center flex-col-center';
-            dz.innerHTML = '<img src="../../images/blx/pl3.png" />';
-            var dzSpan = doc.createElement('span');
-            dzSpan.innerText = data.thing;
-            dz.appendChild(dzSpan);
-            plDiv.appendChild(ydDiv);
-            plDiv.appendChild(pl);
-            plDiv.appendChild(dz);
-            li.appendChild(plDiv);            
+        });
+         // 发表成功
+        window.addEventListener('KZ_BLX_FB_SUCCESS', function(e){
+          var _data = trimData(e.detail.data);
+          viewModel.fblist.unshift(_data);
+          if (e.detail.fromsave == true) {
+            var _index = viewModel.savelist().findIndex(function(i){
+              return i.id == _data.id;
+            });
+            viewModel.savelist.splice(_index,1);
           }
-          return li;
-        };
-        var getList = function(page,callback){
+        });
+        // 存草稿
+        window.addEventListener('KZ_BLX_SAVE_SUCCESS', function(e){
+          viewModel.savelist.unshift(e.detail.data);
+        });
+        // 病例秀列表通知我的病例秀
+        window.addEventListener('BLX_LIST_CHANGE_EVENT', function(e){
+          /*
+           type: 
+           1、点赞数变化 extra:{caseid:0,thing:0}
+           2、删除病例秀 extra:{caseid:0}
+           */
+          if (e.detail.type == 1) {
+            var _case = viewModel.fblist().find(function(i){
+              return i.id == e.detail.extra.caseid;
+            });
+            if (_case) {
+              _case.thing(e.detail.extra.thing);
+            }
+          } else if(e.detail.type == 2){
+            var _index = viewModel.fblist().findIndex(function(i){
+              return i.id == e.detail.extra.caseid;
+            });
+            viewModel.fblist.splice(_index, 1);
+          }
+        });
+        var getList = function(page){
           if (listRequest[type] && page !== 1 && listRequest[type].more === false) {
             return;
+          }
+          if (page == 1) {
+            if (type == 3) {
+               viewModel.fblist([]);
+             } else {
+               viewModel.savelist([]);
+             }
           }
           request.loginAjax('cases/getlist', {
             data: {
@@ -360,15 +301,14 @@
             },
             showMsg: false
           }, function(data) {
-            // 处理页面绑定
+             // 处理页面绑定
              if (data && data.data) {
-               var currentContent = doc.querySelector('.mui-control-content.mui-active .mui-table-view');
-               if (page === 1) {
-                 currentContent.innerHTML = '';
-               }
                $.each(data.data, function(index,i) {
-                 var _li = paintItem(i);
-                 currentContent.appendChild(_li);
+                 if (type == 3) {
+                   viewModel.fblist.push(trimData(i));
+                 } else {
+                   viewModel.savelist.push(i);
+                 }
                });
              }
              // 判断是否有下一页数据
@@ -383,25 +323,19 @@
                  more: false
                }
              }
-             if (typeof callback === 'function') {
-               callback();
-             }
           }, function() {
-             if (typeof callback === 'function') {
-               callback();
-             }
           });
         }
         getList(1);
          // 切换tab
         $.each(doc.querySelectorAll('.mui-bar-tab .mui-tab-item'), function(index, el) {
-             el.addEventListener('tap', function(e) {
-              var _type = this.getAttribute('data-type');
-              type = _type;
-              if (listRequest[type]) {
-                return;
-              }
-              getList(1);
+          el.addEventListener('tap', function(e) {
+            var _type = this.getAttribute('data-type');
+            type = _type;
+            if (listRequest[type]) {
+              return;
+            }
+            getList(1);
           });
         });
         //循环初始化所有下拉刷新，上拉加载。
@@ -410,25 +344,27 @@
             down: {
               callback: function() {
                 var self = this;
-                getList(1, function() {
+                setTimeout(function(){
                   self.endPullDownToRefresh();
                   $(pullRefreshEl).pullToRefresh().refresh(true);
-                });
+                }, 500);
+                getList(1);
               }
             },
             up: {
               callback: function() {
                 var self = this;
-                if (listRequest[type]) {
-                  if (listRequest[type].more === true) {
-                    var page = listRequest[type].page + 1;
-                    getList(page, function(){
-                      self.endPullUpToRefresh(false);
-                    })
-                    return;
+                setTimeout(function(){
+                  if (listRequest[type] && listRequest[type].more === true) {
+                    self.endPullUpToRefresh(false);
+                  } else {
+                    self.endPullUpToRefresh(true);
                   }
+                }, 300);
+                if (listRequest[type] && listRequest[type].more === true) {
+                    var page = listRequest[type].page + 1;
+                    getList(page);
                 }
-                self.endPullUpToRefresh(true);
               }
             }
           });

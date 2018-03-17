@@ -12,6 +12,9 @@
 		<link rel="stylesheet" href="../../css/mui.picker.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
+		  .mui-pull-right{
+		    line-height: 44px;
+		  }
 		  .dateinfo{
 		    height: 50px;
 		    color: #626f7f;
@@ -145,6 +148,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">预约</h1>
+			<a id="xinzeng" class="mui-pull-right">新增</a>
 		</header>
 		<div id="yuyueDate" class="mui-content" >
 		  <div class="datebox">
@@ -185,6 +189,7 @@
       </div>
 	  </div>
 		<script src="../../third/knockout.js" ></script>
+		<script src="../../third/fastclick.js"></script>
 		<script src="../../js/mui.min.js"></script>
     <script src="../../js/mui.picker.min.js"></script>
     <script src="../../js/utils.config.js"></script>
@@ -194,9 +199,9 @@
     <script src="../../js/utils.auth.js"></script>
     <script src="../../js/utils.request.js"></script>
 		<script>
-		  window.addEventListener('refresh', function(e){
-        location.reload();
-      });
+		  window.addEventListener('load', function() {
+        FastClick.attach(document.body);
+      }, false);
 			(function($, doc) {
 			  var headStr = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
         var getDays = function (year, month) {//获取月的天数
@@ -257,7 +262,7 @@
           request.loginAjax('project/getPatientList',{
             data: data,
             showMsg: false
-          },function(data) {
+          },function(data, success) {
             if (data && data.data) {
               callback(data.data);
             } else {
@@ -323,15 +328,33 @@
 				    times = year+'-'+month;
 				    $datetxt.innerText = times;
             getList(times,function(res){
+              console.log(JSON.stringify(res));
               var _days = getDaysStr(year,month, res);
               viewModel.MonthData(_days);
             });
 				  }
+				  doc.getElementById('xinzeng').addEventListener('tap', function(){
+				    $.openWindow({
+              url: './project-list.html',
+              id: 'PRODUCT-LIST',
+              preload: true,
+              show: {
+                aniShow: 'pop-in'
+              },
+              styles: {
+                popGesture: 'hide'
+              },
+              waiting: {
+                autoShow: false
+              }
+            });
+				  });
 				  // 初始化
 				  var _date = new Date();
 				  initCalendar(_date.getFullYear(), _date.getMonth()+1);
 				  // 左右滑动
-				  doc.getElementById('datebox').addEventListener('swipeleft', function(e) {
+				  var $datebox = doc.getElementById('datebox');
+				  $datebox.addEventListener('swipeleft', function(e) {
 				    var _t = times.split('-');
 				    var _year = _t[0];
 				    var _month = _t[1];
@@ -343,7 +366,7 @@
 				    }
 				    initCalendar(_year, _month);
 				  });
-				  doc.getElementById('datebox').addEventListener('swiperight', function(e) {
+				  $datebox.addEventListener('swiperight', function(e) {
             var _t = times.split('-');
             var _year = _t[0];
             var _month = _t[1];
@@ -355,19 +378,24 @@
             }
             initCalendar(_year, _month);
           });
-          // 修改刷新日历
-          window.addEventListener('project-plan', function(e){
+          var refreshCal = function() {
             var _t = times.split('-');
             var _year = _t[0];
             var _month = _t[1];
             initCalendar(_year, _month);
+          }
+          // 修改刷新日历
+          window.addEventListener('project-plan', function(e){
+            refreshCal();
           });
           // 新增刷新日历
           window.addEventListener('bill-success', function(e){
-            var _t = times.split('-');
-            var _year = _t[0];
-            var _month = _t[1];
-            initCalendar(_year, _month);
+            refreshCal();
+          });
+          // 删除刷新日历
+          // 登录刷新
+          window.addEventListener('refresh', function(e){
+            refreshCal();
           });
 				});
 			}(mui, document));

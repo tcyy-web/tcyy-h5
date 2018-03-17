@@ -201,7 +201,7 @@
         </div>
       </div>
       <div class="img flex flex-col-center">
-        <img id="imgurl" src="../../images/project/banner.png"  />
+        <img id="imgurl" src="../../images/project/banner.png" data-preview-src="" data-preview-group="1" />
       </div>
 			<form class="mui-input-group">
 				<div class="mui-input-row">
@@ -246,6 +246,8 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.zoom.js"></script>
+    <script src="../../js/mui.previewimage.js"></script>
 		<script src="../../js/mui.picker.min.js"></script>
     <script src="../../js/mui.poppicker.js"></script>
 		<script src="../../js/utils.config.js"></script>
@@ -291,10 +293,7 @@
           var $listBox = doc.getElementById('listBox');
           // 合计
           var $billTotal = doc.getElementById('billTotal');
-          // 预览图片
-          $img.addEventListener('tap', function() {
-            plus.nativeUI.previewImage([$img.src]);
-          });
+          $.previewImage();
           // 画清单每项
           var paintItem = function(data) {
             var boxDiv = doc.createElement('div');
@@ -417,14 +416,14 @@
           });
           // 分享
           doc.getElementById('share').addEventListener('tap', function(e) {
-            var storageKey = '$projetIndex';
-            var saveValue = storage.get({
-              key: storageKey
-            });
+//          var storageKey = '$projetIndex';
+//          var saveValue = storage.get({
+//            key: storageKey
+//          });
             shareApi.showActionSheet({
               href: config.serverUrl + '/s/share/project?id='+ id,
-              title: saveValue || '天齿月牙APP',
-              content: '给您的诊疗清单！',
+              title: '您有一份诊疗清单！',
+              content: '唇齿之间 关爱无限',
               thumbs: ['_www/images/share/logo.png'],
               interface: 'auto'
             });

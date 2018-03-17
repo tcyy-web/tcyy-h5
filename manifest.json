@@ -1046,7 +1046,8 @@
 				],
 				"refer": [
 					"html/kz_blx/blx-send.html",
-					"html/kz_blx/blx-detail.html"
+					"html/kz_blx/blx-detail.html",
+					"html/login/login.html"
 				],
 				"priority": 4
 			},

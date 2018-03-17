@@ -7,6 +7,7 @@
 	<link href="../../css/iconfont.css" rel="stylesheet" />
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/style.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/blx.css" />
 	<style>
 	  body{
 	    background-color: #fff;
@@ -19,295 +20,6 @@
     .mui-pull-right{line-height: 44px;}
     .main{
       padding: 10px;
-    }
-    .wb-top{
-      position: relative;
-    }
-    .wb-top .img{
-      width: 50px;
-      height:50px;
-      -webkit-border-radius: 50%;
-      border-radius: 50%;
-      overflow: hidden;
-      margin-right: 10px;
-    }
-    .wb-top .img img{
-      width: auto;
-      height: 100%;
-    }
-    .wb-top h2{
-      font-size:16px;
-      color: #010101;
-      font-weight: normal;
-      padding-top:5px;
-      padding-bottom:5px; 
-      padding-right: 70px;
-    }
-    .wb-top p{
-      font-size:14px;
-      color:#7c7c7c;
-    }
-    .wb-top p{
-      font-size:14px;
-      color:#7c7c7c;
-      padding-right: 30px;
-    }
-    .wb-top .mui-icon-trash{
-      font-size: 20px;
-      float: right;
-      position: absolute;
-      right: 0;
-      bottom: 5px;
-      z-index: 3;
-    }
-    .wb-top ins{
-      position: absolute;
-      top:5px;
-      right:0;
-      z-index: 3;
-      text-decoration: none;
-      padding:0 5px;
-      background:#f4f4f4;
-      height: 20px;
-      border-radius: 5px;
-      -webkit-border-radius: 5px;
-      font-size:12px;
-      color:#6d6d6d;
-    }
-    .word p{
-      font-size:14px;
-      line-height: 20px;
-      color:#000000;
-      padding: 10px 0;
-    }
-    .word-img{
-      overflow: hidden;
-    }
-    .word-img .img{
-      width: 80px;
-      height: 80px;
-      float:left;
-      margin-right:10px;
-      margin-bottom: 10px;
-      overflow: hidden;
-    }
-    .word-img .img img{
-      width: 100%!important;
-      height: auto;
-      min-height: 100%;
-    }
-    .pl{
-      position: relative;
-    }
-    .pl:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl:after{
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl .flex-1{
-      position: relative;
-      height: 50px;
-      color: #7c7c7c;
-      font-size: 14px;
-    }
-    .pl .flex-1:before{
-      position: absolute;
-      left: 0;
-      bottom: 10px;
-      top: 10px;
-      width: 1px;
-      content: '';
-      -webkit-transform: scaleX(.5);
-      transform: scaleX(.5);
-      background-color: #d6d6d6;
-    }
-    .pl .flex-1:first-child:before{
-      display: none;
-    }
-    .pl .flex-1 img{
-      width: 20px !important;
-      margin-right: 10px;
-    }
-    .pl-tx{
-      position: relative;
-      padding-top: 10px;
-    	  padding-right: 40px;
-    	  margin: 10px 0;
-    }
-    .pl-tx:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl-tx:after{
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl-tx .mui-icon{
-      position: absolute;
-      right: 0;
-      top: 10px;
-      color: #7c7c7c;
-      font-size: 30px;
-      z-index: 2;
-    }
-    .pl-tx .img{
-    	float:left;
-    	width: 30px;
-    	height: 30px;
-    	-webkit-border-radius: 50%;
-      border-radius: 50%;
-      overflow: hidden;
-    	margin-right:10px;
-    	margin-bottom: 10px;
-    }
-    .pl-tx .img img{
-      width: 100% !important;
-      height: auto;
-    }
-    
-    .pl-true{
-      position: relative;
-    }
-    .pl-true .mui-icon-trash{
-      font-size: 20px;
-    }
-    .pl-true:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl-true-img{
-      padding: 10px 0;
-    }
-    .pl-true-img .img{
-    	width: 30px;
-    	height: 30px;
-    	-webkit-border-radius: 50%;
-    	border-radius: 50%;
-    	overflow: hidden;
-    	margin-right: 10px;
-    }
-    .pl-true-img .img img{
-      width: 100% !important;
-      height: auto;
-    }
-    .p-name{
-      position: relative;
-    	 font-size:14px;
-    	 color:#195ea4;
-      	padding-right: 100px;
-    }
-    .p-name span.time{
-      position: absolute;
-      right: 0;
-      top: 0;
-    	color:#7c7c7c;
-    }
-
-    .p-txt{
-      color: #000000;
-    	  font-size:14px;
-    }
-    .pl-hf{
-      position: relative;
-      	padding:10px 0;
-      	padding-left: 40px;
-      	background: #fff;
-    }
-    .pl-hf:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-
-    .pl-hf p{
-    	font-size:14px;
-    	color:#000000;
-    }
-    .pl-hf p span{
-    	color:#7c7c7c;
-    }
-    
-    .pl-hf p span.slip{
-    	 color:#195ea4;
-    	 margin: 0 5px;
-    }
-    
-    .pl-hf p span.txt{
-    	 color:#000;
-    }
-    .pl-hf p span.time{
-      margin-left: 10px;
-    }
-    .pl-more{
-      position: relative;
-      padding: 10px 0;
-      text-align: center;
-    }
-    .pl-more:before{
-      position: absolute;
-      right: -10px;
-      top: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
-    }
-    .pl-more:after{
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      left: -10px;
-      height: 1px;
-      content: '';
-      -webkit-transform: scaleY(.5);
-      transform: scaleY(.5);
-      background-color: #d6d6d6;
     }
     .ft{
     	width:100%;
@@ -343,78 +55,91 @@
   	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
   	<h1 class="mui-title">病例秀详情</h1>
   </header>
-  <div class="mui-content">
+  <div id="mainContent" class="mui-content">
     <div class="main">
-  		<!-- 顶部头像名字 -->
-  		<div class="wb-top flex">
+  		  <div class="wb-top flex">
         <div class="img flex flex-row-center">
-          <img id="headurl" src="../../images/weibo/tx.png"/>
+          <img data-bind="attr:{src: detailData().userinfo ? detailData().userinfo.headurl || $root.defaultUserImage() : $root.defaultUserImage()}" />
         </div>
         <div class="flex-1">
-          <h2 id="nickname">王医生</h2>
-          <p>发表于：<span id="createtime"></span></p>
+          <h2 data-bind="text: detailData().userinfo ? detailData().userinfo.nickname : ''"></h2>
+          <p>发表于：<span data-bind="text: detailData().creatime"></span></p>
         </div>
         <!--<i class="mui-icon mui-icon-trash"></i>-->
-        <ins id="gzfn" class="flex flex-row-center">加关注</ins>
+        <ins data-bind="visible: detailData().isMe == 2,text: detailData().isfollow ==1 ? '取消关注':'加关注'" id="gzfn" class="flex flex-row-center"></ins>
       </div>
-			<!-- 中间文字 AND 图片 -->
 			<div class="word">
-				<p id="contents"></p>
-				<div id="imgs" class="word-img">
-				  <!--<div class="img">
-				    <img src="../../images/weibo/img.png"/>
-				  </div>-->
+				<p data-bind="text: detailData().contents"></p>
+				<div class="word-img">
+				  <!-- ko 'foreach': detailData().cases_image -->
+				  <div class="img flex flex-row-center">
+				    <img data-bind="attr:{ src:image }" data-preview-src="" data-preview-group="1"/>
+				  </div>
+				  <!-- /ko -->
 				</div>
 			</div>
       <!-- 点赞评论 -->
       <div class="pl flex">
         <div class="flex-1 flex flex-row-center flex-col-center">
           <img src="../../images/blx/pl1.png" />
-          <span id="read">1</span>
+          <span data-bind="text:detailData().read "></span>
         </div>
         <div class="flex-1 flex flex-row-center flex-col-center">
           <img src="../../images/blx/pl2.png" />
-           <span id="comments">1</span>
+           <span data-bind="text:detailData().comments "></span>
         </div>
-        <div id="dzFn" class="flex-1 flex flex-row-center flex-col-center">
+        <div id="dzfn" class="flex-1 flex flex-row-center flex-col-center">
           <img src="../../images/blx/pl3.png" />
-           <span id="thing">1</span>
+           <span data-bind="text:detailData().thing "></span>
         </div>
       </div>			
-      <!-- 下面的评论 -->
-			<div id="dzusersmore" class="pl-tx">
-			  <div id="dzusers" class="clearFix">
+      <!-- 点赞的人 -->
+      <!-- ko 'if': dzlist().length > 0 -->
+			<div class="pl-tx">
+			  <div class="clearFix">
+			    <!-- ko 'foreach': dzlist -->
 			    <div class="img flex flex-row-center">
-            <img src="../../images/weibo/pltx1.png"/>
+            <img data-bind="attr:{src: user_info.headurl || $root.defaultUserImage() }" />
           </div>
+          <!-- /ko -->
 			  </div>
-			  <span class="mui-icon mui-icon-arrowright"></span>
+			  <span class="gotouser mui-icon mui-icon-arrowright"></span>
 			</div>
+			<!-- /ko -->
 			<!-- 发表的评论 -->
-			<div id="pllist">
-  			<div class="pl-true">
-  				<div class="pl-true-img flex">
-  				  <div class="img flex flex-row-center">
-  				    <img src="../../images/weibo/pltx3.png"/>
-  				  </div>
-  				  <div class="flex-1">
-  				    <p class="p-name"><span>领馆小草</span><span class="time">2018-03-05<i class="mui-icon mui-icon-trash"></i></span> </p>
-            <p class="p-txt"><span>真的假的呀？</span></p>
-  				  </div>
-  				</div>
+			<div style="margin-top: 10px;">
+			  <!-- ko 'foreach':pllist -->
+  			  <div class="pl-true">
+    				<div class="pl-true-img flex">
+    				  <div class="img flex flex-row-center">
+    				    <img data-bind="attr: {src: user_info.headurl || $root.defaultUserImage() }"/>
+    				  </div>
+    				  <div class="flex-1">
+    				    <p class="p-name">
+    				      <span class="plyh" data-bind="text: user_info.nickname,
+    				        attr:{pid:id,nickname: user_info.nickname}"></span>
+    				      <span class="time"><span data-bind="text: _timestr"></span><i data-bind="visible: _del,attr:{plid:id}" class="delpl mui-icon mui-icon-trash"></i></span>
+    				    </p>
+              <p class="p-txt" data-bind="text: contents"></p>
+    				  </div>
+    				</div>
+    				<!-- ko 'foreach':child_comments -->
           <div class="pl-hf">
-            <p>
-              <span>土农民</span>
-              <span class="slip">回复</span>
-              <span>领馆小草：</span>
-              <span class="txt">是真的额,一起去吧靓仔-_-,haobuhao!</span>
-              <span class="time">1小时前</span>
-              <i class="mui-icon mui-icon-trash"></i>
+            <p class="clearFix">
+              <span data-bind="text: _hf ? user_info.nickname :  user_info.nickname + '：',
+                attr:{pid:pid, touid:uid,nickname:user_info.nickname}" class="hfyh float_left"></span>
+              <span data-bind="visible: _hf" class="slip float_left">回复</span>
+              <span data-bind="visible: _hf,text: to_user_info.nickname + '：',
+                attr:{pid:pid, touid:to_user_info.uid,nickname:to_user_info.nickname}" class="hfyh float_left"></span>
+              <span data-bind="text: contents" class="txt"></span>
+              <span class="time float_left"><span data-bind="text: _timestr"></span><i data-bind="visible: _del,attr:{plid:id,pid:pid}" class="delpl mui-icon mui-icon-trash"></i></span>
             </p>
           </div>
-  			</div>
+          <!-- /ko -->
+  			  </div>
+  			  <!-- /ko -->
 			</div>
-			<p id="plmore" class="pl-more">更多</p>
+			<p id="morepl" data-bind="visible: moreData" class="pl-more">更多</p>
 		</div>
   </div>
   <footer class="ft clearFix" >
@@ -427,7 +152,10 @@
       <!--<img src="../../images/blx/ft3.png" />-->
     </div>
   </footer>
+  <script src="../../third/knockout.js"></script>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../js/mui.zoom.js"></script>
+  <script src="../../js/mui.previewimage.js"></script>
   <script src="../../js/utils.common.js"></script>
   <script src="../../js/utils.config.js"></script>
   <script src="../../js/utils.extend.js"></script>
@@ -438,7 +166,14 @@
   <script src="../../js/business/blx.js" ></script>
   <script>
     (function($, doc) {
-        var detailData = {};
+        var viewModel = {
+          defaultUserImage: ko.observable('../../images/tab-wode/user_default.png'),
+          detailData: ko.observable({}),
+          dzlist: ko.observableArray([]),
+          pllist: ko.observableArray([]),
+          moreData: ko.observable(false)
+        }
+        ko.applyBindings(viewModel, doc.getElementById('mainContent'));
         $.init({
           preloadPages:[{
             id:'KZ_BLX_PL',
@@ -448,156 +183,83 @@
             url: './blx-users.html'
           }],
           beforeback: function() {
-            //获得所有已打开webview
-            var list = plus.webview.all();
-            $.each(list, function(index,item) {
-              $.fire(item, 'BLX_DETAIL_CHANGE', {
-                data: detailData
-              });
-            });
+            var _detailData = viewModel.detailData();
+            if (_detailData.id > 0) {
+              var fireData = {
+                caseid: _detailData.id,
+                read: _detailData.read,
+                thing: _detailData.thing,
+                comments: _detailData.comments
+              }
+              // 通知我的列表 及列表页
+              var myBlxWebview = plus.webview.getWebviewById('MY-BLX');
+              if (myBlxWebview != null) {
+                $.fire(myBlxWebview, 'BLX_DETAIL_TO_LIST', fireData);
+              }
+              var blxWebview = plus.webview.getWebviewById('KZ-BLX');
+              if (blxWebview != null) {
+                $.fire(blxWebview, 'BLX_DETAIL_TO_LIST', fireData);
+              }
+            }
+            viewModel.detailData({});
+            viewModel.dzlist([]);
+            viewModel.pllist([]);
+            viewModel.moreData(false);
             return true;
           }
         });
         $.plusReady(function() {
-          // 当前登录用户
-          var benren = authManage.getUser();
-          // 默认头像
-          var defaultUserImage = '../../images/tab-wode/user_default.png';
-          //一级评论分页参数
           var page = 1;
           var limit = 6;
-          var more = true;
-          // 用户信息
-          var $headurl = doc.getElementById('headurl');
-          var $nickname = doc.getElementById('nickname');
-          var $createtime = doc.getElementById('createtime');
-          // 内容
-          var $contents = doc.getElementById('contents');
-          var $imgs = doc.getElementById('imgs');
-          // 阅读量
-          var $read = doc.getElementById('read');
-          // 评论数
-          var $comments = doc.getElementById('comments');
-          // 点赞数
-          var $thing = doc.getElementById('thing');
-          // 关注
-          var $gzfn = doc.getElementById('gzfn');
+          // 当前登录用户
+          var benren = authManage.getUser();
+          $.previewImage();
           // 刷新详情
           window.addEventListener('KZ_BLX_DATA', function(e){
             page = 1;
-            more = true;
             blxFn.detailFn(e.detail.caseid, function(res) {
-              detailData = res;
-              setFn();
-              plList();
+              viewModel.detailData(res);
             });
+            blxFn.dzUsersFn(e.detail.caseid, function(_res){
+              _res.isfollow = ko.observable(_res.isfollow);
+              viewModel.dzlist(_res);
+            });
+            plListFn(e.detail.caseid);
           });
-          // 设置详情
-          var setFn = function() {
-            if (detailData.id > 0) {
-              $headurl.src = detailData.userinfo.headurl || defaultUserImage;
-              $nickname.innerText = detailData.userinfo.nickname;
-              $createtime.innerText = detailData.creatime;
-              $contents.innerText = detailData.contents;
-              $imgs.innerHTML = '';
-              if (detailData.cases_image) {
-                var caseurllist = [];
-                $.each(detailData.cases_image, function(i,d) {
-                  var img = doc.createElement('div');
-                  img.className = 'img';
-                  img.innerHTML = '<img src="{0}" />'.format(d.image);
-                  caseurllist.push(d.image);
-                  img.addEventListener('tap', function() {
-                    previewImage(caseurllist, i);
-                  });
-                  $imgs.appendChild(img);
-                });
-              }
-              $read.innerText = detailData.read;
-              $comments.innerText = detailData.comments;
-              $thing.innerText = detailData.thing;
-              if (detailData.isMe == 2) {
-                $gzfn.style.display = 'block';
-                $gzfn.innerText = detailData.isfollow == 1 ? '取消关注' : '加关注';
-              } else{
-                $gzfn.style.display = 'none';
-              }
-              // 获取点赞人
-              $dzusers.innerHTML = '';
-              $dzusersmore.style.display = 'none';
-              blxFn.dzUsersFn(detailData.id, function(users) {
-                $.each(users, function(index, d) {
-                  var imgdiv = doc.createElement('div');
-                  imgdiv.className = 'img flex flex-row-center';
-                  var _url = d.user_info.headurl || defaultUserImage;
-                  imgdiv.innerHTML = '<img src="{0}"/> '.format(_url);
-                  $dzusers.appendChild(imgdiv);
-                });
-                $dzusersmore.style.display = 'block';
-              });
-            }
-          }
-          $gzfn.addEventListener('tap', function() {
-            blxFn.gzFn(detailData.userinfo.uid, function(res) {
-              if (res.status == 1) {
-                $gzfn.innerText = '取消关注';
-              } else {
-                $gzfn.innerText = '加关注';
-              }
-              detailData.isfollow = res.status;
-            });
-          });
-           /*图片预览*/
-          var previewImage = function(urllist, index) {
-            plus.nativeUI.previewImage(urllist, {
-              current: index,
-              loop: true,
-              indicator: 'number'
-            });
-          }
-          doc.getElementById('dzFn').addEventListener('tap',function(e){
-            blxFn.dzFn(detailData.id, function() {
-              detailData.thing += 1;
-              $thing.innerText = detailData.thing;
-            });
-          });
-          // 点赞的人
-          var $dzusers = doc.getElementById('dzusers');
-          var $dzusersmore = doc.getElementById('dzusersmore');
-          $dzusersmore.addEventListener('tap', function(e) {
-            var dzWebview = plus.webview.getWebviewById('KZ_BLX_DZ_USERS');
-            $.fire(dzWebview,'KZ_BLX_DZ_ID',{
-              id:detailData.id
-            });
-            $.openWindow({
-              id: 'KZ_BLX_DZ_USERS'
-            });
-          });
-          /*评论*/
-          var $pllist = doc.getElementById('pllist');
-          var $plmore = doc.getElementById('plmore');
-          var beginKey = 'blx_pl_';
           // 评论成功
           window.addEventListener('KZ_BLX_PL_SUCCESS', function(e){
+            console.log(JSON.stringify(e.detail));
             var _d = e.detail.data;
-            // 一级评论
-            if (_d.pid == 0) {
-              var _first = paintFirstPl(_d, e.detail.t);
-              $pllist.insertBefore(_first, $pllist.childNodes[0]);
-            } else {
+            _d._timestr = utils.formatDateToNow(_d.times, e.detail.t);
+            _d._del = benren.id == _d.uid ? true : false;
+            if (_d.pid > 0) {
               // 二级评论
-              var _dom = doc.getElementById(beginKey + _d.pid);
-              if (_dom != null) {
-                var _second = paintSecondPl(_d, e.detail.t);
-                utils.insertAfter(_second, _dom);
+              _d._hf = _d.to_user_info.id > 0;
+              var _pl = viewModel.pllist().find(function(i){
+                return _d.pid == i.id; 
+              });
+              if (_pl) {
+                _pl.child_comments.unshift(_d);
               }
+            } else {
+              _d.child_comments = ko.observableArray([]);
+              // 一级评论
+              viewModel.pllist.unshift(_d);
+            }
+          });
+          // 关注变化
+          window.addEventListener('KZ_BLX_GZ_CHANGE', function(e){
+            var _detailData = viewModel.detailData();
+            if (_detailData.id > 0 && _detailData.userinfo.uid == e.detail.uid) {
+              _detailData.isfollow = e.detail.status;
+              viewModel.detailData(_detailData);
             }
           });
           // 发布评论 pid > 0 子评论
           var fbPlFn = function(opts) {
             var plWebview = plus.webview.getWebviewById('KZ_BLX_PL');
             $.fire(plWebview,'KZ_BLX_ID',{
-              case_id:detailData.id,
+              case_id:viewModel.detailData().id,
               pid: opts.pid,
               touid: opts.touid,
               nickname: opts.nickname
@@ -606,146 +268,15 @@
               id: 'KZ_BLX_PL'
             });
           }
-          // 画一级评论
-          var paintFirstPl = function(data, serverNowDateStr) {
-            var pldiv = doc.createElement('div');
-            pldiv.className = 'pl-true';
-            // 头像及名称
-            var div1 = doc.createElement('div');
-            div1.id = beginKey + data.id;
-            div1.className = 'pl-true-img flex';
-            var _url = data.user_info.headurl || defaultUserImage;
-            div1.innerHTML = '<div class="img flex flex-row-center"><img src="{0}"/></div>'.format(_url);
-            var namediv = doc.createElement('div');
-            namediv.className = 'flex-1';
-            // 评论用户
-            var _userp = doc.createElement('p');
-            _userp.className = 'p-name';
-            var dateStr = utils.formatDateToNow(data.times, serverNowDateStr);
-            var _userspan = doc.createElement('span');
-            _userp.appendChild(_userspan);
-            _userspan.innerText = data.user_info.nickname;
-            _userspan.addEventListener('tap', function(e) {
-              fbPlFn({
-                pid:data.id,
-                nickname: data.user_info.nickname
-              });
-            });
-            var _timespan = doc.createElement('span');
-            _userp.appendChild(_timespan);
-            _timespan.className = 'time';
-            _timespan.innerText = dateStr;
-            // 删除评论
-            if (benren.id == data.uid) {
-              var _del = doc.createElement('i');
-              _del.className = 'mui-icon mui-icon-trash';
-              _del.addEventListener('tap', function(){
-                blxFn.delPlFn(data.id, function(_res){
-                  $comments.innerText = _res.count;
-                  detailData.contents = _res.count;
-                  pldiv.remove();
-                });
-              });
-              _timespan.appendChild(_del);
-            }
-            namediv.appendChild(_userp);
-            // 评论内容
-            var _contentp = doc.createElement('p');
-            _contentp.className = 'p-txt';
-            var _contentspan = doc.createElement('span');
-            _contentspan.innerText = data.contents;
-            _contentp.appendChild(_contentspan);
-            namediv.appendChild(_contentp);
-            div1.appendChild(namediv);
-            pldiv.appendChild(div1);
-            return pldiv;
-          }
-          //画二级评论
-          var paintSecondPl = function(data,serverNowDateStr) {
-            var divhf = doc.createElement('div');
-            divhf.className = 'pl-hf';
-            var _dateStr = utils.formatDateToNow(data.times, serverNowDateStr);
-            var _plP = doc.createElement('p');
-            divhf.appendChild(_plP);
-            // 评论发起人
-            var _plrenSpan = doc.createElement('span');
-            _plrenSpan.innerText = data.user_info.nickname;
-            _plP.appendChild(_plrenSpan);
-            _plrenSpan.addEventListener('tap', function() {
-              fbPlFn({
-                pid:data.pid,
-                touid: data.uid,
-                nickname: data.user_info.nickname
-              });
-            });
-            if (data.to_user_info && data.to_user_info.id > 0) {
-              // 回复
-              var _hfSpan = doc.createElement('span');
-              _plP.appendChild(_hfSpan);
-              _hfSpan.className = 'slip';
-              _hfSpan.innerText = '回复';
-              // 被回复的人
-              var _plhfSpan = doc.createElement('span');
-              _plP.appendChild(_plhfSpan);
-              _plhfSpan.innerText = data.to_user_info.nickname;
-              _plhfSpan.addEventListener('tap', function() {
-                fbPlFn({
-                  pid:data.pid,
-                  touid: data.to_user_info.uid,
-                  nickname: data.to_user_info.nickname
-                });
-              });
-            }
-            // 内容
-            var _plconSpan = doc.createElement('span');
-            _plconSpan.className = 'txt';
-            _plconSpan.innerText = '：' + data.contents;
-            _plP.appendChild(_plconSpan);
-            // 时间
-            var _pltimeSpan = doc.createElement('span');
-            _pltimeSpan.className = 'time';
-            _pltimeSpan.innerText = _dateStr;
-            _plP.appendChild(_pltimeSpan);
-            // 删除评论
-            if (benren.id == data.uid) {
-              var _del = doc.createElement('i');
-              _del.className = 'mui-icon mui-icon-trash';
-              _del.addEventListener('tap', function(){
-                blxFn.delPlFn(data.id, function(_res){
-                  $comments.innerText = _res.count;
-                  detailData.contents = _res.count;
-                  divhf.remove();
-                });
-              });
-              _plP.appendChild(_del);
-            }
-            return divhf;
-          }
-          // 画每项评论
-          var paintPl = function(data,serverNowDateStr) {
-            var pldiv = paintFirstPl(data,serverNowDateStr);
-            $pllist.appendChild(pldiv);
-            // 子评论
-            if (data.child_comment_count > 0) {
-              $.each(data.child_comments, function(index, childcom) {
-                var divhf = paintSecondPl(childcom, serverNowDateStr);
-                pldiv.appendChild(divhf);
-              });
-            }
-          }
-          $plmore.addEventListener('tap', function(e) {
-            page += 1;
-            plList();
-          });
-          // 获取一级评论列表
-          var plList = function() {
+          // 获取评论列表
+          var plListFn = function(caseid) {
              if (page === 1) {
-               $pllist.innerHTML = '';
-               $plmore.style.display = 'none';
+               viewModel.moreData(false);
+               viewModel.pllist([]);
              }
              request.loginAjax('cases/getCommentsList', {
                 data: {
-                  case_id: detailData.id,
+                  case_id: caseid,
                   page: page,
                   limit: limit
                 },
@@ -754,35 +285,133 @@
                // 处理页面绑定
                if (data && data.data) {
                  $.each(data.data, function(index,i) {
-                   paintPl(i, resHead.t);
+                   i._timestr = utils.formatDateToNow(i.times, resHead.t);
+                   i._del = benren.id == i.uid ? true : false;
+                   $.each(i.child_comments, function(_index, _i) {
+                    _i._timestr = utils.formatDateToNow(_i.times, resHead.t);
+                    _i._del = benren.id == _i.uid ? true : false;
+                    _i._hf = _i.to_user_info.id > 0;
+                   });
+                   i.child_comments = ko.observableArray(i.child_comments);
+                   viewModel.pllist.push(i);
                  });
                }
                // 判断是否有下一页数据
                if (data && data.data && data.data.length === limit) {
-                 more = true;
-                 $plmore.style.display = 'block';
+                 viewModel.moreData(true);
                } else {
-                 more = false;
-                 $plmore.style.display = 'none';
+                 viewModel.moreData(false);
                }
             });
           }
+          /* 绑定事件*/
+          // 关注
+          $('#mainContent').on('tap', '#gzfn', function(e){
+            var _detailData = viewModel.detailData();
+            if (_detailData.userinfo) {
+              var touid = _detailData.userinfo.uid;
+              blxFn.gzFn(touid, function(_res){
+                _detailData.isfollow = _res.status;
+                viewModel.detailData(_detailData);
+                // 通知列表页
+                var blxWebview = plus.webview.getWebviewById('KZ-BLX');
+                if (blxWebview != null) {
+                  $.fire(blxWebview, 'KZ_BLX_GZ_CHANGE', {
+                    uid: touid,
+                    status: _res.status
+                  });
+                }
+              });
+            }
+          });
+          // 点赞
+          doc.getElementById('dzfn').addEventListener('tap', function(e){
+            var _detailData = viewModel.detailData();
+            blxFn.dzFn(_detailData.id, function(){
+              _detailData.thing += 1;
+              viewModel.detailData(_detailData);
+            });
+          });
+          //  评论用户
+          $('#mainContent').on('tap', '.plyh', function(e){
+            var pid = this.getAttribute('pid');
+            var nickname = this.getAttribute('nickname');
+            fbPlFn({
+              pid: pid,
+              nickname: nickname
+            });
+          });
+          // 回复用户
+          $('#mainContent').on('tap', '.hfyh', function(e){
+            var pid = this.getAttribute('pid');
+            var touid = this.getAttribute('touid');
+            var nickname = this.getAttribute('nickname');
+            fbPlFn({
+              pid:pid,
+              touid: touid,
+              nickname: nickname
+            });
+          });
+          // 去点赞列表
+          $('#mainContent').on('tap', '.gotouser', function(e){
+            var dzWebview = plus.webview.getWebviewById('KZ_BLX_DZ_USERS');
+            $.fire(dzWebview,'KZ_BLX_DZ_ID',{
+              id: viewModel.detailData().id
+            });
+            $.openWindow({
+              id: 'KZ_BLX_DZ_USERS'
+            });
+          });
           // 发表一级评论
           doc.getElementById('fb_pl').addEventListener('tap', function(){
             fbPlFn({
               pid: 0
             });
           });
+          // 删除评论
+          $('#mainContent').on('tap', '.delpl', function(e){
+            var plid = this.getAttribute('plid');
+            var pid = this.getAttribute('pid');
+            blxFn.delPlFn(plid, function(res){
+              var _detailData = viewModel.detailData();
+              _detailData.comments = res.count;
+              viewModel.detailData(_detailData);
+              if (pid > 0) {
+                // 删除的二级评论
+                var _pl = viewModel.pllist().find(function(i){
+                  return i.id == pid;
+                });
+                if (_pl) {
+                  var _index = _pl.child_comments().findIndex(function(i){
+                    return i.id == plid;
+                  });
+                  _pl.child_comments.splice(_index, 1);
+                }
+              } else{
+                // 删除的一级评论
+                var _index = viewModel.pllist().findIndex(function(i){
+                  return i.id == plid;
+                });
+                viewModel.pllist.splice(_index, 1);
+              }
+            });
+          });
+          // 更多评论
+          doc.getElementById('morepl').addEventListener('tap', function(){
+            page ++;
+            plListFn(viewModel.detailData().id);
+          });
           // 分享
           doc.getElementById('share').addEventListener('tap', function(e) {
             var shareImg = '_www/images/share/logo.png';
+            var detailData = viewModel.detailData();
             if (detailData.cases_image && detailData.cases_image.length > 0) {
               shareImg = detailData.cases_image[0]
             }
             shareApi.showActionSheet({
               href: config.serverUrl + '/s/share/cases?id='+ detailData.id,
-              title: '天齿月牙APP',
-              content: detailData.contents,
+              title: detailData.contents,
+              content: '唇齿之间 关爱无限',
               thumbs: [shareImg],
               interface: 'auto'
             });
