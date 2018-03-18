@@ -11,6 +11,8 @@ function Drag( target ){
 	this.transform = {}; //图像效果
 	this.timer = null;
 	this.initAngle = 0; //旋转角度
+	
+	this.preAngle = 45;
 	this.initScale = 1; //放大倍数
 
 	this.target = target;
@@ -86,6 +88,10 @@ Drag.prototype = {
 		
 		mc.on("panstart panmove", self.onPan.bind(self));
 		
+		mc.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }))
+		mc.on("doubletap", self.doubleTap.bind( self ) );
+	
+		
 		mcClose.on("panstart panmove panend", self.onPanClose.bind(self));
 		
 		
@@ -116,37 +122,60 @@ Drag.prototype = {
 		this.requestElementUpdate();
 	},
 	
+	doubleTap:function(){
+		this.target.remove();
+	},
+	
 	onPanClose: function( ev ){
-		var y = Math.sqrt( this.width/2 * this.width/2 + this.height/2 * this.height/2 );
-		var cal_x = this.width/2 + ev.deltaX , cal_y = this.height/2 + ev.deltaY;
-		var x = Math.sqrt( cal_x*cal_x + cal_y*cal_y);
-//		
-		this.scale =  (this.width + ev.deltaX*2)/this.width; 
 		
-
-//		console.log( this.transform.scale )
-//		console.log( ev.deltaX , ev.deltaY)
-
-//		this.initAngle = 0; //旋转角度
-//		this.initScale = 1; //放大倍数
+		var x = this.width/2 + ev.deltaX;
+		var y = this.height/2 + ev.deltaY;
 		
+		var len = Math.sqrt( x*x +y*y);
+		
+		var sLen = Math.sqrt(this.width*this.width + this.height * this.height )/2;
+		
+		var self = this;
+
+		this.scale =  len / sLen; 
+
 		if( ev.type =="panstart"){
 			
-			this._y = ev.deltaY;
+			this.t_y = this._y = ev.deltaY;
+			
+			this.t_x = this._x = ev.deltaX;
 			
 			this.initScale = this.transform.scale || 1;
 			
+			
+			this.initAngle = this.preAngle;
+			
 		}else if( ev.type =="panmove"){
 			
-			this.transform.scale = this.initScale * this.scale;
-	
-			this._temp = this.initAngle - this._y + ev.deltaY;
-		
+			var tempScale = this.initScale * this.scale;
 			
+			if( tempScale> 2 ){ tempScale = 2; }
+			
+			if( tempScale < 0.4){ tempScale = 0.4; }
+			
+			this.transform.scale = tempScale ;
+
+			var _x = this.transform.translate.x , _y = this.transform.translate.y;
+			
+			var l_y = ev.center.y, l_x = ev.center.x;
+
+			var deg = Math.atan2( l_y - _y, l_x- _x ) * 180 / Math.PI;
+	
+			
+			this._temp =  this.initAngle + deg;
+
 			this.transform.angle = this._temp;
+
+	
+			
 		}else if( ev.type =="panend"){
 			
-			this.initAngle = this._temp;
+//			this.initAngle = this._temp;
 			this._y = null;
 			
 		}
@@ -172,7 +201,11 @@ Drag.prototype = {
 		tgt.style.transform = value; /*IE Opera?*/
 		tgt.style.zIndex = this.index;
 		
+		var iScale = 1/this.transform.scale;
 		
+		this.target.find("i").css({
+			transform:'scale(' +  iScale + ', ' + iScale + ')'
+		})
 		
 		this.ticking = false;
 		
