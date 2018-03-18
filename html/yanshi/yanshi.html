@@ -9,8 +9,8 @@
 <link href="../../css/mui.min.css" rel="stylesheet" />
 <link href="../../css/style.css" rel="stylesheet" />
   <style type="text/css">
-    html,body{ height: 100%; margin: 0; padding: 0; }
-    body{ background:#252a47; position: relative; overflow: hidden;}
+    html,body{ height: 100%; margin: 0; padding: 0; overflow: hidden;}
+    body{ background:#252a47; position: relative; }
     
     .mui-bar{ height: 48px; background: none; box-shadow: none; }
     .mui-bar .mui-icon{padding-top: 8px; font-size: 30px;}
@@ -61,6 +61,8 @@
     .center_opt li img{ width: 100%;}
     canvas#bg { position: absolute; z-index: 1; top: 0; left: 0;}
     canvas#canvas { position: relative; z-index: 2;top: 0; left: 0;}
+    
+    .delete{ padding: 8px 20px; display: inline-block; display: none; background: #fff; color: #333; position: absolute; top:0; left: 0; z-index: 3; box-shadow: 0 0 6px #999;}
   </style>
 </head>
 <body src="../../images/yangshi/ys_bg.jpg">
@@ -90,9 +92,10 @@
 
 <ul class="left_opt" id="left_list"> </ul>
 
-  
 <ul class="center_opt"> </ul>
-  
+ 
+<div class="delete">删除</div>
+
 </body>
 <script src="../../js/mui.min.js"></script>
 <script src="../../js/utils.config.js"></script>
@@ -105,6 +108,12 @@
 <script src="../../js/business/handdraw.js"></script>
 
 <script>
+	
+	$("body").on("tap",".delete",function(){
+		$(_now_target).remove();
+		$(this).hide();
+	});
+		
   (function($,doc){
     
     	$.init({

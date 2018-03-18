@@ -52,6 +52,10 @@
 	}
 
 	function getEvent(event, type) {
+		
+		if(!event.originalEvent&&!event.changedTouches){
+			return 0;
+		}
 
 		if(type == "x") {
 			return event.clientX || event.originalEvent ? event.originalEvent.changedTouches[0].clientX : event.changedTouches[0].clientX;
@@ -107,17 +111,21 @@
     }
 
 	function addEventListener() {
-		
+		var b_w = 0, b_h = 0;
 		$(window).on("resize",function(){
-			bgCanvas.width = canvas.width = $(window).width();
-			bgCanvas.height = canvas.height = $(window).height();
+			 canvas.width = $(window).width();
+			 bgCanvas.width = canvas.width - b_w;
+			 canvas.height = $(window).height();
+			 bgCanvas.height = canvas.height - b_h;
 			drawBg();
 			
 		})
 		
 		$(function(){
-			bgCanvas.width = canvas.width = $(window).width();
-			bgCanvas.height = canvas.height = $(window).height();
+			canvas.width = $(window).width();
+			bgCanvas.width = canvas.width - b_w;
+			canvas.height = $(window).height();
+			bgCanvas.height = canvas.height - b_h;
 			drawBg();
 		})
 
@@ -179,6 +187,7 @@
 			plus.nativeUI.actionSheet(actionstyle, function(e) {
 				if(e.index == 2) {
 					renderBgData();
+					$(".opt_img").remove();
 					$(".center_opt").show();
 				} 
 				

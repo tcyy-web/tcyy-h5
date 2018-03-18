@@ -1,5 +1,6 @@
 
 window._index = 100;
+window._now_target = null;
 
 window.reqAnimationFrame = (function() {
 	return window[Hammer.prefixed(window, 'requestAnimationFrame')] || function(callback) {
@@ -20,9 +21,7 @@ function Drag( target ){
 	this.index = _index++;
 	this.START_X = 0;
 	this.START_Y = 0;
-	
-	
-	
+
 }
 
 
@@ -62,19 +61,21 @@ Drag.prototype = {
 		
 		var self = this;
 		
-		var mc = new Hammer.Manager(this.target.find("p")[0]);
+		var mc = new Hammer.Manager( this.target.find("p")[0] , {
+			recognizers: [
+				[Hammer.Pan,{
+					threshold: 0,
+					pointers: 0
+				}],
+				[Hammer.Tap],
+				[Hammer.Press]
+			]
+		} );
 		
-		var mcClose = new Hammer.Manager(this.target.find("i")[0]);
+		mc.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }));
 		
-		mc.add(new Hammer.Pan({
-			threshold: 0,
-			pointers: 0
-		}));
-		
-		mcClose.add(new Hammer.Pan({
-			threshold: 0,
-			pointers: 0
-		}));
+		var mcClose = new Hammer(this.target.find("i")[0]);
+	
 		
 		//结束时做一些处理
 		mc.on("hammer.input", function(ev) {
@@ -85,34 +86,35 @@ Drag.prototype = {
 			}
 	
 		});
-		
-		mc.on("panstart panmove", self.onPan.bind(self));
-		
-		mc.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }))
-		mc.on("doubletap", self.doubleTap.bind( self ) );
 	
 		
+		mc.on("panstart panmove", self.onPan.bind(self));
+	
+		mc.on("doubletap", self.doubleTap.bind( self ) );
+
+		mc.on("press", self.onPress.bind( self ));
+		
+		mc.on("tap", self.onTap.bind( self ));
+		
 		mcClose.on("panstart panmove panend", self.onPanClose.bind(self));
+	
+	},
+	
+	onTap: function( ev ){
+		var target = this.target;
 		
+		$(".delete").hide();
 		
-		
-		$(this.target).on("tap",function( ev ){
+		if( $(target).hasClass("taped") ){
+			$(target).removeClass("taped");
 			
-			if( $(this).hasClass("taped") ){
-				$(this).removeClass("taped");
-				return;
-			}
-			
-			$(".opt_img").removeClass("taped");
-			$(this).addClass("taped");
-			self.setIndex();
-		}).on("tap","i",function(ev){
-			ev.stopPropagation();
-			
-		});
+			_now_target = this.target;
+			return;
+		}
 		
-		
-		
+		$(".opt_img").removeClass("taped");
+		$(target).addClass("taped");
+		this.setIndex();
 	},
 	onPan: function( ev ){
 		this.transform.translate = {
@@ -122,6 +124,15 @@ Drag.prototype = {
 		this.requestElementUpdate();
 	},
 	
+	onPress: function( ev ){
+		
+		$(".delete").css({
+			"left": ev.center.x,
+			"top": ev.center.y,
+			"z-index":_index+10
+		}).show();
+	},
+
 	doubleTap:function(){
 		this.target.remove();
 	},
@@ -206,6 +217,10 @@ Drag.prototype = {
 		this.target.find("i").css({
 			transform:'scale(' +  iScale + ', ' + iScale + ')'
 		})
+		
+		$(".delete").hide();
+		
+		_now_target = this.target;
 		
 		this.ticking = false;
 		
