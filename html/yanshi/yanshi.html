@@ -118,6 +118,12 @@
     
     	$.init({
     		beforeback:function(){
+    			
+    			jQuery(".opt_img").remove();
+    			var canvas = document.getElementById("canvas")
+    			canvas.width = canvas.width;
+    			
+    			
     			plus.screen.lockOrientation("portrait-primary");
     			return true;
     		}

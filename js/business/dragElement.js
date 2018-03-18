@@ -19,6 +19,7 @@ function Drag( target ){
 	this.target = target;
 	
 	this.index = _index++;
+	
 	this.START_X = 0;
 	this.START_Y = 0;
 
