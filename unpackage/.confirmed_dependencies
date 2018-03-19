@@ -43,7 +43,9 @@
 	},
 	"html/home/tab-webview-wode.html": {
 		"refer": [
-			"html/kz_blx/my-blx-list.html"
+			"html/kz_blx/my-blx-list.html",
+			"html/login/login.html",
+			"html/my/my.html"
 		]
 	}
 }
