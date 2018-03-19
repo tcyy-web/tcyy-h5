@@ -215,7 +215,7 @@
 									};
 									// qq登录
 									if (auth.id === 'qq') {
-										loginInfo.code = auth.authResult.access_token;
+										loginInfo.code = auth.authResult.openid;
 										loginInfo.type = 2;
 										loginInfo.nickname = auth.userInfo.nickname;
 										loginInfo.headurl = auth.userInfo.figureurl_qq_2;

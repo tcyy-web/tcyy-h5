@@ -47,5 +47,20 @@
 			"html/login/login.html",
 			"html/my/my.html"
 		]
+	},
+	"html/kz_ppsp/product-detail.html": {
+		"refer": [
+			"html/kz_ppsp/product_iframe.html"
+		]
+	},
+	"html/kz_ppsp/qy-list.html": {
+		"refer": [
+			"html/kz_ppsp/product-list.html"
+		]
+	},
+	"html/kz_ppsp/product-list.html": {
+		"refer": [
+			"html/kz_ppsp/product-detail.html"
+		]
 	}
 }
