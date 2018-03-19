@@ -131,6 +131,7 @@
 
 		.pcontent{
 			overflow-y:auto;
+			padding-bottom: 40px;
 		}
 		.pcontent .ptext{ display: inline-block; background: #fff; margin-left: 10px; padding: 5px 10px; border:1px solid #ccc; border-radius: 3px; position: relative;}
 		.pcontent .ptext::before{ content: ''; position: absolute; top:50%; left:-10px; margin-top: -5px; border-width:5px; border-style: solid; border-color: transparent #aaa transparent transparent;}
@@ -193,6 +194,8 @@
     	  right: 10px;
     	  top: 10px;
     	}
+    	
+    	
 	</style>
 </head>
 
@@ -404,8 +407,9 @@ function uploadImage(){
       upload.showImgActionSheet(function( data ){
       	console.log( "--->" +JSON.stringify(data));
         var url = config.url + "Uploads/Files";
+
+	
         upload.uploadimge( url , data.divid, function(res) {
-        	
   			createImage( res );
         },{
         	type: '5', 
@@ -416,6 +420,8 @@ function uploadImage(){
 }
 
 function uploadFile( opt ){
+	
+	var wa = plus.nativeUI.showWaiting( "正在上传...");
 	var fileType = "3";
 	if( opt.type =="vedio"){
 		fileType ="2";
@@ -425,6 +431,7 @@ function uploadFile( opt ){
 	 var divid = new Date().getTime()
       upload.uploadMedia( url , divid, function(res) {
 			mui.toast("上传成功");
+			wa.close();
   			opt.callback&&opt.callback( res );
         },{
           type: '5', 

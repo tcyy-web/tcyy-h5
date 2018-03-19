@@ -140,31 +140,30 @@ Drag.prototype = {
 	
 	onPanClose: function( ev ){
 		
-		var x = this.width/2 + ev.deltaX;
-		var y = this.height/2 + ev.deltaY;
-		
-		var len = Math.sqrt( x*x +y*y);
-		
-		var sLen = Math.sqrt(this.width*this.width + this.height * this.height )/2;
-		
 		var self = this;
 
-		this.scale =  len / sLen; 
 
 		if( ev.type =="panstart"){
-			
-			this.t_y = this._y = ev.deltaY;
-			
-			this.t_x = this._x = ev.deltaX;
-			
+
 			this.initScale = this.transform.scale || 1;
-			
-			
+
 			this.initAngle = this.preAngle;
 			
 		}else if( ev.type =="panmove"){
 			
+			var _x = this.transform.translate.x+this.width/2 , _y = this.transform.translate.y+this.height/2;
+				
+			var l_y = ev.center.y, l_x = ev.center.x;
+			
+			var len = Math.sqrt( (l_x-_x)*(l_x -_x) +(l_y-_y)*(l_y-_y));
+			
+			var sLen = Math.sqrt(this.width*this.width + this.height * this.height )/2;
+	
+			
+			this.scale =  len / sLen; 
+			
 			var tempScale = this.initScale * this.scale;
+
 			
 			if( tempScale> 2 ){ tempScale = 2; }
 			
@@ -172,23 +171,15 @@ Drag.prototype = {
 			
 			this.transform.scale = tempScale ;
 
-			var _x = this.transform.translate.x , _y = this.transform.translate.y;
-			
-			var l_y = ev.center.y, l_x = ev.center.x;
 
 			var deg = Math.atan2( l_y - _y, l_x- _x ) * 180 / Math.PI;
 	
-			
 			this._temp =  this.initAngle + deg;
 
 			this.transform.angle = this._temp;
 
-	
-			
 		}else if( ev.type =="panend"){
-			
-//			this.initAngle = this._temp;
-			this._y = null;
+
 			
 		}
 		this.requestElementUpdate();
