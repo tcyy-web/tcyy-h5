@@ -215,17 +215,17 @@
 									};
 									// qq登录
 									if (auth.id === 'qq') {
-										loginInfo.code = auth.authResult.access_token;
+										loginInfo.code = auth.authResult.openid;
 										loginInfo.type = 2;
 										loginInfo.nickname = auth.userInfo.nickname;
 										loginInfo.headurl = auth.userInfo.figureurl_qq_2;
 										loginInfo.sex = auth.userInfo.gender === '男' ? 1 : 2;
 									} else if (auth.id === 'weixin') {
-										loginInfo.code = auth.authResult.access_token;
+										loginInfo.code = auth.authResult.openid;
 										loginInfo.type = 3;
 										loginInfo.nickname = auth.userInfo.nickname;
 										loginInfo.headurl = auth.userInfo.headimgurl;
-										loginInfo.sex = auth.userInfo.sex;
+										loginInfo.sex = auth.userInfo.sex == 2? 1:2;
 									}
 									request.ajax('login/byQQWX',{
 										data: loginInfo

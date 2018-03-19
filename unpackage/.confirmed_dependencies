@@ -32,7 +32,8 @@
 		"refer": [
 			"html/kz_blx/blx-list.html",
 			"html/kz_ppsp/qy-list.html",
-			"html/kz_cysj/list.html"
+			"html/kz_cysj/list.html",
+			"html/kz_zsk/zsk-list.html"
 		]
 	},
 	"html/kz_blx/blx-detail.html": {
@@ -43,7 +44,29 @@
 	},
 	"html/home/tab-webview-wode.html": {
 		"refer": [
-			"html/kz_blx/my-blx-list.html"
+			"html/kz_blx/my-blx-list.html",
+			"html/login/login.html",
+			"html/my/my.html"
+		]
+	},
+	"html/kz_ppsp/product-detail.html": {
+		"refer": [
+			"html/kz_ppsp/product_iframe.html"
+		]
+	},
+	"html/kz_ppsp/qy-list.html": {
+		"refer": [
+			"html/kz_ppsp/product-list.html"
+		]
+	},
+	"html/kz_ppsp/product-list.html": {
+		"refer": [
+			"html/kz_ppsp/product-detail.html"
+		]
+	},
+	"html/kz_zsk/zsk-list.html": {
+		"refer": [
+			"html/kz_zsk/zsk-detail.html"
 		]
 	}
 }

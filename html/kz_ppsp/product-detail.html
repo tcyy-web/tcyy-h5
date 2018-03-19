@@ -66,16 +66,17 @@
 	  display: none;
 	  margin-left: 10px;
     width: 100px;
-    color: #ffffff;
     padding: 0;
     border: 0;
     text-align: center;
     margin-bottom: 0;
     font-size: 14px;
-    background-color: #6b51c1;
     line-height: 40px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+    color: #896dea;
+    background-color: #fff;
+    border: 1px solid #8a6de9;
 	}
 	</style>
 
@@ -107,6 +108,8 @@
     </div>
   </div>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../js/mui.zoom.js"></script>
+  <script src="../../js/mui.previewimage.js"></script>
   <script src="../../js/utils.config.js"></script>
   <script src="../../js/utils.extend.js"></script>
   <script src="../../js/utils.storages.js" ></script>
@@ -133,6 +136,7 @@
           var $tongdao = doc.getElementById('tongdao');
           var $headName = doc.getElementById('headName');
           var $contents = doc.getElementById('contents');
+          $.previewImage();
           // 页面刷新
           window.addEventListener('KZ_PPSP_PRODUCT_ID', function(e){
             id = e.detail.id;
@@ -154,6 +158,10 @@
                 $title.innerText = data.title;
                 $headName.innerText = data.title;
                 $contents.innerHTML = data.contents;
+                $.each($contents.querySelectorAll('img'), function(index, img) {
+                  img.setAttribute('data-preview-group', id);
+                  img.setAttribute('data-preview-src', '');
+                 });
                 if (data.purls != '') {
                   $tongdao.style.display = 'inline-block';
                 }
