@@ -12,6 +12,9 @@
     html,body{ height: 100%; margin: 0; padding: 0; overflow: hidden;}
     body{ background:#252a47; position: relative; }
     
+    .container{ zoom: 0.5;}
+    
+    
     .mui-bar{ height: 48px; background: none; box-shadow: none; }
     .mui-bar .mui-icon{padding-top: 8px; font-size: 30px;}
     .mui-tooltip{ display: none;}
@@ -66,7 +69,7 @@
   </style>
 </head>
 <body src="../../images/yangshi/ys_bg.jpg">
-<canvas id="bg"></canvas>
+
 <header class="mui-bar mui-bar-nav">
   	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<div class="top_opt mui-input-row">
@@ -86,8 +89,10 @@
 		  </div>
 	  </div>
 </header>
-
-<canvas id="canvas"> 不支持canvas </canvas>
+<div class="container">
+	<canvas  id="bg"></canvas>
+	<canvas  id="canvas"> 不支持canvas </canvas>
+</div>
 
 
 <ul class="left_opt" id="left_list"> </ul>

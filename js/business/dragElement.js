@@ -69,11 +69,21 @@ Drag.prototype = {
 					pointers: 0
 				}],
 				[Hammer.Tap],
-				[Hammer.Press]
+				[Hammer.Tap,{
+					 event: 'doubletap', taps: 2
+				}],
+				[Hammer.Press],
+				
+//				[Hammer.Rotate,{
+//					threshold: 0
+//				},['pan']]
+				
+				[Hammer.Pinch,{
+					threshold: 0
+				},['pan']],
 			]
 		} );
 		
-		mc.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }));
 		
 		var mcClose = new Hammer(this.target.find("i")[0]);
 	
@@ -97,8 +107,49 @@ Drag.prototype = {
 		
 		mc.on("tap", self.onTap.bind( self ));
 		
+		mc.on("pinchstart pinchmove", self.onPinch.bind( self ) );
+		
+//		mc.on("rotatestart rotatemove rotateend", self.onRotate.bind( self ) );
+		
 		mcClose.on("panstart panmove panend", self.onPanClose.bind(self));
 	
+	},
+	
+	onRotate : function (ev) {
+
+		//点下第二个触控点时触发
+		if(ev.type == 'rotatestart') {
+			this.startRotateAngle = ev.rotation;
+			this.tempAngleFlag = 0;
+		}
+		if(ev.type == 'rotatemove') {
+			if( this.tempAngleFlag == 0) {
+				this.preAngle = this.startRotateAngle;
+				this.tempAngleFlag++;
+			} else {
+				this.deltaAngle = ev.rotation + this.preAngle;
+				
+				this.transform.rz = 1; //非0  垂直xy轴
+				this.transform.angle = this.initAngle + this.deltaAngle;
+				this.requestElementUpdate();
+			}
+		}
+
+		//旋转结束  记录当前图片角度	
+		if(ev.type == 'rotateend') {
+			this.initAngle = this.transform.angle;
+		}
+	},
+	
+	onPinch:function(ev) {
+		
+		if(ev.type == 'pinchstart') {
+			this.initScale = this.transform.scale || 1;
+		}
+		
+		this.transform.scale = this.initScale * ev.scale;
+		
+		this.requestElementUpdate();
 	},
 	
 	onTap: function( ev ){
@@ -117,6 +168,8 @@ Drag.prototype = {
 		$(target).addClass("taped");
 		this.setIndex();
 	},
+	
+
 	onPan: function( ev ){
 		this.transform.translate = {
 			x: this.START_X + ev.deltaX,
@@ -128,14 +181,15 @@ Drag.prototype = {
 	onPress: function( ev ){
 		
 		$(".delete").css({
-			"left": ev.center.x,
-			"top": ev.center.y,
+			"left": ev.center.x-100,
+			"top": ev.center.y-20,
 			"z-index":_index+10
 		}).show();
 	},
 
 	doubleTap:function(){
-		this.target.remove();
+		
+		$(this.target).remove();
 	},
 	
 	onPanClose: function( ev ){
@@ -144,9 +198,7 @@ Drag.prototype = {
 
 
 		if( ev.type =="panstart"){
-
-			this.initScale = this.transform.scale || 1;
-
+			
 			this.initAngle = this.preAngle;
 			
 		}else if( ev.type =="panmove"){
@@ -162,10 +214,10 @@ Drag.prototype = {
 			
 			this.scale =  len / sLen; 
 			
-			var tempScale = this.initScale * this.scale;
+			var tempScale =  this.scale;
 
 			
-			if( tempScale> 2 ){ tempScale = 2; }
+//			if( tempScale> 2 ){ tempScale = 2; }
 			
 			if( tempScale < 0.4){ tempScale = 0.4; }
 			
@@ -179,8 +231,8 @@ Drag.prototype = {
 			this.transform.angle = this._temp;
 
 		}else if( ev.type =="panend"){
+			this.initScale = tempScale;
 
-			
 		}
 		this.requestElementUpdate();
 		

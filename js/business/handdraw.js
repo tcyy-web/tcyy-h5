@@ -5,8 +5,26 @@
 	var bgCanvas = document.getElementById("bg");
 	var context = canvas.getContext("2d");
 
-	canvas.width = $(window).width();
-	canvas.height = $(window).height();
+
+
+    // polyfill 提供了这个方法用来获取设备的 pixel ratio
+    var getPixelRatio = function(context) {
+        var backingStore = context.backingStorePixelRatio ||
+            context.webkitBackingStorePixelRatio ||
+            context.mozBackingStorePixelRatio ||
+            context.msBackingStorePixelRatio ||
+            context.oBackingStorePixelRatio ||
+            context.backingStorePixelRatio || 1;
+    
+        return (window.devicePixelRatio || 1) / backingStore;
+    };
+
+    var ratio = getPixelRatio(context);
+    
+    $(".container").css({
+    	"zoom":1/ratio
+    })
+	
 
 	var lastLoc = {
 		x: 0,
@@ -47,7 +65,7 @@
 		image.src = src;
 		image.onload = function() {
 			
-			context.drawImage(image, left||0, top||0, canvas.width-(left||0), canvas.height-(top||0));
+			context.drawImage(image, left*ratio||0, top*ratio||0, canvas.width-(left||0)*ratio, canvas.height-(top||0)*ratio);
 		}
 	}
 
@@ -58,11 +76,13 @@
 		}
 
 		if(type == "x") {
-			return event.clientX || event.originalEvent ? event.originalEvent.changedTouches[0].clientX : event.changedTouches[0].clientX;
+			var x = event.clientX || event.originalEvent ? event.originalEvent.changedTouches[0].clientX : event.changedTouches[0].clientX;
+			return x*ratio;
 		}
 
 		if(type == "y") {
-			return event.clientY || event.originalEvent ? event.originalEvent.changedTouches[0].clientY : event.changedTouches[0].clientY;
+			y = event.clientY || event.originalEvent ? event.originalEvent.changedTouches[0].clientY : event.changedTouches[0].clientY;
+			return y*ratio
 		}
 	}
 
@@ -88,7 +108,6 @@
 //  	if($(".center_opt").find("li").length!=0){ return false;}
     	var st = "";
     	for(var i = 0; i<data.length; i++){
-    		console.log( data[i].image );
     		st += "<li><img src='"+data[i].image+"'/></li>";
     	}
     	st+="<li class='clearfix'></li>";
@@ -111,22 +130,30 @@
     }
 
 	function addEventListener() {
-		var b_w = 0, b_h = 0;
-		$(window).on("resize",function(){
-			 canvas.width = $(window).width();
-			 bgCanvas.width = canvas.width - b_w;
-			 canvas.height = $(window).height();
-			 bgCanvas.height = canvas.height - b_h;
+		
+		var render = function(){
+			_w = $(window).width();
+			_h = $(window).height();
+			
+//			canvas.style.width = _w;
+//			canvas.style.height = _h;
+//			
+//			bgCanvas.style.width = _w;
+//			bgCanvas.style.height = _h;
+			
+			bgCanvas.width = canvas.width = _w*ratio ;
+			bgCanvas.height = canvas.height = _h*ratio ;
+
+			
 			drawBg();
+		}
+		$(window).on("resize",function(){
+			render();
 			
 		})
 		
 		$(function(){
-			canvas.width = $(window).width();
-			bgCanvas.width = canvas.width - b_w;
-			canvas.height = $(window).height();
-			bgCanvas.height = canvas.height - b_h;
-			drawBg();
+			render();
 		})
 
 		$("#file").on("change", function() {
@@ -381,7 +408,7 @@
 
 				context.save();
 				context.strokeStyle = strokeColor;
-				context.lineWidth = lineWidth;
+				context.lineWidth = lineWidth*ratio;
 				context.lineCap = "round";
 
 				context.stroke();

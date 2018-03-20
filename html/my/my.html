@@ -9,12 +9,14 @@
 	<link rel="stylesheet" href="../../css/mui.poppicker.css">
 	<link href="../../css/style.css" rel="stylesheet" />
 <style>
-	.mui-content>.mui-table-view:first-child{margin-top: 0;}
-	.mui-table-view-chevron .mui-table-view-cell{padding-right: 40px;}
+
+	.mui-content>.mui-table-view:first-child{margin-top: 2px;}
+	.mui-table-view-chevron .mui-table-view-cell1{padding-right: 8px; position: relative;}
+	.mui-navigate-right{ position: relative; height: 40px; display: block;}
 	.mui-navigate-right:after, .mui-push-right:after{ content: ''; }
-	.mui-table-view-cell>a:not(.mui-btn){ color: #999;}
-	.mui-navigate-right span{position: absolute;}
-	.mui-pull-right{ font-style: normal; color: #333; text-align: right; width: 100%;}
+	.mui-table-view-cell1>a:not(.mui-btn){ color: #999;}
+	.mui-navigate-right span{position: absolute; left:10px;}
+	.mui-pull-right1{ font-style: normal; color: #333; text-align: right;  height: 100%; display: block; －webkit－user-select ：none ; border:none!important;}
 	#headurl img{ width: 40px; height: 40px;}
 </style>
 
@@ -27,31 +29,31 @@
 </header>
 <div class="mui-content">
 <ul class="mui-table-view mui-table-view-chevron">
-	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>头像</span> <i id="headurl" class="mui-pull-right">
+	<li class="mui-table-view-cell1">
+		<a class="mui-navigate-right"><span>头像</span> <i id="headurl" class="mui-pull-right1">
 			<img src="" alt="" />
 		</i></a>
 	</li>
-	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>昵称 </span><input id="nickname" class="mui-pull-right"></a>
+	<li class="mui-table-view-cell1">
+		<a class="mui-navigate-right"><span>昵称 </span><input type="text" id="nickname" class="mui-pull-right1"></a>
 	</li>
-	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>性别 </span><i id="sex" class="mui-pull-right">男</i></a>
+	<li class="mui-table-view-cell1">
+		<a class="mui-navigate-right"><span>性别 </span><i id="sex" class="mui-pull-right1">男</i></a>
 	</li>
-	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>电话 </span><input id="phone" class="mui-pull-right" ></a>
+	<li class="mui-table-view-cell1">
+		<a class="mui-navigate-right"><span>电话 </span><input type="text" id="phone" class="mui-pull-right1" ></a>
 	</li>
-	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>所在地 </span><input id="province" class="mui-pull-right" ></a>
+	<li class="mui-table-view-cell1">
+		<a class="mui-navigate-right"><span>所在地 </span><input type="text" id="province" class="mui-pull-right1" ></a>
 	</li>
-	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>微信 </span><input id="weixin" class="mui-pull-right" ></a>
+	<li class="mui-table-view-cell1">
+		<a class="mui-navigate-right"><span>微信 </span><input type="text" id="weixin" class="mui-pull-right1" ></a>
 	</li>
-	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>QQ </span><input id="qq" class="mui-pull-right" ></a>
+	<li class="mui-table-view-cell1">
+		<a class="mui-navigate-right"><span>QQ </span><input type="text" id="qq" class="mui-pull-right1" ></a>
 	</li>
-	<li class="mui-table-view-cell">
-		<a href="#about" class="mui-navigate-right"><span>Email </span><input id="email" class="mui-pull-right" ></a>
+	<li class="mui-table-view-cell1">
+		<a class="mui-navigate-right"><span>Email </span><input type="text" id="email" class="mui-pull-right1" ></a>
 	</li>
 </ul>
 </div>
@@ -105,7 +107,7 @@
 		}
 		
 		function render( obj ){
-			var arr = doc.querySelectorAll(".mui-pull-right");
+			var arr = doc.querySelectorAll(".mui-pull-right1");
 			$.each( arr , function() {
 				var name = this.getAttribute("id");
 				if( name == "headurl"){
@@ -137,7 +139,7 @@
 		}
 
 		function addEvent() {
-			var oTableCell = doc.querySelectorAll(".mui-table-view-cell .mui-pull-right");
+			var oTableCell = doc.querySelectorAll(".mui-table-view-cell1 .mui-pull-right1");
 
 			$.each(oTableCell, function() {
 
