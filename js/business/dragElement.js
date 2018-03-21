@@ -74,13 +74,13 @@ Drag.prototype = {
 				}],
 				[Hammer.Press],
 				
-//				[Hammer.Rotate,{
-//					threshold: 0
-//				},['pan']]
+				[Hammer.Rotate,{
+					threshold: 0
+				},['pan']],
 				
 				[Hammer.Pinch,{
 					threshold: 0
-				},['pan']],
+				},['pan','rotate']],
 			]
 		} );
 		
@@ -101,7 +101,7 @@ Drag.prototype = {
 		
 		mc.on("panstart panmove", self.onPan.bind(self));
 	
-		mc.on("doubletap", self.doubleTap.bind( self ) );
+//		mc.on("doubletap", self.doubleTap.bind( self ) );
 
 		mc.on("press", self.onPress.bind( self ));
 		
@@ -109,9 +109,9 @@ Drag.prototype = {
 		
 		mc.on("pinchstart pinchmove", self.onPinch.bind( self ) );
 		
-//		mc.on("rotatestart rotatemove rotateend", self.onRotate.bind( self ) );
+		mc.on("rotatestart rotatemove rotateend", self.onRotate.bind( self ) );
 		
-		mcClose.on("panstart panmove panend", self.onPanClose.bind(self));
+		mcClose.on("panstart panmove panend", self.oniPanChange.bind(self));
 	
 	},
 	
@@ -119,17 +119,22 @@ Drag.prototype = {
 
 		//点下第二个触控点时触发
 		if(ev.type == 'rotatestart') {
+			
 			this.startRotateAngle = ev.rotation;
+			
 			this.tempAngleFlag = 0;
+			
+			_now_target = this.target;
 		}
 		if(ev.type == 'rotatemove') {
+			
 			if( this.tempAngleFlag == 0) {
-				this.preAngle = this.startRotateAngle;
+				this.preAngle2 = this.startRotateAngle ;
 				this.tempAngleFlag++;
 			} else {
-				this.deltaAngle = ev.rotation + this.preAngle;
+				this.deltaAngle = ev.rotation  - this.preAngle2;
 				
-				this.transform.rz = 1; //非0  垂直xy轴
+//				this.transform.rz = 1; //非0  垂直xy轴
 				this.transform.angle = this.initAngle + this.deltaAngle;
 				this.requestElementUpdate();
 			}
@@ -138,10 +143,13 @@ Drag.prototype = {
 		//旋转结束  记录当前图片角度	
 		if(ev.type == 'rotateend') {
 			this.initAngle = this.transform.angle;
+			
 		}
 	},
 	
 	onPinch:function(ev) {
+		
+		_now_target = this.target;
 		
 		if(ev.type == 'pinchstart') {
 			this.initScale = this.transform.scale || 1;
@@ -188,11 +196,10 @@ Drag.prototype = {
 	},
 
 	doubleTap:function(){
-		
-		$(this.target).remove();
+		this.target.remove();
 	},
 	
-	onPanClose: function( ev ){
+	oniPanChange: function( ev ){
 		
 		var self = this;
 
@@ -232,7 +239,7 @@ Drag.prototype = {
 
 		}else if( ev.type =="panend"){
 			this.initScale = tempScale;
-
+			this.initAngle = this.transform.angle;
 		}
 		this.requestElementUpdate();
 		

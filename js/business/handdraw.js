@@ -281,7 +281,8 @@
 				h = oImg.height();
 			var l = ($(window).width() - w) / 2,
 				t = ($(window).height() - h) / 2;
-			var oTar = $("<div class='opt_img'><p><img src=" + sLink + "></p> <i></i></div>").appendTo("body");
+				
+			var oTar = $("<div class='opt_img'><p><img src=" + sLink + "><b></b></p> <i></i> </div>").appendTo("body");
 			oTar.css({
 				"position": "absolute",
 				"left": 0,
