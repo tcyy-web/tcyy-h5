@@ -68,10 +68,7 @@ Drag.prototype = {
 					threshold: 0,
 					pointers: 0
 				}],
-				[Hammer.Tap],
-				[Hammer.Tap,{
-					 event: 'doubletap', taps: 2
-				}],
+
 				[Hammer.Press],
 				
 				[Hammer.Rotate,{
@@ -97,15 +94,22 @@ Drag.prototype = {
 			}
 	
 		});
+		
+		
+		mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
+		mc.add( new Hammer.Tap({ event: 'singletap' }) );
+		
+		mc.get('doubletap').recognizeWith('singletap');
+		mc.get('singletap').requireFailure('doubletap');
 	
 		
 		mc.on("panstart panmove", self.onPan.bind(self));
+		
+		mc.on("singletap", self.onTap.bind( self ));
 	
-//		mc.on("doubletap", self.doubleTap.bind( self ) );
+		mc.on("doubletap", self.doubleTap.bind( self ) );
 
 		mc.on("press", self.onPress.bind( self ));
-		
-		mc.on("tap", self.onTap.bind( self ));
 		
 		mc.on("pinchstart pinchmove", self.onPinch.bind( self ) );
 		
@@ -196,6 +200,7 @@ Drag.prototype = {
 	},
 
 	doubleTap:function(){
+		$(".delete").hide();
 		this.target.remove();
 	},
 	
