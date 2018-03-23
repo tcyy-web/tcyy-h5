@@ -33,6 +33,59 @@
 				margin-top: 5px;
 			}
 		</style>
+		<style>
+		  .startimgbox{
+		    display: none;
+		    position: fixed;
+		    top: 0;
+		    right: 0;
+		    left: 0;
+		    bottom: 0;
+		    z-index: 10000;
+		    background-color: #000;
+		  }
+		  .startimgbox .mui-slider{
+		    height: 100%;
+		  }
+		  .startimgbox .mui-slider-group{
+		    height: 100%;
+		  }
+		  .startimgbox .mui-slider .mui-slider-group .mui-slider-item img{
+		    width: 100%;
+		    height: 100%;
+		  }
+		  .mui-slider-indicator{
+        bottom: 20px;
+      }
+      .mui-slider-indicator .mui-indicator{
+        width: 10px;
+        height: 10px;
+        margin: 1px 3px;
+        background-color: #b1a0e9;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .mui-slider-indicator .mui-active.mui-indicator{
+        background-color: #765fc3;
+      }
+      .startimgbox .ljjr{
+        position: absolute;
+        left: calc(50% - 50px);
+        left: -webkit-calc(50% - 50px);
+        bottom: 60px;
+        width: 100px;
+        height: 40px;
+        z-index: 100;
+        line-height: 40px;
+        background-color: #765fc3;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+      }
+		</style>
 	</head>
 
 	<body>
@@ -114,8 +167,22 @@
 				</div>
 			</div>
 		</div>
+		<div id="startimgbox" class="startimgbox">
+		  <div id="slider" class="mui-slider" >
+        <div class="mui-slider-group">
+          <div class="mui-slider-item">
+            <img src="../../images/ppsp/banner.jpg">
+            <div class="ljjr">立即进入</div>
+          </div>
+        </div>
+        <div class="mui-slider-indicator">
+        </div>
+      </div>
+		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../third/knockout.js" ></script>
 		<script src="../../js/utils.config.js"></script>
+		<script src="../../js/utils.extend.js" ></script>
 		<script src="../../js/utils.storages.js"></script>
 		<script src="../../js/utils.auth.js" ></script>
 		<script src="../../js/utils.request.js" ></script>
@@ -223,6 +290,84 @@
                 authManage.toLogin();
               }
             });
+            /*启动图片*/
+            var $startimgbox = doc.getElementById('startimgbox');
+            var $silder = doc.getElementById('slider');
+            var silder = $('#slider');
+            var imgKey = '$startimgs';
+            $('#startimgbox').on('tap', '.ljjr', function(){
+              $startimgbox.style.display = 'none';
+            });
+            var paintSilder = function(data) {
+              $startimgbox.style.display = 'block';
+              $silder.innerHTML = '';
+              var imgDiv = doc.createElement('div');
+              imgDiv.className = 'mui-slider-group';
+              $.each(data, function(index, d) {
+                 var img = doc.createElement('div');
+                 img.className = 'mui-slider-item';
+                 var _img = doc.createElement('img');
+                 _img.src = d.image;
+                 img.appendChild(_img);
+                 if (index == data.length -1 ) {
+                   var _ljjr = doc.createElement('div');
+                   _ljjr.className = 'ljjr';
+                   _ljjr.innerText = '立即进入';
+                   img.appendChild(_ljjr);
+                 }
+                 imgDiv.appendChild(img);
+              });
+              $silder.appendChild(imgDiv);
+              // 画点
+              var dianDiv = doc.createElement('div');
+              dianDiv.className = 'mui-slider-indicator';
+              $.each(data, function(index, d) {
+                 var dian = doc.createElement('div');
+                 if (index === 0) {
+                   dian.className = 'mui-indicator mui-active';
+                 } else {
+                   dian.className = 'mui-indicator';
+                 }
+                 dianDiv.appendChild(dian);
+              });
+              $silder.appendChild(dianDiv);
+              silder.slider({
+                interval: 2000
+              });
+            }
+            // 读缓存
+            var getImageFromStorage = function() {
+              var imgurl = storage.get({
+                key: imgKey
+              });
+              if (imgurl !== null) {
+                var imgs = JSON.parse(imgurl);
+                if (imgs.length > 0) {
+                  paintSilder(imgs);
+                  return;
+                }
+              }
+              $startimgbox.style.display = 'none';
+            }
+            var getImageFromServer = function() {
+              request.ajax('Publics/advert',{
+                showMsg: false,
+                showLoading: false
+              },function(data, success) {
+                if (success && data && data.length > 0) {
+                  paintSilder(data);
+                  return;
+                }
+                $startimgbox.style.display = 'none';
+              }, function() {
+                $startimgbox.style.display = 'none';
+              });
+            }
+            if (!request.getNetworkState()) {
+              getImageFromStorage();
+            } else {
+              getImageFromServer();
+            }
             // tab事件
             doc.getElementById('tab3d').addEventListener('tap', function(event) {
               if (authManage.checkLogin()) {

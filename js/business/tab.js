@@ -1,15 +1,8 @@
 
 function gotoGT () {
+  var startWebview = plus.webview.getLaunchWebview();
   mui.openWindow({
-    url: './tab-webview-goutong.html',
-    id: 'TAB_GOUTONG',
-    preload: true,
-    show: {
-      aniShow: 'pop-in'
-    },
-    waiting: {
-      autoShow: false
-    }
+    id: startWebview.id,
   });
 }
 function gotoKZ () {
