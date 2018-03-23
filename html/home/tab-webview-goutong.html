@@ -356,6 +356,10 @@
               },function(data, success) {
                 if (success && data && data.length > 0) {
                   paintSilder(data);
+                  storage.save({
+                    key: imgKey,
+                    value: JSON.stringify(data)
+                  });
                   return;
                 }
                 $startimgbox.style.display = 'none';
