@@ -22,7 +22,7 @@ body,div,p,span,h1,h2,h3,h4,h5,ul,li,dl,dd,dt,a,from,input,div,menu,ol{ border:0
 	margin: 0px;
 }
 /*头部*/
-.mui-bar {
+.mui-bar.mui-bar-nav {
 	background-color: #765fc3;
 }
 .mui-bar .mui-pull-left,.mui-bar .mui-pull-right {
@@ -31,6 +31,89 @@ body,div,p,span,h1,h2,h3,h4,h5,ul,li,dl,dd,dt,a,from,input,div,menu,ol{ border:0
 .mui-title {
 	color: #ffffff;
 	font-size: 18px;
+}
+.tab3d{
+  width: 62px;
+  height: 62px;
+  position: fixed;
+  bottom: 5px;
+  left: calc(50% - 30px);
+  left: -webkit-calc(50% - 30px);
+  z-index: 200;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  background-color: #fff;
+  font-size: 25px;
+  text-align: center;
+  line-height: 58px;
+  color: #fff;
+}
+.tab3d span{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+}
+.tab3d:before{
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 50px;
+  height: 50px;
+  z-index: 3;
+  background-color: #a39cc4;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.tab3d:after{
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 16px;
+  width: 70px;
+  height: 45px;
+  z-index: 2;
+  background-color: #fff;
+}
+.mui-bar.mui-bar-tab.indextab{
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0,.15);
+  box-shadow: 0 0 1px rgba(0,0,0,.15);
+}
+.mui-bar-tab.indextab .item{
+  color: #303030;
+  font-size: 10px;
+  display: table-cell;
+  overflow: hidden;
+  width: 1%;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.mui-bar-tab.indextab .item.left{
+  text-align: left;
+  padding-left: 10px;
+}
+.mui-bar-tab.indextab .item.right{
+  text-align: right;
+  padding-right: 10px;
+}
+.mui-bar-tab.indextab .item .iconfontbox{
+  position: relative;
+  top: 4px;
+}
+.mui-bar-tab.indextab .item .iconfont{
+  font-size: 20px;
+}
+.mui-bar-tab.indextab .item.mui-active
+{
+  color: #765fc3;
 }
 /*公共*/
 .clearFix:before,.clearFix:after{ content:""; display:table;}

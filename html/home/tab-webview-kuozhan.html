@@ -7,13 +7,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+    <link rel="stylesheet" href="../../css/iconfont.css" />
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
 		<style>
 			body,
 			.mui-content {
 				background-color: #ececec;
+			}
+			.mui-content{
+			  height: auto;
+        padding-bottom: 70px !important;
 			}
 			.pb10 {
 				padding-bottom: 10px;
@@ -55,6 +59,27 @@
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">扩展</h1>
 		</header>
+		<div id="tab3d" class="tab3d">
+      <span>3D</span>
+    </div>
+		<nav class="mui-bar mui-bar-tab indextab">
+      <a id="tabgt" class="item">
+        <div class="iconfontbox"><i class="iconfont icon-gt"></i></div>
+        <span class="mui-tab-label">沟通</span>
+      </a>
+      <a id="tabys" class="item left">
+        <div class="iconfontbox"><i class="iconfont icon-ys"></i></div>
+        <span class="mui-tab-label">演示</span>
+      </a>
+      <a id="tabkz" class="item mui-active right">
+        <div class="iconfontbox"><i class="iconfont icon-kz"></i></div>
+        <span class="mui-tab-label">扩展</span>
+      </a>
+      <a id="tabwd" class="item">
+        <div class="iconfontbox"><i class="iconfont icon-wd"></i></div>
+        <span class="mui-tab-label">我的</span>
+      </a>
+    </nav>
 		<div id="content" class="mui-content">
 			<!--<div class="kuozhan-item">
 				<div class="item-title">
@@ -177,6 +202,7 @@
   <script src="../../js/utils.storages.js" ></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.request.js"></script>
+  <script src="../../js/business/tab.js" ></script>
 	<script>
 		(function($, doc) {
 				$.init({
@@ -331,6 +357,27 @@
             });
           }
 				  getList();
+				  // tab事件
+				  doc.getElementById('tab3d').addEventListener('tap', function(event) {
+            if (authManage.checkLogin()) {
+              goto3D();
+            } else {
+              authManage.toLogin();
+            }
+          });
+          doc.getElementById('tabys').addEventListener('tap', function(event) {
+              var yanshiWebview = plus.webview.getWebviewById('YANSHI_INDEX');
+               $.fire(yanshiWebview,'YANSHI_Refresh',{});
+               $.openWindow({
+                 id: 'YANSHI_INDEX'
+               });
+            });
+            doc.getElementById('tabgt').addEventListener('tap', function(event) {
+              gotoGT();
+            });
+            doc.getElementById('tabwd').addEventListener('tap', function(event) {
+              gotoWD();
+            });
 				});
 			}(mui, document));
 	</script>
