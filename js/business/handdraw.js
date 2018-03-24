@@ -266,6 +266,10 @@
 			}
 			
 			var oChild = $(this).find(".left_opt2")
+			if( !oChild.is(":hidden")){
+				oChild.hide();
+				return ;
+			}
 			renderLeftOpt2( tar["dome_image"] , oChild );
 			$(".left_opt2").hide()
 			oChild.show();

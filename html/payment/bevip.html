@@ -10,10 +10,12 @@
 	<link href="../../css/style.css" rel="stylesheet" />
     <!--App自定义的css-->
     <style type="text/css">
+    	.mui-content{background: #fff;}
     	p{padding: 15px;}
     	#content{
     		margin-bottom: 15px;
     	}
+    	#left{ display: none; position: absolute; background: #fff; left:0; right: 0; bottom: 0; text-align: center; font-size: 18px; line-height: 40px; color: red; }
     </style>
 </head>
 <body>
@@ -25,7 +27,7 @@
     	<ul class="mui-table-view mui-table-view-chevron" id="content">
 			
 		</ul>
-		
+		<div id="left">到期时间： <span id="leftTime"></span></div>
     </div>
 </body>
 <script src="../../js/mui.min.js"></script>
@@ -42,6 +44,8 @@
  $.plusReady(function() {
 	
   ajaxData();
+  
+  getVip();
   
  window.addEventListener("back",function( e ){
 
@@ -105,7 +109,23 @@ function openPay( id , price ,content){
     	id:"MY-PAY"
     })
 }
-    
+  
+  
+function getVip(){
+	request.loginAjax('user/getVip', {showMsg: false , showLoading:false }, function(data, success) {
+  	
+  	  if ( success ){
+  	  	
+  	  	if( data.date != 0){
+  	  		document.getElementById("left").style.display = "block";
+  	  		document.getElementById("leftTime").innerText = data.date;
+  	  	}
+		
+		
+  	  }
+  	});
+	
+}
 })( mui , document);    
 </script>
 </html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html class="ui-page-my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title></title>
+<link href="../../css/mui.min.css" rel="stylesheet" />
+<link href="../../css/style.css" rel="stylesheet" />
+<style>
+.pd{ padding: 0 10px; position: relative;}
+.mui-bar-nav{box-shadow: none;}
+.mui-content{background: #fff;}
+.mui-content>img{ width: 100%;}
+.mui-content #title{ font-size: 22px; line-height: 30px; color: #21c1fb; }
+
+.mui-content #price{ margin-left: 10px;}
+.mui-content #left{ margin-left: 10px;}
+.mui-content .ptitle{padding: 0 10px 20px;}
+.mui-content .line{height: 1px; background: #ccc; margin-top: 20px; margin-bottom: 20px;}
+.mui-content .red{ color: red;;}
+.mui-content .gray{ color: gray;}
+.mui-content .blue{ color: deepskyblue;}
+.mui-content #goumai{ position: absolute; top: -6px; right: 15px;} 
+.mui-content #content{}
+</style>
+
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">产品详情</h1>
+</header>
+<div class="mui-content">
+	<img src="" id="image"/>
+	<div class="pd" id="title"></div>
+	<div class="pd">
+		<span class="red"><span id="point">333</span>积分</span>
+		<span class="gray"><span id="price">333</span>元</span>
+		<span class="blue"><span id="left">333</span>元</span>
+		<button id="goumai">购买</button>
+	</div>
+	<div class="line"></div>
+	<h4 class="ptitle">产品介绍</h4>
+	<div class="pd" id="content"></div>
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.storages.js"></script>
+<script src="../../js/utils.auth.js"></script>
+<script src="../../js/utils.upload.js"></script>
+<script src="../../js/utils.request.js" ></script>
+
+<script type="text/javascript">
+(function($, doc) {
+
+$.init();
+var goodsId = null;
+$.plusReady(function() {
+	
+window.addEventListener('product-detail-id', function(e){
+    goodsId = e.detail.id;
+    
+    getProductDetail( goodsId );
+	
+});
+
+});
+
+var childWebview = null;
+function getProductDetail( id ){
+
+request.loginAjax('Point/getDetails', {
+	data:{
+		id : id
+	},
+	
+	showMsg: false,
+	showLoading:false
+  }, function(data, success) {
+    if (success) {
+		document.getElementById("image").setAttribute("src",data.image);
+		document.getElementById("title").innerHTML = data.title;
+		document.getElementById("point").innerHTML = data.point;
+		document.getElementById("price").innerHTML = data.price;
+		document.getElementById("left").innerHTML = data.number;
+		document.getElementById("content").innerHTML = data.contents;
+		
+		document.getElementById("goumai").addEventListener('tap', function(event){
+		  event.stopPropagation();
+	      if (!childWebview) {
+	        childWebview = plus.webview.getWebviewById('pointUSE');
+	      }
+	      $.fire(childWebview,'point-use-id',{
+	        id:data.id
+	      });
+	      $.openWindow({
+	        id: 'pointUSE'
+	      });
+	    });
+    }
+});
+
+}
+
+})(mui,document);
+</script>
+</body>
+
+</html>

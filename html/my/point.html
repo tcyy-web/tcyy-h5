@@ -166,7 +166,7 @@
 	text-align: center;
 	line-height:30px;
 	position: absolute;
-	right:10px;
+	right:0px;
 	top:50%;
 	transform: translate(0,-50%);
 	border-radius: 15px;
@@ -239,18 +239,32 @@
 <script src="../../js/utils.auth.js"></script>
 <script src="../../js/utils.request.js"></script>
 <script type="text/javascript">
+	
+var childWebview = null , pointProductDetailWebview = null;	
 (function($, doc) {
 
 	$.init({
-      preloadPages:[{
+      preloadPages:[
+      {
         id:'pointUSE',
-        url: './point-use.html'
-      }]
+        url: './point-use.html',
+        styles: {
+			popGesture:"hide"
+		}
+      },
+		{
+			id:'pointProductDetail',
+			url: './point-product-detail.html',
+			styles: {
+				popGesture:"hide"
+			},
+	    }]
     });
 
 	$.plusReady(function() {
-		ajaxList();
-		getTotalPoint();
+
+	ajaxList();
+	getTotalPoint();
 	
 	 document.getElementById("jifenxiangqing").addEventListener('tap', function(event){
         $.openWindow({
@@ -260,6 +274,9 @@
             show: {
               aniShow: 'pop-in'
             },
+            styles: {
+				popGesture:"close"
+			},
 
             waiting: {
               autoShow: true
@@ -282,37 +299,6 @@
           }
         });
      });
-//   
-//   document.getElementById("fabu").addEventListener('tap', function(event){
-//      $.openWindow({
-//          url: './train-upload.html',
-//          id: 'KZ-TRAIN-UPLOAD',
-//			extras:{ courseId  : courseId},
-//          show: {
-//            aniShow: 'pop-in'
-//          },
-//
-//          waiting: {
-//            autoShow: true
-//          }
-//       });
-//   });
-//   
-//   document.getElementById("fabu").addEventListener('tap', function(event){
-//      $.openWindow({
-//          url: './train-upload.html',
-//          id: 'KZ-TRAIN-UPLOAD',
-//			extras:{ courseId  : courseId},
-//          show: {
-//            aniShow: 'pop-in'
-//          },
-//
-//          waiting: {
-//            autoShow: true
-//          }
-//       });
-//   });
-		
 	});
 	
 	
@@ -336,7 +322,7 @@ request.loginAjax('Point/getListData', {
     }
 });
 }
-var childWebview = null;
+
 var createFragment = function( parent, data) {
   var li = doc.createElement('li');
   li.innerHTML ='<a>'+
@@ -353,9 +339,25 @@ var createFragment = function( parent, data) {
 					'</p>'+
 					'<a class="duihua">兑换</a>'+
 				'</div>';
-		    	
-		    	
-	 li.querySelector(".duihua").addEventListener('tap', function(event){
+	parent.appendChild(li);
+	
+	
+	var viewProductDetail = function(event){
+      if ( !pointProductDetailWebview ) {
+        pointProductDetailWebview = plus.webview.getWebviewById('pointProductDetail');
+      }
+      $.fire( pointProductDetailWebview ,'product-detail-id',{
+        id:data.id
+      });
+      $.openWindow({
+        id: 'pointProductDetail'
+      });
+    }
+	
+	li.addEventListener('tap', viewProductDetail );
+    
+	li.querySelector(".duihua").addEventListener('tap', function(event){
+	  event.stopPropagation();
       if (!childWebview) {
         childWebview = plus.webview.getWebviewById('pointUSE');
       }
@@ -366,7 +368,7 @@ var createFragment = function( parent, data) {
         id: 'pointUSE'
       });
     });
-  parent.appendChild(li);
+  
 };
 
 function getTotalPoint(){

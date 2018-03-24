@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="../../css/mui.poppicker.css">
 	<link href="../../css/style.css" rel="stylesheet" />
 <style>
-
+	html,body,.mui-content{background: #fff;}
 	.mui-content>.mui-table-view:first-child{margin-top: 2px;}
 	.mui-table-view-chevron .mui-table-view-cell1{padding-right: 8px; position: relative;}
 	.mui-navigate-right{ position: relative; height: 40px; display: block;}
@@ -18,6 +18,7 @@
 	.mui-navigate-right span{position: absolute; left:10px;}
 	.mui-pull-right1{ font-style: normal; color: #333; text-align: right;  height: 100%; display: block; －webkit－user-select ：none ; border:none!important;}
 	#headurl img{ width: 40px; height: 40px;}
+	.btn-box{ margin:20px 10px;}
 </style>
 
 </head>
@@ -56,6 +57,10 @@
 		<a class="mui-navigate-right"><span>Email </span><input type="text" id="email" class="mui-pull-right1" ></a>
 	</li>
 </ul>
+
+<div class="btn-box">
+	<button id="queding" class="mui-btn-block mui-btn-purple">确定</button>
+</div>
 </div>
 <script src="../../js/mui.min.js"></script>
 <script src="../../js/mui.picker.min.js"></script>
@@ -67,18 +72,78 @@
 <script src="../../js/utils.upload.js"></script>
 <script src="../../js/utils.request.js" ></script>
 
-<script>
-	(function($, doc) {
-		$.init({beforeback: function() {
-		  var parent = plus.webview.currentWebview().opener();
-      $.fire(parent, 'info-edit-success', {});
+<script>(function($, doc) {
+	
+
+	$.init({
+		beforeback: function() {
+			var parent = plus.webview.currentWebview().opener();
+			$.fire(parent, 'info-edit-success', {});
 			return true;
-		}});
-		$.plusReady(function() {
-			addEvent();
-			ajaxData();
+		}
+	});
+	$.plusReady(function() {
+		var postData = {}
+		
+		addEvent();
+		ajaxData();
+
+		//性别
+		var gender = [];
+		for(var key in enums.sex) {
+			gender.push({
+				value: key,
+				text: enums.sex[key]
+			})
+		}
+		var genderPicker = new $.PopPicker();
+		genderPicker.setData(gender);
+
+		function selectSex() {
+
+			var _this = this;
+
+			genderPicker.show(function(items) {
+				sex = items[0].value;
+				_this.innerText = items[0].text;
+				setData("sex", sex);
+			});
+
+		}
+
+		var user = authManage.getUser();
+
+		doc.getElementById("queding").addEventListener("click", function() {
+			
+			if( JSON.stringify(postData) == "{}"){
+				mui.back();
+				return;
+			}
+
+			request.loginAjax('User/saveDataByFiled', {
+
+				data: {
+					"field": postData
+				}
+
+			}, function(data, success) {
+
+				if(success) {
+					postData["header"] && (user.header = postData["header"]);
+					postData["nickname"] && (user.nickname = postData["nickname"]);
+					postData["sex"] && (user.sex = postData["sex"]);
+					postData["phone"] && (user.phone = postData["phone"]);
+					bb();
+					
+				}
+			});
 		});
 		
+		function bb(){
+			var parent = plus.webview.currentWebview().opener();
+			$.fire(parent, 'info-edit-success', {});
+			mui.back();
+		}
 
 		function ajaxData() {
 			request.loginAjax('User/getInfo', {
@@ -87,54 +152,49 @@
 
 				if(success) {
 
-					render( data );
+					render(data);
 				}
 			});
 		}
-		
-		function setData( name , value , fnEnd){
-			var postData = {}
-			postData[name] = value;
-			
-			request.loginAjax('User/saveDataByFiled', {
-				
-				data: {"field": postData}
-				
-			}, function(data, success) {
 
-				typeof fnEnd =="function"&&fnEnd(data , success);
-			});
+		function setData(name, value, callback) {
+
+			postData[name] = value;
+
+			callback && callback();
+
 		}
-		
-		function render( obj ){
+
+		function render(obj) {
 			var arr = doc.querySelectorAll(".mui-pull-right1");
-			$.each( arr , function() {
+			$.each(arr, function() {
 				var name = this.getAttribute("id");
-				if( name == "headurl"){
-					this.innerHTML = "<img src="+obj["headurl"]+">";
-				}else if( name =="sex"){
-					this.value = obj[name]==1?"男":"女";
-				}else{
+				if(name == "headurl") {
+					this.innerHTML = "<img src=" + obj["headurl"] + ">";
+				} else if(name == "sex") {
+					this.value = obj[name] == 1 ? "男" : "女";
+				} else {
 					this.value = obj[name];
 				}
 			});
 		}
 		var imageurl = null;
-		function uploadImage( target ){
-			setTimeout(function(){
-              upload.showImgActionSheet(function( data ){
-                var url = config.url + "Uploads/Files";
-                upload.uploadimge( url , data.divid, function(res) {
-                 
-                 imageurl = res[0].showUrl;
-                 target.innerHTML = "<img src="+imageurl+">"
-                 imageurl&&setData( "headurl" , imageurl ,function(){
-					imageurl = null;
-					
-				 });
-				
-                });
-              });         
+
+		function uploadImage(target) {
+			setTimeout(function() {
+				upload.showImgActionSheet(function(data) {
+					var url = config.url + "Uploads/Files";
+					upload.uploadimge(url, data.divid, function(res) {
+
+						imageurl = res[0].showUrl;
+						target.innerHTML = "<img src=" + imageurl + ">"
+						imageurl && setData("headurl", imageurl, function() {
+							imageurl = null;
+
+						});
+
+					});
+				});
 			}, 500);
 		}
 
@@ -146,73 +206,69 @@
 				this.addEventListener("tap", function() {
 					this._text = this.value;
 					var name = this.getAttribute("id");
-					if( name == "headurl"){
-						uploadImage( this );
-						
-					}else if( name =="sex"){
+					if(name == "headurl") {
+						uploadImage(this);
+
+					} else if(name == "sex") {
 						selectSex.call(this);
-					}else if( name =="phone"){
-						 $.openWindow({
-			              url: '../my/validate-phone.html',
-			              id: 'MY-VALIDATA-PHONE',
-			              show: {
-			                aniShow: 'pop-in'
-			              },
-			              styles: {
-			                popGesture: 'hide'
-			              },
-			              waiting: {
-			                autoShow: false
-			              }
-			            });
+					} else if(name == "phone") {
+						if(this.value == "") {
+							$.openWindow({
+								url: '../my/validate-phone.html',
+								id: 'MY-VALIDATA-PHONE',
+								show: {
+									aniShow: 'pop-in'
+								},
+								styles: {
+									popGesture: 'close'
+								},
+								waiting: {
+									autoShow: false
+								}
+							});
+						} else {
+							$.openWindow({
+								url: '../my/validate-phone-cancel.html',
+								id: 'MY-VALIDATA-PHONE-CANCEL',
+								show: {
+									aniShow: 'pop-in'
+								},
+								styles: {
+									popGesture: 'close'
+								},
+								waiting: {
+									autoShow: false
+								}
+							});
+						}
 					}
-					
+
 				});
 				this.addEventListener("blur", function() {
-					if(this._text != this.value){
+					if(this._text != this.value) {
 						var name = this.getAttribute("id");
 						var txt = this.value;
-						
-						var callback = function(data ,sucess){
-							if(!sucess){
+
+						var callback = function(data, sucess) {
+							if(!sucess) {
 								this.value = this._text;
 							}
 						}
-						if( name == "headurl"){
-							
-						}else if( name =="sex"){
-//							txt =="男"?"1":"2";
-//							setData( name , txt ,callback );
-						}else{
-							setData( name , txt , callback );
+						if(name == "headurl") {
+
+						} else if(name == "sex") {
+							//							txt =="男"?"1":"2";
+							//							setData( name , txt ,callback );
+						} else {
+							setData(name, txt, callback);
 						}
 					};
 
 				});
 			})
 		}
-		//性别
-		  var gender = [];
-		  for (var key in enums.sex) {
-		    gender.push({
-		      value: key,
-		      text: enums.sex[key]
-		    })
-		  }
-		  var genderPicker = new $.PopPicker();
-		  genderPicker.setData(gender);
-		function selectSex(){
 
-		  var _this = this;
-
-		  genderPicker.show(function(items) {
-		      sex = items[0].value;
-		      _this.innerText = items[0].text;
-		      setData( "sex" , sex );
-		  });
-		 
-		}
-		
+	});
 
 }(mui, document));
 </script>

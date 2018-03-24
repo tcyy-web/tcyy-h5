@@ -34,6 +34,10 @@
 
 	<p>公司名称 ：<span id="title"></span></p>
 	<p>公司介绍：<span id="info"></span></p>
+	<p>网站地址：<span id="website"></span></p>
+	<p>电话：<span id="phone"></span></p>
+	<p>QQ：<span id="qq"></span></p>
+
 	
 	<div class="copyright">
 		<p>Copyright &copy;2018</p>
@@ -69,9 +73,11 @@ function ajaxData(  ){
  
 	      	  if ( success ){
 	      	  	document.getElementById("logo").setAttribute("src",data.logo);
-
-	      	  	
-	      	  	document.getElementById("info").innerHTML = data.info;
+				
+	      	  	document.getElementById("phone").innerHTML = data.phone;
+	      	  	document.getElementById("qq").innerHTML = data.qq;
+	      	  	document.getElementById("website").innerHTML = data.website;
+	      	  	document.getElementById("info").innerHTML = data.info.replace(/\r\n/gi,"<br>");
 	      	  	document.getElementById("title").innerHTML = data.title;
 	      	  	document.getElementById("title2").innerHTML = data.title;
 	    

@@ -263,6 +263,8 @@
             $('#login #nickname')[0].innerText = user.nickname;
             $('#login #sex')[0].innerText = enums.sex[user.sex] || '未知';
             logout.style.display = 'block';
+            var oPhone = doc.getElementById("myTelephone");
+            oPhone.innerText = user.phone?"解除绑定":"绑定手机";
 					}
 					loginItem.addEventListener('tap', function(event) {
 						if (authManage.checkLogin()) {
@@ -315,10 +317,7 @@
 			                autoShow: false
 			              }
 			            });
-			            var yqmWebview = plus.webview.getWebviewById("MY-YAOQINGMA") ;
-			            $.fire( yqmWebview ,"yaoqingma",{
-			            	code:authManage.getUser().spread_code
-			            })
+			            
 					});
 					
 					// 我的激活码
@@ -415,19 +414,35 @@
 					
 					//绑定手机
 					doc.getElementById('myTelephone').addEventListener('tap', function(e) {
-					  $.openWindow({
-			              url: '../my/validate-phone.html',
-			              id: 'MY-VALIDATA-PHONE',
-			              show: {
-			                aniShow: 'pop-in'
-			              },
-			              styles: {
-			                popGesture: 'hide'
-			              },
-			              waiting: {
-			                autoShow: false
-			              }
-			            });
+					 if(authManage.getUser().phone =="" ){
+							 $.openWindow({
+				              url: '../my/validate-phone.html',
+				              id: 'MY-VALIDATA-PHONE',
+				              show: {
+				                aniShow: 'pop-in'
+				              },
+				              styles: {
+				                popGesture: 'close'
+				              },
+				              waiting: {
+				                autoShow: false
+				              }
+				            });
+				        }else{   
+				             $.openWindow({
+				              url: '../my/validate-phone-cancel.html',
+				              id: 'MY-VALIDATA-PHONE-CANCEL',
+				              show: {
+				                aniShow: 'pop-in'
+				              },
+				              styles: {
+				                popGesture: 'close'
+				              },
+				              waiting: {
+				                autoShow: false
+				              }
+				            });
+			           }
 					});
 					//意见反馈
 					doc.getElementById('fankui').addEventListener('tap', function(e) {
