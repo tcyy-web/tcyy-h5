@@ -93,6 +93,9 @@
 		.mui-row .mui-col-xs-4 p.p {
 			color: #bababa;
 		}
+    #sliderSegmentedContent .mui-scroll-wrapper{
+      overflow: auto;
+    }
 	</style>
 
 </head>
@@ -169,7 +172,7 @@
 			(function($, doc) {
 				//阻尼系数
 				var deceleration = mui.os.ios?0.003:0.0009;
-				$('.mui-scroll-wrapper').scroll({
+				$('.mui-scroll-wrapper.mui-slider-indicator').scroll({
 					bounce: false,
 					indicators: true, //是否显示滚动条
 					deceleration:deceleration
