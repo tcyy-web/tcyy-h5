@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../../css/iconfont.css" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+		  .startimgbox.mui-slider .mui-slider-group .mui-slider-item img{
+		    width: 100%;
+		    height: 100%;
+		  }
+		  .mui-slider-indicator{
+        bottom: 40px;
+      }
+      .mui-slider-indicator .mui-indicator{
+        width: 10px;
+        height: 10px;
+        margin: 1px 3px;
+        background-color: #ddd;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .mui-slider-indicator .mui-active.mui-indicator{
+        background-color: #765fc3;
+      }
+      .startimgbox .ljjr{
+        position: absolute;
+        right: 20px;
+        bottom: 0;
+        height: 40px;
+        line-height: 40px;
+        z-index: 100;
+        line-height: 40px;
+        color: #fff;
+        font-size: 16px;
+        -webkit-animation: fadeIn 1s linear infinite;
+        animation: fadeIn 1s linear infinite;
+      }
+      .startimgbox .ljjr .mui-icon{
+        font-size: 20px;
+      }
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content ">
+		  <div id="slider" class="startimgbox mui-slider mui-fullscreen" >
+        <!--<div class="mui-slider-group">
+          <div class="mui-slider-item">
+            <img src="../../images/ppsp/banner.jpg">
+            <div class="ljjr">立即进入<i class="mui-icon mui-icon-forward"></i></div>
+          </div>
+        </div>
+        <div class="mui-slider-indicator">
+          <div class="mui-indicator mui-active"></div>
+        </div>-->
+      </div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/utils.config.js"></script>
+		<script src="../../js/utils.extend.js" ></script>
+		<script src="../../js/utils.storages.js"></script>
+		<script src="../../js/utils.auth.js" ></script>
+		<script src="../../js/utils.request.js" ></script>
+		<script src="../../js/utils.category.js"></script>
+		<script src="../../js/business/push.js"></script>
+		<script>
+			(function($, doc) {
+					$.init();
+					$.plusReady(function() {
+						plus.screen.lockOrientation("portrait-primary");
+					  /******APP初始化 begin******/
+					  // 设置系统默认状态栏
+						plus.navigator.setStatusBarBackground('#765fc3');
+						// 获取基础分类
+						categorys.getServer();
+						/******APP初始化 end******/
+            /*启动图片*/
+            var $silder = doc.getElementById('slider');
+            var silder = $('#slider');
+            var imgKey = '$startimgs';
+            // 立即进入
+            $('#slider').on('tap', '.ljjr', function(){
+              gotoIndex();
+            });
+            var paintSilder = function(data) {
+              $silder.innerHTML = '';
+              var imgDiv = doc.createElement('div');
+              imgDiv.className = 'mui-slider-group';
+              $.each(data, function(index, d) {
+                 var img = doc.createElement('div');
+                 img.className = 'mui-slider-item';
+                 var _img = doc.createElement('img');
+                 _img.src = d.image;
+                 img.appendChild(_img);
+                 if (index == data.length -1 ) {
+                   var _ljjr = doc.createElement('div');
+                   _ljjr.className = 'ljjr';
+                   _ljjr.innerHTML = '立即进入<i class="mui-icon mui-icon-forward"></i>';
+                   img.appendChild(_ljjr);
+                 }
+                 imgDiv.appendChild(img);
+              });
+              $silder.appendChild(imgDiv);
+              // 画点
+              var dianDiv = doc.createElement('div');
+              dianDiv.className = 'mui-slider-indicator';
+              $.each(data, function(index, d) {
+                 var dian = doc.createElement('div');
+                 if (index === 0) {
+                   dian.className = 'mui-indicator mui-active';
+                 } else {
+                   dian.className = 'mui-indicator';
+                 }
+                 dianDiv.appendChild(dian);
+              });
+              $silder.appendChild(dianDiv);
+              silder.slider({
+                interval: 2000
+              });
+            }
+            // 去首页
+            var gotoIndex = function() {
+              $.openWindow({
+                url: './index.html',
+                id: 'APP_INDEX',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            }
+            // 读缓存 读不到直接跳转首页
+            var getImageFromStorage = function() {
+              var imgurl = storage.get({
+                key: imgKey
+              });
+              try{
+                console.log(imgurl);
+                var imgs = JSON.parse(imgurl);
+                if (imgs.length > 0) {
+                  _imgs = imgs.sort(function(a, b){
+                    if(a._index < b._index) {
+                      return -1;
+                    }
+                    if (a._index > b._index) {
+                      return 1;
+                    }
+                    return 0;
+                  });
+                  paintSilder(_imgs);
+                } else {
+                  gotoIndex();
+                }
+              }catch(e) {
+                gotoIndex();
+              }
+            }
+            // 存储缓存 因为下载是异步 所以每次下载成功取出缓存 再加入新的内容
+            // index 存的排序字段，因为下载是异步，可能后面的图片先下载完成
+            var setImageStorage = function(localurl,index) {
+              var _imgurls = storage.get({
+                key: imgKey
+              });
+              var _data = {
+                image: localurl,
+                _index: index
+              }
+              try{
+                var _imgs = JSON.parse(_imgurls);
+                if (_imgs.length) {
+                  _imgs.push(_data);
+                  storage.save({
+                    key: imgKey,
+                    value: JSON.stringify(_imgs)
+                  });
+                }
+              }catch(e) {
+                storage.save({
+                  key: imgKey,
+                  value: JSON.stringify([_data])
+                });
+              }
+            }
+            // 下载图片缓存 index 排序
+            var downLoadImgs = function(imgurl, index) {
+              if (imgurl && imgurl != null && imgurl != '') {
+                var _lsIdx = imgurl.lastIndexOf('/');
+                var localurl = '_downloads/tcyy/startimg/' + imgurl.substring(_lsIdx+1, imgurl.length);
+                var dtask = plus.downloader.createDownload(imgurl,
+                  {filename: localurl}, 
+                function ( d, status ) {
+                  if ( status == 200 ) {
+                    console.log('网络地址：'+imgurl);
+                    console.log('本地地址：'+localurl);
+                    // 下载存储地址是相对路径，通过此种方式返回绝对路径
+                    plus.io.resolveLocalFileSystemURL(localurl, function(entry) {
+                       setImageStorage(entry.toLocalURL(), index);
+                     }, function(e) {
+                     });
+                  }
+                });
+                dtask.start();  
+              }
+            }
+            // 从服务读取启动图
+            var getImageFromServer = function() {
+              request.ajax('Publics/advert',{
+                showMsg: false,
+                showLoading: false
+              },function(data, success) {
+                if (success && data && data.length > 0) {
+                  storage.del({
+                    key: imgKey
+                  });
+                  // 每次获取下载缓存地址
+                  $.each(data, function(index, i) {
+                  	 downLoadImgs(i.image, index);
+                  });
+                  paintSilder(data);
+                  return;
+                }
+                gotoIndex();
+              }, function() {
+                gotoIndex();
+              });
+            }
+            if (!request.getNetworkState()) {
+              getImageFromStorage();
+            } else {
+              getImageFromServer();
+            }
+            plus.navigator.closeSplashscreen();
+					});
+				}(mui, document));
+		</script>
+	</body>
+
+</html>
