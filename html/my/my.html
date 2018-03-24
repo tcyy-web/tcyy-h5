@@ -77,8 +77,9 @@
 
 	$.init({
 		beforeback: function() {
-			var parent = plus.webview.currentWebview().opener();
-			$.fire(parent, 'info-edit-success', {});
+		  // 请求成功调用就把这注释了，不然会调用两次
+//			var parent = plus.webview.currentWebview().opener();
+//			$.fire(parent, 'info-edit-success', {});
 			return true;
 		}
 	});

@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="../../css/iconfont.css" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<style>
+		  .mui-content{
+		    height: auto;
+		    min-height: 100%;
+		  }
+		  .mui-bar.mui-bar-nav{
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+		</style>
+		<style>
+		  /*沟通样式*/
+			#goutong .goutong-row {
+				padding: 20px 0;
+			}
+			#goutong .goutong-row .gr-item {
+	    	text-align: center;
+			}
+			#goutong .goutong-row .gr-item .gr-img .img-box {
+				width: 60px;
+				height: 60px;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				overflow: hidden;
+			}
+			#goutong .goutong-row .gr-item .gr-img .img-box  img {
+				width: 100%;
+				height: 100%;
+			}
+			#goutong .goutong-row .gr-item p {
+				margin-bottom: 0;
+				font-size: 18px;
+				margin-top: 5px;
+			}
+		</style>
+	  <style>
+	    /*扩展样式*/
+	    #kuozhan {
+	      min-height: 100%;
+	      padding-bottom: 20px;
+	      background-color: #ececec;
+	    }
+	    #kuozhan .kuozhan-item .item-title p {
+        padding: 0 10px;
+        font-size: 14px;
+        color: #7c7c7c;
+        background-color: #eaeaea;
+        height: 50px;
+        line-height: 50px;
+        margin-bottom: 0;
+      }
+      #kuozhan .mui-table-view-cell {
+        font-size: 14px !important;
+        padding: 14px 15px 14px 40px !important;
+      }
+      #kuozhan .mui-table-view-cell>a:not(.mui-btn) {
+          margin: -14px -15px -14px -40px !important;
+          margin-right: -40px !important;
+      }
+      #kuozhan .mui-table-view-cell a {
+        color: #303030 !important;
+      }
+      #kuozhan .mui-table-view-cell img {
+        position: absolute;
+        left: 7px;
+        top: 12px;
+        width: 25px;
+        height: 25px;
+        z-index: 3;
+      }
+      #kuozhan .mui-table-view-cell:after {
+        left: 40px !important;
+      }
+	  </style>
+	  <style>
+	    /*我的样式*/
+	    #wode{
+	      padding-bottom: 5px;
+	    }
+	    #wode p {
+        text-align: center;
+        margin: 0;
+      }
+      #wode .wode-header {
+        position: relative;
+        background-color: #765fc3;
+        text-align: center;
+      }
+      #wode .msg{
+        padding: 12px 0;
+      }
+      #wode .msg img{
+        width: auto;
+        height: 20px;
+      }
+      #wode .wode-header .user-info {
+        padding: 10px 10px 40px 10px;
+      }
+      #wode .wode-header .user-info .img {
+        width: 60px;
+        height: 60px;
+        margin-right: 20px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      #wode .wode-header .user-info .img img {
+        width: 100%;
+      }
+      #wode .wode-header .user-info .info {
+        padding-top: 4px;
+      }
+      #wode .wode-header .user-info .info p{
+        font-size: 18px;
+        color: #ffffff;
+        text-align: left;
+        margin-top: 5px;
+      }
+
+      #wode .count {
+        padding: 10px 0;
+        background-color: #ffffff;
+        color: #303030;
+        margin-bottom: 10px;
+      }
+      #wode .count .flex-1 p:first-child {
+        color: #7c7c7c;
+      }
+      #wode .count p {
+        height: 20px;
+        line-height: 20px;
+      }
+
+      #wode .mui-table-view {
+        margin-bottom: 10px;
+      }
+      #wode .mui-table-view-cell {
+        font-size: 14px !important;
+        padding: 14px 15px 14px 40px !important;
+      }
+      #wode .mui-table-view-cell>a:not(.mui-btn) {
+          margin: -14px -15px -14px -40px !important;
+          margin-right: -40px !important;
+      }
+      #wode .mui-table-view-cell a {
+        color: #303030 !important;
+      }
+      #wode .mui-table-view-cell img {
+        position: absolute;
+        left: 7px;
+        top: 12px;
+        width: 25px;
+        height: 25px;
+        z-index: 3;
+      }
+      #wode .mui-table-view-cell:after {
+        left: 40px !important;
+      }
+      #wode .btn-padding {
+        padding-bottom: 20px;
+      }
+      #wode .btn-logout {
+        width: 100%;
+        border: 0;
+        color: #303030;
+        height: 50px;
+        line-height: 50px;
+        background-color: #ffffff;
+        padding: 0 10px;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+      }
+      #wode button.btn-logout:enabled,
+      #wode button.btn-logout:enabled:active{
+        background-color: #ffffff ;
+        opacity: 1;
+      }
+      
+      #wode #xiaoxi,
+      #wode #qiandao{
+        padding-top: 10px;
+        position: relative;
+      }
+      
+      #wode #xiaoxi #unread{
+        position: absolute;
+        margin-top: -16px;
+        margin-left: 5px;
+        padding: 0 6px;
+        top:50%;
+        left:50%;
+        line-height: 16px;
+        border-radius: 16px;
+        background: #f25d8e;
+        color: #fff;
+      }
+	  </style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">沟通</h1>
+		</header>
+		<div id="tab3d" class="tab3d">
+		  <span>3D</span>
+		</div>
+		<nav class="mui-bar mui-bar-tab indextab">
+      <a class="mui-tab-item item mui-active" href="#goutong">
+        <div class="iconfontbox"><i class="iconfont icon-gt"></i></div>
+        <span class="mui-tab-label">沟通</span>
+      </a>
+      <a id="tabys" class="item left">
+        <div class="iconfontbox"><i class="iconfont icon-ys"></i></div>
+        <span class="mui-tab-label">演示</span>
+      </a>
+      <a class="mui-tab-item item right" href="#kuozhan">
+        <div class="iconfontbox"><i class="iconfont icon-kz"></i></div>
+        <span class="mui-tab-label">扩展</span>
+      </a>
+      <a class="mui-tab-item item" href="#wode">
+        <div class="iconfontbox"><i class="iconfont icon-wd"></i></div>
+        <span class="mui-tab-label">我的</span>
+      </a>
+    </nav>
+		<div class="mui-content">
+		  <div id="goutong" class="mui-control-content mui-active">
+		    <div class="goutong-row flex">
+          <div id="video" class="gr-item flex flex-col flex-1">
+            <div class="gr-img flex flex-col-center">
+              <div class="img-box">
+                <img src="../../images/tab-goutong/img1.png" />
+              </div>
+            </div>
+            <p>视频</p>
+          </div>
+          <div id="picture" class="gr-item flex flex-col flex-1">
+            <div class="gr-img flex flex-col-center">
+              <div class="img-box">
+                <img src="../../images/tab-goutong/img2.png" />
+              </div>
+            </div>
+            <p>图片</p>
+          </div>
+          <div id="yanshi" class="gr-item flex flex-col flex-1">
+            <div class="gr-img flex flex-col-center">
+              <div class="img-box">
+                <img src="../../images/tab-goutong/img3.png" />
+              </div>
+            </div>
+            <p>演示</p>
+          </div>
+        </div>
+        <div class="goutong-row flex">
+          <div id="threed" class="gr-item flex flex-col flex-1">
+            <div class="gr-img flex flex-col-center">
+              <div class="img-box">
+                <img src="../../images/tab-goutong/img4.png" />
+              </div>
+            </div>
+            <p>3D</p>
+          </div>
+          <div id="yuyue" class="gr-item flex flex-col flex-1">
+            <div class="gr-img flex flex-col-center">
+              <div class="img-box">
+                <img src="../../images/tab-goutong/img5.png" />
+              </div>
+            </div>
+            <p>预约</p>
+          </div>
+          <div id="project" class="gr-item flex flex-col flex-1">
+            <div class="gr-img flex flex-col-center">
+              <div class="img-box">
+                <img src="../../images/tab-goutong/img6.png" />
+              </div>
+            </div>
+            <p>项目</p>
+          </div>
+        </div>
+      </div>
+      <div id="kuozhan" class="mui-control-content">
+        <!-- ko 'if':groupList().length > 0 -->
+        <div class="kuozhan-item" data-bind="foreach: groupList">
+          <div class="item-title">
+            <p data-bind="text:title"></p>
+          </div>
+          <ul class="mui-table-view mui-table-view-chevron">
+            <!-- ko 'foreach': childs -->
+            <li class="mui-table-view-cell">
+              <img data-bind="attr: {src: icon || '../../images/tab-kuozhan/juhui.png'}" />
+              <a data-bind="text: title,attr: {kztype: type, kzid: id, kztitle: title}" class="clickItem mui-navigate-right">
+              </a>
+            </li>
+            <!-- /ko -->
+          </ul>
+        </div>
+        <!-- /ko -->
+      </div>
+      <div id="wode" class="mui-control-content">
+        <div class="wode-header">
+          <div class="user-info">
+            <div id="login" class="flex">
+              <div class="img flex flex-row-center">
+                <img data-bind="attr: {src: header() || $root.defaultUserImage()}" />
+              </div>
+              <div class="info flex-1">
+                <p data-bind="text:nickname"></p>
+                <p data-bind="text:sex"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="count flex">
+          <div class="flex-1" id="xiaoxi">
+            <p>消息 <span id="unread" data-bind="text: count,visible: count() > 0"></span></p>
+          </div>
+          <div class="flex-1" id="myjifen">
+            <p>积分</p>
+            <p data-bind="text:totalPoint"></p>
+          </div>
+          <div id="qiandao" class="flex-1">
+            <p>签到</p>
+          </div>
+        </div>
+        <ul class="mui-table-view mui-table-view-chevron">
+          <li class="mui-table-view-cell">
+            <img src="../../images/tab-wode/yqm.png"/>
+            <a id="myyaoqingma" class="mui-navigate-right">我的邀请码</a>
+          </li>
+          <li class="mui-table-view-cell">
+            <img src="../../images/tab-wode/jhm.png"/>
+            <a id="myjihuoma" class="mui-navigate-right">我的激活码</a>
+          </li>
+          <li class="mui-table-view-cell">
+            <img src="../../images/tab-wode/wdblx.png"/>
+            <a id="myblx" class="mui-navigate-right">我的病例秀</a>
+          </li>
+          <li class="mui-table-view-cell">
+            <img src="../../images/tab-wode/jhm.png"/>
+            <a id="myorders" class="mui-navigate-right">我的订单</a>
+          </li>
+          <li class="mui-table-view-cell">
+            <img src="../../images/tab-wode/tk.png"/>
+            <a id="myTelephone" class="mui-navigate-right">绑定手机</a>
+          </li>
+          <li class="mui-table-view-cell">
+            <img src="../../images/tab-wode/bdblx.png"/>
+            <a id="beVip" class="mui-navigate-right">充值会员</a>
+          </li>
+          <li class="mui-table-view-cell">
+            <img src="../../images/tab-wode/fk.png"/>
+            <a id="fankui" class="mui-navigate-right">意见反馈</a>
+          </li>
+          <li class="mui-table-view-cell">
+            <img src="../../images/tab-wode/gy.png"/>
+            <a id="aboutAs" class="mui-navigate-right">关于我们</a>
+          </li>
+        </ul>
+        <div class="btn-padding" data-bind="visible: islogin()">
+          <button id="logout" class="btn-logout">退出登录</button>
+        </div>
+      </div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../third/knockout.js" ></script>
+		<script src="../../js/utils.config.js"></script>
+		<script src="../../js/utils.enums.js"></script>
+		<script src="../../js/utils.extend.js" ></script>
+		<script src="../../js/utils.storages.js"></script>
+		<script src="../../js/utils.auth.js" ></script>
+		<script src="../../js/utils.request.js" ></script>
+		<script src="../../js/utils.category.js"></script>
+		<script>
+			(function($, doc) {
+					$.init({
+					  preloadPages:[{
+              id:'YANSHI_INDEX',
+              url: '../yanshi/yanshi.html'
+            },{
+              url: '../3d/three_3d_index.html',
+              id: 'THTREE_3d_index'
+            },{
+              id:'KZ-PPSP', //品牌商品类
+              url: '../kz_ppsp/qy-list.html'
+            }]
+					});
+					$.plusReady(function() {
+					  // 跳转3d
+					  var goto3D = function(){
+					    if (authManage.checkLogin()) {
+                $.openWindow({
+                   id: 'THTREE_3d_index'
+                });
+              } else {
+                authManage.toLogin();
+              }
+					  }
+					  // 跳转演示
+					  var gotoYanshi = function() {
+					    if (authManage.checkLogin()) {
+                var yanshiWebview = plus.webview.getWebviewById('YANSHI_INDEX');
+                 $.fire(yanshiWebview,'YANSHI_Refresh',{});
+                 $.openWindow({
+                   id: 'YANSHI_INDEX'
+                 });
+              } else {
+                authManage.toLogin();
+              }
+					  }
+					  /*沟通 业务begin*/
+						// 视频
+						doc.getElementById('video').addEventListener('tap', function(event) {
+              $.openWindow({
+                url: '../video/video-list.html',
+                id: 'VIDEO',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide',
+                  hardwareAccelerated: true
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 图片
+            doc.getElementById('picture').addEventListener('tap', function(event) {
+              $.openWindow({
+                url: '../picture/picture-folders.html',
+                id: 'PICTURE',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 演示
+            doc.getElementById('yanshi').addEventListener('tap', function(event) {
+              gotoYanshi();
+            });
+            // 项目
+            doc.getElementById('project').addEventListener('tap', function(event) {
+              $.openWindow({
+                url: '../project/project-index.html',
+                id: 'PRODUCT-INDEX',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 预约
+            doc.getElementById('yuyue').addEventListener('tap', function(event) {
+              $.openWindow({
+                url: '../project/project-plan-date-list.html',
+                id: 'PRODUCT-YUYUE',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 3d
+            doc.getElementById('threed').addEventListener('tap', function(e) {
+              goto3D();
+            });
+            /*沟通 业务end*/
+            /* 扩展业务 begin */
+            var kuozhanViewModel = {
+              groupList: ko.observableArray([])
+            }
+            ko.applyBindings(kuozhanViewModel, doc.getElementById('kuozhan'));
+            var kuozhanStorageKey = '$KUOZHAN';
+            $('#kuozhan').on('tap', '.clickItem', function(){
+              var _typestr = this.getAttribute('kztype');
+              var _type = -1;
+              try{
+                _type = parseInt(_typestr, 10);
+              } catch(e) {}
+              var _id = this.getAttribute('kzid');
+              var _title = this.getAttribute('kztitle');
+              if (_type === 1) {// 病例秀类
+                $.openWindow({
+                  url: '../kz_blx/blx-list.html',
+                  id: 'KZ-BLX',
+                  preload: true,
+                  show: {
+                    aniShow: 'pop-in'
+                  },
+                  styles: {
+                    popGesture: 'hide'
+                  },
+                  waiting: {
+                    autoShow: false
+                  }
+                });
+              } else if (_type === 2) { //知识库类
+                $.openWindow({
+                  url: '../kz_zsk/zsk-list.html',
+                  id: 'KZ-ZSK',
+                  preload: true,
+                  show: {
+                    aniShow: 'pop-in'
+                  },
+                  styles: {
+                    popGesture: 'hide'
+                  },
+                  waiting: {
+                    autoShow: false
+                  }
+                });
+              } else if (_type === 3) { // 品牌商品类
+                 var  fbWebview = plus.webview.getWebviewById('KZ-PPSP');
+                  $.fire(fbWebview,'KZ_PPSP_DATA',{
+                    id: _id,
+                    title: _title
+                  });
+                  $.openWindow({
+                    id: 'KZ-PPSP'
+                  });
+              } else if (_type === 4) { // 创意设计类
+                $.openWindow({
+                  url: '../kz_cysj/list.html',
+                  id: 'KZ-CYSJ',
+                  preload: true,
+                  show: {
+                    aniShow: 'pop-in'
+                  },
+                  styles: {
+                    popGesture: 'none'
+                  },
+                  waiting: {
+                    autoShow: false
+                  }
+                });
+              } else if (_type === 5) { // 在线课堂类
+                $.openWindow({
+                  url: '../train/train-list.html',
+                  id: 'KZ-ZXKT',
+                  preload: true,
+                  show: {
+                    aniShow: 'pop-in'
+                  },
+                  styles: {
+                    popGesture: 'hide'
+                  },
+                  waiting: {
+                    autoShow: false
+                  }
+                });
+              } else if (_type === 6) { // 购物中心类
+                
+              } else if (_type === 7) { // 积分商城类
+                
+              } else if (_type === 8) { // 口腔招聘类
+                
+              }
+            });
+            // 从缓存取数据
+            var getKuozhanListFromStorage = function() {
+              var datastr = storage.get({
+                key: kuozhanStorageKey
+              });
+              if (datastr != null) {
+                var dataobj = JSON.parse(datastr);
+                kuozhanViewModel.groupList(dataobj);
+              }
+            }
+            // 取数据
+            var getKuozhanList = function() {
+              // 没网取缓存
+              if (!request.getNetworkState()) {
+                getKuozhanListFromStorage();
+                return;
+              }
+              request.ajax('Extendgroup/getList',{
+                showMsg: false,
+                showLoading: false
+              },function(data, success) {
+                if (success && data && data.length && data.length > 0) {
+                  kuozhanViewModel.groupList(data);
+                  storage.save({
+                    key: kuozhanStorageKey,
+                    value: JSON.stringify(data)
+                  });
+                } else {
+                   getKuozhanListFromStorage();
+                }
+              }, function() {
+                getKuozhanListFromStorage();
+              });
+            }
+            getKuozhanList();
+            /* 扩展业务 end */
+            /*  我的业务 begin */
+            var wodeViewModel = {
+              defaultUserImage: ko.observable('../../images/tab-wode/user_default.png'),
+              header: ko.observable(''),
+              nickname: ko.observable('游客身份'),
+              sex: ko.observable('立即登录'),
+              phone: ko.observable('绑定手机'),
+              islogin: ko.observable(false), // 是否登录
+              totalPoint: ko.observable(0), // 我的积分
+              count: ko.observable(0), //未读消息数
+            }
+            ko.applyBindings(wodeViewModel, doc.getElementById('wode'));
+            // 获取我的积分
+            var getTotalPoint = function(){
+              request.loginAjax('point/getTotalPoint', {
+                statusFlag: false,
+                showLoading:false,
+                showMsg: false
+              }, function(data) {
+                if (data && data.header && data.header.status === 2001) {
+                  wodeViewModel.totalPoint(data.body.point);
+                }
+              });
+            }
+            // 获取我的未读消息
+            var getUnread = function(){
+              request.loginAjax('Message/getUnread', {
+                statusFlag: false,
+                showLoading:false,
+                showMsg: false
+              }, function(data) {
+                if (data && data.header && data.header.status === 2001) {
+                  wodeViewModel.count(data.body.count);
+                }
+              });
+            }
+            // 更新信息
+            var initWode = function() {
+              if (authManage.checkLogin()) {
+                var user = authManage.getUser();
+                wodeViewModel.header(user.header);
+                wodeViewModel.nickname(user.nickname);
+                wodeViewModel.sex(enums.sex[user.sex] || '未知');
+                wodeViewModel.phone(user.phone ? "解除绑定" : "绑定手机");
+                wodeViewModel.islogin(true);
+                getTotalPoint();
+                getUnread();
+              }
+            }
+            initWode();
+            window.addEventListener('refresh', function(e){
+              initWode();
+            });
+            window.addEventListener('info-edit-success', function(e){
+              initWode();
+            });
+            // 跳转我的信息
+            doc.getElementById('login').addEventListener('tap', function(event) {
+              if (authManage.checkLogin()) {
+                $.openWindow({
+                  url: '../my/my.html',
+                  id: 'WDJL',
+                  preload: true,
+                  show: {
+                    aniShow: 'pop-in'
+                  },
+                  styles: {
+                    popGesture: 'hide'
+                  },
+                  waiting: {
+                    autoShow: false
+                  }
+                });
+              } else {
+                authManage.toLogin();
+              }
+            });
+            //我的消息
+            doc.getElementById('xiaoxi').addEventListener('tap', function(e) {
+              $.openWindow({
+                url: '../my/my-message.html',
+                id: 'MY-MESSAGE',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 我的积分
+            doc.getElementById('myjifen').addEventListener('tap', function(e) {
+              $.openWindow({
+                url: '../my/point.html',
+                id: 'MY-JIFENSHANGCHENG',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 签到
+            doc.getElementById("qiandao").addEventListener("tap",function(){
+              request.loginAjax('user/sign', {
+                }, function(data, success) {
+                  if (success) {}
+              });
+            });
+            // 我的邀请码
+            doc.getElementById('myyaoqingma').addEventListener('tap', function(e) {
+              $.openWindow({
+                url: '../my/invite-code.html',
+                id: 'MY-YAOQINGMA',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 我的激活码
+            doc.getElementById('myjihuoma').addEventListener('tap', function(e) {
+              $.openWindow({
+                url: '../my/active-code.html',
+                id: 'MY-JIHUOMA',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 我的病例秀
+            doc.getElementById('myblx').addEventListener('tap', function(e) {
+              $.openWindow({
+                url: '../kz_blx/my-blx-list.html',
+                id: 'MY-BLX',
+                preload: true,
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            //我的订单
+            doc.getElementById('myorders').addEventListener('tap', function(e) {
+              $.openWindow({
+                url: '../my/my-orders.html',
+                id: 'MY-ORDERS',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            //绑定手机
+            doc.getElementById('myTelephone').addEventListener('tap', function(e) {
+              var _user = authManage.getUser();
+              if(_user.phone && _user.phone != ''){
+                $.openWindow({
+                  url: '../my/validate-phone-cancel.html',
+                  id: 'MY-VALIDATA-PHONE-CANCEL',
+                  show: {
+                    aniShow: 'pop-in'
+                  },
+                  styles: {
+                    popGesture: 'close'
+                  },
+                  waiting: {
+                    autoShow: false
+                  }
+                });
+              }else{   
+                 $.openWindow({
+                  url: '../my/validate-phone.html',
+                  id: 'MY-VALIDATA-PHONE',
+                  show: {
+                    aniShow: 'pop-in'
+                  },
+                  styles: {
+                    popGesture: 'close'
+                  },
+                  waiting: {
+                    autoShow: false
+                  }
+                });
+               }
+            });
+            // 充值会员
+            doc.getElementById('beVip').addEventListener('tap', function(e) {
+              $.openWindow({
+                url: '../payment/bevip.html',
+                id: 'beVip',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            //意见反馈
+            doc.getElementById('fankui').addEventListener('tap', function(e) {
+              $.openWindow({
+                url: '../my/feedback.html',
+                id: 'myFeedback',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            //关于我们
+            doc.getElementById('aboutAs').addEventListener('tap', function(e) {
+              $.openWindow({
+                url: '../gongsi/index.html',
+                id: 'aboutAs',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            });
+            // 退出登录
+            doc.getElementById('logout').addEventListener('tap', function(event) {
+              $.confirm('确认退出登录？','退出登录','',function(ok){
+                if (ok.index === 1) {
+                  request.loginAjax('login/loginOut',{},function(data,success) {
+                    if (success){
+                      authManage.clearUser();
+                      wodeViewModel.header('');
+                      wodeViewModel.nickname('游客身份');
+                      wodeViewModel.sex('立即登录');
+                      wodeViewModel.phone('绑定手机');
+                      wodeViewModel.islogin(false);
+                      wodeViewModel.totalPoint(0);
+                      wodeViewModel.count(0);
+                    }
+                  });
+                }
+              }, 'div');
+            });
+            /* 我的业务 end */
+            /* tab事件 begin */
+            doc.getElementById('tab3d').addEventListener('tap', function(event) {
+              goto3D();
+            });
+            doc.getElementById('tabys').addEventListener('tap', function(event) {
+              gotoYanshi();
+            });
+            /* tab事件 end */
+					});
+ 				}(mui, document));
+ 				// 重置返回 避免返回引导页
+ 				mui.back = function() {};
+		</script>
+	</body>
+
+</html>

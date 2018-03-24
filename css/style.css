@@ -108,8 +108,14 @@ body,div,p,span,h1,h2,h3,h4,h5,ul,li,dl,dd,dt,a,from,input,div,menu,ol{ border:0
   position: relative;
   top: 4px;
 }
+.mui-bar-tab.indextab .item.left .iconfontbox{
+  left: -2px;
+}
+.mui-bar-tab.indextab .item.right .iconfontbox{
+  right: -2px;
+}
 .mui-bar-tab.indextab .item .iconfont{
-  font-size: 20px;
+  font-size: 22px;
 }
 .mui-bar-tab.indextab .item.mui-active
 {
