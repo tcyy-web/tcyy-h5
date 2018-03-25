@@ -1,1 +1,577 @@
-{}
+{
+  "html/my/my-message-detail.html": {
+    "href": "html/my/my-message-detail.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "priority": 1
+  },
+  "html/my/my-message.html": {
+    "href": "html/my/my-message.html",
+    "resources": [
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/business/message-d.js"
+    ],
+    "refer": [],
+    "priority": 1
+  },
+  "html/yanshi/yanshi.html": {
+    "href": "html/yanshi/yanshi.html",
+    "resources": [
+      "js/business/dragElement.js"
+    ],
+    "priority": 2
+  },
+  "html/payment/pay.html": {
+    "href": "html/payment/pay.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "images/pay/weixin.png"
+    ],
+    "priority": 3
+  },
+  "html/payment/bevip.html": {
+    "href": "html/payment/bevip.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg"
+    ],
+    "refer": [],
+    "priority": 3
+  },
+  "html/picture/picture-list.html": {
+    "href": "html/picture/picture-list.html",
+    "resources": [
+      "third/knockout.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/utils.upload.js",
+      "images/picture/bg1.png"
+    ],
+    "priority": 5
+  },
+  "html/picture/picture-folders.html": {
+    "href": "html/picture/picture-folders.html",
+    "resources": [
+      "third/knockout.js",
+      "third/fastclick.js",
+      "images/picture/bg1.png"
+    ],
+    "refer": [],
+    "priority": 5
+  },
+  "html/my/active-code.html": {
+    "href": "html/my/active-code.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "priority": 6
+  },
+  "html/project/project-plan-detail.html": {
+    "href": "html/project/project-plan-detail.html",
+    "resources": [
+      "css/iconfont.css",
+      "fonts/iconfont.woff",
+      "fonts/iconfont.ttf",
+      "fonts/iconfont.svg",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/utils.share.js"
+    ],
+    "priority": 10
+  },
+  "html/project/project-list.html": {
+    "href": "html/project/project-list.html",
+    "resources": [
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js"
+    ],
+    "refer": [],
+    "priority": 7
+  },
+  "html/my/point-product-detail.html": {
+    "href": "html/my/point-product-detail.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.upload.js",
+      "js/utils.request.js"
+    ],
+    "priority": 10
+  },
+  "html/my/point.html": {
+    "href": "html/my/point.html",
+    "resources": [],
+    "refer": [
+      "html/my/my-orders.html",
+      "html/my/point-product-detail.html"
+    ],
+    "priority": 8
+  },
+  "html/my/validate-phone-cancel.html": {
+    "href": "html/my/validate-phone-cancel.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "priority": 9
+  },
+  "html/gongsi/index.html": {
+    "href": "html/gongsi/index.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "priority": 10
+  },
+  "html/train/train-arrange.html": {
+    "href": "html/train/train-arrange.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "images/train/v_video.png",
+      "images/train/v_audio.png",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "third/jquery/jquery.js"
+    ],
+    "priority": 12
+  },
+  "html/train/train-detail.html": {
+    "href": "html/train/train-detail.html",
+    "resources": [
+      "images/train/v_video.png",
+      "images/train/v_audio.png"
+    ],
+    "refer": [],
+    "priority": 12
+  },
+  "html/train/train-list.html": {
+    "href": "html/train/train-list.html",
+    "resources": [],
+    "refer": [
+      "html/payment/bevip.html"
+    ],
+    "priority": 11
+  },
+  "html/project/project-plan-date-list.html": {
+    "href": "html/project/project-plan-date-list.html",
+    "resources": [
+      "css/iconfont.css",
+      "fonts/iconfont.woff",
+      "fonts/iconfont.ttf",
+      "fonts/iconfont.svg",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/mui.picker.min.css",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "third/knockout.js",
+      "third/fastclick.js",
+      "js/mui.min.js",
+      "js/mui.picker.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.enums.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [
+      "html/project/project-list.html"
+    ],
+    "priority": 13
+  },
+  "html/my/invite-code.html": {
+    "href": "html/my/invite-code.html",
+    "resources": [
+      "css/iconfont.css",
+      "fonts/iconfont.woff",
+      "fonts/iconfont.ttf",
+      "fonts/iconfont.svg",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.share.js"
+    ],
+    "priority": 14
+  },
+  "html/my/feedback.html": {
+    "href": "html/my/feedback.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "priority": 16
+  },
+  "html/3d/three_3d_iframe.html": {
+    "href": "html/3d/three_3d_iframe.html",
+    "resources": [
+      "css/iconfont.css",
+      "fonts/iconfont.woff",
+      "fonts/iconfont.ttf",
+      "fonts/iconfont.svg",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/utils.share.js"
+    ],
+    "priority": 17
+  },
+  "html/3d/three_3d_index.html": {
+    "href": "html/3d/three_3d_index.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.request.js",
+      "images/3d/11.png",
+      "images/3d/12.png",
+      "images/3d/13.png",
+      "images/3d/14.png",
+      "images/3d/15.png",
+      "images/3d/16.png",
+      "images/3d/17.png",
+      "images/3d/18.png",
+      "images/3d/21.png",
+      "images/3d/22.png",
+      "images/3d/23.png",
+      "images/3d/24.png",
+      "images/3d/25.png",
+      "images/3d/26.png",
+      "images/3d/27.png",
+      "images/3d/28.png",
+      "images/3d/41.png",
+      "images/3d/42.png",
+      "images/3d/43.png",
+      "images/3d/44.png",
+      "images/3d/45.png",
+      "images/3d/46.png",
+      "images/3d/47.png",
+      "images/3d/48.png",
+      "images/3d/31.png",
+      "images/3d/32.png",
+      "images/3d/33.png",
+      "images/3d/34.png",
+      "images/3d/35.png",
+      "images/3d/36.png",
+      "images/3d/37.png",
+      "images/3d/38.png"
+    ],
+    "refer": [],
+    "priority": 17
+  },
+  "html/kz_blx/blx-users.html": {
+    "href": "html/kz_blx/blx-users.html",
+    "resources": [
+      "js/business/blx.js"
+    ],
+    "priority": 19
+  },
+  "html/kz_blx/my-blx-detail.html": {
+    "href": "html/kz_blx/my-blx-detail.html",
+    "resources": [
+      "css/blx.css",
+      "third/knockout.js",
+      "third/fastclick.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/business/blx.js"
+    ],
+    "refer": [],
+    "priority": 18
+  },
+  "html/kz_blx/my-blx-save.html": {
+    "href": "html/kz_blx/my-blx-save.html",
+    "resources": [
+      "css/blx.css",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js"
+    ],
+    "priority": 19
+  },
+  "html/kz_blx/my-blx-list.html": {
+    "href": "html/kz_blx/my-blx-list.html",
+    "resources": [
+      "css/blx.css",
+      "third/knockout.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/business/blx.js"
+    ],
+    "refer": [],
+    "priority": 18
+  },
+  "html/kz_zsk/zsk-detail.html": {
+    "href": "html/kz_zsk/zsk-detail.html",
+    "resources": [
+      "css/iconfont.css",
+      "fonts/iconfont.woff",
+      "fonts/iconfont.ttf",
+      "fonts/iconfont.svg",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/utils.share.js"
+    ],
+    "priority": 19
+  },
+  "html/kz_ppsp/product_iframe.html": {
+    "href": "html/kz_ppsp/product_iframe.html",
+    "resources": [
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js"
+    ],
+    "priority": 20
+  },
+  "html/kz_ppsp/product-detail.html": {
+    "href": "html/kz_ppsp/product-detail.html",
+    "resources": [
+      "css/iconfont.css",
+      "fonts/iconfont.woff",
+      "fonts/iconfont.ttf",
+      "fonts/iconfont.svg",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/utils.share.js"
+    ],
+    "refer": [],
+    "priority": 20
+  },
+  "html/my/my.html": {
+    "href": "html/my/my.html",
+    "resources": [],
+    "refer": [
+      "html/my/validate-phone-cancel.html",
+      "html/my/validate-phone.html"
+    ],
+    "priority": 22
+  },
+  "html/kz_cysj/list.html": {
+    "href": "html/kz_cysj/list.html",
+    "resources": [
+      "third/knockout.js",
+      "js/utils.share.js"
+    ],
+    "priority": 23
+  },
+  "html/kz_blx/blx-detail.html": {
+    "href": "html/kz_blx/blx-detail.html",
+    "resources": [
+      "css/iconfont.css",
+      "fonts/iconfont.woff",
+      "fonts/iconfont.ttf",
+      "fonts/iconfont.svg",
+      "css/blx.css",
+      "third/knockout.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/business/blx.js"
+    ],
+    "refer": [],
+    "priority": 24
+  },
+  "html/kz_blx/blx-list.html": {
+    "href": "html/kz_blx/blx-list.html",
+    "resources": [
+      "css/blx.css",
+      "third/knockout.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/business/blx.js"
+    ],
+    "refer": [],
+    "priority": 24
+  },
+  "html/home/index.html": {
+    "href": "html/home/index.html",
+    "resources": [
+      "css/iconfont.css",
+      "fonts/iconfont.woff",
+      "fonts/iconfont.ttf",
+      "fonts/iconfont.svg",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "third/knockout.js",
+      "js/utils.config.js",
+      "js/utils.enums.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.category.js",
+      "images/tab-wode/user_default.png",
+      "images/tab-wode/yqm.png",
+      "images/tab-wode/jhm.png",
+      "images/tab-wode/wdblx.png",
+      "images/tab-wode/tk.png",
+      "images/tab-wode/bdblx.png",
+      "images/tab-wode/fk.png",
+      "images/tab-wode/gy.png",
+      "images/tab-kuozhan/juhui.png",
+      "images/tab-goutong/img1.png",
+      "images/tab-goutong/img2.png",
+      "images/tab-goutong/img3.png",
+      "images/tab-goutong/img4.png",
+      "images/tab-goutong/img5.png",
+      "images/tab-goutong/img6.png"
+    ],
+    "refer": [
+      "html/yanshi/yanshi.html",
+      "html/payment/bevip.html",
+      "html/my/my-orders.html",
+      "html/picture/picture-folders.html",
+      "html/my/active-code.html",
+      "html/project/project-index.html",
+      "html/my/point.html",
+      "html/my/validate-phone-cancel.html",
+      "html/gongsi/index.html",
+      "html/train/train-list.html",
+      "html/my/validate-phone.html",
+      "html/project/project-plan-date-list.html",
+      "html/my/invite-code.html",
+      "html/my/my-message.html",
+      "html/my/feedback.html",
+      "html/3d/three_3d_index.html",
+      "html/kz_blx/my-blx-list.html",
+      "html/kz_zsk/zsk-list.html",
+      "html/kz_ppsp/qy-list.html",
+      "html/video/video-list.html",
+      "html/my/my.html",
+      "html/kz_cysj/list.html",
+      "html/kz_blx/blx-list.html"
+    ],
+    "priority": 2
+  },
+  "html/home/guide.html": {
+    "href": "html/home/guide.html",
+    "resources": [
+      "css/iconfont.css",
+      "fonts/iconfont.woff",
+      "fonts/iconfont.ttf",
+      "fonts/iconfont.svg",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "css/style.css",
+      "images/profile/xg.jpg",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.category.js",
+      "js/business/push.js"
+    ],
+    "refer": [
+      "html/login/login.html",
+      "html/my/my-message.html",
+      "html/home/index.html"
+    ],
+    "priority": 0
+  }
+}

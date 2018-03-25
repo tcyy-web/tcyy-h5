@@ -265,8 +265,10 @@
                   } 
                 }
                 getImageFromStorage();
+                plus.navigator.closeSplashscreen();
               }, function() {
                 getImageFromStorage();
+                plus.navigator.closeSplashscreen();
               });
             }
             if (!request.getNetworkState()) {
@@ -274,7 +276,6 @@
             } else {
               panduanGengxin();
             }
-            plus.navigator.closeSplashscreen();
 					});
 				}(mui, document));
 		</script>

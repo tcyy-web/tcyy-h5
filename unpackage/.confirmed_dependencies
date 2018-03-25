@@ -12,13 +12,58 @@
   },
   "html/project/project-list.html": {
     "refer": [
-      "html/login/login.html"
+      "html/login/login.html",
+      "html/project/project-edit.html",
+      "html/project/project-add.html",
+      "html/project/project-bill-edit.html",
+      "html/project/project-plan-list.html"
+    ],
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.common.js",
+      "js/utils.config.js",
+      "js/utils.enums.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "images/project/edit.png",
+      "images/project/del.png"
     ]
   },
   "html/kz_blx/my-blx-list.html": {
     "refer": [
       "html/kz_blx/my-blx-save.html",
       "html/kz_blx/my-blx-detail.html"
+    ],
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "css/blx.css",
+      "third/knockout.js",
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/business/blx.js",
+      "images/blx/pl1.png",
+      "images/blx/pl2.png",
+      "images/blx/pl3.png"
     ]
   },
   "html/kz_blx/blx-list.html": {
@@ -26,6 +71,29 @@
       "html/kz_blx/blx-detail.html",
       "html/kz_blx/blx-send.html",
       "html/login/login.html"
+    ],
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "css/blx.css",
+      "third/knockout.js",
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.common.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/business/blx.js",
+      "images/tab-wode/user_default.png",
+      "images/blx/pl1.png",
+      "images/blx/pl2.png",
+      "images/blx/pl3.png"
     ]
   },
   "html/home/tab-webview-kuozhan.html": {
@@ -34,12 +102,36 @@
       "html/kz_ppsp/qy-list.html",
       "html/kz_cysj/list.html",
       "html/kz_zsk/zsk-list.html"
-    ]
+    ],
+    "resources": []
   },
   "html/kz_blx/blx-detail.html": {
     "refer": [
       "html/kz_blx/blx-users.html",
       "html/kz_blx/blx-pl.html"
+    ],
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/style.css",
+      "css/blx.css",
+      "third/knockout.js",
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/utils.common.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.share.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/business/blx.js",
+      "images/tab-wode/user_default.png",
+      "images/blx/ft1.png",
+      "images/blx/pl1.png",
+      "images/blx/pl2.png",
+      "images/blx/pl3.png"
     ]
   },
   "html/home/tab-webview-wode.html": {
@@ -47,26 +139,1011 @@
       "html/kz_blx/my-blx-list.html",
       "html/login/login.html",
       "html/my/my.html"
-    ]
+    ],
+    "resources": []
   },
   "html/kz_ppsp/product-detail.html": {
     "refer": [
       "html/kz_ppsp/product_iframe.html"
+    ],
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.share.js"
     ]
   },
   "html/kz_ppsp/qy-list.html": {
     "refer": [
       "html/kz_ppsp/product-list.html"
+    ],
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "images/ppsp/banner.jpg"
     ]
   },
   "html/kz_ppsp/product-list.html": {
     "refer": [
       "html/kz_ppsp/product-detail.html"
+    ],
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
     ]
   },
   "html/kz_zsk/zsk-list.html": {
     "refer": [
       "html/kz_zsk/zsk-detail.html"
+    ],
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/weibo/date.png",
+      "images/weibo/yj.png",
+      "images/weibo/weizhuan.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
     ]
+  },
+  "html/login/reg.html": {
+    "href": "html/login/reg.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/login/login.html": {
+    "href": "html/login/login.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/business/login.js",
+      "images/login/qq.png",
+      "images/login/weixin.png"
+    ],
+    "refer": [
+      "html/login/reg.html"
+    ],
+    "priority": 0
+  },
+  "html/my/my-message-detail.html": {
+    "href": "html/my/my-message-detail.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/my/my-message.html": {
+    "href": "html/my/my-message.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/my/date.png",
+      "images/my/message.png",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/business/message-d.js"
+    ],
+    "refer": [
+      "html/my/my-message-detail.html"
+    ],
+    "priority": 0
+  },
+  "html/yanshi/yanshi.html": {
+    "href": "html/yanshi/yanshi.html",
+    "resources": [
+      "images/yangshi/ys_bg.jpg",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.request.js",
+      "third/jquery/jquery.js",
+      "third/hammer/hammer.min.js",
+      "js/business/dragElement.js",
+      "js/business/handdraw.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "images/yangshi/xp.png",
+      "images/yangshi/wjj.png",
+      "images/yangshi/add.png",
+      "images/yangshi/hme.png",
+      "images/yangshi/undo.png",
+      "images/yangshi/a_l.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/payment/pay.html": {
+    "href": "html/payment/pay.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "images/pay/weixin.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/payment/bevip.html": {
+    "href": "html/payment/bevip.html",
+    "resources": [
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "css/mui.min.css",
+      "css/style.css"
+    ],
+    "refer": [
+      "html/payment/pay.html"
+    ],
+    "priority": 0
+  },
+  "html/my/my-orders.html": {
+    "href": "html/my/my-orders.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/my/fszreo.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/picture/picture-list.html": {
+    "href": "html/picture/picture-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "third/knockout.js",
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.upload.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "images/picture/bg1.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/picture/picture-folders.html": {
+    "href": "html/picture/picture-folders.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "third/knockout.js",
+      "third/fastclick.js",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "images/picture/bg.png",
+      "images/picture/bg1.png"
+    ],
+    "refer": [
+      "html/picture/picture-list.html"
+    ],
+    "priority": 0
+  },
+  "html/my/active-code.html": {
+    "href": "html/my/active-code.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/project/project-edit.html": {
+    "href": "html/project/project-edit.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.upload.js",
+      "js/utils.request.js",
+      "images/project/jia.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/project/project-add.html": {
+    "href": "html/project/project-add.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.upload.js",
+      "js/utils.request.js",
+      "images/project/jia.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/project/project-bill-edit.html": {
+    "href": "html/project/project-bill-edit.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.picker.min.js",
+      "js/mui.poppicker.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.enums.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.upload.js",
+      "js/utils.request.js",
+      "images/project/jia.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/project/project-plan-detail.html": {
+    "href": "html/project/project-plan-detail.html",
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/mui.picker.min.js",
+      "js/mui.poppicker.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.enums.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.share.js",
+      "images/project/banner.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/project/project-plan-list.html": {
+    "href": "html/project/project-plan-list.html",
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.enums.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [
+      "html/project/project-plan-detail.html"
+    ],
+    "priority": 0
+  },
+  "html/project/project-index.html": {
+    "href": "html/project/project-index.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "images/project/formleft.png"
+    ],
+    "refer": [
+      "html/project/project-list.html"
+    ],
+    "priority": 0
+  },
+  "html/my/point-use.html": {
+    "href": "html/my/point-use.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.upload.js",
+      "js/utils.request.js",
+      "images/my/duihuan.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/my/point-product-detail.html": {
+    "href": "html/my/point-product-detail.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.upload.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/my/point-detail.html": {
+    "href": "html/my/point-detail.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.upload.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/my/point.html": {
+    "href": "html/my/point.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/my/bg.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "images/my/xqimg.png"
+    ],
+    "refer": [
+      "html/my/my-orders.html",
+      "html/my/point-use.html",
+      "html/my/point-product-detail.html",
+      "html/my/point-detail.html"
+    ],
+    "priority": 0
+  },
+  "html/my/validate-phone-cancel.html": {
+    "href": "html/my/validate-phone-cancel.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/gongsi/index.html": {
+    "href": "html/gongsi/index.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/train/train-arrange.html": {
+    "href": "html/train/train-arrange.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/train/v_video.png",
+      "images/train/v_audio.png",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "third/jquery/jquery.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/train/train-upload.html": {
+    "href": "html/train/train-upload.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/train/s_video.png",
+      "images/train/s_audio.png",
+      "images/train/s_pic.png",
+      "images/train/s_txt.png",
+      "images/train/s_add.png",
+      "images/train/s_send.png",
+      "images/train/astop.png",
+      "images/train/v_video.png",
+      "images/train/v_audio.png",
+      "js/mui.min.js",
+      "js/common.js",
+      "js/utils.config.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.upload.js",
+      "js/utils.request.js",
+      "third/jquery/jquery.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/train/train-detail.html": {
+    "href": "html/train/train-detail.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/train/v_video.png",
+      "images/train/v_audio.png",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "images/my/bg.png"
+    ],
+    "refer": [
+      "html/train/train-arrange.html",
+      "html/train/train-upload.html"
+    ],
+    "priority": 0
+  },
+  "html/train/train-list.html": {
+    "href": "html/train/train-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "images/my/bgy.png"
+    ],
+    "refer": [
+      "html/payment/pay.html",
+      "html/train/train-detail.html",
+      "html/payment/bevip.html"
+    ],
+    "priority": 0
+  },
+  "html/my/validate-phone.html": {
+    "href": "html/my/validate-phone.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/project/project-plan-date-list.html": {
+    "href": "html/project/project-plan-date-list.html",
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/mui.picker.min.css",
+      "css/style.css",
+      "third/knockout.js",
+      "third/fastclick.js",
+      "js/mui.min.js",
+      "js/mui.picker.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.enums.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [
+      "html/project/project-plan-detail.html",
+      "html/project/project-list.html"
+    ],
+    "priority": 0
+  },
+  "html/my/invite-code.html": {
+    "href": "html/my/invite-code.html",
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.share.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/my/feedback.html": {
+    "href": "html/my/feedback.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/3d/three_3d_iframe.html": {
+    "href": "html/3d/three_3d_iframe.html",
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.share.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/3d/three_3d_index.html": {
+    "href": "html/3d/three_3d_index.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.request.js",
+      "images/3d/11.png",
+      "images/3d/12.png",
+      "images/3d/13.png",
+      "images/3d/14.png",
+      "images/3d/15.png",
+      "images/3d/16.png",
+      "images/3d/17.png",
+      "images/3d/18.png",
+      "images/3d/21.png",
+      "images/3d/22.png",
+      "images/3d/23.png",
+      "images/3d/24.png",
+      "images/3d/25.png",
+      "images/3d/26.png",
+      "images/3d/27.png",
+      "images/3d/28.png",
+      "images/3d/41.png",
+      "images/3d/42.png",
+      "images/3d/43.png",
+      "images/3d/44.png",
+      "images/3d/45.png",
+      "images/3d/46.png",
+      "images/3d/47.png",
+      "images/3d/48.png",
+      "images/3d/31.png",
+      "images/3d/32.png",
+      "images/3d/33.png",
+      "images/3d/34.png",
+      "images/3d/35.png",
+      "images/3d/36.png",
+      "images/3d/37.png",
+      "images/3d/38.png"
+    ],
+    "refer": [
+      "html/3d/three_3d_iframe.html"
+    ],
+    "priority": 0
+  },
+  "html/kz_blx/blx-pl.html": {
+    "href": "html/kz_blx/blx-pl.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/kz_blx/blx-users.html": {
+    "href": "html/kz_blx/blx-users.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/business/blx.js",
+      "images/tab-wode/user_default.png"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/kz_blx/my-blx-detail.html": {
+    "href": "html/kz_blx/my-blx-detail.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "css/blx.css",
+      "third/knockout.js",
+      "third/fastclick.js",
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/utils.common.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.share.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/business/blx.js",
+      "images/tab-wode/user_default.png",
+      "images/blx/pl1.png",
+      "images/blx/pl2.png",
+      "images/blx/pl3.png"
+    ],
+    "refer": [
+      "html/kz_blx/blx-pl.html",
+      "html/kz_blx/blx-users.html"
+    ],
+    "priority": 0
+  },
+  "html/kz_blx/my-blx-save.html": {
+    "href": "html/kz_blx/my-blx-save.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "css/blx.css",
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/utils.common.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.share.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/kz_zsk/zsk-detail.html": {
+    "href": "html/kz_zsk/zsk-detail.html",
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/style.css",
+      "images/weibo/yuandian.png",
+      "js/mui.min.js",
+      "js/mui.zoom.js",
+      "js/mui.previewimage.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.share.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/kz_ppsp/product_iframe.html": {
+    "href": "html/kz_ppsp/product_iframe.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/video/video-list.html": {
+    "href": "html/video/video-list.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/video/sc11.png",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/my/my.html": {
+    "href": "html/my/my.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/mui.picker.min.css",
+      "css/mui.poppicker.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/mui.picker.min.js",
+      "js/mui.poppicker.js",
+      "js/utils.enums.js",
+      "js/utils.config.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.upload.js",
+      "js/utils.request.js"
+    ],
+    "refer": [
+      "html/my/validate-phone-cancel.html",
+      "html/my/validate-phone.html"
+    ],
+    "priority": 0
+  },
+  "html/kz_cysj/list.html": {
+    "href": "html/kz_cysj/list.html",
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/style.css",
+      "third/knockout.js",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.share.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/kz_blx/blx-send.html": {
+    "href": "html/kz_blx/blx-send.html",
+    "resources": [
+      "css/mui.min.css",
+      "css/style.css",
+      "images/weibo/yuan.png",
+      "images/blx/jia.png",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.category.js",
+      "js/utils.auth.js",
+      "js/utils.upload.js",
+      "js/utils.request.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "html/home/index.html": {
+    "href": "html/home/index.html",
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "third/knockout.js",
+      "js/utils.config.js",
+      "js/utils.enums.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.category.js",
+      "images/tab-wode/user_default.png",
+      "images/tab-wode/yqm.png",
+      "images/tab-wode/jhm.png",
+      "images/tab-wode/wdblx.png",
+      "images/tab-wode/tk.png",
+      "images/tab-wode/bdblx.png",
+      "images/tab-wode/fk.png",
+      "images/tab-wode/gy.png",
+      "images/tab-kuozhan/juhui.png",
+      "images/tab-goutong/img1.png",
+      "images/tab-goutong/img2.png",
+      "images/tab-goutong/img3.png",
+      "images/tab-goutong/img4.png",
+      "images/tab-goutong/img5.png",
+      "images/tab-goutong/img6.png"
+    ],
+    "refer": [
+      "html/yanshi/yanshi.html",
+      "html/payment/bevip.html",
+      "html/my/my-orders.html",
+      "html/picture/picture-folders.html",
+      "html/my/active-code.html",
+      "html/project/project-index.html",
+      "html/my/point.html",
+      "html/my/validate-phone-cancel.html",
+      "html/gongsi/index.html",
+      "html/train/train-list.html",
+      "html/my/validate-phone.html",
+      "html/project/project-plan-date-list.html",
+      "html/my/invite-code.html",
+      "html/my/my-message.html",
+      "html/my/feedback.html",
+      "html/3d/three_3d_index.html",
+      "html/kz_blx/my-blx-list.html",
+      "html/kz_zsk/zsk-list.html",
+      "html/kz_ppsp/qy-list.html",
+      "html/video/video-list.html",
+      "html/my/my.html",
+      "html/kz_cysj/list.html",
+      "html/kz_blx/blx-list.html"
+    ],
+    "priority": 0
+  },
+  "html/home/guide.html": {
+    "href": "html/home/guide.html",
+    "resources": [
+      "css/iconfont.css",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.min.js",
+      "js/utils.config.js",
+      "js/utils.extend.js",
+      "js/utils.storages.js",
+      "js/utils.auth.js",
+      "js/utils.request.js",
+      "js/utils.category.js",
+      "js/business/push.js"
+    ],
+    "refer": [
+      "html/login/login.html",
+      "html/my/my-message.html",
+      "html/home/index.html"
+    ],
+    "priority": 0
   }
 }
