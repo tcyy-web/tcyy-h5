@@ -928,7 +928,20 @@
 					});
  				}(mui, document));
  				// 重置返回 避免返回引导页
- 				mui.back = function() {};
+ 				var _back_first = null;
+ 				mui.back = function() {
+ 				  if (!_back_first) {
+            _back_first = new Date().getTime();
+            mui.toast('再按一次退出应用');
+            setTimeout(function() {
+              _back_first = null;
+            }, 2000);
+          } else {
+            if (new Date().getTime() - _back_first < 2000) {
+              plus.runtime.quit();
+            }
+          }
+ 				};
 		</script>
 	</body>
 

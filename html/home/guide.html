@@ -136,7 +136,7 @@
                   aniShow: 'pop-in'
                 },
                 styles: {
-                  popGesture: 'hide'
+                  popGesture: 'none'
                 },
                 waiting: {
                   autoShow: false
@@ -169,6 +169,8 @@
                 }
               }catch(e) {
                 gotoIndex();
+              } finally {
+                plus.navigator.closeSplashscreen();
               }
             }
             // 存储缓存 因为下载是异步 所以每次下载成功取出缓存 再加入新的内容
@@ -239,8 +241,10 @@
                   paintSilder(data.data, data.color);
                   return;
                 }
+                plus.navigator.closeSplashscreen();
                 gotoIndex();
               }, function() {
+                plus.navigator.closeSplashscreen();
                 gotoIndex();
               });
             }
@@ -265,10 +269,8 @@
                   } 
                 }
                 getImageFromStorage();
-                plus.navigator.closeSplashscreen();
               }, function() {
                 getImageFromStorage();
-                plus.navigator.closeSplashscreen();
               });
             }
             if (!request.getNetworkState()) {
