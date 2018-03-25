@@ -191,6 +191,7 @@
 				    createFlag: ko.observable(false), // 是否可新增
 				    category: ko.observableArray([]),
 				    groupid: ko.observable(0),
+				    vipflag: ko.observable(false) // 是否会员
 				  }
 				  viewModel.groupid.subscribe(function(newValue) {
             var cur = viewModel.category().find(function(i){
@@ -205,8 +206,31 @@
             }
           });
 				  ko.applyBindings(viewModel, doc.getElementById('mainContent'));
+				  // 获取会员标识
+          var getVip = function(title) {
+            request.loginAjax('user/getVip', {
+                showLoading: false,
+                showMsg: false
+              }, function(data, success) {
+                 if (success) {
+                   viewModel.vipflag(data.isend == 1);
+                 }
+              }, function() {
+              });
+          }
+          var checkVip = function() {
+            if (!viewModel.vipflag()) {
+              $.toast('请开通会员');
+              return false;
+            }
+            return true;
+          }
+          getVip();
 				  // 新增文件夹
 				  $('#mainContent').on('tap', '.addfolder', function() {
+				    if (!checkVip()) {
+				      return;
+				    }
 				    $.prompt('', '请输入文件夹名称', '创建文件夹', null,function(obj){
               if (obj.index == 1){
                 if (obj.value == '') {
@@ -302,6 +326,9 @@
           });
           // 用户文件夹
           $('#mainContent').on('tap', '.userdetail', function(e) {
+            if (!checkVip()) {
+              return;
+            }
             var folderid = this.getAttribute('folderid');
             var _webview = plus.webview.getWebviewById('pictureList');
             $.fire(_webview, 'picture-folderid', {
@@ -313,6 +340,9 @@
             });
           });
           $('#mainContent').on('longtap', '.userdetail', function(e) {
+            if (!checkVip()) {
+              return;
+            }
             var folderid = this.getAttribute('folderid');
             var foldername = this.getAttribute('foldername');
             var actionstyle = {
