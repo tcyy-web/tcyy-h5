@@ -82,8 +82,9 @@
             /*启动图片*/
             var $silder = doc.getElementById('slider');
             var silder = $('#slider');
-            var imgKey = '$startimgs';
-            var colorKey = '$startColor';
+            var imgKey = '$startimgs'; // 图片地址存储key
+            var colorKey = '$startColor';// 颜色存储key
+            var updateTimeKey = '$startTime'; // 更新时间Key
             // 立即进入
             $('#slider').on('tap', '.ljjr', function(){
               gotoIndex();
@@ -245,18 +246,33 @@
             }
             // 判断是否有更新
             var panduanGengxin = function(){
+              var _localUpdatetime = storage.get({
+                key: updateTimeKey
+              });
               request.ajax('Publics/advertUpdateTime',{
                 showMsg: false,
                 showLoading: false
               },function(data, success) {
+                if (success && data && data.times) {
+                  if (_localUpdatetime != data.times) {
+                    // 有更新
+                    storage.save({
+                      key: updateTimeKey,
+                      value: data.times
+                    });
+                    getImageFromServer();
+                    return;
+                  } 
+                }
+                getImageFromStorage();
               }, function() {
+                getImageFromStorage();
               });
             }
-            panduanGengxin();
             if (!request.getNetworkState()) {
               getImageFromStorage();
             } else {
-              getImageFromServer();
+              panduanGengxin();
             }
             plus.navigator.closeSplashscreen();
 					});

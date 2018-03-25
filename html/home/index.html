@@ -212,7 +212,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">沟通</h1>
+			<h1 id="indexTitle" class="mui-title">沟通</h1>
 		</header>
 		<div id="tab3d" class="tab3d">
 		  <span>3D</span>
@@ -419,6 +419,13 @@
                 authManage.toLogin();
               }
 					  }
+					  // tab改变 
+					  var $indexTitle = doc.getElementById('indexTitle');
+					  $.each(doc.querySelectorAll('.mui-bar-tab.indextab .mui-tab-item'), function(index, el) {
+              el.addEventListener('tap', function(e) {
+                $indexTitle.innerText = this.querySelector('.mui-tab-label').innerText;
+              });
+            });
 					  /*沟通 业务begin*/
 						// 视频
 						doc.getElementById('video').addEventListener('tap', function(event) {
