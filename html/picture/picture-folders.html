@@ -207,7 +207,7 @@
           });
 				  ko.applyBindings(viewModel, doc.getElementById('mainContent'));
 				  // 获取会员标识
-          var getVip = function(title) {
+          var getVip = function() {
             request.loginAjax('user/getVip', {
                 showLoading: false,
                 showMsg: false

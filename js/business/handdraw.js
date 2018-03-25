@@ -4,8 +4,30 @@
 	var canvas = document.getElementById("canvas")
 	var bgCanvas = document.getElementById("bg");
 	var context = canvas.getContext("2d");
-
-
+	// 验证会员
+  var vipflag = null;
+  var checkVip = function(callback) {
+    if (vipflag == null) {
+      request.loginAjax('user/getVip', {
+        showLoading: false,
+        showMsg: false
+      }, function(data, success) {
+         if (success) {
+           if (data.isend == 1) {
+             callback();
+             return;
+           }
+         }
+         mui.toast('请开通会员');
+      }, function() {
+        mui.toast('请开通会员');
+      });
+    } else if (vipflag == true) {
+      callback();
+    } else {
+      mui.toast('请开通会员');
+    }
+  }
 
     // polyfill 提供了这个方法用来获取设备的 pixel ratio
     var getPixelRatio = function(context) {
@@ -219,16 +241,18 @@
 				} 
 				
 				if(e.index == 1) {
-					plus.gallery.pick(function(p) {
-						$(".center_opt").hide();
-
-						$("body").attr("src",p);
-						$(".opt_img").remove();
-						drawBg();
-						
-					}, function(e) {
-					  console.log('打开视频库失败：'+e.message);
-					});
+				  checkVip(function(){
+            plus.gallery.pick(function(p) {
+              $(".center_opt").hide();
+  
+              $("body").attr("src",p);
+              $(".opt_img").remove();
+              drawBg();
+              
+            }, function(e) {
+              console.log('打开视频库失败：'+e.message);
+            });				    
+				  })
 				}
 				
 				
