@@ -7,7 +7,7 @@
 	"id": "H53E43A39",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "天齿月牙",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.1.0",/*应用版本名称*/
+		"name": "1.3.0",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -94,7 +94,7 @@
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
-		"distribute": {"plugins":{"payment":{"weixin":{"description":"微信支付","appid":"wxed56e6662b878b3b"}},"push":{"mipush":{"appid_android":"2882303761517709892","appkey_android":"5191770955892","appid_ios":"2882303761517710312","appkey_ios":"5151771041312"}},"share":{"qq":{"appid":"1106636065","description":"QQ分享"},"weixin":{"appid":"wxed56e6662b878b3b","appsecret":"0473c095c08b655b2bcdd1db3dbddde3","description":"可选，微信分享"}},"oauth":{"qq":{"appid":"1106636065"},"weixin":{"appid":"wxed56e6662b878b3b","appsecret":"0473c095c08b655b2bcdd1db3dbddde3"}}},
+		"distribute": {"plugins":{"payment":{"weixin":{"description":"微信支付","appid":"wxed56e6662b878b3b"}},"push":{"mipush":{"appid_android":"2882303761517709892","appkey_android":"5191770955892","appid_ios":"2882303761517751801","appkey_ios":"5891775158801"}},"share":{"qq":{"appid":"1106636065","description":"QQ分享"},"weixin":{"appid":"wxed56e6662b878b3b","appsecret":"0473c095c08b655b2bcdd1db3dbddde3","description":"可选，微信分享"}},"oauth":{"qq":{"appid":"1106636065"},"weixin":{"appid":"wxed56e6662b878b3b","appsecret":"0473c095c08b655b2bcdd1db3dbddde3"}}},
 			"apple": {
 				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
 				"mobileprovision": "",/*iOS应用打包配置文件*/
