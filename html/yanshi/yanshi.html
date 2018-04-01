@@ -130,14 +130,16 @@
     			var canvas = document.getElementById("canvas")
     			canvas.width = canvas.width;
     			
-    			
+    			plus.screen.unlockOrientation();
     			plus.screen.lockOrientation("portrait-primary");
     			return true;
     		}
     	});
     	$.plusReady(function() {
     	  window.addEventListener('YANSHI_Refresh', function(e){
-        plus.screen.lockOrientation("landscape-primary");
+	    	  plus.screen.unlockOrientation();
+	    	  plus.screen.lockOrientation("landscape-primary");
+        
       });
     		ajaxData();
     	});

@@ -155,6 +155,7 @@ $(function(){
 $("#cont").on("click",".paudio",function(){
 	
 	var link = $(this).attr("link");
+	console.log( link )
 	var _this = this;
 	Play.resetPlay = function(){
 		$(_this).removeClass("playing");
@@ -195,43 +196,26 @@ var Play = {
   	}else{
   		mui.toast("加载中");
   	}
-	this._player = plus.audio.createPlayer(url);
-	var p = this._player;
-	var _this = this;
-	
+
 	this.isplay = true;
-	p.play(function(){
-		console.log('播放完成！');
-		_this.resetPlay();
-		_this.stopPlay();
-	}, function(e){
-		console.log('播放音频文件"'+url+'"失败：'+e.message);
-	});
+	this._player = new Audio(); 
+	this._player.src = url;
+	this._player.play();
 	
-	// 获取总时长
-	var d = p.getDuration();
-	if(!d){
-//		pt.innerText = '00:00:00/'+timeToStr(d);
-	}
-	this._timer = setInterval(function(){
-		//渲染播放界面
-	}, 1000);
 	
 	},
 	// 停止播放
 	stopPlay:function (){
-		var p = this._player;
+		
 		this.resetPlay();
 		clearInterval(this._timer);
 		this.isplay = false;
 		this._timer = null;
 		var _this = this;
 		setTimeout(_this.resetPlay, 500);
-		// 操作播放对象
-		if(p){
-			p.stop();
-			this._player = null;
-		}
+		
+		this._player.pause();
+		this._player = null;
 	},
 	resetPlay:function(){
 		
