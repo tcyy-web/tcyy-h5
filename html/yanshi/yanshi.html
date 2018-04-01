@@ -138,7 +138,9 @@
     	$.plusReady(function() {
     	  window.addEventListener('YANSHI_Refresh', function(e){
 	    	  plus.screen.unlockOrientation();
-	    	  plus.screen.lockOrientation("landscape-primary");
+	    	  setTimeout(function(){
+	    	  	plus.screen.lockOrientation("landscape-primary");
+	    	  },200)
         
       });
     		ajaxData();
