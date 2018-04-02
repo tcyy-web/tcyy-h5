@@ -173,7 +173,7 @@ function pay( id , data){
 		PAYSERVER = WXPAYSERVER +"?id="+data.id+"&type="+data.type+"&userid="+data.userid+"&appid="+appid;
         channel = wxChannel;
         checkServices( channel );
-         plus.nativeUI.alert( PAYSERVER );
+//       plus.nativeUI.alert( PAYSERVER );
 //      PAYSERVER ="http://demo.dcloud.net.cn/payment/wxpayv3.HBuilder/?total=0.01"
     }else{
         plus.nativeUI.alert("不支持此支付通道！",null,"捐赠");
@@ -191,10 +191,10 @@ function pay( id , data){
 	                    
 	                });
                 },function(error){
-                    plus.nativeUI.alert("支付失败：" + error.message);
+//                  plus.nativeUI.alert("支付失败：" + error.message);
                 });
             }else{
-                alert("获取订单信息失败！");
+                plus.nativeUI.alert("获取订单信息失败！");
             }
             break;
         default:
