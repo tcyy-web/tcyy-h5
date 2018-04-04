@@ -1120,7 +1120,8 @@
       "html/video/video-list.html",
       "html/my/my.html",
       "html/kz_cysj/list.html",
-      "html/kz_blx/blx-list.html"
+      "html/kz_blx/blx-list.html",
+      "html/login/login.html"
     ],
     "priority": 0
   },

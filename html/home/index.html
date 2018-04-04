@@ -691,20 +691,28 @@
             // 跳转我的信息
             doc.getElementById('login').addEventListener('tap', function(event) {
               if (authManage.checkLogin()) {
-                $.openWindow({
-                  url: '../my/my.html',
-                  id: 'WDJL',
-                  preload: true,
-                  show: {
-                    aniShow: 'pop-in'
-                  },
-                  styles: {
-                    popGesture: 'hide'
-                  },
-                  waiting: {
-                    autoShow: false
-                  }
-                });
+                var _myWebview = plus.webview.getWebviewById('WDJL');
+                if (_myWebview) {
+                  $.fire(_myWebview,'WDINFO',{});
+                  $.openWindow({
+                    id: 'WDJL',
+                  });
+                } else {
+                  $.openWindow({
+                    url: '../my/my.html',
+                    id: 'WDJL',
+                    preload: true,
+                    show: {
+                      aniShow: 'pop-in'
+                    },
+                    styles: {
+                      popGesture: 'none'
+                    },
+                    waiting: {
+                      autoShow: false
+                    }
+                  });
+                }
               } else {
                 authManage.toLogin();
               }

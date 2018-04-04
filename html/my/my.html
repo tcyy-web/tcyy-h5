@@ -75,20 +75,15 @@
 <script>(function($, doc) {
 	
 
-	$.init({
-		beforeback: function() {
-		  // 请求成功调用就把这注释了，不然会调用两次
-//			var parent = plus.webview.currentWebview().opener();
-//			$.fire(parent, 'info-edit-success', {});
-			return true;
-		}
-	});
+	$.init();
 	$.plusReady(function() {
 		var postData = {}
 		
 		addEvent();
 		ajaxData();
-
+    window.addEventListener('WDINFO', function(e){
+      ajaxData();
+    });
 		//性别
 		var gender = [];
 		for(var key in enums.sex) {
@@ -114,10 +109,10 @@
 
 		var user = authManage.getUser();
 
-		doc.getElementById("queding").addEventListener("click", function() {
+		doc.getElementById("queding").addEventListener("tap", function() {
 			
 			if( JSON.stringify(postData) == "{}"){
-				mui.back();
+			  console.log(JSON.stringify(postData));
 				return;
 			}
 
@@ -134,6 +129,7 @@
 					postData["nickname"] && (user.nickname = postData["nickname"]);
 					postData["sex"] && (user.sex = postData["sex"]);
 					postData["phone"] && (user.phone = postData["phone"]);
+					authManage.saveUser(user);
 					bb();
 					
 				}
@@ -173,7 +169,7 @@
 				if(name == "headurl") {
 					this.innerHTML = "<img src=" + obj["headurl"] + ">";
 				} else if(name == "sex") {
-					this.value = obj[name] == 1 ? "男" : "女";
+					this.value = enums.sex[obj[name]];
 				} else {
 					this.value = obj[name];
 				}

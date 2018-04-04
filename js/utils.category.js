@@ -31,15 +31,17 @@
 		    }
 		    w.request.ajax('group/getList', {
 		      showMsg: false
-		    }, function(data) {
-		      var d = new Date().getTime();
-		      w.storage.save({
-		        key: KEY,
-		        value: JSON.stringify({
-		          times: d,
-		          values: data,
-		        })
-		      });
+		    }, function(success,data) {
+		      if (success && data && data.length > 0) {
+		        var d = new Date().getTime();
+            w.storage.save({
+              key: KEY,
+              value: JSON.stringify({
+                times: d,
+                values: data,
+              })
+            });
+		      }
 		    });
 		  }
 		},
