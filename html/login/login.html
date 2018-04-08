@@ -190,13 +190,16 @@
 						$.back();
 					}
 					//第三方登录
-					var authBtns = ['weixin', 'qq']; //配置业务支持的第三方登录
 					var auths = {};
 					var oauthArea = doc.querySelector('.oauth-area');
 					plus.oauth.getServices(function(services) {
 						for (var i in services) {
 							var service = services[i];
 							auths[service.id] = service;
+							// 处理微信未安装情况
+							if (service.id === 'weixin') {
+							  doc.querySelector('[authId='+service.id+']').style.display = 'none';
+							}
 						}
 						$(oauthArea).on('tap', '.oauth-btn', function() {
 							var authId = this.getAttribute('authId');
