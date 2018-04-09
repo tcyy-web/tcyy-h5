@@ -31,7 +31,8 @@
 		    }
 		    w.request.ajax('group/getList', {
 		      showMsg: false
-		    }, function(success,data) {
+		    }, function(data,success) {
+		    	
 		      if (success && data && data.length > 0) {
 		        var d = new Date().getTime();
             w.storage.save({
