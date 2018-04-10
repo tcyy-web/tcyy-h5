@@ -197,7 +197,7 @@
 							var service = services[i];
 							auths[service.id] = service;
 							// 处理微信未安装情况
-							if (service.id === 'weixin') {
+							if (service.id === 'weixin' && !login.isInstalled('weixin')) {
 							  doc.querySelector('[authId='+service.id+']').style.display = 'none';
 							}
 						}
