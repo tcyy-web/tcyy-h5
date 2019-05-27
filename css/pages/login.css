@@ -1,0 +1,279 @@
+.mui-bar {
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.mui-content {
+	position: relative;
+	background-color: #765fc3;
+	overflow: auto;
+}
+
+.mui-input-group .mui-input-row {
+	background-color: #765fc3;
+}
+
+.mui-input-group {
+	margin-top: 10px;
+}
+
+.mui-input-group:first-child {
+	margin-top: 20px;
+}
+
+.mui-input-group:after {
+	height: 0;
+}
+
+.mui-input-group label {
+	width: 100px;
+	text-align: right;
+	color: #ffffff;
+}
+
+.mui-input-group .mui-input-row {
+	height: 50px;
+}
+
+.mui-input-group .mui-input-row:after {
+	right: 15px;
+}
+
+.mui-input-row label~input,
+.mui-input-row label~select,
+.mui-input-row label~textarea {
+	width: calc(100% - 100px);
+	width: -webkit-calc(100% - 100px);
+}
+
+.mui-input-row label {
+	padding: 0 15px;
+	height: 50px;
+	line-height: 50px;
+}
+
+.mui-input {
+	color: #ffffff;
+	font-size: 14px;
+	line-height: 30px !important;
+	height: 50px !important;
+}
+
+.mui-icon-clear {
+	top: 16px !important;
+	color: #ffffff !important;
+}
+
+::-moz-placeholder {
+	color: #ffffff;
+}
+
+:-ms-input-placeholder {
+	color: #ffffff;
+}
+
+::-webkit-input-placeholder {
+	color: #ffffff;
+}
+
+.mui-content-padded {
+	margin: 70px 30px 60px 30px;
+}
+
+.btn-login {
+	display: block;
+	width: 100%;
+	color: #ffffff;
+	padding: 0;
+	border: 0;
+	margin-bottom: 0;
+	font-size: 18px;
+	background-color: #6b51c1;
+	line-height: 60px;
+	-webkit-border-radius: 60px;
+	-moz-border-radius: 60px;
+	border-radius: 60px;
+}
+
+.oauth-area {
+	text-align: center;
+	width: 100%;
+}
+
+.oauth-area .oauth-btn {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.oauth-area .oauth-btn:first-child {
+	margin-right: 20px;
+}
+
+.oauth-area .oauth-btn img {
+	border: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.link-area {
+	margin: 60px 0;
+}
+
+.link-area p {
+	text-align: center;
+	color: #ffffff;
+}
+
+.link-area p a {
+	color: #5438af;
+	margin-left: 5px;
+}
+
+
+/**注册**/
+
+.mui-bar {
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.mui-content {
+	background-color: #765fc3;
+	overflow: auto;
+}
+
+.mui-input-group .mui-input-row {
+	background-color: #765fc3;
+}
+
+.mui-input-group {
+	margin-top: 10px;
+}
+
+.mui-input-group:first-child {
+	margin-top: 20px;
+}
+
+.mui-input-group:after {
+	height: 0;
+}
+
+.mui-input-group label {
+	text-align: right;
+	width: 100px;
+	color: #ffffff;
+}
+
+.mui-input-group .mui-input-row {
+	height: 50px;
+}
+
+.mui-input-group .mui-input-row:after {
+	right: 15px;
+}
+
+.mui-input-row label~input,
+.mui-input-row label~select,
+.mui-input-row label~textarea {
+	width: calc(100% - 100px);
+	width: -webkit-calc(100% - 100px);
+}
+
+.mui-input-row label {
+	padding: 0 15px;
+	height: 50px;
+	line-height: 50px;
+}
+
+.mui-input {
+	color: #ffffff;
+	font-size: 14px;
+	line-height: 30px !important;
+	height: 50px !important;
+}
+
+.mui-icon-clear {
+	padding-top: 14px !important;
+	height: 50px !important;
+	top: 0 !important;
+	color: #ffffff !important;
+}
+
+.verify~.mui-icon-clear {
+	right: calc(60% - 100px) !important;
+	right: -webkit-calc(60% - 100px) !important;
+}
+
+::-moz-placeholder {
+	color: #ffffff;
+}
+
+:-ms-input-placeholder {
+	color: #ffffff;
+}
+
+::-webkit-input-placeholder {
+	color: #ffffff;
+}
+
+.verify {
+	float: left !important;
+	width: 40% !important;
+}
+
+.btn-verify {
+	position: relative;
+	top: 5px;
+	float: right;
+	margin-right: 15px;
+	border: 0;
+	color: #999999;
+	height: 40px;
+	line-height: 40px;
+	background-color: #e0e0e0;
+	padding: 0 10px;
+}
+
+button.btn-verify:enabled,
+button.btn-verify:enabled:active {
+	background-color: #e0e0e0;
+	opacity: 1;
+}
+
+.mui-content-padded {
+	margin: 70px 30px 140px 30px;
+}
+
+.btn-reg {
+	display: block;
+	width: 100%;
+	color: #ffffff;
+	padding: 0;
+	border: 0;
+	margin-bottom: 0;
+	font-size: 18px;
+	background-color: #6b51c1;
+	line-height: 60px;
+	-webkit-border-radius: 60px;
+	-moz-border-radius: 60px;
+	border-radius: 60px;
+}
+
+.link-area {
+	margin-bottom: 60px;
+}
+
+.link-area p {
+	text-align: center;
+	color: #ffffff;
+}
+
+.link-area p a {
+	color: #5438af;
+	margin-left: 5px;
+}

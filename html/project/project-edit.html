@@ -9,119 +9,8 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link href="../../css/style.css" rel="stylesheet" />
-		<style>
-			::-moz-placeholder {
-				color: #000000;
-			}
-			:-ms-input-placeholder {
-				color: #000000;
-			}
-			::-webkit-input-placeholder {
-				color: #000000;
-			}
-			.mui-content {
-				position: relative;
-				padding-bottom: 60px;
-			}
-			.btn-save {
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				background-color: #765fc3;
-				font-size: 18px;
-				color: #ffffff;
-				text-align: center;
-				height: 60px;
-				line-height: 60px;
-				border: 0;
-				padding: 0;
-				width: 100%;
-				-webkit-border-radius: 0;
-				-moz-border-radius: 0;
-				border-radius: 0;
-			}
-			form {
-        margin-bottom: 10px;
-      }
-      .mui-input-group .mui-input-row{
-        height: 50px;
-      }
-      .mui-input-row label{
-        padding: 15px 10px;
-        line-height: 20px;
-        width: 80px;
-      }
-      .mui-input-group input{
-        height: 50px;
-        font-size: 14px;
-        padding: 15px;
-      }
-      .mui-input-row label~input{
-        width: calc(100% - 80px);
-        width: -webkit-calc(100% - 80px);
-      }
-      .mui-input-row label~p{
-        width: calc(100% - 80px);
-        width: -webkit-calc(100% - 80px);
-        float: right;
-        line-height: 50px;
-        color: #000000;
-      }
-      .mui-input-group .mui-input-row:after{
-        left: 0;
-      }
-      .mui-input-group .mui-input-row:last-child:after{
-        height: 0;
-      }
-      .mui-input-row .mui-input-clear~.mui-icon-clear{
-        top: 15px;
-      }
-			.add-pic {
-				position: relative;
-				margin-top: 10px;
-				margin-bottom: 10px;
-				background-color: #ffffff;
-				padding: 30px;
-				text-align: center;
-			}
-			.add-pic:before,
-			.add-pic:after{
-				position: absolute;
-		    right: 0;
-		    left: 0;
-		    height: 1px;
-		    content: '';
-		    -webkit-transform: scaleY(.5);
-		    transform: scaleY(.5);
-		    background-color: #d6d6d6;
-			}
-			.add-pic:before{
-				top: 0;
-			}
-			.add-pic:after{
-				bottom: 0;
-			}
-			.add-box {
-				display: inline-block;
-				text-align: center;
-			}
-			.add-box p {
-				color: #b3b3b3;
-				font-size: 14px;
-				margin-top: 5px;
-			}
-			.add-box .ap-jia{
-				border: 1px dotted #d2d2d2;
-				width: 40px;
-				height: 40px;
-				-webkit-border-radius: 5px;
-				border-radius: 5px;
-			}
-			.add-box .ap-jia img{
-			  max-width: 100%;
-			  max-height: 100%;
-			}
-		</style>
+		<link href="../../css/pages/project.css" rel="stylesheet" />
+
 	</head>
 
 	<body>
@@ -130,20 +19,20 @@
 			<h1 class="mui-title">修改项目</h1>
 		</header>
 		<div class="mui-content">
-		  <form class="mui-input-group">
-        <div class="mui-input-row">
-          <label>编号：</label>
-          <input id="number" class="mui-input-clear" type="text" placeholder="请输入编号" />
-        </div>
-        <div class="mui-input-row">
-          <label>项目：</label>
-          <input id="title" class="mui-input-clear" type="text" placeholder="请输入项目名称" />
-        </div>
-        <div class="mui-input-row">
-          <label>金额：</label>
-          <input id="price" class="mui-input-clear" type="number" placeholder="请输入金额" />
-        </div>
-      </form>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>编号：</label>
+					<input id="number" class="mui-input-clear" type="text" placeholder="请输入编号" />
+				</div>
+				<div class="mui-input-row">
+					<label>项目：</label>
+					<input id="title" class="mui-input-clear" type="text" placeholder="请输入项目名称" />
+				</div>
+				<div class="mui-input-row">
+					<label>金额：</label>
+					<input id="price" class="mui-input-clear" type="number" placeholder="请输入金额" />
+				</div>
+			</form>
 			<div class="add-pic">
 				<div id="addPic" class="add-box">
 					<div style="display: inline-block;">
@@ -154,94 +43,94 @@
 					<p>上传图片</p>
 				</div>
 			</div>
-			<button id="save" class="btn-save">保存</button>
+			<button id="save" class="btn btn-save">保存</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/utils.config.js"></script>
 		<script src="../../js/utils.storages.js"></script>
 		<script src="../../js/utils.auth.js"></script>
 		<script src="../../js/utils.upload.js"></script>
-    <script src="../../js/utils.request.js" ></script>
+		<script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-				  // 详情数据
-				  var detailData = {};
-				  var imageurl = null;
-				  // 分类id
-				  var groupid = 0;
-          var numberBox = doc.getElementById('number');
-          var titleBox = doc.getElementById('title');
-          var priceBox = doc.getElementById('price');
-          var $img = doc.getElementById('img');
-          // 更新
-          window.addEventListener('project-detail', function(e){
-            detailData = e.detail.data;
-            groupid = e.detail.groupid;
-            imageurl = detailData.image;
-            $img.src = detailData.image;
-            numberBox.value = detailData.number;
-            titleBox.value = detailData.title;
-            priceBox.value = detailData.price;
-          });
-				  //上传图片
-				  var $addPic = doc.getElementById('addPic');
-				  $addPic.addEventListener('tap', function(event) {
-				    var _this = this;
-				    setTimeout(function(){
-              upload.showImgActionSheet(function( data ){
-                var url = config.url + "Uploads/Files";
-                upload.uploadimge( url , data.divid, function(res) {
-                 $img.src = data.abspath;
-                 imageurl = res[0].saveUrl;
-                });
-              });         
-				    }, 500);
-				  });
-				  //保存
-          var save = doc.getElementById('save');
-          save.addEventListener('tap', function(event) {
-            var number = numberBox.value.trim();
-            var title = titleBox.value.trim();
-            var price = priceBox.value.trim();
-            if (number === '') {
-              $.toast('请输入编号');
-              return;
-            }
-            if (title === '') {
-              $.toast('请输入项目名称');
-              return;
-            }
-            if (price === '') {
-              $.toast('请输入金额');
-              return;
-            }
-            if (imageurl === null){
-              $.toast('请上传图片');
-              return;
-            }
-            var postData = {
-              groupid:groupid,
-              number:number,
-              price:price,
-              title:title,
-              image: imageurl,
-              id: detailData.id
-            }
-            request.loginAjax('project/savedata',{
-              data: postData
-            },function(data, success) {
-              if (success){
-                 //获得父页面的webview
-                var parent = plus.webview.currentWebview().opener();
-                $.fire(parent, 'project-edit-success', {
-                  data:data
-                });
-                $.back();                 
-              }
-            });
-          });
+					// 详情数据
+					var detailData = {};
+					var imageurl = null;
+					// 分类id
+					var groupid = 0;
+					var numberBox = doc.getElementById('number');
+					var titleBox = doc.getElementById('title');
+					var priceBox = doc.getElementById('price');
+					var $img = doc.getElementById('img');
+					// 更新
+					window.addEventListener('project-detail', function(e) {
+						detailData = e.detail.data;
+						groupid = e.detail.groupid;
+						imageurl = detailData.image;
+						$img.src = detailData.image;
+						numberBox.value = detailData.number;
+						titleBox.value = detailData.title;
+						priceBox.value = detailData.price;
+					});
+					//上传图片
+					var $addPic = doc.getElementById('addPic');
+					$addPic.addEventListener('tap', function(event) {
+						var _this = this;
+						setTimeout(function() {
+							upload.showImgActionSheet(function(data) {
+								var url = config.url + "Uploads/Files";
+								upload.uploadimge(url, data.divid, function(res) {
+									$img.src = data.abspath;
+									imageurl = res[0].saveUrl;
+								});
+							});
+						}, 500);
+					});
+					//保存
+					var save = doc.getElementById('save');
+					save.addEventListener('tap', function(event) {
+						var number = numberBox.value.trim();
+						var title = titleBox.value.trim();
+						var price = priceBox.value.trim();
+						if(number === '') {
+							$.toast('请输入编号');
+							return;
+						}
+						if(title === '') {
+							$.toast('请输入项目名称');
+							return;
+						}
+						if(price === '') {
+							$.toast('请输入金额');
+							return;
+						}
+						if(imageurl === null) {
+							$.toast('请上传图片');
+							return;
+						}
+						var postData = {
+							groupid: groupid,
+							number: number,
+							price: price,
+							title: title,
+							image: imageurl,
+							id: detailData.id
+						}
+						request.loginAjax('project/savedata', {
+							data: postData
+						}, function(data, success) {
+							if(success) {
+								//获得父页面的webview
+								var parent = plus.webview.currentWebview().opener();
+								$.fire(parent, 'project-edit-success', {
+									data: data
+								});
+								$.back();
+							}
+						});
+					});
 				});
 			}(mui, document));
 		</script>

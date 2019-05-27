@@ -1,0 +1,199 @@
+.mui-pull-right {
+	line-height: 44px;
+	height: 44px;
+}
+
+.mui-pull-right .iconfont {
+	font-size: 20px;
+}
+
+.mui-bar-nav {
+	box-shadow: none;
+}
+
+.mui-content {
+	background: #fff;
+}
+
+.bt-title {
+	background: #765fc3;
+	padding: 25px 15px;
+}
+
+.bt-title h1 {
+	font-size: 15px;
+	line-height: 20px;
+	color: #fff;
+	padding-bottom: 10px;
+}
+
+.bt-title p {
+	color: #fff;
+	font-size: 13px;
+}
+
+.bt-title p span.read {
+	/*padding-right:25px;*/
+	display: inline-block;
+	/*background: url(../../images/weibo/yuandian.png) right center no-repeat;*/
+}
+
+.content {
+	padding: 10px;
+	color: #000000;
+	font-size: 14px;
+}
+
+.content p {
+	padding-bottom: 12px;
+}
+
+.content img {
+	max-width: 100%;
+}
+
+
+/**list**/
+
+#sliderSegmentedControl {
+	border-bottom: 1px solid #d2d2d2;
+	margin-bottom: 10px;
+	height: 50px;
+	background-color: #ffffff;
+}
+
+.mui-segmented-control.mui-scroll-wrapper {
+	height: 50px;
+	overflow: auto !important;
+}
+
+.mui-segmented-control .mui-control-item {
+	line-height: 50px;
+	display: inline-block;
+	position: relative;
+}
+
+.mui-segmented-control .mui-control-item:after {
+	content: '';
+	position: absolute;
+	width: 1px;
+	height: 20px;
+	right: 0;
+	bottom: 15px;
+	background-color: #d6d6d6;
+}
+
+.mui-segmented-control .mui-control-item:last-child:after {
+	width: 0;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+	color: #765fc3;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:before {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 3px;
+	left: 0;
+	bottom: -1px;
+	background-color: #765fc3;
+}
+
+.mui-fullscreen .mui-segmented-control~.mui-slider-group {
+	top: 60px;
+	background-color: #ffffff;
+}
+
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+	border: 0;
+}
+
+.mui-table-view {
+	background: none;
+}
+
+.mui-table-view .mui-table-view-cell {
+	padding: 10px;
+	border: none;
+}
+
+.mui-table-view-cell:after {
+	left: 0;
+}
+
+.mui-table-view-cell:last-child:after,
+.mui-table-view-cell:last-child:before {
+	height: 1px;
+}
+
+.item {
+	position: relative;
+	padding: 10px;
+	background: #fff;
+	display: block;
+}
+
+.item:before {
+	position: absolute;
+	right: -10px;
+	bottom: 0;
+	left: -10px;
+	height: 1px;
+	content: '';
+	-webkit-transform: scaleY(.5);
+	transform: scaleY(.5);
+	background-color: #d6d6d6;
+}
+
+.ileft {
+	float: left;
+	width: calc(70% - 20px);
+}
+
+.iright {
+	float: right;
+	width: 30%;
+}
+
+.iright img {
+	width: 100%;
+}
+
+.ileft h2 {
+	font-size: 15px;
+	padding-bottom: 1rem;
+}
+
+.ileft p {
+	font-size: 14px;
+	color: #7c7c7c;
+}
+
+.zh {
+	font-size: 14px;
+	color: #7c7c7c;
+	margin-top: 1rem;
+}
+
+.zh span {
+	padding-left: 25px;
+}
+
+.zh span:first-child {
+	background: url(../../images/weibo/date.png) 5px center no-repeat;
+}
+
+.zh span:nth-child(2) {
+	padding-left: 35px;
+	background: url(../../images/weibo/yj.png) 5px center no-repeat;
+}
+
+.zh a {
+	display: inline-block;
+	width: 15px;
+	background: url(../../images/weibo/weizhuan.png) center no-repeat;
+	color: transparent;
+	margin-left: 15px;
+}
