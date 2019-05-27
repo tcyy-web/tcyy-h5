@@ -509,6 +509,9 @@ input[type=submit]:enabled:active {
 	-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
 	transition: transform 0.5s ease, opacity 0.5s ease;
 }
+
+
+
 .mui-input-group .mui-input-row{
 	height: 50px;
 	line-height: 50px;
@@ -541,7 +544,9 @@ input[type=submit]:enabled:active {
 	line-height: 50px;
 	color: #000000;
 }
-
+.mui-input-row .mui-input-clear~.mui-icon-clear, .mui-input-row .mui-input-password~.mui-icon-eye, .mui-input-row .mui-input-speech~.mui-icon-speech{
+	margin-top: 5px;
+}
 
 .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 	color: #765fc3;

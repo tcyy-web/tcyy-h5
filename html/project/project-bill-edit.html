@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="../../css/mui.min.css">
 		<link rel="stylesheet" href="../../css/mui.picker.min.css">
 		<link rel="stylesheet" href="../../css/mui.poppicker.css">
-		
+
 		<link href="../../css/style.css" rel="stylesheet" />
 		<link href="../../css/pages/project.css" rel="stylesheet" />
 	</head>
@@ -21,29 +21,29 @@
 			<h1 class="mui-title">提交清单</h1>
 		</header>
 		<div class="mui-content">
-		  <div id="listBox">
-    			<!--<div class="bill-item flex">
+			<div id="listBox">
+				<!--<div class="bill-item flex">
     				<p>01by</p>
     				<p class="flex-1">牙齿修复<span>*1</span></p>
     				<p class="flex-1">￥318.00<span>元</span></p>
     			</div>-->
 			</div>
 			<div>
-			  <div class="bill-item flex">
-          <p>合计</p>
-          <p class="flex-1" id="billTotal">￥0.00<span>元</span></p>
-        </div>
+				<div class="bill-item flex">
+					<p>合计</p>
+					<p class="flex-1" id="billTotal">￥0.00<span>元</span></p>
+				</div>
 			</div>
 			<form class="mui-input-group">
 				<div class="mui-input-row">
-	        <label>姓名：</label>
-	        <input id="name" type="text" class="mui-input-clear" placeholder="请输入姓名">
-		    </div>
+					<label>姓名：</label>
+					<input id="name" type="text" class="mui-input-clear" placeholder="请输入姓名">
+				</div>
 				<div class="mui-input-row">
-	       	<label>性别：</label>
+					<label>性别：</label>
 					<p id="showGenderPicker">请选择性别</p>
-		    </div>
-		    <div class="mui-input-row">
+				</div>
+				<div class="mui-input-row">
 					<label>年龄：</label>
 					<input id="age" class="mui-input-clear" type="number" placeholder="请输入年龄" />
 				</div>
@@ -56,24 +56,24 @@
 					<p id="booktime">请选择预约时间</p>
 				</div>
 				<div class="mui-input-row">
-          <label>接诊师：</label>
-          <input id="jzs" type="text" class="mui-input-clear" placeholder="请输入姓名">
-        </div>
-        <div class="mui-input-row">
-          <label>主诊师：</label>
-          <input id="zzys" type="text" class="mui-input-clear" placeholder="请输入姓名">
-        </div>
+					<label>接诊师：</label>
+					<input id="jzs" type="text" class="mui-input-clear" placeholder="请输入姓名">
+				</div>
+				<div class="mui-input-row">
+					<label>主诊师：</label>
+					<input id="zzys" type="text" class="mui-input-clear" placeholder="请输入姓名">
+				</div>
 			</form>
 			<div class="add-pic">
-        <div id="bill-addpic" class="add-box">
-          <div style="display: inline-block;">
-            <div class="ap-jia flex flex-col-center flex-row-center">
-              <img id="img" src="../../images/project/jia.png" />
-            </div>
-          </div>
-          <p>患者图片</p>
-        </div>
-      </div>
+				<div id="bill-addpic" class="add-box">
+					<div style="display: inline-block;">
+						<div class="ap-jia flex flex-col-center flex-row-center">
+							<img id="img" src="../../images/project/jia.png" />
+						</div>
+					</div>
+					<p>患者图片</p>
+				</div>
+			</div>
 			<div class="btns flex">
 				<div id="submit" class="flex-1 sure">提交</div>
 			</div>
@@ -81,184 +81,184 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.picker.min.js"></script>
 		<script src="../../js/mui.poppicker.js"></script>
-    <script src="../../js/utils.config.js"></script>
-    <script src="../../js/utils.extend.js"></script>
-    <script src="../../js/utils.enums.js"></script>
-    <script src="../../js/utils.storages.js" ></script>
-    <script src="../../js/utils.auth.js"></script>
-    <script src="../../js/utils.upload.js"></script>
-    <script src="../../js/utils.request.js"></script>
+		<script src="../../js/utils.config.js"></script>
+		<script src="../../js/utils.extend.js"></script>
+		<script src="../../js/utils.enums.js"></script>
+		<script src="../../js/utils.storages.js"></script>
+		<script src="../../js/utils.auth.js"></script>
+		<script src="../../js/utils.upload.js"></script>
+		<script src="../../js/utils.request.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-				  var groupid = 0;
-				  var list = [];
-				  var $listBox = doc.getElementById('listBox');
-				  // 合计
-				  var $billTotal = doc.getElementById('billTotal');
-				  var $submit = doc.getElementById('submit');
-				  //
-				  var sex = null;
-          var $sex = doc.getElementById('showGenderPicker');
-          var $name = doc.getElementById('name');
-          var $age = doc.getElementById('age');
-          var $phone = doc.getElementById('phone');
-          var booktime = null;
-          var $booktime = doc.getElementById('booktime');
-          var $jzs = doc.getElementById('jzs');
-          var $zzys = doc.getElementById('zzys');
-          var $img = doc.getElementById('img');
-          var imageurl = '';
-				  // 画清单每项
-          var paintItem = function(data) {
-            var boxDiv = doc.createElement('div');
-            boxDiv.className = 'bill-item flex';
-            var _p = eval(data.num + '*' + data.price);
-            boxDiv.innerHTML = '<p>{0}</p><p class="flex-1">{1}<span>*{2}</span></p><p class="flex-1">￥{3}<span>元</span></p>'.format(data.number,data.title,data.num,_p.toFixed(2));
-            $listBox.appendChild(boxDiv);
-          }
-          // 更新清单
-				  var refreshList = function(){
-				    $listBox.innerHTML = '';
-				    var total = 0;
-				    $.each(list, function(index, i) {
-				    	 paintItem(i);
-				    	 total += eval(i.num + '*' + i.price);
-				    });
-				    $billTotal.innerHTML = '￥{0}<span>元</span>'.format(total.toFixed(2)); 
-				  }
-	        // 清单更新
-          window.addEventListener('bill-refresh', function(e){
-             list = e.detail.list;
-             groupid = e.detail.groupid;
-             refreshList();
-             $name.value = '';
-             sex = null;
-             $sex.innerText = '请选择性别';
-             $age.value = '';
-             $phone.value = '';
-             $jzs.value = '';
-             $zzys.value = '';
-             booktime = null;
-             $booktime.innerText = '请选择预约时间';
-             $img.src = '../../images/project/jia.png';
-             imageurl = '';
-          });
-          // 提交清单
-          //性别
-          var gender = [];
-          for (var key in enums.sex) {
-            gender.push({
-              value: key,
-              text: enums.sex[key]
-            })
-          }
-          var genderPicker = new $.PopPicker();
-          genderPicker.setData(gender);
-          $sex.addEventListener('tap', function(event) {
-            	setTimeout(function(){
-  	            genderPicker.show(function(items) {
-  	              sex = items[0].value;
-  	              $sex.innerText = items[0].text;
-  	            });
-            	},500);
-          }, false);
-          // 预约时间
-          var datepicer = new $.DtPicker({});
-          $booktime.addEventListener('tap', function(event) {
-            	setTimeout(function(){
-  	            datepicer.show(function(rs) {
-  	              $booktime.innerText = rs.text;
-  	              booktime = rs.text;
-  	            });
-            	},500);
-          }, false);
-          //选择图片
-          var $addPic = doc.getElementById('bill-addpic');
-          $addPic.addEventListener('tap', function(event) {
-            setTimeout(function(){
-              upload.showImgActionSheet(function( data ){
-                var url = config.url + "Uploads/Files";
-                upload.uploadimge( url , data.divid, function(res) {
-                  $img.src = data.abspath;
-                  imageurl = res[0].saveUrl;
-                }, {
-                  type: '4'
-                });
-              });             
-            }, 500);
-          });
-          //提交
-          $submit.addEventListener('tap', function(e) {
-            var name = $name.value.trim();
-            var age = $age.value.trim();
-            var phone = $phone.value.trim();
-            var jzs = $jzs.value.trim();
-            var zzys = $zzys.value.trim();
-            if (list.length <= 0) {
-              return;
-            }
-            if (name === '') {
-              $.toast('请输入姓名');
-              return;
-            }
-            if (sex === null) {
-              $.toast('请选择性别');
-              return;
-            }
-            if (age === '') {
-              $.toast('请输入年龄');
-              return;
-            }
-            if (phone === '') {
-              $.toast('请输入电话');
-              return;
-            }
-            if (booktime === null) {
-              $.toast('请选择预约时间');
-              return;
-            }
-            if (jzs === '') {
-              $.toast('请输入接诊师姓名');
-              return;
-            }
-            if (zzys === '') {
-              $.toast('请输入主诊师姓名');
-              return;
-            }
-            if (imageurl == '' || imageurl == null) {
-              $.toast('请上传患者图片');
-              return;
-            }
-            request.loginAjax('project/saveplan', {
-              data: {
-                groupid: groupid,
-                name: name,
-                sex: sex,
-                age: age,
-                phone: phone,
-                booktime: booktime,
-                jzs:jzs,
-                zzys: zzys,
-                data: list,
-                image:imageurl
-              }
-            }, function(data, success) {
-              if (success){
-                // 关联预约页 及 项目列表页
-                var _yuyueWebview = plus.webview.getWebviewById('PRODUCT-YUYUE');
-                if (_yuyueWebview != null) {
-                  $.fire(_yuyueWebview, 'bill-success');
-                }
-                var _listWebview = plus.webview.getWebviewById('PRODUCT-LIST');
-                if (_listWebview != null) {
-                  $.fire(_listWebview, 'bill-success');
-                }
-                $.back();               
-              }
-            });
-          });
+					var groupid = 0;
+					var list = [];
+					var $listBox = doc.getElementById('listBox');
+					// 合计
+					var $billTotal = doc.getElementById('billTotal');
+					var $submit = doc.getElementById('submit');
+					//
+					var sex = null;
+					var $sex = doc.getElementById('showGenderPicker');
+					var $name = doc.getElementById('name');
+					var $age = doc.getElementById('age');
+					var $phone = doc.getElementById('phone');
+					var booktime = null;
+					var $booktime = doc.getElementById('booktime');
+					var $jzs = doc.getElementById('jzs');
+					var $zzys = doc.getElementById('zzys');
+					var $img = doc.getElementById('img');
+					var imageurl = '';
+					// 画清单每项
+					var paintItem = function(data) {
+						var boxDiv = doc.createElement('div');
+						boxDiv.className = 'bill-item flex';
+						var _p = eval(data.num + '*' + data.price);
+						boxDiv.innerHTML = '<p>{0}</p><p class="flex-1">{1}<span>*{2}</span></p><p class="flex-1">￥{3}<span>元</span></p>'.format(data.number, data.title, data.num, _p.toFixed(2));
+						$listBox.appendChild(boxDiv);
+					}
+					// 更新清单
+					var refreshList = function() {
+						$listBox.innerHTML = '';
+						var total = 0;
+						$.each(list, function(index, i) {
+							paintItem(i);
+							total += eval(i.num + '*' + i.price);
+						});
+						$billTotal.innerHTML = '￥{0}<span>元</span>'.format(total.toFixed(2));
+					}
+					// 清单更新
+					window.addEventListener('bill-refresh', function(e) {
+						list = e.detail.list;
+						groupid = e.detail.groupid;
+						refreshList();
+						$name.value = '';
+						sex = null;
+						$sex.innerText = '请选择性别';
+						$age.value = '';
+						$phone.value = '';
+						$jzs.value = '';
+						$zzys.value = '';
+						booktime = null;
+						$booktime.innerText = '请选择预约时间';
+						$img.src = '../../images/project/jia.png';
+						imageurl = '';
+					});
+					// 提交清单
+					//性别
+					var gender = [];
+					for(var key in enums.sex) {
+						gender.push({
+							value: key,
+							text: enums.sex[key]
+						})
+					}
+					var genderPicker = new $.PopPicker();
+					genderPicker.setData(gender);
+					$sex.addEventListener('tap', function(event) {
+						setTimeout(function() {
+							genderPicker.show(function(items) {
+								sex = items[0].value;
+								$sex.innerText = items[0].text;
+							});
+						}, 500);
+					}, false);
+					// 预约时间
+					var datepicer = new $.DtPicker({});
+					$booktime.addEventListener('tap', function(event) {
+						setTimeout(function() {
+							datepicer.show(function(rs) {
+								$booktime.innerText = rs.text;
+								booktime = rs.text;
+							});
+						}, 500);
+					}, false);
+					//选择图片
+					var $addPic = doc.getElementById('bill-addpic');
+					$addPic.addEventListener('tap', function(event) {
+						setTimeout(function() {
+							upload.showImgActionSheet(function(data) {
+								var url = config.url + "Uploads/Files";
+								upload.uploadimge(url, data.divid, function(res) {
+									$img.src = data.abspath;
+									imageurl = res[0].saveUrl;
+								}, {
+									type: '4'
+								});
+							});
+						}, 500);
+					});
+					//提交
+					$submit.addEventListener('tap', function(e) {
+						var name = $name.value.trim();
+						var age = $age.value.trim();
+						var phone = $phone.value.trim();
+						var jzs = $jzs.value.trim();
+						var zzys = $zzys.value.trim();
+						if(list.length <= 0) {
+							return;
+						}
+						if(name === '') {
+							$.toast('请输入姓名');
+							return;
+						}
+						if(sex === null) {
+							$.toast('请选择性别');
+							return;
+						}
+						if(age === '') {
+							$.toast('请输入年龄');
+							return;
+						}
+						if(phone === '') {
+							$.toast('请输入电话');
+							return;
+						}
+						if(booktime === null) {
+							$.toast('请选择预约时间');
+							return;
+						}
+						if(jzs === '') {
+							$.toast('请输入接诊师姓名');
+							return;
+						}
+						if(zzys === '') {
+							$.toast('请输入主诊师姓名');
+							return;
+						}
+						if(imageurl == '' || imageurl == null) {
+							$.toast('请上传患者图片');
+							return;
+						}
+						request.loginAjax('project/saveplan', {
+							data: {
+								groupid: groupid,
+								name: name,
+								sex: sex,
+								age: age,
+								phone: phone,
+								booktime: booktime,
+								jzs: jzs,
+								zzys: zzys,
+								data: list,
+								image: imageurl
+							}
+						}, function(data, success) {
+							if(success) {
+								// 关联预约页 及 项目列表页
+								var _yuyueWebview = plus.webview.getWebviewById('PRODUCT-YUYUE');
+								if(_yuyueWebview != null) {
+									$.fire(_yuyueWebview, 'bill-success');
+								}
+								var _listWebview = plus.webview.getWebviewById('PRODUCT-LIST');
+								if(_listWebview != null) {
+									$.fire(_listWebview, 'bill-success');
+								}
+								$.back();
+							}
+						});
+					});
 				});
 			}(mui, document));
 		</script>
