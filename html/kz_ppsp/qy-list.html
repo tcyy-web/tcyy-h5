@@ -16,7 +16,7 @@
   </header>
   <div class="mui-content">
     	<div class="search-bar">
-    		<input id="searchValue" type="text" />
+    		<input id="searchValue" type="text" placeholder="请输入搜索内容"/>
     		<i id="search" class="mui-icon mui-icon-search"></i>
     	</div>
   	 <div id="slider" class="mui-slider" >
@@ -46,7 +46,11 @@
 	    <div class="mui-scroll-wrapper">
         <div id="pullrefresh" class="mui-scroll">
           <div id="brandList" class="lists clearFix">
-            <!--<a class="item"><img src="../../images/profile/sc9.png"/></a>-->
+            <a class="item">
+              <div class="img"><img src="../../images/profile/sc9.png"/></div>
+            </a>
+
+
           </div>
         </div>
       </div>
@@ -231,7 +235,7 @@
           var paintBrand = function(data) {
             var _a = doc.createElement('a');
             _a.className = 'item';
-            _a.innerHTML = '<img src="{0}"/>'.format(data.image);
+            _a.innerHTML = '<div class="img"><img src="{0}"/></div>'.format(data.image);
             // 品牌产品
             _a.addEventListener('tap',function(e){
               var fbWebview = plus.webview.getWebviewById('KZ-PPSP-PRODUCT');

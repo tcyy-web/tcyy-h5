@@ -78,7 +78,8 @@ request.loginAjax('Point/getBookList', {
 
 		var currentContent = document.getElementById("content");
 		currentContent.innerHTML = '';
-		if (data && data.data) {
+
+		if (data && data.data && data.data.length!=0) {
 			$.each(data.data, function(index,i) {
            		createFragment(currentContent,i);
            });
@@ -93,8 +94,9 @@ request.loginAjax('Point/getBookList', {
 }
 
 function createFragment( parent, data) {
+	
   var oDiv = doc.createElement('div');
-  console.log( JSON.stringify(data) )
+
   var st ='<div class="order-no">订单号：'+data.booknum+' &nbsp;&nbsp;'+data.createtime+'</div>'+
 	    '<div class="main">'+
 		'<ul>';

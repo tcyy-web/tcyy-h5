@@ -8,7 +8,7 @@ body {
 	height: 100%;
 	margin: 0px;
 	padding: 0px;
-	background-color: #f1f1f1;
+	background-color: #fff;
 	font-size: 14px;
 	box-sizing: border-box;
 	font-family: "微软雅黑", arial;
@@ -67,6 +67,10 @@ ol {
   	padding:0 12px;
 
 }
+.mui-pull-right.mui-icon{
+	padding-top:0;
+	padding-bottom: 0;
+}
 
 .btn {
 	width: 100%;
@@ -77,6 +81,14 @@ ol {
 	background-color: #765fc3!important;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
+}
+
+.btn.btn-bottom{
+	position: absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	border-radius: 0;
 }
 
 .mui-content {
