@@ -447,7 +447,8 @@
 				],
 				"priority": 4,
 				"refer": [
-					"html/project/project-list.html"
+					"html/project/project-list.html",
+					"html/login/login.html"
 				]
 			},
 			"html/my/my-message.html": {
