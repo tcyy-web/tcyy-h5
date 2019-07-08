@@ -58,7 +58,26 @@ ol {
 ::-webkit-input-placeholder {
 	color: #000000;
 }
+.space{ height: 12px; background: #f3f3f3;}
+.m-title.t1 {
+  font-size: 18px;
+  line-height: 30px;
+}
+.m-title.t2 {
+  font-size: 16px;
+  line-height: 24px;
+}
 
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.flex .flex-item {
+  flex-grow: 1;
+}
+.flex .flex-item .iconfont {
+  margin-right: 4px;
+}
 .mui-pull-right {
 	line-height: 44px;
 	height: 44px;
@@ -66,6 +85,11 @@ ol {
   	margin-left: -10px;
   	padding:0 12px;
 
+}
+.mui-input-group
+{
+	height: 100%;
+	overflow-y: auto;
 }
 .mui-pull-right.mui-icon{
 	padding-top:0;

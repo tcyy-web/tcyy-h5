@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/pages/jobs.css">
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">职位</h1>
+			<a id="fb_jobs" class="mui-pull-right">发布</a>
+		</header>
+		<div class="mui-content">
+			<div class="scroll-box">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="search-input-box">
+							<div class="search-input-group">
+								<input type="text" class="search" placeholder="请输入关键字" />
+								<span class="search-btn">搜索</span>
+							</div>
+						</div>
+						<div class="conditions-bar">
+							<span class="c-box">筛选</span>
+							<span class="active c-box">双流区</span>
+						</div>
+						<div class="space"></div>
+						<div id="jobContent">
+							<div class="jobs-box">
+								<div class="jobs-name">职位名称</div>
+								<div class="jobs-imp">
+									<span class="c-box">护理师</span>
+									<span class="c-box">成都 双流区</span>
+									<span class="c-box">3-10年</span>
+								</div>
+								<div class="jobs-company-name"> 有限公司有限公司有限公司 </div>
+								<span class="jobs-price">12-15k</span>
+							</div>
+							<div class="jobs-box">
+								<div class="jobs-name">职位名称</div>
+								<div class="jobs-imp">
+									<span class="c-box">护理师</span>
+									<span class="c-box">成都 双流区</span>
+									<span class="c-box">3-10年</span>
+								</div>
+								<div class="jobs-company-name"> 有限公司有限公司有限公司 </div>
+								<span class="jobs-price">12-15k</span>
+							</div>
+							<div class="jobs-box">
+								<div class="jobs-name">职位名称</div>
+								<div class="jobs-imp">
+									<span class="c-box">护理师</span>
+									<span class="c-box">成都 双流区</span>
+									<span class="c-box">3-10年</span>
+								</div>
+								<div class="jobs-company-name"> 有限公司有限公司有限公司 </div>
+								<span class="jobs-price">12-15k</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
+		<script src="../../js/utils.config.js"></script>
+		<script src="../../js/utils.extend.js"></script>
+		<script src="../../js/utils.storages.js"></script>
+		<script src="../../js/utils.category.js"></script>
+		<script src="../../js/utils.auth.js"></script>
+		<script src="../../js/utils.request.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$.plusReady(function() {
+					getJobList();
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							down: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										//下
+										console.log(index)
+										getJobList();
+										self.endPullDownToRefresh();
+									}, 1000);
+								}
+							},
+							up: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										//上
+										console.log(index)
+										getJobList();
+										self.endPullUpToRefresh();
+									}, 1000);
+								}
+							}
+						});
+					});
+
+				});
+
+				function getJobList() {
+					request.loginAjax('personalposition/queryPositionByCondition', {
+						showMsg: false
+					}, function(data, success) {
+
+						if(success) {
+							console.log(JSON.stringify(data.data));
+							renderData(data.data)
+						}
+					});
+				}
+				function renderData( data ){
+					var st = '<div class="jobs-box">\
+								<div class="jobs-name">职位名称</div>\
+								<div class="jobs-imp">\
+									<span class="c-box">护理师</span>\
+									<span class="c-box">成都 双流区</span>\
+									<span class="c-box">3-10年</span>\
+								</div>\
+								<div class="jobs-company-name"> 有限公司有限公司有限公司 </div>\
+								<span class="jobs-price">12-15k</span>\
+							</div>';
+					document.getElementById("jobContent").innerHTML = "";
+				}
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

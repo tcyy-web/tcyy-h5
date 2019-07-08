@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="ui-page-my">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/mui.picker.min.css" rel="stylesheet">
+	<link href="../../css/mui.poppicker.css" rel="stylesheet">
+	<link href="../../css/style.css" rel="stylesheet" />
+<style>
+	.mui-input-row label{ width: 90px;}
+	.mui-input-row label~input{width: calc(100% - 90px); width: -webkit-calc(100% - 90px);}
+	.mui-content{padding-bottom: 40px;}
+	.mui-input-row .mui-pull-right1{ font-style: normal; color: #333; text-align: right;  height: 100%; display: block; －webkit－user-select ：none ; border:none!important;}
+	.mui-input-row i.mui-pull-right1{ padding-right: 35px;}
+	.mui-input-row input.mui-pull-right1{ padding-right: 35px;}
+	#businessLicense img{ width: 100%;}
+	#businessLicense { height: 120px; overflow: hidden; background: #eee;}
+	.btn-box{ margin:20px 10px;}
+	.mui-input-group .mui-input-row.nolimit{
+		height: auto;
+	}
+	.mui-input-group .mui-input-row.nolimit label{
+		float: none;
+	}
+	.mui-input-group{
+		padding-bottom: 10px;	
+	}
+	.mui-input-group:after{ display: none;}
+</style>
+
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">公司信息维护</h1>
+</header>
+<div class="mui-content">
+<form class="mui-input-group">
+	<div class="mui-input-row">
+		<label>公司名称：</label>
+		<input id="name" type="text" class="m-data mui-input-clear mui-pull-right1" placeholder="请输入公司名称">
+	</div>
+	<div class="mui-input-row">
+		<label>成立日期：</label>
+		<i id="createrdate" class="m-data mui-pull-right1">请选择</i>
+	</div>
+	<div class="mui-input-row">
+		<label>所在地区：</label>
+		<i id="region" class="m-data mui-pull-right1">请选择</i>
+	</div>
+
+	<div class="mui-input-row">
+		<label>详细地址：</label>
+		<input id="address" type="text" class="m-data mui-input-clear mui-pull-right1" placeholder="请输入详细地址">
+	</div>
+	<div class="mui-input-row">
+		<label>注册资金：</label>
+		<input id="registermoney" type="text" class="m-data mui-input-clear mui-pull-right1" placeholder="请输入注册资金">
+	</div>
+	<div class="mui-input-row">
+		<label>人数规模：</label>
+		<input id="people" type="text" class="m-data mui-input-clear mui-pull-right1" placeholder="请输入人数规模">
+	</div>
+	<div class="mui-input-row">
+		<label>联系人：</label>
+		<input id="contacts" type="text" class="m-data mui-input-clear mui-pull-right1" placeholder="请输入联系人">
+	</div>
+	<div class="mui-input-row">
+		<label>联系电话：</label>
+		<input id="nickname" type="text" class="m-data mui-input-clear mui-pull-right1" placeholder="请输入联系电话">
+	</div>
+	<div class="mui-input-row">
+		<label>邮箱：</label>
+		<input id="email" type="text" class="m-data mui-input-clear mui-pull-right1" placeholder="请输入邮箱">
+	</div>
+	<div class="mui-input-row">
+		<label>公司简介：</label>
+		<input id="email" type="text" class="m-data mui-input-clear mui-pull-right1" placeholder="请输入公司简介">
+	</div>
+	<div class="mui-input-row">
+		<label>官网地址：</label>
+		<input id="offcialcurl" type="text" class="m-data mui-input-clear mui-pull-right1" placeholder="请输入官网地址">
+	</div>
+	<div class="mui-input-row nolimit">
+		<label>营业执照：</label>
+		<div id="businessLicense">
+			<img id="authurl" class="m-data" src="" alt="" />
+		</div>
+	</div>
+	<!--<div class="mui-input-row">
+		<label>状态：</label>
+		<i id="headurl" class="m-data mui-pull-right1">待审核</i>
+	</div>-->
+
+</form>
+<div id="saveData" class="btn btn-bottom">发布</div>
+</div>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.picker.min.js"></script>
+<script src="../../js/mui.poppicker.js"></script>
+<script src="../../js/utils.enums.js"></script>
+<script src="../../js/utils.config.js"></script>
+<script src="../../js/utils.storages.js"></script>
+<script src="../../js/utils.auth.js"></script>
+<script src="../../js/utils.upload.js"></script>
+<script src="../../js/utils.request.js" ></script>
+
+<script>(function($, doc) {
+			
+
+	$.init();
+	$.plusReady(function() {
+	
+		var dtpicker = new $.DtPicker({ 
+		    "type": "month",
+		    "beginDate": new Date(1960, 04, 25),//设置开始日期 
+
+		});
+		
+		var region = [{value:'重庆',text:'重庆'},{value:'成都',text:'成都'}]
+
+		var areaPicker = new $.PopPicker();
+		areaPicker.setData(region);
+
+		document.getElementById('createrdate').addEventListener("click", function(){
+			dtpicker.show(function(e) { 
+				var otgt = document.getElementById('createrdate');
+			    otgt.innerHTML = e;
+			    otgt.setAttribute("data-data",e);
+//			    dtpicker.setSelectedValue( e );
+			})
+		});
+		
+		document.getElementById('region').addEventListener("click", function(){
+			areaPicker.show(function(e) {
+				var otgt = document.getElementById('region');
+				console.log(JSON.stringify(e))
+			    otgt.innerHTML = e[0].text;
+			    otgt.setAttribute("data-data",e[0].value);
+//			    areaPicker.setSelectedValue( e );
+			})
+		});
+		document.getElementById('saveData').addEventListener("click", function(){
+			var data = collectionData();
+			
+			console.log( JSON.stringify(data) )
+			saveData( data );
+		});
+		
+		document.getElementById('businessLicense').addEventListener("click", function(){
+			uploadImage( this ,"authurl");
+		});
+		
+
+		
+		function collectionData(){
+			var data = {};
+			var mData = document.querySelectorAll(".m-data");
+			[].forEach.call(mData,function( ele ){
+			
+				var id = ele.getAttribute("id"),dt = ele.value||ele.getAttribute("url")||ele.getAttribute("data-data")||'';
+				data[ id ] = dt;
+			});
+			
+			return data;
+		}
+		
+		
+		
+		function saveData( postData ){
+			
+			request.loginAjax('personalcompany/saveCompanyByVip', {
+
+				data: {
+					"field": postData
+				}
+
+			}, function(data, success) {
+
+				if(success) {
+					mui.toast("保存成功");
+					//返回上一级
+					console.log( data );
+				}
+			});
+		}
+		
+		var imageurl = null;
+
+		function uploadImage(target , name) {
+			setTimeout(function() {
+				upload.showImgActionSheet(function(data) {
+					var url = config.url + "Uploads/Files";
+					upload.uploadimge(url, data.divid, function(res) {
+
+						imageurl = res[0].showUrl;
+						target.innerHTML = "<img id="+name+" src=" + imageurl + ">"
+
+					});
+				});
+			}, 500);
+		}
+
+
+	});
+
+}(mui, document));
+</script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+.tel {
+  border: 1px solid #f1f1f1;
+  padding: 3px 10px!important;
+  border-radius: 30px;
+  background: #f6f3ff;
+  color: #765fc3;
+  display: inline-block;
+}
+.tel .iconfont {
+  margin-right: 6px;
+}
+a {
+  color: #8E78D6;
+}
+.nav-tabs .mui-tab-item {
+  width: 32%;
+  display: inline-block;
+  text-align: center;
+  padding: 15px 0;
+  color: #999;
+  font-size: 16px;
+}
+.nav-tabs .mui-tab-item.active {
+  color: #8E78D6;
+}
+.resume-box {
+  padding: 10px 0 12px;
+  margin: 0 15px;
+  border-bottom: 1px solid #f3f3f3;
+}
+.resume-box .key-imp {
+  font-size: 14px;
+  color: #666;
+  padding-left: 10px;
+}
+.resume-box .flex {
+  color: #999;
+}
+.resume-box > div {
+  padding: 5px 0;
+}
+.work-edu {
+  padding: 10px 15px;
+}
+.work-edu .flex {
+  color: #999;
+}
+.work-edu .pt15 {
+  padding-top: 15px;
+}
+.flow-box {
+  margin-top: 10px;
+  background: #f3f3f3;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+.flow-box > div {
+  padding: 5px 0;
+}
