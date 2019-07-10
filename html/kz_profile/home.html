@@ -1,9 +1,132 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-	</head>
-	<body>
-	</body>
+<html class="ui-page-my">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title></title>
+  <link href="../../fonts/iconfont.css" rel="stylesheet" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../css/style.css" rel="stylesheet" />
+  <link href="css/profile-style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title" id="indexTitle">职位</h1>
+  </header>
+  <nav class="mui-bar mui-bar-tab">
+      <a href="#zhiwei" class="mui-tab-item mui-active" >
+        <div class="iconfontbox"><i class="iconfont icon-zhiwei"></i></div>
+        <span class="mui-tab-label">职位</span>
+      </a>
+      <a href="#jianli" class="mui-tab-item">
+        <div class="iconfontbox"><i class="iconfont icon-jianli"></i></div>
+        <span class="mui-tab-label">简历</span>
+      </a>
+      <a href="#wode" class="mui-tab-item">
+        <div class="iconfontbox"><i class="iconfont icon-wode"></i></div>
+        <span class="mui-tab-label">我的</span>
+      </a>
+    </nav>
+  <div class="mui-content">
+    <div id="zhiwei" class="mui-control-content mui-active mui-fullscreen">
+      <div class="mui-scroll-wrapper">
+        <div id="zhiwei-list" class="mui-scroll">
+          <ul class="mui-table-view">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="jianli" class="mui-control-content mui-fullscreen">
+      <div class="mui-scroll-wrapper">
+        <div id="jianli-list" class="mui-scroll">
+          <ul class="mui-table-view">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="wode" class="mui-control-content">
+       z22
+    </div>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/mui.pullToRefresh.js"></script>
+  <script src="../../js/mui.pullToRefresh.material.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  
+  <script>
+    (function($, doc) {
+      $.init({
+        beforeback: function() {
+　　      plus.navigator.setStatusBarBackground('#765fc3');
+          return true;
+        }
+      });
+      $.plusReady(function() {
+        plus.navigator.setStatusBarBackground('#8E78D6');
+        // tab改变 
+        var $indexTitle = doc.getElementById('indexTitle');
+        $.each(doc.querySelectorAll('.mui-bar-tab .mui-tab-item'), function(index, el) {
+          el.addEventListener('tap', function(e) {
+            $indexTitle.innerText = this.querySelector('.mui-tab-label').innerText;
+          });
+        });
+        // 职位
+        (function(){
+          $('#zhiwei-list').pullToRefresh({
+              down: {
+                callback: function() {
+                  console.log(1)
+                  var self = this;
+                  setTimeout(function(){
+                    self.endPullDownToRefresh();
+                    $('#zhiwei-list').pullToRefresh().refresh(true);
+                  }, 500);
+                }
+              },
+              up: {
+                callback: function() {
+                  var self = this;
+                  setTimeout(function(){
+                    self.endPullUpToRefresh(true);
+                  }, 300);
+                }
+              }
+            });
+        })();
+        // 简历
+        (function(){
+          $('#jianli-list').pullToRefresh({
+              down: {
+                callback: function() {
+                  console.log(1)
+                  var self = this;
+                  setTimeout(function(){
+                    self.endPullDownToRefresh();
+                    $('#jianli-list').pullToRefresh().refresh(true);
+                  }, 500);
+                }
+              },
+              up: {
+                callback: function() {
+                  var self = this;
+                  setTimeout(function(){
+                    self.endPullUpToRefresh(true);
+                  }, 300);
+                }
+              }
+            });
+        })()
+      });
+    }(mui, document));
+  </script>
+</body>
 </html>
