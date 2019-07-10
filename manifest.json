@@ -719,7 +719,8 @@
 					"images/picture/bg1.png"
 				],
 				"refer": [
-					"html/picture/picture-list.html"
+					"html/picture/picture-list.html",
+					"html/login/login.html"
 				],
 				"priority": 0
 			},
