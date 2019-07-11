@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="ui-page-my">
+<html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -11,16 +11,22 @@
 </head>
 
 <body>
-  <header class="mui-bar mui-bar-nav">
+  <header id="header-view" class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title" id="indexTitle">职位</h1>
+    <h1 class="mui-title" data-bind="text: headerText">职位</h1>
+    <!-- ko if: pageType() == 'zhiwei' -->
+    <a data-bind="click: publishJob" class="mui-pull-right">发布</a>
+    <!-- /ko -->
+    <!-- ko if: pageType() == 'jianli' -->
+    <a class="mui-pull-right">搜索</a>
+    <!-- /ko -->
   </header>
   <nav class="mui-bar mui-bar-tab">
-      <a href="#zhiwei" class="mui-tab-item mui-active" >
+      <a page-type="zhiwei" href="#zhiwei" class="mui-tab-item mui-active" >
         <div class="iconfontbox"><i class="iconfont icon-zhiwei"></i></div>
         <span class="mui-tab-label">职位</span>
       </a>
-      <a href="#jianli" class="mui-tab-item">
+      <a page-type="jianli" href="#jianli" class="mui-tab-item">
         <div class="iconfontbox"><i class="iconfont icon-jianli"></i></div>
         <span class="mui-tab-label">简历</span>
       </a>
@@ -52,6 +58,9 @@
        z22
     </div>
   </div>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../third/knockout.js"></script>
   <script src="../../js/mui.min.js"></script>
   <script src="../../js/mui.pullToRefresh.js"></script>
   <script src="../../js/mui.pullToRefresh.material.js"></script>
@@ -65,6 +74,10 @@
   <script>
     (function($, doc) {
       $.init({
+        preloadPages:[{
+          id:'kz_profile_JobPublish',
+          url: './job-publish.html'
+        }],
         beforeback: function() {
 　　      plus.navigator.setStatusBarBackground('#765fc3');
           return true;
@@ -72,11 +85,26 @@
       });
       $.plusReady(function() {
         plus.navigator.setStatusBarBackground('#8E78D6');
+        var HeaderView = function () {
+          var vm = this;
+          vm.headerText = ko.observable('职位');
+          vm.pageType = ko.observable('zhiwei');
+          
+          vm.publishJob = function() {
+            $.openWindow({
+              id: 'kz_profile_JobPublish'
+            });
+          }
+        }
+        var headerView = new HeaderView();
+        ko.applyBindings(headerView, document.getElementById('header-view'))
+        
         // tab改变 
-        var $indexTitle = doc.getElementById('indexTitle');
+  
         $.each(doc.querySelectorAll('.mui-bar-tab .mui-tab-item'), function(index, el) {
           el.addEventListener('tap', function(e) {
-            $indexTitle.innerText = this.querySelector('.mui-tab-label').innerText;
+            headerView.headerText(el.querySelector('.mui-tab-label').innerText);
+            headerView.pageType(el.getAttribute('page-type'));
           });
         });
         // 职位

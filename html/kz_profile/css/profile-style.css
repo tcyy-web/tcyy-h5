@@ -25,3 +25,16 @@
 .zhiwei-list{
   height: 100%;
 }
+
+/*职位维护*/
+.profile-form-group .mui-input-row label{
+  width: 100px;
+}
+.profile-form-group .mui-input-row label~input {
+  width: calc(100% - 100px);
+  width: -webkit-calc(100% - 100px);
+}
+.profile-form-group .mui-input-row label~p {
+  width: calc(100% - 100px);
+  width: -webkit-calc(100% - 100px);
+}
