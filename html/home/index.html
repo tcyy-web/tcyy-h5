@@ -376,21 +376,25 @@
                   }
                 });
               } else if (_type === 5) { // 在线课堂类
-                $.openWindow({
-//                url: '../train/train-list.html',
-                  url: '../kz_profile/home.html',
-                  id: 'KZ-ZXKT',
-                  preload: true,
-                  show: {
-                    aniShow: 'pop-in'
-                  },
-                  styles: {
-                    popGesture: 'hide'
-                  },
-                  waiting: {
-                    autoShow: false
-                  }
-                });
+                if (authManage.checkLogin()) {
+                  $.openWindow({
+  //                url: '../train/train-list.html',
+                    url: '../kz_profile/home.html',
+                    id: 'KZ-ZXKT',
+                    show: {
+                      aniShow: 'pop-in'
+                    },
+                    styles: {
+                      popGesture: 'hide'
+                    },
+                    waiting: {
+                      autoShow: false
+                    }
+                  });
+                } else {
+                  authManage.toLogin();
+                }
+                
               } else if (_type === 6) { // 购物中心类
                 
               } else if (_type === 7) { // 积分商城类

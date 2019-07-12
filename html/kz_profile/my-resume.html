@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title></title>
+  <link href="../../fonts/iconfont.css" rel="stylesheet" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../css/style.css" rel="stylesheet" />
+  <link href="css/profile-style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">我的公司信息</h1>
+  </header>
+  <div class="mui-content">
+    <form class="mui-input-group profile-form-group">
+      <div class="mui-input-row">
+        <label>公司名称：</label>
+        <input type="text" class="mui-input-clear" placeholder="公司名称">
+      </div>
+      <div class="mui-input-row">
+        <label>招聘职位：</label>
+        <p>请选择</p>
+      </div>
+      <div class="mui-input-row">
+        <label>工作地区：</label>
+        <p>请选择</p>
+      </div>
+      <div class="mui-input-row">
+        <label>详细地址：</label>
+        <input type="text" class="mui-input-clear" placeholder="请输入详细地址">
+      </div>
+      <textarea id="descriptions" rows="5" class="m-data " placeholder="公司描述"></textarea>
+    
+    
+    </form>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  
+  <script>
+    (function($, doc) {
+      $.init();
+      $.plusReady(function() {
+        
+      });
+    }(mui, document));
+  </script>
+</body>
+</html>

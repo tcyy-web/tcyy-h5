@@ -7,6 +7,7 @@
   <link href="../../fonts/iconfont.css" rel="stylesheet" />
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/profile-style.css" rel="stylesheet" />
 </head>
 
@@ -21,7 +22,7 @@
     <a class="mui-pull-right">搜索</a>
     <!-- /ko -->
   </header>
-  <nav class="mui-bar mui-bar-tab">
+  <nav class="mui-bar mui-bar-tab custom-tab">
       <a page-type="zhiwei" href="#zhiwei" class="mui-tab-item mui-active" >
         <div class="iconfontbox"><i class="iconfont icon-zhiwei"></i></div>
         <span class="mui-tab-label">职位</span>
@@ -30,7 +31,7 @@
         <div class="iconfontbox"><i class="iconfont icon-jianli"></i></div>
         <span class="mui-tab-label">简历</span>
       </a>
-      <a href="#wode" class="mui-tab-item">
+      <a page-type="wode" href="#wode" class="mui-tab-item">
         <div class="iconfontbox"><i class="iconfont icon-wode"></i></div>
         <span class="mui-tab-label">我的</span>
       </a>
@@ -55,7 +56,20 @@
       </div>
     </div>
     <div id="wode" class="mui-control-content">
-       z22
+      <ul class="mui-table-view custom-wode-list">
+        <li class="mui-table-view-cell">
+           <a data-bind="click: myCompany" class="mui-navigate-right"><i class="iconfont icon-gongsi"></i>我的公司信息</a>
+        </li>
+        <li class="mui-table-view-cell">
+          <a class="mui-navigate-right"><i class="iconfont icon-gongsixinxi"></i>我的简历</a>
+        </li>
+        <li class="mui-table-view-cell">
+          <a class="mui-navigate-right"><i class="iconfont icon-toudilishi"></i>我的投递历史</a>
+        </li>
+        <li class="mui-table-view-cell">
+          <a class="mui-navigate-right"><i class="iconfont icon-zhiwei"></i>我发布的职位</a>
+        </li>
+      </ul>
     </div>
   </div>
   <script src="../../third/knockout.js"></script>
@@ -70,14 +84,10 @@
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.upload.js"></script>
   <script src="../../js/utils.request.js" ></script>
-  
+  <script src="js/profile-common.js" ></script>
   <script>
     (function($, doc) {
       $.init({
-        preloadPages:[{
-          id:'kz_profile_JobPublish',
-          url: './job-publish.html'
-        }],
         beforeback: function() {
 　　      plus.navigator.setStatusBarBackground('#765fc3');
           return true;
@@ -92,7 +102,17 @@
           
           vm.publishJob = function() {
             $.openWindow({
-              id: 'kz_profile_JobPublish'
+              id:'kz_profile_JobPublish',
+              url: './job-publish.html',
+              show: {
+                aniShow: 'pop-in'
+              },
+              styles: {
+                popGesture: 'hide'
+              },
+              waiting: {
+                autoShow: false
+              }
             });
           }
         }
@@ -152,7 +172,28 @@
                 }
               }
             });
-        })()
+        })();
+        // 我的
+        (function(){
+          var wodeViewModel = {
+            myCompany: function () {
+              $.openWindow({
+                id:'kz_profile_MyCompany',
+                url: './my-company.html',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            }
+          }
+          ko.applyBindings(wodeViewModel, document.getElementById('wode'))
+        })();
       });
     }(mui, document));
   </script>
