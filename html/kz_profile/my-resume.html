@@ -6,55 +6,334 @@
   <title></title>
   <link href="../../fonts/iconfont.css" rel="stylesheet" />
   <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/mui.picker.min.css">
+  <link rel="stylesheet" href="../../css/mui.poppicker.css">
   <link href="../../css/style.css" rel="stylesheet" />
   <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/profile-style.css" rel="stylesheet" />
+  <style>
+    .mui-content{
+      height: auto;
+    }
+  </style>
 </head>
 
-<body>
+<body id="main-content">
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">我的公司信息</h1>
+    <h1 class="mui-title">我的简历信息</h1>
   </header>
+  <nav class="mui-bar mui-bar-tab custom-tab">
+    <div class="mui-tab-item">
+      <button id="saveBtn" class="mui-btn mui-btn-blue">保存</button>
+    </div>  
+  </nav>
   <div class="mui-content">
     <form class="mui-input-group profile-form-group">
+      <h4>基本信息</h4>
       <div class="mui-input-row">
-        <label>公司名称：</label>
-        <input type="text" class="mui-input-clear" placeholder="公司名称">
+        <label><i class="form-required"></i>姓名：</label>
+        <input data-bind="value: formData.personname, muiInput: formData.personname" maxlength="50" type="text" class="mui-input-clear" placeholder="请输入姓名">
       </div>
       <div class="mui-input-row">
-        <label>招聘职位：</label>
-        <p>请选择</p>
+        <label><i class="form-required"></i>性别：</label>
+        <p data-bind="text: !formData.sexText() ? '请选择' : formData.sexText, 
+          click: sexPickerClick">请选择</p>
       </div>
       <div class="mui-input-row">
-        <label>工作地区：</label>
-        <p>请选择</p>
+        <label>民族：</label>
+        <input data-bind="value: formData.ethnic, muiInput: formData.ethnic" maxlength="50" type="text" class="mui-input-clear" placeholder="请输入民族">
       </div>
       <div class="mui-input-row">
-        <label>详细地址：</label>
-        <input type="text" class="mui-input-clear" placeholder="请输入详细地址">
+        <label>婚姻状况：</label>
+        <p data-bind="text: !formData.marriageText() ? '请选择' : formData.marriageText, 
+          click: marriagePickerClick">请选择</p>
       </div>
-      <textarea id="descriptions" rows="5" class="m-data " placeholder="公司描述"></textarea>
-    
-    
+      <div class="mui-input-row">
+        <label>居住地址：</label>
+        <input data-bind="value: formData.address, muiInput: formData.address" maxlength="100" type="text" class="mui-input-clear" placeholder="请输入姓名">
+      </div>
+      <div class="mui-input-row auto">
+        <label><i class="form-required"></i>资格证书：</label>
+        <div>
+          <div data-bind="click: addPic" class="custom-add-pic flex flex-col-center flex-row-center">
+            <div>
+              <div class="custom-img-box flex flex-col-center flex-row-center">
+                  <img data-bind="attr: {src: !!formData.showAuthurl() ? formData.showAuthurl() : '../../images/project/jia.png'}" id="img" src="../../images/project/jia.png" />                 
+              </div>
+              <p>点击上传</p>
+            </div>
+          </div>          
+        </div>
+      </div>
+      <!-- ko if: formData.id() > 0 -->
+      <div class="mui-input-row">
+        <label>状态：</label>
+        <p></p>
+      </div>
+      <!-- /ko -->
+      <h4>求职信息</h4>
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>求职职位：</label>
+        <p data-bind="text: !formData.intentpositionText() ? '请选择' : formData.intentpositionText, 
+          click: intentpositionPickerClick">请选择</p>
+      </div>
+      <div class="mui-input-row">
+        <label>求职类型：</label>
+        <p data-bind="text: !formData.worknatureText() ? '请选择' : formData.worknatureText, 
+          click: worknaturePickerClick">请选择</p>
+      </div>      
+      <div class="mui-input-row">
+        <label>在职状态：</label>
+        <p data-bind="text: !formData.jobstatusText() ? '请选择' : formData.jobstatusText, 
+          click: jobstatusPickerClick">请选择</p>
+      </div>
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>期望地区：</label>
+        <p data-bind="text: !formData.expectregion() ? '请选择' : formData.expectregion, 
+          click: regionPickerClick">请选择</p>
+      </div>
+      <div class="mui-input-row">
+        <label>期望工资：</label>
+        <p data-bind="text: !formData.wagesText() ? '请选择' : formData.wagesText, 
+          click: wagesPickerClick">请选择</p>
+      </div>
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>工作日期：</label>
+        <p data-bind="text: !formData.jointime() ? '请选择' : formData.jointime,
+          click: datePickerClick">请选择</p>
+      </div>
+      <h4>工作经历</h4>
+      <div class="profile-form-item">
+        <div class="flow-box">
+          <div>2017.09至2019.07</div>
+          <div>护理师</div>
+          <div>公司公司公司</div>
+        </div>
+        <div class="flow-box">
+          <div class="mui-text-center"><i class="mui-icon mui-icon-plusempty"></i>添加工作经历</div>
+        </div>
+      </div>
+      <h4>教育培训经历</h4>
+      <div class="profile-form-item">
+        <div class="flow-box">
+          <div>2017.09至2019.07</div>
+          <div>护理师</div>
+          <div>公司公司公司</div>
+        </div>
+        <div class="flow-box">
+          <div class="mui-text-center"><i class="mui-icon mui-icon-plusempty"></i>添加工作经历</div>
+        </div>
+      </div>
     </form>
   </div>
   <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/knockout.extend.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.picker.min.js"></script>
+  <script src="../../js/mui.poppicker.js"></script>
   <script src="../../js/utils.enums.js"></script>
   <script src="../../js/utils.config.js"></script>
   <script src="../../js/utils.storages.js"></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.upload.js"></script>
   <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
   <script src="js/profile-common.js" ></script>
   <script>
     (function($, doc) {
       $.init();
       $.plusReady(function() {
-        ProfileArea().then(function(areas) {
-          console.log(areas);
+        // 初始化性别选择
+        var sexPicker = new $.PopPicker({
         });
+        sexPicker.setData([
+          { value: 1, text: '男'},
+          { value: 2, text: '女'}
+        ]);
+        // 初始化婚姻选择
+        var marriagePicker = new $.PopPicker({
+        });
+        marriagePicker.setData([
+          { value: 1, text: '已婚'},
+          { value: 2, text: '未婚'}
+        ]);
+        // 初始化职位选择
+        var intentpositionPicker = new $.PopPicker({
+        });
+        // 初始化求职类型选择
+        var worknaturePicker = new $.PopPicker({
+        });
+        worknaturePicker.setData([
+          { value: 1, text: '全职'},
+          { value: 2, text: '兼职'}
+        ]);
+        // 初始化在职状态选择
+        var jobstatusPicker = new $.PopPicker({
+        });
+        jobstatusPicker.setData([
+          { value: 1, text: '在职'},
+          { value: 2, text: '离职'}
+        ]);
+        // 初始化区域选择
+        var areaPicker = new $.PopPicker({
+          layer: 3
+        });
+        ProfileArea().then(function(areas) {
+          areaPicker.setData(areas);          
+        });
+        // 初始化期望工资选择
+        var wagesPicker = new $.PopPicker({
+        });
+        // 初始化日期选择
+        var datepicer = new $.DtPicker({
+          type: 'date'
+        });
+        Enums.getAll(function(){
+          intentpositionPicker.setData(
+            _.map(_.cloneDeep(Enums.getEnums('positionType')), function(o) {
+              return {
+                value: o.dict_value,
+                text: o.dict_name
+              }
+            })
+          );
+          wagesPicker.setData(
+            _.map(_.cloneDeep(Enums.getEnums('salaryRange')), function(o) {
+              return {
+                value: o.dict_value,
+                text: o.dict_name
+              }
+            })
+          );
+        })
+        var BaseView = function () {
+          var vm = this;
+          vm.formData = {
+            id: ko.observable(),
+            personname: ko.observable(),
+            sex: ko.observable(),
+            sexText: ko.observable(''),
+            ethnic: ko.observable(),
+            marriage: ko.observable(),
+            marriageText: ko.observable(''),
+            address: ko.observable(),
+            // 资格证书
+            authurl: ko.observable(),
+            showAuthurl: ko.observable(),
+            // 求职职位
+            intentposition: ko.observable(),
+            intentpositionText: ko.observable(''),
+            // 求职类型
+            worknature: ko.observable(),
+            worknatureText: ko.observable(''),
+            // 在职状态
+            jobstatus: ko.observable(),
+            jobstatusText: ko.observable(''),
+            // 期望地区
+            expectregion: ko.observable(''),  
+            expectregionid: ko.observable(),
+            // 期望工资
+            wages: ko.observable(),  
+            wagesText: ko.observable(''),
+            jointime: ko.observable()
+          }
+          vm.sexPickerClick = function(){
+            setTimeout(function() {
+              sexPicker.show(function(items) {
+                vm.formData.sex(items[0].value);
+                vm.formData.sexText(items[0].text);
+              });
+            }, 500);
+          }
+          vm.marriagePickerClick = function(){
+            setTimeout(function() {
+              marriagePicker.show(function(items) {
+                vm.formData.marriage(items[0].value);
+                vm.formData.marriageText(items[0].text);
+              });
+            }, 500);
+          }
+          vm.regionPickerClick=function() {
+            setTimeout(function() {
+              areaPicker.show(function(items) {
+                var result = _.reduce(items, function(a, b){  
+                  if (b.id > 0) {
+                    return a + b.name
+                  }  
+                  return a;
+                }, '');
+                var resultid = _.reduce(items, function(a, b){  
+                  if (b.id > 0) {
+                    if (!a) {
+                      return a + b.id
+                    } else {
+                      return a + '-' + b.id
+                    }
+                  }    
+                  return a;
+                }, '');
+                vm.formData.expectregion(result);
+                vm.formData.expectregionid(resultid);
+              });
+            }, 500);
+          }
+          vm.datePickerClick = function () {
+            setTimeout(function() {
+              datepicer.show(function(rs) {
+                viewModel.formData.jointime(rs.text);
+              });
+            }, 500);
+          }
+          vm.addPic = function () {
+            setTimeout(function() {
+              upload.showImgActionSheet(function(data) {
+                var url = config.url + "Uploads/Files";
+                upload.uploadimge(url, data.divid, function(res) {
+                  vm.formData.authurl(res[0].saveUrl);
+                  vm.formData.showAuthurl(data.abspath);
+                });
+              });
+            }, 500);
+          }
+          vm.intentpositionPickerClick = function () {
+            setTimeout(function() {
+              intentpositionPicker.show(function(items) {
+                vm.formData.intentposition(items[0].value);
+                vm.formData.intentpositionText(items[0].text);
+              });
+            }, 500);
+          }
+          vm.worknaturePickerClick = function (){
+            setTimeout(function() {
+              worknaturePicker.show(function(items) {
+                vm.formData.worknature(items[0].value);
+                vm.formData.worknatureText(items[0].text);
+              });
+            }, 500);
+          }
+          vm.jobstatusPickerClick = function () {
+            setTimeout(function() {
+              jobstatusPicker.show(function(items) {
+                vm.formData.jobstatus(items[0].value);
+                vm.formData.jobstatusText(items[0].text);
+              });
+            }, 500);
+          }
+          vm.wagesPickerClick = function(){
+            setTimeout(function() {
+              wagesPicker.show(function(items) {
+                vm.formData.wages(items[0].value);
+                vm.formData.wagesText(items[0].text);
+              });
+            }, 500);
+          }
+        }
+        var viewModel = new BaseView();
+        ko.applyBindings(viewModel, document.getElementById('main-content'));  
       });
     }(mui, document));
   </script>

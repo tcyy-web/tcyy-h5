@@ -106,7 +106,7 @@
            <a data-bind="click: myCompany" class="mui-navigate-right"><i class="iconfont icon-gongsi"></i>我的公司信息</a>
         </li>
         <li class="mui-table-view-cell">
-          <a class="mui-navigate-right"><i class="iconfont icon-gongsixinxi"></i>我的简历</a>
+          <a data-bind="click: myResume" class="mui-navigate-right"><i class="iconfont icon-gongsixinxi"></i>我的简历</a>
         </li>
         <li class="mui-table-view-cell">
           <a class="mui-navigate-right"><i class="iconfont icon-toudilishi"></i>我的投递历史</a>
@@ -439,6 +439,21 @@
               $.openWindow({
                 id:'kz_profile_MyCompany',
                 url: './my-company.html',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            },
+            myResume: function () {
+              $.openWindow({
+                id:'kz_profile_MyResume',
+                url: './my-resume.html',
                 show: {
                   aniShow: 'pop-in'
                 },

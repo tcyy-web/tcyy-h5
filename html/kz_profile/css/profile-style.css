@@ -1,6 +1,9 @@
 .mui-bar.mui-bar-nav{
   background-color: #8E78D6;
 }
+.profile-form-item{
+  padding: 10px;
+}
 /*搜索*/
 .search-input-box {
   padding: 15px;
@@ -99,6 +102,7 @@
 /*职位维护*/
 .profile-form-group .mui-input-row label{
   width: 100px;
+  text-align: right;
 }
 .profile-form-group .mui-input-row label~input {
   width: calc(100% - 100px);
@@ -112,6 +116,11 @@
   width: calc(100% - 100px);
   width: -webkit-calc(100% - 100px);
   float: right;
+}
+.profile-form-group h4{
+  color: #333333;
+  padding: 10px;
+  background-color: #dedede;
 }
 
 /*搜索*/
@@ -219,4 +228,17 @@
   padding-top: 10px;
   line-height: 25px;
   font-size: 15px;
+}
+
+/*简历*/
+.flow-box {
+  background: #f3f3f3;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+.flow-box ~ .flow-box{
+  margin-top: 10px;
+}
+.flow-box > div {
+  padding: 5px 0;
 }
