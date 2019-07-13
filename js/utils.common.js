@@ -61,6 +61,90 @@
         //如果不是，则插入在目标元素的下一个兄弟节点 的前面。也就是目标元素的后面
         parent.insertBefore(newElement, targetElement.nextSibling);
       }
+    },
+    // 转换格式
+    arrayToTree (opts) {
+      var defaults = {
+        arrays: [],
+        id: 'id',
+        pid: 'pid',
+        children: 'children'
+      }
+      mui.extend(true,defaults,opts);
+      let data = defaults.arrays;
+      var id = defaults.id;
+      var pid = defaults.pid;
+      var children = defaults.children;
+      let result = [];
+      let hash = {};
+      mui.each(data, function(index, item){
+        hash[data[index][id]] = data[index];
+      });
+      mui.each(data, function(index, item){
+        let hashVP = hash[item[pid]];
+        if (hashVP) {
+          !hashVP[children] && (hashVP[children] = []);
+          hashVP[children].push(item);
+        } else {
+          result.push(item);
+        }
+      });
+      return result;
     }
 	}
+	
+	function _Enums () {
+	  var KEY = 'base-dict';
+	  var _that = this;
+	  _that.allEnums = [];
+	  _that.getEnums = function(key) {
+	     return _.filter(_that.allEnums, function(o){
+	       return o.dict_code == key;
+	     })
+	  }
+	  _that.getEnumText = function(key, value) {
+	    var exist = _.find(_that.allEnums, function(o){
+	      return o.dict_code == key && o.dict_value == value
+	    })
+	    if (exist) {
+	      return exist.dict_name
+	    }
+	    return '-'
+	  }
+	  _that.getAll = function (callback) {	    
+      var cacheStr = storage.get({
+        key: KEY
+      }) || '{}';    
+      console.log(cacheStr);
+      var cacheData = JSON.parse(cacheStr);
+      if (cacheData.times) {
+        var currentTime = new Date().getTime();
+        var timeDiff = currentTime - cacheData.times;
+        var day = timeDiff / 1000 / 60 / 60 / 24;
+        // 1天获取一次
+        if (day < 1) {
+          _that.allEnums = cacheData.dicts;
+          callback(cacheData.dicts);         
+          return;
+        }
+      }
+      request.ajax('basedict/lists', {
+        showMsg: false
+      }, function(data,success) {
+        if (success && data && data.length > 0) {                       
+          var d = new Date().getTime();
+          storage.save({
+            key: KEY,
+            value: JSON.stringify({
+              times: d,
+              dicts: data
+            })
+          });
+          _that.allEnums = data;
+          callback(data);         
+        }
+      });
+	  }
+	}
+	w.Enums = new _Enums();
 })(window);

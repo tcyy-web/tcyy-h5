@@ -1,9 +1,99 @@
 .mui-bar.mui-bar-nav{
   background-color: #8E78D6;
 }
+/*搜索*/
+.search-input-box {
+  padding: 15px;
+}
+.search-input-box .search-input-group {
+  border-radius: 40px;
+  background: #F6F6F6;
+  display: flex;
+  line-height: 38px;
+}
+.search-input-box .search-input-group .search {
+  border: none;
+  outline: none;
+  background: none;
+  height: 38px;
+  line-height: 30px;
+  padding: 4px 15px;
+  margin: 0;
+  font-size: 14px;
+}
+.search-input-box .search-input-group .search-btn {
+  padding: 0 20px;
+  border-left: 1px solid #eee;
+  white-space: nowrap;
+}
+.conditions-bar {
+  padding: 0 15px;
+  margin-bottom: 15px;
+}
+.conditions-bar:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.conditions-bar .c-box {
+  float: right;
+  padding: 2px 12px;
+  margin-left: 8px;
+  margin-right: 0;
+}
+.conditions-bar .c-box.active {
+  background: #eae4ff;
+  color: #8E78D6;
+}
+.conditions-bar .c-box:after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent  #999 #999 transparent;
+}
+.c-box {
+  position: relative;
+  border-radius: 4px;
+  background: #e3e3e3;
+  padding: 2px 8px;
+  margin-right: 5px;
+  font-size: 14px;
+  line-height: 22px;
+  color: #999;
+  display: inline-block;
+}
 /*职位列表*/
-.zhiwei-list{
-  height: 100%;
+.zhiwei-pullrefresh{
+  height: calc(100% - 121px);
+  height: -webkit-calc(100% - 121px);
+  position: relative;
+}
+.jobs-box {
+  padding: 15px;
+  border-bottom: 1px solid #f3f3f3;
+  position: relative;
+}
+.jobs-box .jobs-price {
+  position: absolute;
+  color: #673AB7;
+  right: 15px;
+  top: 20px;
+}
+.jobs-box .jobs-imp {
+  padding: 4px 0;
+}
+.jobs-box .jobs-name {
+  line-height: 34px;
+  font-size: 19px;
+  padding-right: 80px;
+}
+.jobs-box .jobs-company-name {
+  color: #999;
+  font-size: 14px;
+  line-height: 24px;
 }
 
 /*职位维护*/
@@ -17,4 +107,116 @@
 .profile-form-group .mui-input-row label~p {
   width: calc(100% - 100px);
   width: -webkit-calc(100% - 100px);
+}
+.profile-form-group .mui-input-row label~div {
+  width: calc(100% - 100px);
+  width: -webkit-calc(100% - 100px);
+  float: right;
+}
+
+/*搜索*/
+
+.condition-select-box {
+  padding: 10px 15px;
+}
+.condition-select-box .condition-box {
+  padding: 10px 0;
+}
+.condition-select-box .c-box {
+  float: left;
+  padding: 2px 20px;
+  border: 1px solid #e3e3e3;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+.condition-select-box .c-box.active {
+    border-color: #8E78D6;
+    background: #fff;
+    color: #8E78D6;
+}
+.btn-box {
+  display: flex;
+  padding: 6px 20px;
+  background: #f4f4f4;
+}
+.btn-box .btn{
+  line-height: 34px;
+}
+.btn-box .cancel-btn {
+  margin-right: 40px;
+}
+.btn-box .btn-gray {
+  background: #ccc!important;
+  color: #333;
+}
+/*首页简历*/
+.jianli-pullrefresh {
+  height: calc(100% - 63px);
+  height: -webkit-calc(100% - 63px);
+  position: relative;
+}
+.nav-tabs .mui-tab-item {
+  width: 32%;
+  display: inline-block;
+  text-align: center;
+  padding: 15px 0;
+  color: #999;
+  font-size: 16px;
+}
+.nav-tabs .mui-tab-item.active {
+  color: #8E78D6;
+}
+/*职位详情*/
+.jobs-detail {
+  position: relative;
+  padding: 10px 15px;
+}
+.jobs-detail .m-title.t1{
+  padding-right: 80px;
+  min-height: 30px;
+}
+.jobs-detail .jobs-price {
+  position: absolute;
+  color: #673AB7;
+  font-size: 16px;
+  right: 15px;
+  top: 15px;
+}
+.jobs-detail .condition-box {
+  padding: 10px 0;
+}
+.jobs-detail .tj {
+  line-height: 20px;
+  color: #999;
+  padding: 5px 0;
+  font-size: 15px;
+}
+.jobs-detail .tj .iconfont{
+  font-size: 18px;
+  margin-right: 5px;
+}
+.jobs-detail .tel {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  border: 1px solid #f1f1f1;
+  padding: 3px 10px;
+  border-radius: 30px;
+  color: #765fc3;
+}
+.jobs-detail .tel .iconfont {
+  margin-right: 6px;
+}
+.jobs-description {
+  border-top: 1px solid #f3f3f3;
+  padding: 10px 15px;
+}
+.jobs-description .jobs-description-d {
+  padding-top: 10px;
+  line-height: 25px;
+  font-size: 15px;
 }

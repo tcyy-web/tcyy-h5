@@ -28,3 +28,13 @@ var deepMapping = function (jsonData) {
   }
   return mapping(jsonData);
 };
+
+// mui-input-clear
+ko.bindingHandlers.muiInput = {
+    init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {    
+        element.addEventListener("blur", function (event) {
+            valueAccessor()(element.value);
+        });
+    }, update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {      
+    }
+};

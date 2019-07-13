@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title></title>
+  <link href="../../fonts/iconfont.css" rel="stylesheet" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/style-custom.css" rel="stylesheet" />
+  <link href="css/profile-style.css" rel="stylesheet" />
+  <style>
+    .mui-content{
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">职位详情</h1>
+  </header>
+  <nav class="mui-bar mui-bar-tab custom-tab">
+    <div class="mui-tab-item">
+      <button id="saveBtn" class="mui-btn mui-btn-blue">立即投递</button>
+    </div>  
+  </nav>
+  <div id="main-content" class="mui-content">
+    <div class="jobs-detail">
+      <div data-bind="text: detailData().professional" class="m-title t1"></div>
+      <span data-bind="text: detailData().wagesStr" class="jobs-price"></span>
+      <div class="condition-box">
+        <span data-bind="text: detailData().positiontypeStr" class="c-box"></span>
+        <span data-bind="text: detailData().nature == 2 ?'兼职' :'全职'" class="c-box"></span>
+        <span data-bind="text: detailData().experience" class="c-box">5-10年</span>
+        <span data-bind="text: detailData().educationStr" class="c-box">大专</span>
+      </div>
+      <div class="tj"><i class="iconfont icon-gongsixinxi1"></i>公司名称：</div>
+      <div class="tj"><i class="iconfont icon-didian"></i>工作地点：<span data-bind="text:detailData().region"></span>-<span data-bind="text:detailData().address"></span></div>
+      <div class="tj"><i class="iconfont icon-renshu"></i>招聘人数：<span data-bind="text:detailData().nums"></span>人</div>
+      <div class="tj"><i class="iconfont icon-lianxiren"></i>联系人：</div>
+      <div class="tel"><i class="iconfont icon-dianhua"></i></div>
+    </div>
+    
+    <div class="jobs-description">
+      <div class="m-title t2">职位描述</div>
+      <div data-bind="text: detailData().descriptions" class="jobs-description-d">
+      </div>
+    </div>
+  </div>
+  <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/knockout.extend.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.picker.min.js"></script>
+  <script src="../../js/mui.poppicker.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
+  <script src="js/profile-common.js" ></script>
+  <script>
+    (function($, doc) {
+      $.init();
+      $.plusReady(function() {
+        
+        var BaseView = function () {
+          var vm = this;
+          vm.detailData = ko.observable({});
+        }
+        var viewModel = new BaseView();
+        ko.applyBindings(viewModel, doc.getElementById('main-content'));
+        function loadData (id) {
+          request.loginAjax('personalposition/getPositionDetail', {
+            data: {
+              id: id
+            }
+          }, function(data,success) {
+            if (success) {   
+              Enums.getAll(function(){
+                 data.wagesStr = Enums.getEnumText('salaryRange', data.wages);
+                 data.positiontypeStr = Enums.getEnumText('positionType', data.positiontype);
+                 data.educationStr = Enums.getEnumText('education', data.education);
+              })
+              viewModel.detailData(ko.mapping.fromJS(data));
+            }
+          });
+        }
+        
+        doc.getElementById('saveBtn').addEventListener('tap', function () {
+           ProfileResumeCheck().then(function(){
+           });
+        })
+        
+        window.addEventListener('kz_profile_JobDetail_Data', function(e) {
+          loadData(e.detail.itemid)
+        });
+      });
+    }(mui, document));
+  </script>
+</body>
+</html>

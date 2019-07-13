@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+  <link href="../../fonts/iconfont.css" rel="stylesheet" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/style-custom.css" rel="stylesheet" />
+  <link href="css/profile-style.css" rel="stylesheet" />
+	<style>
+		.mui-bar.mui-bar-nav{
+		  background-color: #FFFFFF;		
+		  -webkit-box-shadow: none;
+      box-shadow: none;
+		}
+		.mui-bar.mui-bar-nav .mui-title{
+		  color: #333333;
+		}
+		.mui-bar-nav.mui-bar .mui-icon{
+		  color: #333!important;
+      font-size: 46px;
+      padding-top: 0;
+      padding-bottom: 0;
+      opacity: 1!important;
+		}
+	</style>
+</head>
+<body>
+  <header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon mui-icon-closeempty mui-pull-left"></a>
+    <h1 class="mui-title">筛选</h1>
+  </header>
+  <nav class="mui-bar mui-bar-tab custom-tab">
+    <div class="btn-box">
+      <div class="mui-action-back btn btn-gray cancel-btn">取消</div>
+      <div id="sure-btn" class="btn sure-btn">确定</div>
+    </div>
+  </nav>
+	<div id="main-content" class="mui-content condition-select">
+		<div class="cover">
+			<div class="cover-full">				
+				<div class="condition-select-box">
+					<div class="m-title t2">学历</div>
+					<div class="condition-box clearFix">
+						<span data-bind="click: $root.clickItem.bind(null, 'education', {}),
+						  css: { active: !searchRes.education() }" class="c-box">全部</span>
+						<!-- ko foreach: education -->
+						<span data-bind="text: dict_name,
+						  click: $root.clickItem.bind(null, 'education', $data),
+						  css: { active: $root.searchRes.education() == dict_value }" class="c-box"></span>
+						<!-- /ko -->
+					</div>
+
+					<div class="m-title t2">工作经验</div>
+					<div class="condition-box clearFix">
+						<span data-bind="click: $root.clickItem.bind(null, 'workExperience', {}),
+						  css: { active: !searchRes.workExperience() }" class="c-box">全部</span>
+						<!-- ko foreach: workExperience -->
+            <span data-bind="text: dict_name,
+              click: $root.clickItem.bind(null, 'workExperience', $data),
+              css: { active: $root.searchRes.workExperience() == dict_value }" class="c-box"></span>
+            <!-- /ko -->
+					</div>
+		
+					<div class="m-title t2">职位类型</div>
+					<div class="condition-box clearFix">
+						<span data-bind="click: $root.clickItem.bind(null, 'positionType', {}),
+						  css: { active: !searchRes.positionType() }" class="c-box">全部</span>
+						<!-- ko foreach: positionType -->
+            <span data-bind="text: dict_name, 
+              click: $root.clickItem.bind(null, 'positionType', $data),
+              css: { active: $root.searchRes.positionType() == dict_value }" class="c-box"></span>
+            <!-- /ko -->
+					</div>
+				</div>				
+			</div>
+		</div>
+	</div>
+	<script src="../../third/bluebird.min.js"></script>
+	<script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
+  <script src="js/profile-common.js" ></script>
+  <script>
+    (function($, doc) {
+      $.init({
+        beforeback: function() {
+　　      plus.navigator.setStatusBarBackground('#765fc3');
+          return true;
+        }
+      });
+      $.plusReady(function() {
+        var viewModel = {
+          searchRes: {
+            education: ko.observable(''),
+            workExperience: ko.observable(''),
+            positionType: ko.observable('')
+          },
+          education: ko.observableArray([]),
+          workExperience: ko.observableArray([]),
+          positionType: ko.observableArray([]),
+          clickItem: function (key, data) {            
+            if (data.dict_value !== undefined) {             
+              viewModel.searchRes[key](data.dict_value.toString());
+            } else {
+              viewModel.searchRes[key]('');
+            }
+          }
+        }
+        ko.applyBindings(viewModel, doc.getElementById('main-content'));
+        Enums.getAll(function(){
+          viewModel.education(Enums.getEnums('education'));
+          viewModel.workExperience(Enums.getEnums('workExperience'));
+          viewModel.positionType(Enums.getEnums('positionType'));
+        });
+        
+        doc.getElementById('sure-btn').addEventListener('tap', function() {
+          var postData = ko.mapping.toJS(viewModel.searchRes);
+          var nextWebview = plus.webview.getWebviewById('Kz_profile');
+          $.fire(nextWebview, 'Kz_profile_JobSearch_Data', postData);       
+          $.back();
+        });
+        
+        
+        window.addEventListener('kz_profile_JobCondition_Data', function(e){
+           plus.navigator.setStatusBarBackground('#FFFFFF');
+        });
+      });
+    }(mui, document));
+  </script>
+</body>
+</html>

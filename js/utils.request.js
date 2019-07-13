@@ -54,7 +54,9 @@
                     }
                     break;
                   case 5001:
-                    mui.toast(data.header.msg || '获取数据失败');
+                    if (defaults.showMsg === true) {
+                      mui.toast(data.header.msg || '获取数据失败');
+                    }                  
                     break;
                   case 6001:
                     mui.toast('登录状态失效，请重新登录');

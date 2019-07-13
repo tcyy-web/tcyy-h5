@@ -6,64 +6,228 @@
   <title></title>
   <link href="../../fonts/iconfont.css" rel="stylesheet" />
   <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/mui.picker.min.css">
+  <link rel="stylesheet" href="../../css/mui.poppicker.css">
   <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/profile-style.css" rel="stylesheet" />
+  <style>
+    .mui-content{
+      height: auto;
+    }
+  </style>
 </head>
 
-<body>
+<body id="main-content" >
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">我的公司信息</h1>
   </header>
+  <nav class="mui-bar mui-bar-tab custom-tab">
+    <div class="mui-tab-item">
+      <button id="saveBtn" class="mui-btn mui-btn-blue">保存</button>
+    </div>  
+  </nav>
   <div class="mui-content">
-    <form class="mui-input-group profile-form-group">
+    <form class="mui-input-group profile-form-group custom-form-group">
       <div class="mui-input-row">
-        <label>公司名称：</label>
-        <input type="text" class="mui-input-clear" placeholder="公司名称">
+        <label><i class="form-required"></i>公司名称：</label>
+        <input data-bind="value: formData.name, muiInput: formData.name" type="text" maxlength="100" class="mui-input-clear" placeholder="请输入公司名称">
       </div>
       <div class="mui-input-row">
-        <label>成立日期：</label>
-        <p>请选择</p>
+        <label><i class="form-required"></i>成立日期：</label>
+        <p data-bind="text: !formData.createrdate() ? '请选择' : formData.createrdate,
+          click: datePickerClick">请选择</p>
       </div>
       <div class="mui-input-row">
-        <label>所在地区：</label>
-        <p>请选择</p>
+        <label><i class="form-required"></i>所在地区：</label>
+        <p data-bind="text: !formData.region() ? '请选择' : formData.region, 
+          click: regionPickerClick">请选择</p>
       </div>
       <div class="mui-input-row">
         <label>详细地址：</label>
-        <input type="text" class="mui-input-clear" placeholder="请输入详细地址">
+        <input data-bind="value: formData.address, muiInput: formData.address" type="text" maxlength="100" class="mui-input-clear" placeholder="请输入详细地址">
       </div>
       <div class="mui-input-row">
         <label>注册资金：</label>
-        <input type="text" class="mui-input-clear" placeholder="请输入注册资金">
+        <input data-bind="value: formData.registermoney, muiInput: formData.registermoney" type="text" maxlength="30" class="mui-input-clear" placeholder="请输入注册资金">
       </div>
       <div class="mui-input-row">
         <label>人数规模：</label>
-        <input type="text" class="mui-input-clear" placeholder="请输入注册资金">
+        <input data-bind="value: formData.people, muiInput: formData.people" type="number" maxlength="8" class="mui-input-clear" placeholder="请输入人数规模">
       </div>
       <div class="mui-input-row">
-        <label>人数规模：</label>
-        <input type="text" class="mui-input-clear" placeholder="请输入注册资金">
+        <label><i class="form-required"></i>联系人：</label>
+        <input data-bind="value: formData.contacts, muiInput: formData.contacts" type="text" maxlength="20" class="mui-input-clear" placeholder="请输入联系人">
       </div>
-      <textarea id="descriptions" rows="5" class="m-data " placeholder="公司描述"></textarea>
-    
-    
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>联系电话：</label>
+        <input data-bind="value: formData.phone, muiInput: formData.phone" type="number" maxlength="20" class="mui-input-clear" placeholder="请输入联系电话">
+      </div>
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>邮箱：</label>
+        <input data-bind="value: formData.email, muiInput: formData.email" type="text" maxlength="100" class="mui-input-clear" placeholder="请输入邮箱">
+      </div>
+      <div class="mui-input-row auto">
+        <label><i class="form-required"></i>营业执照：</label>
+        <div>
+          <div data-bind="click: addPic" class="custom-add-pic flex flex-col-center flex-row-center">
+            <div>
+              <div class="custom-img-box flex flex-col-center flex-row-center">
+                  <img data-bind="attr: {src: !!formData.showAuthurl() ? formData.showAuthurl() : '../../images/project/jia.png'}" id="img" src="../../images/project/jia.png" />                 
+              </div>
+              <p>点击上传</p>
+            </div>
+          </div>          
+        </div>
+      </div>
+      <!-- ko if: formData.id() > 0 -->
+      <div class="mui-input-row">
+        <label>状态：</label>
+        <p></p>
+      </div>
+      <!-- /ko -->
     </form>
   </div>
+  <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
   <script src="../../js/mui.min.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/knockout.extend.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.picker.min.js"></script>
+  <script src="../../js/mui.poppicker.js"></script>
   <script src="../../js/utils.enums.js"></script>
   <script src="../../js/utils.config.js"></script>
   <script src="../../js/utils.storages.js"></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.upload.js"></script>
   <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
   <script src="js/profile-common.js" ></script>
   <script>
-    ProfileArea();
+    
     (function($, doc) {
       $.init();
-      $.plusReady(function() {
+      $.plusReady(function() {        
+        // 初始化区域选择
+        var areaPicker = new $.PopPicker({
+          layer: 3
+        });
+        ProfileArea().then(function(areas) {
+          areaPicker.setData(areas);          
+        });
+        // 初始化日期选择
+        var datepicer = new $.DtPicker({
+          type: 'date'
+        });
+        var BaseView = function () {
+          var vm = this;
+          vm.formData = {
+            id: ko.observable(),
+            name: ko.observable(),
+            region: ko.observable(),
+            region: ko.observable('请选择'),  
+            regionid: ko.observable(),
+            address: ko.observable(),
+            createrdate: ko.observable(),
+            registermoney: ko.observable(),
+            people: ko.observable(),
+            contacts: ko.observable(),
+            phone: ko.observable(),
+            email: ko.observable(),
+            authurl: ko.observable(),
+            showAuthurl: ko.observable()
+          }
+          vm.regionPickerClick=function() {
+            setTimeout(function() {
+              areaPicker.show(function(items) {
+                var result = _.reduce(items, function(a, b){  
+                  if (b.id > 0) {
+                    return a + b.name
+                  }  
+                  return a;
+                }, '');
+                var resultid = _.reduce(items, function(a, b){  
+                  if (b.id > 0) {
+                    if (!a) {
+                      return a + b.id
+                    } else {
+                      return a + '-' + b.id
+                    }
+                  }    
+                  return a;
+                }, '');
+                vm.formData.region(result);
+                vm.formData.regionid(resultid);
+              });
+            }, 500);
+          }
+          vm.datePickerClick = function () {
+            setTimeout(function() {
+              datepicer.show(function(rs) {
+                viewModel.formData.createrdate(rs.text);
+              });
+            }, 500);
+          }
+          vm.addPic = function () {
+            setTimeout(function() {
+              upload.showImgActionSheet(function(data) {
+                var url = config.url + "Uploads/Files";
+                upload.uploadimge(url, data.divid, function(res) {
+                  vm.formData.authurl(res[0].saveUrl);
+                  vm.formData.showAuthurl(data.abspath);
+                });
+              });
+            }, 500);
+          }
+        }
+        var viewModel = new BaseView();
+        ko.applyBindings(viewModel, document.getElementById('main-content'));  
+        function loadPage () {
+          ProfileCompany().then(function(res) {
+           
+          }); 
+        }
+        function saveServer() {
+          return new Promise(function(resolve) {               
+            var postData = ko.mapping.toJS(viewModel.formData);
+            if (!postData.name) {
+              mui.toast('请输入公司名称');
+              return
+            }
+            if (!postData.region || !postData.regionid) {
+              mui.toast('请选择所在地区');
+              return
+            }
+            if (!postData.contacts) {
+              mui.toast('请输入联系人');
+              return
+            }
+            if (!postData.phone) {
+              mui.toast('请输入联系电话');
+              return
+            }
+            if (!postData.authurl) {
+              mui.toast('上传营业执照');
+              return
+            }
+            request.loginAjax('personalcompany/saveCompanyByVip', {
+              data: postData
+            }, function(data,success) {     
+              if (success) {   
+                resolve()
+              }
+            });
+          })
+        }
         
+        doc.getElementById('saveBtn').addEventListener('tap', function(e) {
+          saveServer().then(function(){
+            loadPage();
+          });
+        });
+        loadPage();
       });
     }(mui, document));
   </script>

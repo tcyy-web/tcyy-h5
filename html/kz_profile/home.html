@@ -6,6 +6,8 @@
   <title></title>
   <link href="../../fonts/iconfont.css" rel="stylesheet" />
   <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/mui.picker.min.css">
+  <link rel="stylesheet" href="../../css/mui.poppicker.css">
   <link href="../../css/style.css" rel="stylesheet" />
   <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/profile-style.css" rel="stylesheet" />
@@ -15,7 +17,7 @@
   <header id="header-view" class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title" data-bind="text: headerText">职位</h1>
-    <!-- ko if: pageType() == 'zhiwei' -->
+    <!-- ko if: pageType() == 'zhiwei' && hasCompany() -->
     <a data-bind="click: publishJob" class="mui-pull-right">发布</a>
     <!-- /ko -->
     <!-- ko if: pageType() == 'jianli' -->
@@ -27,7 +29,7 @@
         <div class="iconfontbox"><i class="iconfont icon-zhiwei"></i></div>
         <span class="mui-tab-label">职位</span>
       </a>
-      <a page-type="jianli" href="#jianli" class="mui-tab-item">
+      <a page-type="jianli" href="#jianli" class="mui-tab-item mui-hidden">
         <div class="iconfontbox"><i class="iconfont icon-jianli"></i></div>
         <span class="mui-tab-label">简历</span>
       </a>
@@ -38,20 +40,63 @@
     </nav>
   <div class="mui-content">
     <div id="zhiwei" class="mui-control-content mui-active mui-fullscreen">
-      <div class="mui-scroll-wrapper">
-        <div id="zhiwei-list" class="mui-scroll">
-          <ul class="mui-table-view">
-            
-          </ul>
+      <div>
+        <div class="search-input-box">
+          <div class="search-input-group">
+            <input data-bind="value: searchRes.professional" type="text" class="search" maxlength="20" placeholder="请输入关键字" />
+            <span data-bind="click: searchFn" class="search-btn">搜索</span>
+          </div>
+        </div>
+        <div class="conditions-bar">
+          <span data-bind="click: sortFilter,
+            css: {active: hasSearch()}" class="c-box">筛选</span>
+          <span data-bind="click: regionFilter,
+            css: {active: !!searchRes.region()},
+            text: !!searchRes.region() ? searchRes.region() : '区域'" class="c-box"></span>
+        </div>
+        <div class="space"></div>
+      </div>
+      <div class="zhiwei-pullrefresh">
+        <div class="mui-scroll-wrapper">
+          <div id="zhiwei-list" class="mui-scroll">
+            <ul class="mui-table-view">
+              <!-- ko foreach: list -->
+              <li data-bind="attr: {itemid: id}" >
+                <div class="jobs-box">
+                  <div data-bind="text: professional" class="jobs-name"></div>
+                  <div class="jobs-imp">                     
+                    <span data-bind="text: positiontypeStr" class="c-box"></span>
+                    <span data-bind="text: region" class="c-box"></span>
+                    <span data-bind="text: experience" class="c-box"></span>
+                  </div>
+                  <div data-bind="text: name" class="jobs-company-name"></div>
+                  <span data-bind="text: wagesStr" class="jobs-price"></span>
+                </div>
+              </li>
+              <!-- /ko -->
+            </ul>
+          </div>
         </div>
       </div>
     </div>
     <div id="jianli" class="mui-control-content mui-fullscreen">
-      <div class="mui-scroll-wrapper">
-        <div id="jianli-list" class="mui-scroll">
-          <ul class="mui-table-view">
-            
-          </ul>
+      <div>
+        <div class="nav-tabs">
+          <div class="mui-tab-item active">投递我的</div>
+          <div class="mui-tab-item">我收藏的</div>
+          <div class="mui-tab-item">历史查看</div>
+        </div>
+        <div class="space"></div>
+      </div>
+      <div class="jianli-pullrefresh">
+        <div class="mui-scroll-wrapper">
+          <div id="jianli-list" class="mui-scroll">
+            <ul class="mui-table-view">
+              <li>
+                
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -72,10 +117,13 @@
       </ul>
     </div>
   </div>
+  <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../js/mui.min.js"></script>
   <script src="../../third/knockout.js"></script>
   <script src="../../third/ko.mapping.js"></script>
-  <script src="../../third/knockout.js"></script>
-  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/mui.picker.min.js"></script>
+  <script src="../../js/mui.poppicker.js"></script>
   <script src="../../js/mui.pullToRefresh.js"></script>
   <script src="../../js/mui.pullToRefresh.material.js"></script>
   <script src="../../js/utils.enums.js"></script>
@@ -84,10 +132,18 @@
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.upload.js"></script>
   <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
   <script src="js/profile-common.js" ></script>
   <script>
     (function($, doc) {
       $.init({
+        preloadPages:[{
+          id:'kz_profile_JobCondition',
+          url: './job-condition.html'
+        }, {
+          id:'kz_profile_JobDetail',
+          url: './job-detail.html'
+        }],
         beforeback: function() {
 　　      plus.navigator.setStatusBarBackground('#765fc3');
           return true;
@@ -95,11 +151,12 @@
       });
       $.plusReady(function() {
         plus.navigator.setStatusBarBackground('#8E78D6');
+        // 初始化头部
         var HeaderView = function () {
           var vm = this;
           vm.headerText = ko.observable('职位');
-          vm.pageType = ko.observable('zhiwei');
-          
+          vm.pageType = ko.observable('zhiwei');  
+          vm.hasCompany = ko.observable(false);
           vm.publishJob = function() {
             $.openWindow({
               id:'kz_profile_JobPublish',
@@ -117,10 +174,26 @@
           }
         }
         var headerView = new HeaderView();
-        ko.applyBindings(headerView, document.getElementById('header-view'))
-        
+        ko.applyBindings(headerView, document.getElementById('header-view'));
+        //  查询公司信息
+        ProfileCompany().then(function() {
+          $('[page-type="jianli"]')[0].classList.remove('mui-hidden');  
+          headerView.hasCompany(true);
+        }); 
+        window.addEventListener('Kz_profile_home_company', function (){
+          ProfileCompany().then(function() {
+            $('[page-type="jianli"]')[0].classList.remove('mui-hidden');
+            headerView.hasCompany(true);
+          });
+        })
+        // 初始化区域选择
+        var areaPicker = new $.PopPicker({
+          layer: 3
+        });
+        ProfileArea().then(function(areas) {
+          areaPicker.setData(areas);          
+        });
         // tab改变 
-  
         $.each(doc.querySelectorAll('.mui-bar-tab .mui-tab-item'), function(index, el) {
           el.addEventListener('tap', function(e) {
             headerView.headerText(el.querySelector('.mui-tab-label').innerText);
@@ -129,49 +202,235 @@
         });
         // 职位
         (function(){
-          $('#zhiwei-list').pullToRefresh({
-              down: {
-                callback: function() {
-                  console.log(1)
-                  var self = this;
-                  setTimeout(function(){
-                    self.endPullDownToRefresh();
-                    $('#zhiwei-list').pullToRefresh().refresh(true);
-                  }, 500);
-                }
-              },
-              up: {
-                callback: function() {
-                  var self = this;
-                  setTimeout(function(){
-                    self.endPullUpToRefresh(true);
-                  }, 300);
-                }
-              }
+          // 分页参数
+          var page = 1;
+          var limit = 10;
+          var more = true;
+          //列表渲染
+          var BaseView = function () {
+            var vm = this;
+            vm.searchRes = {
+              professional: ko.observable(''),
+              region: ko.observable(),
+              education: ko.observable(''),
+              experience: ko.observable(''),
+              positiontype: ko.observable('')
+            }
+            // 是否正在筛选
+            vm.hasSearch = ko.computed(function() {
+               return !!vm.searchRes.education() ||
+               !!vm.searchRes.experience() ||
+               !!vm.searchRes.positiontype();
+            })
+            vm.list = ko.observableArray([]);
+            // 跳转筛选
+            vm.sortFilter = function() {
+              var nextWebview = plus.webview.getWebviewById('kz_profile_JobCondition');
+              $.fire(nextWebview, 'kz_profile_JobCondition_Data', ko.mapping.toJS(viewModel.searchRes));
+              $.openWindow({
+                id:'kz_profile_JobCondition',               
+              });                    
+            }
+            // 点击搜索
+            vm.searchFn =function () {
+               reloadPage();
+            }
+            //区域
+            vm.regionFilter = function () {
+              setTimeout(function() {
+                areaPicker.show(function(items) {
+                  if (items.length > 0) {
+                    var result = _.reduce(items, function(a, b){                     
+                      return a + b.name
+                    }, '');
+                    viewModel.searchRes.region(result);   
+                    reloadPage();
+                  }                                 
+                });
+              }, 300);
+            }
+          }
+          var viewModel = new BaseView();
+          ko.applyBindings(viewModel, doc.getElementById('zhiwei'));
+          // 查询
+          var queryList = function(callback) {
+            var _request = {
+              page: page,
+              limit: limit
+            }       
+            if (!!viewModel.searchRes.region()) {
+              _request.region = viewModel.searchRes.region()
+            }
+            if (!!viewModel.searchRes.education()) {
+              _request.education = viewModel.searchRes.education()
+            }
+            if (!!viewModel.searchRes.experience()) {
+              _request.experience = viewModel.searchRes.experience()
+            }
+            if (!!viewModel.searchRes.positiontype()) {
+              _request.positiontype = viewModel.searchRes.positiontype()
+            }
+            if (!!viewModel.searchRes.professional()) {
+              _request.professional = viewModel.searchRes.professional()
+            }
+            request.loginAjax('personalposition/queryPositionByCondition',{
+              data: _request,
+              showMsg: false
+            },function(data, success) {
+               // 处理页面绑定
+               if (data && data.data) {
+                 // 取字典显示值
+                 if (data.data.length > 0) {
+                   Enums.getAll(function(){
+                      $.each(data.data, function(index, item) {
+                         item.wagesStr = Enums.getEnumText('salaryRange', item.wages);
+                         item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
+                      });
+                   })
+                 }                 
+                 if (page === 1) {                  
+                   viewModel.list(data.data);                  
+                 } else {
+                   $.each(data.data, function(index,i) {
+                     viewModel.list.push(i);
+                   });                  
+                 }                
+               }
+               // 判断是否有下一页数据
+               if (data && data.data && data.data.length === limit) {
+                 more = true;
+               } else {
+                 more = false;
+               }
+               if (typeof callback === 'function') {
+                 callback();
+               }
+            },function() {
+              if (typeof callback === 'function') {
+                 callback();
+               }
             });
+          }
+          queryList();
+          // 跳转详情
+          $('#zhiwei-list').on('tap', '.mui-table-view > li', function(e){
+            var itemid = this.getAttribute('itemid');
+            var nextWebview = plus.webview.getWebviewById('kz_profile_JobDetail');
+            $.fire(nextWebview, 'kz_profile_JobDetail_Data', {
+              itemid: itemid
+            });
+            $.openWindow({
+              id:'kz_profile_JobDetail',               
+            }); 
+          });
+          function reloadPage () {
+            page = 1;
+            more = true;
+            $('#zhiwei-list').pullToRefresh().refresh(true);
+            queryList();
+          }
+          $('#zhiwei-list').pullToRefresh({
+            down: {
+              callback: function() {
+                page = 1;
+                var self = this;
+                queryList(function() {
+                  self.endPullDownToRefresh();
+                  $('#zhiwei-list').pullToRefresh().refresh(true);
+                });                
+              }
+            },
+            up: {
+              callback: function() {
+                var self = this;
+                if (more) {
+                  page = page + 1;
+                  queryList(function() {
+                    self.endPullUpToRefresh(false);
+                  });
+                  return;
+                }
+                self.endPullUpToRefresh(true);
+              }
+            }
+          });
+          window.addEventListener('Kz_profile_JobSearch_Data', function(e) {          
+            viewModel.searchRes.education(e.detail.education);
+            viewModel.searchRes.experience(e.detail.workExperience);
+            viewModel.searchRes.positiontype(e.detail.positionType);
+            reloadPage();
+          });
         })();
         // 简历
         (function(){
+          //列表渲染
+          var BaseView = function () {
+            var vm = this;
+            vm.searchRes = {
+              professional: ko.observable(''),
+              region: ko.observable(),
+              regionText: ko.observable(),
+              education: ko.observable(''),
+              experience: ko.observable(''),
+              positiontype: ko.observable('')
+            }
+            // 是否正在筛选
+            vm.hasSearch = ko.computed(function() {
+               return !!vm.searchRes.education() ||
+               !!vm.searchRes.experience() ||
+               !!vm.searchRes.positiontype();
+            })
+            vm.list = ko.observableArray([]);
+            // 跳转筛选
+            vm.sortFilter = function() {
+              var nextWebview = plus.webview.getWebviewById('kz_profile_JobCondition');
+              $.fire(nextWebview, 'kz_profile_JobCondition_Data', ko.mapping.toJS(viewModel.searchRes));
+              $.openWindow({
+                id:'kz_profile_JobCondition',               
+              });                    
+            }
+            // 点击搜索
+            vm.searchFn =function () {
+               reloadPage();
+            }
+            //区域
+            vm.regionFilter = function () {
+              setTimeout(function() {
+                areaPicker.show(function(items) {
+                  if (items.length > 0) {
+                    var result = _.reduce(items, function(a, b){                     
+                      return a + b.name
+                    }, '');
+                    var last = items[items.length -1];
+                    viewModel.searchRes.region(last.id);
+                    viewModel.searchRes.regionText(result);   
+                    reloadPage();
+                  }                                 
+                });
+              }, 300);
+            }
+          }
+          var viewModel = new BaseView();
+          ko.applyBindings(viewModel, doc.getElementById('jianli'));
           $('#jianli-list').pullToRefresh({
-              down: {
-                callback: function() {
-                  console.log(1)
-                  var self = this;
-                  setTimeout(function(){
-                    self.endPullDownToRefresh();
-                    $('#jianli-list').pullToRefresh().refresh(true);
-                  }, 500);
-                }
-              },
-              up: {
-                callback: function() {
-                  var self = this;
-                  setTimeout(function(){
-                    self.endPullUpToRefresh(true);
-                  }, 300);
-                }
+            down: {
+              callback: function() {
+                var self = this;
+                setTimeout(function(){
+                  self.endPullDownToRefresh();
+                  $('#jianli-list').pullToRefresh().refresh(true);
+                }, 500);
               }
-            });
+            },
+            up: {
+              callback: function() {
+                var self = this;
+                setTimeout(function(){
+                  self.endPullUpToRefresh(true);
+                }, 300);
+              }
+            }
+          });
         })();
         // 我的
         (function(){
