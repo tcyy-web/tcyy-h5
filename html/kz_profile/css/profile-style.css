@@ -242,3 +242,27 @@
 .flow-box > div {
   padding: 5px 0;
 }
+
+.resume-box {
+  padding: 10px 0 12px;
+  margin: 0 15px;
+  border-bottom: 1px solid #f3f3f3;
+}
+.resume-box .key-imp {
+  font-size: 14px;
+  color: #666;
+  padding-left: 10px;
+}
+.resume-box .flex {
+  color: #999;
+}
+.resume-box > div {
+  padding: 5px 0;
+}
+
+.publish-box{ padding:12px 15px; border-bottom:1px solid #f3f3f3; }
+.publish-box .m-title{ padding-bottom:8px; }
+.publish-time{ color:#999; display:inline-block; line-height: 28px; margin-left: 12px;}
+.publish-box .opt { text-align:right; padding:5px 0;}
+.publish-box .opt .opt-btn{ background:#ccc; color:#333; padding:4px 15px; border-radius:3px;}
+.publish-box .opt .opt-btn.purple{ background:#8E78D6; color:#fff;}

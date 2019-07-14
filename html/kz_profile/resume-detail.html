@@ -16,19 +16,17 @@
   </style>
 </head>
 
-<body id="main-content" >
+<body>
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">职位详情</h1>
+    <h1 class="mui-title">简历详情</h1>
   </header>
-  <!-- ko if: pageType() == 'deliver' -->
   <nav class="mui-bar mui-bar-tab custom-tab">
     <div class="mui-tab-item">
-      <button class="mui-btn mui-btn-blue">立即投递</button>
+      <button id="saveBtn" class="mui-btn mui-btn-blue">收藏</button>
     </div>  
   </nav>
-  <!-- /ko -->
-  <div class="mui-content">
+  <div id="main-content" class="mui-content">
     <div class="jobs-detail">
       <div data-bind="text: detailData().professional" class="m-title t1"></div>
       <span data-bind="text: detailData().wagesStr" class="jobs-price"></span>
@@ -74,8 +72,6 @@
         
         var BaseView = function () {
           var vm = this;
-          //页面类型  show 查看  deliver 可投递
-          vm.pageType = ko.observable('');
           vm.detailData = ko.observable({});
         }
         var viewModel = new BaseView();
@@ -96,21 +92,14 @@
             }
           });
         }
-        //投递
-        mui('#main-content').on('tap', '.mui-btn-blue', function(e) {
-          ProfileResumeCheck().then(function(){
-            //TODO
-          });
+        
+        doc.getElementById('saveBtn').addEventListener('tap', function () {
+           ProfileResumeCheck().then(function(){
+           });
         })
-//      doc.getElementById('deliverBtn').addEventListener('tap', function (e) {
-//        ProfileResumeCheck().then(function(){
-//          //TODO
-//        });
-//      });
         
         window.addEventListener('kz_profile_JobDetail_Data', function(e) {
-          loadData(e.detail.id);
-          viewModel.pageType(e.detail.type || 'show');
+          loadData(e.detail.itemid)
         });
       });
     }(mui, document));

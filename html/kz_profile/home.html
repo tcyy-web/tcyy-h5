@@ -21,7 +21,7 @@
     <a data-bind="click: publishJob" class="mui-pull-right">发布</a>
     <!-- /ko -->
     <!-- ko if: pageType() == 'jianli' -->
-    <a class="mui-pull-right">搜索</a>
+    <a data-bind="click: searchResume" class="mui-pull-right">搜索</a>
     <!-- /ko -->
   </header>
   <nav class="mui-bar mui-bar-tab custom-tab">
@@ -29,7 +29,7 @@
         <div class="iconfontbox"><i class="iconfont icon-zhiwei"></i></div>
         <span class="mui-tab-label">职位</span>
       </a>
-      <a page-type="jianli" href="#jianli" class="mui-tab-item mui-hidden">
+      <a page-type="jianli" href="#jianli" class="mui-tab-item">
         <div class="iconfontbox"><i class="iconfont icon-jianli"></i></div>
         <span class="mui-tab-label">简历</span>
       </a>
@@ -109,10 +109,10 @@
           <a data-bind="click: myResume" class="mui-navigate-right"><i class="iconfont icon-gongsixinxi"></i>我的简历</a>
         </li>
         <li class="mui-table-view-cell">
-          <a class="mui-navigate-right"><i class="iconfont icon-toudilishi"></i>我的投递历史</a>
+          <a data-bind="click: myDeliverList" class="mui-navigate-right"><i class="iconfont icon-toudilishi"></i>我的投递历史</a>
         </li>
         <li class="mui-table-view-cell">
-          <a class="mui-navigate-right"><i class="iconfont icon-zhiwei"></i>我发布的职位</a>
+          <a data-bind="click: myJob" class="mui-navigate-right"><i class="iconfont icon-zhiwei"></i>我发布的职位</a>
         </li>
       </ul>
     </div>
@@ -141,8 +141,15 @@
           id:'kz_profile_JobCondition',
           url: './job-condition.html'
         }, {
+          id:'kz_profile_JobPublish',
+          url: './job-publish.html',
+        }
+        ,{
           id:'kz_profile_JobDetail',
           url: './job-detail.html'
+        }, {
+          id:'kz_profile_ResumeDetail',
+          url: './resume-detail.html'
         }],
         beforeback: function() {
 　　      plus.navigator.setStatusBarBackground('#765fc3');
@@ -157,10 +164,19 @@
           vm.headerText = ko.observable('职位');
           vm.pageType = ko.observable('zhiwei');  
           vm.hasCompany = ko.observable(true);
+          //发布职位
           vm.publishJob = function() {
+            var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
+            $.fire(nextWebview, 'kz_profile_JobPublish_Data', {});
             $.openWindow({
-              id:'kz_profile_JobPublish',
-              url: './job-publish.html',
+              id:'kz_profile_JobPublish',               
+            }); 
+          }
+          // 搜索简历
+          vm.searchResume = function() {
+            $.openWindow({
+              id:'kz_profile_Resume',
+              url: './resume.html',
               show: {
                 aniShow: 'pop-in'
               },
@@ -318,7 +334,8 @@
             var itemid = this.getAttribute('itemid');
             var nextWebview = plus.webview.getWebviewById('kz_profile_JobDetail');
             $.fire(nextWebview, 'kz_profile_JobDetail_Data', {
-              itemid: itemid
+              id: itemid,
+              type: 'deliver'
             });
             $.openWindow({
               id:'kz_profile_JobDetail',               
@@ -455,6 +472,36 @@
               $.openWindow({
                 id:'kz_profile_MyResume',
                 url: './my-resume.html',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            },
+            myDeliverList: function () {
+              $.openWindow({
+                id:'kz_profile_MyDeliverList',
+                url: './my-job-deliver-list.html',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            },
+            myJob: function () {
+              $.openWindow({
+                id:'kz_profile_MyJobList',
+                url: './my-job-list.html',
                 show: {
                   aniShow: 'pop-in'
                 },

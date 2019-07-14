@@ -43,28 +43,16 @@
 			<div class="cover-full">				
 				<div class="condition-select-box">
 					<div class="m-title t2">学历</div>
-					<div class="condition-box clearFix">
-						<span data-bind="click: $root.clickItem.bind(null, 'education', {}),
-						  css: { active: !searchRes.education() }" class="c-box">全部</span>
-						<!-- ko foreach: education -->
-						<span data-bind="text: dict_name,
-						  click: $root.clickItem.bind(null, 'education', $data),
-						  css: { active: $root.searchRes.education() == dict_value }" class="c-box"></span>
-						<!-- /ko -->
-					</div>
-
-					<div class="m-title t2">工作经验</div>
-					<div class="condition-box clearFix">
-						<span data-bind="click: $root.clickItem.bind(null, 'workExperience', {}),
-						  css: { active: !searchRes.workExperience() }" class="c-box">全部</span>
-						<!-- ko foreach: workExperience -->
-            <span data-bind="text: dict_name,
-              click: $root.clickItem.bind(null, 'workExperience', $data),
-              css: { active: $root.searchRes.workExperience() == dict_value }" class="c-box"></span>
-            <!-- /ko -->
-					</div>
-		
-					<div class="m-title t2">招聘职位</div>
+  					<div class="condition-box clearFix">
+  						<span data-bind="click: $root.clickItem.bind(null, 'education', {}),
+  						  css: { active: !searchRes.education() }" class="c-box">全部</span>
+  						<!-- ko foreach: education -->
+  						<span data-bind="text: dict_name,
+  						  click: $root.clickItem.bind(null, 'education', $data),
+  						  css: { active: $root.searchRes.education() == dict_value }" class="c-box"></span>
+  						<!-- /ko -->
+  					</div>
+					<div class="m-title t2">求职职位</div>
 					<div class="condition-box clearFix">
 						<span data-bind="click: $root.clickItem.bind(null, 'positionType', {}),
 						  css: { active: !searchRes.positionType() }" class="c-box">全部</span>
@@ -102,11 +90,9 @@
         var viewModel = {
           searchRes: {
             education: ko.observable(''),
-            workExperience: ko.observable(''),
             positionType: ko.observable('')
           },
           education: ko.observableArray([]),
-          workExperience: ko.observableArray([]),
           positionType: ko.observableArray([]),
           clickItem: function (key, data) {            
             if (data.dict_value !== undefined) {             
@@ -119,19 +105,18 @@
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
         Enums.getAll(function(){
           viewModel.education(Enums.getEnums('education'));
-          viewModel.workExperience(Enums.getEnums('workExperience'));
           viewModel.positionType(Enums.getEnums('positionType'));
         });
         
         doc.getElementById('sure-btn').addEventListener('tap', function() {
           var postData = ko.mapping.toJS(viewModel.searchRes);
-          var nextWebview = plus.webview.getWebviewById('Kz_profile');
-          $.fire(nextWebview, 'Kz_profile_JobSearch_Data', postData);       
+          var nextWebview = plus.webview.getWebviewById('kz_profile_Resume');
+          $.fire(nextWebview, 'Kz_profile_ResumeSearch_Data', postData);       
           $.back();
         });
         
         
-        window.addEventListener('kz_profile_JobCondition_Data', function(e){
+        window.addEventListener('kz_profile_ResumeCondition_Data', function(e){
            plus.navigator.setStatusBarBackground('#FFFFFF');
         });
       });

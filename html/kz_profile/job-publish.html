@@ -262,17 +262,24 @@
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, document.getElementById('main-content'));  
         // 加载信息
-        function loadPage () {
+        function loadData (id) {
           request.loginAjax('personalposition/getPositionDetail', {
             data: {
-              id: 1
+              id: id
             }
-          }, function(data,success) {     
+          }, function(data,success) {
             if (success) {   
-              // TODO 
+              Enums.getAll(function(){
+                 data.positiontypeText = Enums.getEnumText('positionType', data.positiontype);
+                 data.wagesText = Enums.getEnumText('salaryRange', data.wages);
+                 data.educationText = Enums.getEnumText('education', data.education);
+                 data.natureText = data.nature == 2 ? '兼职' : '全职';
+              })
+              _.forEach(viewModel.formData, function(n, key){
+                n(data[key]);
+              });
             }
           });
-          
         }
         //保存
         saveServer = function () {
@@ -329,8 +336,16 @@
         }
         doc.getElementById('saveBtn').addEventListener('tap', function(e) {
           saveServer().then(function(){
-            loadPage();
           });
+        });
+        
+        window.addEventListener('kz_profile_JobPublish_Data', function(e) {
+          _.forEach(viewModel.formData, function(n , key) {
+            n('');
+          });
+          if (e.detail.id > 0) {
+            loadData(e.detail.id);
+          } 
         });
       });
     }(mui, document));

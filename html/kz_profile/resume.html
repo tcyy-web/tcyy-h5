@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title></title>
+  <link href="../../fonts/iconfont.css" rel="stylesheet" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/mui.picker.min.css">
+  <link rel="stylesheet" href="../../css/mui.poppicker.css">
+  <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/style-custom.css" rel="stylesheet" />
+  <link href="css/profile-style.css" rel="stylesheet" />
+  <style>
+    .resume-pullrefresh{
+      height: calc(100% - 68px);
+      height: -webkit-calc(100% - 68px);
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <header id="header-view" class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">简历搜索</h1>
+  </header>
+  <div class="mui-content">
+    <div class="mui-control-content mui-active mui-fullscreen">
+      <div>
+        <div style="padding-top: 15px;" class="conditions-bar">
+          <span data-bind="click: sortFilter,
+            css: {active: hasSearch()}" class="c-box">筛选</span>
+          <span data-bind="click: regionFilter,
+            css: {active: !!searchRes.region()},
+            text: !!searchRes.region() ? searchRes.region() : '区域'" class="c-box"></span>
+        </div>
+        <div class="space"></div>
+      </div>
+      <div class="resume-pullrefresh">
+        <div class="mui-scroll-wrapper">
+          <div id="pullrefresh-list" class="mui-scroll">
+            <ul class="mui-table-view">
+              <!-- ko foreach: list -->
+              <li data-bind="attr: {itemid: id}" >
+                <div class="resume-box">
+                  <div class="m-title t1">
+                    <span>姓名</span> 
+                    <span class="key-imp">
+                      <span>护理师</span> | 
+                      <span>大专</span> |
+                      <span>5-10年</span>
+                    </span>
+                  </div>
+                  <div class="flex">
+                    <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>发布日期：<span></span></div>
+                    <div class="resume-jobs flex-item"><i class="mui-icon mui-icon-paperplane"></i>已投递职位名称</div>
+                  </div>
+                  <div class="tel"><i class="iconfont icon-dianhua"></i>133333333333</div>
+                </div>
+              </li>
+              <!-- /ko -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.picker.min.js"></script>
+  <script src="../../js/mui.poppicker.js"></script>
+  <script src="../../js/mui.pullToRefresh.js"></script>
+  <script src="../../js/mui.pullToRefresh.material.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
+  <script src="js/profile-common.js" ></script>
+  <script>
+    (function($, doc) {
+      $.init({
+        preloadPages:[{
+          id:'kz_profile_ResumeCondition',
+          url: './resume-condition.html'
+        }]
+      });
+      $.plusReady(function() {
+        // 初始化区域选择
+        var areaPicker = new $.PopPicker({
+          layer: 3
+        });
+        ProfileArea().then(function(areas) {
+          areaPicker.setData(areas);          
+        });
+        // 分页参数
+        var page = 1;
+        var limit = 10;
+        var more = true;
+        //列表渲染
+        var BaseView = function () {
+          var vm = this;
+          vm.searchRes = {
+            region: ko.observable(),
+            education: ko.observable(''),
+            positiontype: ko.observable('')
+          }
+          // 是否正在筛选
+          vm.hasSearch = ko.computed(function() {
+             return !!vm.searchRes.education() ||
+             !!vm.searchRes.positiontype();
+          })
+          vm.list = ko.observableArray([]);
+          // 跳转筛选
+          vm.sortFilter = function() {
+            var nextWebview = plus.webview.getWebviewById('kz_profile_ResumeCondition');
+            $.fire(nextWebview, 'kz_profile_ResumeCondition_Data');
+            $.openWindow({
+              id:'kz_profile_ResumeCondition',               
+            });                    
+          }
+          //区域
+          vm.regionFilter = function () {
+            setTimeout(function() {
+              areaPicker.show(function(items) {
+                if (items.length > 0) {
+                  var result = _.reduce(items, function(a, b){                     
+                    return a + b.name
+                  }, '');
+                  viewModel.searchRes.region(result);   
+                  reloadPage();
+                }                                 
+              });
+            }, 300);
+          }
+        }
+        var viewModel = new BaseView();
+        ko.applyBindings(viewModel, doc.getElementById('zhiwei'));
+        // 查询
+        var queryList = function(callback) {
+          var _request = {
+            page: page,
+            limit: limit
+          }       
+          if (!!viewModel.searchRes.region()) {
+            _request.region = viewModel.searchRes.region()
+          }
+          if (!!viewModel.searchRes.education()) {
+            _request.education = viewModel.searchRes.education()
+          }
+          if (!!viewModel.searchRes.positiontype()) {
+            _request.positiontype = viewModel.searchRes.positiontype()
+          }
+          request.loginAjax('personalresume/queryPersonalResumeList',{
+            data: _request,
+            showMsg: false
+          },function(data, success) {
+             // 处理页面绑定
+             if (data && data.data) {
+               // 取字典显示值
+               if (data.data.length > 0) {
+                 Enums.getAll(function(){
+                    $.each(data.data, function(index, item) {
+                       item.wagesStr = Enums.getEnumText('salaryRange', item.wages);
+                       item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
+                    });
+                 })
+               }                 
+               if (page === 1) {                  
+                 viewModel.list(data.data);                  
+               } else {
+                 $.each(data.data, function(index,i) {
+                   viewModel.list.push(i);
+                 });                  
+               }                
+             }
+             // 判断是否有下一页数据
+             if (data && data.data && data.data.length === limit) {
+               more = true;
+             } else {
+               more = false;
+             }
+             if (typeof callback === 'function') {
+               callback();
+             }
+          },function() {
+            if (typeof callback === 'function') {
+               callback();
+             }
+          });
+        }
+        queryList();
+        // 跳转详情
+        $('#pullrefresh-list').on('tap', '.mui-table-view > li', function(e){
+          var itemid = this.getAttribute('itemid');
+          var nextWebview = plus.webview.getWebviewById('kz_profile_JobDetail');
+          $.fire(nextWebview, 'kz_profile_JobDetail_Data', {
+            itemid: itemid
+          });
+          $.openWindow({
+            id:'kz_profile_JobDetail',               
+          }); 
+        });
+        function reloadPage () {
+          page = 1;
+          more = true;
+          $('#pullrefresh-list').pullToRefresh().refresh(true);
+          queryList();
+        }
+        $('#pullrefresh-list').pullToRefresh({
+          down: {
+            callback: function() {
+              page = 1;
+              var self = this;
+              queryList(function() {
+                self.endPullDownToRefresh();
+                $('#pullrefresh-list').pullToRefresh().refresh(true);
+              });                
+            }
+          },
+          up: {
+            callback: function() {
+              var self = this;
+              if (more) {
+                page = page + 1;
+                queryList(function() {
+                  self.endPullUpToRefresh(false);
+                });
+                return;
+              }
+              self.endPullUpToRefresh(true);
+            }
+          }
+        });
+          
+          
+        window.addEventListener('Kz_profile_ResumeSearch_Data', function(e) {          
+          viewModel.searchRes.education(e.detail.education);
+          viewModel.searchRes.positiontype(e.detail.positionType);
+          reloadPage();
+        });
+      });
+    }(mui, document));
+  </script>
+</body>
+</html>

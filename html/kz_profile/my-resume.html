@@ -36,6 +36,14 @@
         <input data-bind="value: formData.personname, muiInput: formData.personname" maxlength="50" type="text" class="mui-input-clear" placeholder="请输入姓名">
       </div>
       <div class="mui-input-row">
+        <label><i class="form-required"></i>联系电话：</label>
+        <input data-bind="value: formData.telephone, muiInput: formData.telephone" maxlength="20" type="text" class="mui-input-clear" placeholder="请输入姓名">
+      </div>
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>邮箱：</label>
+        <input data-bind="value: formData.email, muiInput: formData.email" maxlength="20" type="text" class="mui-input-clear" placeholder="请输入姓名">
+      </div>
+      <div class="mui-input-row">
         <label><i class="form-required"></i>性别：</label>
         <p data-bind="text: !formData.sexText() ? '请选择' : formData.sexText, 
           click: sexPickerClick">请选择</p>
@@ -224,6 +232,8 @@
           vm.formData = {
             id: ko.observable(),
             personname: ko.observable(),
+            telephone: ko.observable(),
+            email: ko.observable(),
             sex: ko.observable(),
             sexText: ko.observable(''),
             ethnic: ko.observable(),
@@ -375,6 +385,14 @@
             var postData = ko.mapping.toJS(viewModel.formData);
             if (!postData.personname) {
               mui.toast('请输入姓名')
+              return
+            }
+            if (!postData.telephone) {
+              mui.toast('请输入联系电话')
+              return
+            }
+            if (!postData.email) {
+              mui.toast('请输入邮箱')
               return
             }
             if (!postData.sexText) {
