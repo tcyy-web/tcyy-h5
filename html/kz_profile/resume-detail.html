@@ -27,25 +27,43 @@
     </div>  
   </nav>
   <div id="main-content" class="mui-content">
-    <div class="jobs-detail">
-      <div data-bind="text: detailData().professional" class="m-title t1"></div>
-      <span data-bind="text: detailData().wagesStr" class="jobs-price"></span>
-      <div class="condition-box">
-        <span data-bind="text: detailData().positiontypeStr" class="c-box"></span>
-        <span data-bind="text: detailData().nature == 2 ?'兼职' :'全职'" class="c-box"></span>
-        <span data-bind="text: detailData().experience" class="c-box">5-10年</span>
-        <span data-bind="text: detailData().educationStr" class="c-box">大专</span>
+    <div class="resume-box">
+      <div class="m-title t1">姓名 <span class="key-imp">护理师 | 大专 | 5-10年</span></div>
+      <div class="flex mui-row">
+        <div class="mui-col-sm-6 mui-col-xs-12">性别：男</div>
+        <div class="mui-col-sm-6 mui-col-xs-12">民族：汉</div>
       </div>
-      <div class="tj"><i class="iconfont icon-gongsixinxi1"></i>公司名称：</div>
-      <div class="tj"><i class="iconfont icon-didian"></i>工作地点：<span data-bind="text:detailData().region"></span>-<span data-bind="text:detailData().address"></span></div>
-      <div class="tj"><i class="iconfont icon-renshu"></i>招聘人数：<span data-bind="text:detailData().nums"></span>人</div>
-      <div class="tj"><i class="iconfont icon-lianxiren"></i>联系人：</div>
-      <div class="tel"><i class="iconfont icon-dianhua"></i></div>
+      <div class="flex mui-row">
+        <div class="mui-col-sm-6 mui-col-xs-12">期望职位：xxx</div>
+        <div class="mui-col-sm-6 mui-col-xs-12">求职类型：全职</div>
+      </div>
+      <div class="flex mui-row">
+        <div class="mui-col-sm-6 mui-col-xs-12">期望工资：面议</div>
+        <div class="mui-col-sm-6 mui-col-xs-12">在职状态：离职</div>
+      </div>
+      <div class="flex mui-row">期望工作区域：四川省-成都市-武侯区</div>
+      <div class="flex mui-row">
+        <div class="mui-col-sm-6 mui-col-xs-12">出生日期：1989.01.02</div>
+        <div class="mui-col-sm-6 mui-col-xs-12">婚姻状况：xx</div>
+      </div>
+      <div class="flex mui-row">
+        <div class="mui-col-sm-6 mui-col-xs-12">现住址：xxxx</div>
+      </div>
+      <div class="flex mui-row">资格证书：<a href="#">资格证书名称点击可查看</a></div>
     </div>
-    
-    <div class="jobs-description">
-      <div class="m-title t2">职位描述</div>
-      <div data-bind="text: detailData().descriptions" class="jobs-description-d">
+    <div class="work-edu">
+      <div class="m-title t2">工作经历</div>
+      <div class="flex mui-row pt15">参加工作时间：2019.09.01</div>
+      <div class="flow-box">
+        <div class="time">2017.09至2019.07</div>
+        <div class="job-name">护理师</div>
+        <div class="company-name">公司公司公司</div>
+      </div>
+      <div class="m-title t2 pt15">教育经历</div>
+      <div class="flow-box">
+        <div class="time">2017.09至2019.07</div>
+        <div>教育机构</div>
+        <div>学习课程</div>
       </div>
     </div>
   </div>

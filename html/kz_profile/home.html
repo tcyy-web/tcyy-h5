@@ -82,9 +82,9 @@
     <div id="jianli" class="mui-control-content mui-fullscreen">
       <div>
         <div class="nav-tabs">
-          <div class="mui-tab-item active">投递我的</div>
-          <div class="mui-tab-item">我收藏的</div>
-          <div class="mui-tab-item">历史查看</div>
+          <div tabtype="1" data-bind="css: {active: tabType() == 1}" class="mui-tab-item">投递我的</div>
+          <div tabtype="2" data-bind="css: {active: tabType() == 2}" class="mui-tab-item">我收藏的</div>
+          <div tabtype="3" data-bind="css: {active: tabType() == 3}" class="mui-tab-item">历史查看</div>
         </div>
         <div class="space"></div>
       </div>
@@ -92,9 +92,61 @@
         <div class="mui-scroll-wrapper">
           <div id="jianli-list" class="mui-scroll">
             <ul class="mui-table-view">
-              <li>
-                
-              </li>
+              <!-- ko if: $root.tabType() == 1 -->
+                <li>
+                   <div class="resume-box">
+                    <div class="m-title t1">
+                      <span>姓名</span> 
+                      <span class="key-imp">
+                        <span>护理师</span> | 
+                        <span>大专</span> |
+                        <span>5-10年</span>
+                      </span>
+                    </div>
+                    <div class="flex">
+                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>投递日期：<span></span></div>
+                      <div class="resume-jobs flex-item"><i class="mui-icon mui-icon-paperplane"></i>投递职位名称</div>
+                    </div>
+                    <div class="tel"><i class="iconfont icon-dianhua"></i>133333333333</div>
+                  </div>
+                </li>
+              <!-- /ko -->
+              <!-- ko if: $root.tabType() == 2 -->
+                <li>
+                  <div class="resume-box">
+                    <div class="m-title t1">
+                      <span>姓名</span> 
+                      <span class="key-imp">
+                        <span>护理师</span> | 
+                        <span>大专</span> |
+                        <span>5-10年</span>
+                      </span>
+                    </div>
+                    <div class="flex">
+                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>收藏日期：<span></span></div>
+                    </div>
+                    <div class="tel"><i class="iconfont icon-dianhua"></i>133333333333</div>
+                  </div>
+                </li>
+              <!-- /ko -->
+              <!-- ko if: $root.tabType() == 3 -->
+                <li>
+                  <div class="resume-box">
+                    <div class="m-title t1">
+                      <span>姓名</span> 
+                      <span class="key-imp">
+                        <span>护理师</span> | 
+                        <span>大专</span> |
+                        <span>5-10年</span>
+                      </span>
+                    </div>
+                    <div class="flex">
+                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>查看日期：<span></span></div>
+                    </div>
+                    <div class="tel"><i class="iconfont icon-dianhua"></i>133333333333</div>
+                  </div>
+                </li>
+              <!-- /ko -->
             </ul>
           </div>
         </div>
@@ -381,71 +433,106 @@
         })();
         // 简历
         (function(){
+          // 分页参数
+          var page = 1;
+          var limit = 10;
+          var more = true;
           //列表渲染
           var BaseView = function () {
             var vm = this;
-            vm.searchRes = {
-              professional: ko.observable(''),
-              region: ko.observable(),
-              regionText: ko.observable(),
-              education: ko.observable(''),
-              experience: ko.observable(''),
-              positiontype: ko.observable('')
-            }
-            // 是否正在筛选
-            vm.hasSearch = ko.computed(function() {
-               return !!vm.searchRes.education() ||
-               !!vm.searchRes.experience() ||
-               !!vm.searchRes.positiontype();
+            //tab 类型  1 投递我的  2  我收藏的  3 历史查看
+            vm.tabType = ko.observable(1);
+            vm.queryUrl = ko.computed(function(){
+              if (vm.tabType() == 2) {
+                return 'personalcompany/queryCollectResumeRecords'
+              } else if (vm.tabType() == 3) {
+                return 'personalcompany/queryViewLogs';
+              }
+              return 'personalresume/queryPersonalResumeList'
+            });
+            vm.tabType.subscribe(function(){
+              reloadPage();
             })
             vm.list = ko.observableArray([]);
-            // 跳转筛选
-            vm.sortFilter = function() {
-              var nextWebview = plus.webview.getWebviewById('kz_profile_JobCondition');
-              $.fire(nextWebview, 'kz_profile_JobCondition_Data', ko.mapping.toJS(viewModel.searchRes));
-              $.openWindow({
-                id:'kz_profile_JobCondition',               
-              });                    
-            }
-            // 点击搜索
-            vm.searchFn =function () {
-               reloadPage();
-            }
-            //区域
-            vm.regionFilter = function () {
-              setTimeout(function() {
-                areaPicker.show(function(items) {
-                  if (items.length > 0) {
-                    var result = _.reduce(items, function(a, b){                     
-                      return a + b.name
-                    }, '');
-                    var last = items[items.length -1];
-                    viewModel.searchRes.region(last.id);
-                    viewModel.searchRes.regionText(result);   
-                    reloadPage();
-                  }                                 
-                });
-              }, 300);
-            }
           }
           var viewModel = new BaseView();
           ko.applyBindings(viewModel, doc.getElementById('jianli'));
+          
+          mui('#jianli').on('tap', '.nav-tabs .mui-tab-item', function(e) {
+            viewModel.tabType(this.getAttribute('tabtype'));
+          })
+          
+          function queryJinliList (callback) {
+            var _request = {
+              page: page,
+              limit: limit
+            }       
+            request.loginAjax(viewModel.queryUrl(),{
+              data: _request,
+              showMsg: false
+            },function(data, success) {
+               // 处理页面绑定
+               if (data && data.data) {
+                 // 取字典显示值
+                 if (data.data.length > 0) {
+                   Enums.getAll(function(){
+                      $.each(data.data, function(index, item) {
+                         item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
+                      });
+                   })
+                 }                 
+                 if (page === 1) {                  
+                   viewModel.list(data.data);                  
+                 } else {
+                   $.each(data.data, function(index,i) {
+                     viewModel.list.push(i);
+                   });                  
+                 }                
+               }
+               // 判断是否有下一页数据
+               if (data && data.data && data.data.length === limit) {
+                 more = true;
+               } else {
+                 more = false;
+               }
+               if (typeof callback === 'function') {
+                 callback();
+               }
+            },function() {
+              if (typeof callback === 'function') {
+                 callback();
+               }
+            });
+          }
+          queryJinliList();
+          function reloadPage () {
+            page = 1;
+            more = true;
+            $('#jianli-list').pullToRefresh().refresh(true);
+            queryJinliList();
+          }
           $('#jianli-list').pullToRefresh({
             down: {
               callback: function() {
+                page = 1;
                 var self = this;
-                setTimeout(function(){
+                queryJinliList(function() {
                   self.endPullDownToRefresh();
                   $('#jianli-list').pullToRefresh().refresh(true);
-                }, 500);
+                });  
               }
             },
             up: {
               callback: function() {
                 var self = this;
-                setTimeout(function(){
-                  self.endPullUpToRefresh(true);
-                }, 300);
+                if (more) {
+                  page = page + 1;
+                  queryJinliList(function() {
+                    self.endPullUpToRefresh(false);
+                  });
+                  return;
+                }
+                self.endPullUpToRefresh(true);
               }
             }
           });

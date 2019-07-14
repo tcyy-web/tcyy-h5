@@ -231,6 +231,15 @@
 }
 
 /*简历*/
+.work-edu {
+  padding: 10px 15px;
+}
+.work-edu .flex {
+  color: #999;
+}
+.work-edu .pt15 {
+  padding-top: 15px;
+}
 .flow-box {
   background: #f3f3f3;
   border-radius: 10px;
@@ -258,6 +267,14 @@
 }
 .resume-box > div {
   padding: 5px 0;
+}
+.resume-box .tel{
+  border: 1px solid #f1f1f1;
+  padding: 3px 10px!important;
+  border-radius: 30px;
+  background: #f6f3ff;
+  color: #765fc3;
+  display: inline-block;
 }
 
 .publish-box{ padding:12px 15px; border-bottom:1px solid #f3f3f3; }
