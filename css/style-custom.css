@@ -74,3 +74,8 @@
   color: #dd524d;
 }
 
+.mui-input-row textarea{
+  padding: 15px 15px 15px 0;
+  font-size: 14px;
+}
+

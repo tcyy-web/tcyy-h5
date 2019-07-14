@@ -105,24 +105,24 @@
       </div>
       <h4>工作经历</h4>
       <div class="profile-form-item">
-        <div class="flow-box">
+        <!--<div class="flow-box">
           <div>2017.09至2019.07</div>
           <div>护理师</div>
           <div>公司公司公司</div>
-        </div>
-        <div class="flow-box">
+        </div>-->
+        <div data-bind="click: workMaintain.bind(null, {})" class="flow-box">
           <div class="mui-text-center"><i class="mui-icon mui-icon-plusempty"></i>添加工作经历</div>
         </div>
       </div>
       <h4>教育培训经历</h4>
       <div class="profile-form-item">
-        <div class="flow-box">
+        <!--<div class="flow-box">
           <div>2017.09至2019.07</div>
           <div>护理师</div>
           <div>公司公司公司</div>
-        </div>
-        <div class="flow-box">
-          <div class="mui-text-center"><i class="mui-icon mui-icon-plusempty"></i>添加工作经历</div>
+        </div>-->
+        <div data-bind="click: educMaintain.bind(null, {})" class="flow-box">
+          <div class="mui-text-center"><i class="mui-icon mui-icon-plusempty"></i>添加教育培训经历</div>
         </div>
       </div>
     </form>
@@ -145,7 +145,16 @@
   <script src="js/profile-common.js" ></script>
   <script>
     (function($, doc) {
-      $.init();
+      $.init({
+        preloadPages:[{
+          id:'kz_profile_MyResume_work',
+          url: './my-resume-work.html'
+        }, 
+        {
+          id:'kz_profile_MyResume_educ',
+          url: './my-resume-educ.html'
+        }],
+      });
       $.plusReady(function() {
         // 初始化性别选择
         var sexPicker = new $.PopPicker({
@@ -331,9 +340,85 @@
               });
             }, 500);
           }
+          // 工作经历维护
+          vm.workMaintain = function (data) {
+            var nextWebview = plus.webview.getWebviewById('kz_profile_MyResume_work');
+            $.fire(nextWebview, 'kz_profile_MyResume_work_Data', data);
+            $.openWindow({
+              id:'kz_profile_MyResume_work',               
+            }); 
+          }
+          // 教育经历维护
+          vm.educMaintain = function(data) {
+            var nextWebview = plus.webview.getWebviewById('kz_profile_MyResume_educ');
+            $.fire(nextWebview, 'kz_profile_MyResume_educ_Data', data);
+            $.openWindow({
+              id:'kz_profile_MyResume_educ',               
+            }); 
+          }
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, document.getElementById('main-content'));  
+        // 加载简历信息
+        function loadPage () {
+          request.loginAjax('personalresume/getResumeDetail', {
+          }, function(data,success) {     
+            if (success) {   
+              // TODO 
+            }
+          });
+          
+        }
+        //保存简历
+        saveResume = function () {
+          return new Promise(function(resolve){
+            var postData = ko.mapping.toJS(viewModel.formData);
+            if (!postData.personname) {
+              mui.toast('请输入姓名')
+              return
+            }
+            if (!postData.sexText) {
+              mui.toast('请选择性别')
+              return
+            }
+            if (!postData.authurl) {
+              mui.toast('请上传资格证书')
+              return
+            }
+            if (!postData.intentpositionText) {
+              mui.toast('请选择求职职位')
+              return
+            }
+            if (!postData.expectregion || !postData.expectregionid) {
+              mui.toast('请选择期望地区')
+              return
+            }
+            if (!postData.jointime) {
+              mui.toast('请选择工作日期')
+              return
+            }
+            request.loginAjax('personalresume/savePersonalResume', {
+              data: postData
+            }, function(data,success) {     
+              if (success) {   
+                resolve()
+              }
+            });
+          });
+        }
+        doc.getElementById('saveBtn').addEventListener('tap', function(e) {
+          saveResume().then(function(){
+            loadPage();
+          });
+        });
+        //工作经历刷新
+        window.addEventListener('kz_profile_MyResume_workRefresh', function(e){
+          
+        });
+        //教育经历刷新
+        window.addEventListener('kz_profile_MyResume_educRefresh', function(e){
+          
+        });
       });
     }(mui, document));
   </script>

@@ -156,7 +156,7 @@
           var vm = this;
           vm.headerText = ko.observable('职位');
           vm.pageType = ko.observable('zhiwei');  
-          vm.hasCompany = ko.observable(false);
+          vm.hasCompany = ko.observable(true);
           vm.publishJob = function() {
             $.openWindow({
               id:'kz_profile_JobPublish',
@@ -180,6 +180,7 @@
           $('[page-type="jianli"]')[0].classList.remove('mui-hidden');  
           headerView.hasCompany(true);
         }); 
+        // 监听公司信息是否保存
         window.addEventListener('Kz_profile_home_company', function (){
           ProfileCompany().then(function() {
             $('[page-type="jianli"]')[0].classList.remove('mui-hidden');

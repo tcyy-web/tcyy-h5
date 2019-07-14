@@ -580,6 +580,7 @@ input[type=submit]:enabled:active {
 	align-items: center;
 	line-height: 20px;
 	color: #000000;
+	padding-right: 15px;
 }
 .mui-input-row .mui-input-clear~.mui-icon-clear, .mui-input-row .mui-input-password~.mui-icon-eye, .mui-input-row .mui-input-speech~.mui-icon-speech{
 	margin-top: 5px;

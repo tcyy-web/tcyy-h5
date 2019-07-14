@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title></title>
+  <link href="../../fonts/iconfont.css" rel="stylesheet" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/mui.picker.min.css">
+  <link rel="stylesheet" href="../../css/mui.poppicker.css">
+  <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/style-custom.css" rel="stylesheet" />
+  <link href="css/profile-style.css" rel="stylesheet" />
+  <style>
+    .mui-content{
+      height: auto;
+    }
+  </style>
+</head>
+
+<body id="main-content">
+  <header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">教育培训经历</h1>
+  </header>
+  <nav class="mui-bar mui-bar-tab custom-tab">
+    <div class="mui-tab-item">
+      <button id="saveBtn" class="mui-btn mui-btn-blue">保存</button>
+    </div>  
+  </nav>
+  <div class="mui-content">
+    <form class="mui-input-group profile-form-group">
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>教育机构：</label>
+        <input data-bind="value: formData.schoolname, muiInput: formData.schoolname" maxlength="100" type="text" class="mui-input-clear" placeholder="请输入教育机构">
+      </div>
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>学习课程：</label>
+        <input data-bind="value: formData.profession, muiInput: formData.profession" maxlength="100" type="text" class="mui-input-clear" placeholder="请输入学习课程">
+      </div>
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>开始日期：</label>
+        <p data-bind="text: !formData.entrancedate() ? '请选择' : formData.entrancedate,
+          click: entrancedateClick">请选择</p>
+      </div>
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>结束日期：</label>
+        <p data-bind="text: !formData.graduatedate() ? '请选择' : formData.graduatedate,
+          click: dimissiondateClick">请选择</p>
+      </div>
+    </form>
+  </div>
+  <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/knockout.extend.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.picker.min.js"></script>
+  <script src="../../js/mui.poppicker.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
+  <script src="js/profile-common.js" ></script>
+  <script>
+    (function($, doc) {
+      $.init();
+      $.plusReady(function() {
+        // 初始化日期选择
+        var datepicer = new $.DtPicker({
+          type: 'date',
+          beginYear: config.dateBegin,
+          endYear: config.dateEnd
+        });
+        var BaseView = function () {
+          var vm = this;
+          vm.formData = {
+            id: ko.observable(),
+            schoolname: ko.observable(),
+            profession: ko.observable(),
+            entrancedate: ko.observable(),
+            graduatedate: ko.observable()
+          }
+          vm.entrancedateClick = function () {
+            setTimeout(function() {
+              datepicer.show(function(rs) {
+                if (!!vm.formData.graduatedate()) {
+                  if (rs.text >= vm.formData.graduatedate()) {
+                    mui.toast('开始日期必须小于结束日期')
+                    return
+                  }
+                }
+                viewModel.formData.entrancedate(rs.text);
+              });
+            }, 500);
+          }
+          vm.dimissiondateClick = function () {
+            setTimeout(function() {
+              datepicer.show(function(rs) {
+                if (!!vm.formData.entrancedate()) {
+                  if (rs.text <= vm.formData.entrancedate()) {
+                    mui.toast('结束日期必须大于开始日期')
+                    return
+                  }
+                }
+                viewModel.formData.graduatedate(rs.text);
+              });
+            }, 500);
+          }
+        }
+        var viewModel = new BaseView();
+        ko.applyBindings(viewModel, document.getElementById('main-content'));  
+        // 加载详情信息
+        function loadPage (id) {
+          request.loginAjax('personaleducation/getPersonalEducationDetail', {
+            data: {
+              id: 1
+            }
+          }, function(data,success) {     
+            if (success) {   
+              // TODO 
+            }
+          });
+          
+        }
+        //保存
+        saveServer = function () {
+          return new Promise(function(resolve){
+            var postData = ko.mapping.toJS(viewModel.formData);
+            if (!postData.schoolname) {
+              mui.toast('请输入教育机构')
+              return
+            }
+            if (!postData.profession) {
+              mui.toast('请输入学习课程')
+              return
+            }
+            if (!postData.entrancedate) {
+              mui.toast('请选择开始日期')
+              return
+            }
+            if (!postData.graduatedate) {
+              mui.toast('请选择结束日期')
+              return
+            }
+            request.loginAjax('personaleducation/savePersonEducationExp', {
+              data: postData
+            }, function(data,success) {     
+              if (success) {   
+                resolve()
+              }
+            });
+          });
+        }
+        doc.getElementById('saveBtn').addEventListener('tap', function(e) {
+          saveServer().then(function(){
+            var nextWebview = plus.webview.getWebviewById('kz_profile_MyResume');
+            $.fire(nextWebview, 'kz_profile_MyResume_educRefresh');
+            $.back(); 
+          });
+        });
+        
+        window.addEventListener('kz_profile_MyResume_educ_Data', function(e){
+          if (e.detail.id > 0) {
+            loadPage(e.detail.id);
+          } else {
+            viewModel.formData.id('');
+            viewModel.formData.schoolname('');
+            viewModel.formData.profession('');
+            viewModel.formData.entrancedate('');
+            viewModel.formData.graduatedate('');
+          }
+        });
+      });
+    }(mui, document));
+  </script>
+</body>
+</html>
