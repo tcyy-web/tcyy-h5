@@ -65,9 +65,9 @@
                 <div class="jobs-box">
                   <div data-bind="text: professional" class="jobs-name"></div>
                   <div class="jobs-imp">                     
-                    <span data-bind="text: positiontypeStr" class="c-box"></span>
+                    <span data-bind="text: positiontypeText" class="c-box"></span>
                     <span data-bind="text: region" class="c-box"></span>
-                    <span data-bind="text: experience" class="c-box"></span>
+                    <span data-bind="text: experienceText" class="c-box"></span>
                   </div>
                   <div data-bind="text: name" class="jobs-company-name"></div>
                   <span data-bind="text: wagesStr" class="jobs-price"></span>
@@ -353,17 +353,18 @@
                    Enums.getAll(function(){
                       $.each(data.data, function(index, item) {
                          item.wagesStr = Enums.getEnumText('salaryRange', item.wages);
-                         item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
+                         item.positiontypeText = Enums.getEnumText('positionType', item.positiontype);
+                         item.experienceText = Enums.getEnumText('workExperience', item.experience);
                       });
+                      if (page === 1) {                  
+                         viewModel.list(data.data);                  
+                       } else {
+                         $.each(data.data, function(index,i) {
+                           viewModel.list.push(i);
+                         });                  
+                       }  
                    })
-                 }                 
-                 if (page === 1) {                  
-                   viewModel.list(data.data);                  
-                 } else {
-                   $.each(data.data, function(index,i) {
-                     viewModel.list.push(i);
-                   });                  
-                 }                
+                 }  
                }
                // 判断是否有下一页数据
                if (data && data.data && data.data.length === limit) {

@@ -185,7 +185,7 @@
         ko.applyBindings(viewModel, document.getElementById('main-content'));  
         function loadPage () {
           ProfileCompany().then(function(res) {
-           
+            console.log(JSON.stringify(res));
           }); 
         }
         function saveServer() {
