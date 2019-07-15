@@ -17,7 +17,7 @@
   <header id="header-view" class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title" data-bind="text: headerText">职位</h1>
-    <!-- ko if: pageType() == 'zhiwei' && hasCompany() -->
+    <!-- ko if: pageType() == 'zhiwei' -->
     <a data-bind="click: publishJob" class="mui-pull-right">发布</a>
     <!-- /ko -->
     <!-- ko if: pageType() == 'jianli' -->
@@ -29,7 +29,7 @@
         <div class="iconfontbox"><i class="iconfont icon-zhiwei"></i></div>
         <span class="mui-tab-label">职位</span>
       </a>
-      <a page-type="jianli" href="#jianli" class="mui-tab-item">
+      <a page-type="jianli" href="#jianli" class="mui-tab-item mui-hidden">
         <div class="iconfontbox"><i class="iconfont icon-jianli"></i></div>
         <span class="mui-tab-label">简历</span>
       </a>
@@ -210,19 +210,48 @@
       });
       $.plusReady(function() {
         plus.navigator.setStatusBarBackground('#8E78D6');
+        // 跳转公司维护页
+        function JopToCompany() {
+          mui.openWindow({
+            id:'kz_profile_MyCompany',
+            url: './my-company.html',
+            show: {
+              aniShow: 'pop-in'
+            },
+            styles: {
+              popGesture: 'hide'
+            },
+            waiting: {
+              autoShow: false
+            }
+          });
+        }
+        //验证并跳转公司维护信息
+        function CheckCompany () {
+          return new Promise(function(resolve) {
+            ProfileCompany().then(function(){
+              resolve();
+            })
+            .catch(function(){
+              mui.toast('请先维护公司信息');
+              JopToCompany();
+            });
+          });
+        }
         // 初始化头部
         var HeaderView = function () {
           var vm = this;
           vm.headerText = ko.observable('职位');
           vm.pageType = ko.observable('zhiwei');  
-          vm.hasCompany = ko.observable(true);
           //发布职位
           vm.publishJob = function() {
-            var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
-            $.fire(nextWebview, 'kz_profile_JobPublish_Data', {});
-            $.openWindow({
-              id:'kz_profile_JobPublish',               
-            }); 
+            CheckCompany().then(function(){
+               var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
+                $.fire(nextWebview, 'kz_profile_JobPublish_Data', {});
+                $.openWindow({
+                  id:'kz_profile_JobPublish',               
+                }); 
+            })
           }
           // 搜索简历
           vm.searchResume = function() {
@@ -246,13 +275,11 @@
         //  查询公司信息
         ProfileCompany().then(function() {
           $('[page-type="jianli"]')[0].classList.remove('mui-hidden');  
-          headerView.hasCompany(true);
         }); 
         // 监听公司信息是否保存
         window.addEventListener('Kz_profile_home_company', function (){
           ProfileCompany().then(function() {
             $('[page-type="jianli"]')[0].classList.remove('mui-hidden');
-            headerView.hasCompany(true);
           });
         })
         // 初始化区域选择
@@ -348,23 +375,20 @@
             },function(data, success) {
                // 处理页面绑定
                if (data && data.data) {
-                 // 取字典显示值
-                 if (data.data.length > 0) {
-                   Enums.getAll(function(){
-                      $.each(data.data, function(index, item) {
-                         item.wagesStr = Enums.getEnumText('salaryRange', item.wages);
-                         item.positiontypeText = Enums.getEnumText('positionType', item.positiontype);
-                         item.experienceText = Enums.getEnumText('workExperience', item.experience);
-                      });
-                      if (page === 1) {                  
-                         viewModel.list(data.data);                  
-                       } else {
-                         $.each(data.data, function(index,i) {
-                           viewModel.list.push(i);
-                         });                  
-                       }  
-                   })
-                 }  
+                 Enums.getAll(function(){
+                   $.each(data.data, function(index, item) {
+                     item.wagesStr = Enums.getEnumText('salaryRange', item.wages);
+                     item.positiontypeText = Enums.getEnumText('positionType', item.positiontype);
+                     item.experienceText = Enums.getEnumText('workExperience', item.experience);
+                   });
+                   if (page === 1) {                  
+                     viewModel.list(data.data);                  
+                   } else {
+                     $.each(data.data, function(index,i) {
+                       viewModel.list.push(i);
+                     });                  
+                   }  
+                 });
                }
                // 判断是否有下一页数据
                if (data && data.data && data.data.length === limit) {
@@ -542,19 +566,7 @@
         (function(){
           var wodeViewModel = {
             myCompany: function () {
-              $.openWindow({
-                id:'kz_profile_MyCompany',
-                url: './my-company.html',
-                show: {
-                  aniShow: 'pop-in'
-                },
-                styles: {
-                  popGesture: 'hide'
-                },
-                waiting: {
-                  autoShow: false
-                }
-              });
+              JopToCompany();
             },
             myResume: function () {
               $.openWindow({

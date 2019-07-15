@@ -71,7 +71,7 @@
         children: 'children'
       }
       mui.extend(true,defaults,opts);
-      let data = defaults.arrays;
+      let data = _.cloneDeep(defaults.arrays);
       var id = defaults.id;
       var pid = defaults.pid;
       var children = defaults.children;

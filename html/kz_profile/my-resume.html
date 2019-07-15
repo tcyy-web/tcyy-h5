@@ -36,17 +36,27 @@
         <input data-bind="value: formData.personname, muiInput: formData.personname" maxlength="50" type="text" class="mui-input-clear" placeholder="请输入姓名">
       </div>
       <div class="mui-input-row">
+        <label><i class="form-required"></i>出生日期：</label>
+        <p data-bind="text: !formData.birthday() ? '请选择' : formData.birthday, 
+          click: birthdayClick">请选择</p>
+      </div>
+      <div class="mui-input-row">
         <label><i class="form-required"></i>联系电话：</label>
-        <input data-bind="value: formData.telephone, muiInput: formData.telephone" maxlength="20" type="text" class="mui-input-clear" placeholder="请输入姓名">
+        <input data-bind="value: formData.telephone, muiInput: formData.telephone" maxlength="20" type="text" class="mui-input-clear" placeholder="请输入联系电话">
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>邮箱：</label>
-        <input data-bind="value: formData.email, muiInput: formData.email" maxlength="20" type="text" class="mui-input-clear" placeholder="请输入姓名">
+        <input data-bind="value: formData.email, muiInput: formData.email" maxlength="100" type="text" class="mui-input-clear" placeholder="请输入邮箱">
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>性别：</label>
         <p data-bind="text: !formData.sexText() ? '请选择' : formData.sexText, 
           click: sexPickerClick">请选择</p>
+      </div>
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>学历：</label>
+        <p data-bind="text: !formData.educationText() ? '请选择' : formData.educationText, 
+          click: educationClick">请选择</p>
       </div>
       <div class="mui-input-row">
         <label>民族：</label>
@@ -59,20 +69,7 @@
       </div>
       <div class="mui-input-row">
         <label>居住地址：</label>
-        <input data-bind="value: formData.address, muiInput: formData.address" maxlength="100" type="text" class="mui-input-clear" placeholder="请输入姓名">
-      </div>
-      <div class="mui-input-row auto">
-        <label><i class="form-required"></i>资格证书：</label>
-        <div>
-          <div data-bind="click: addPic" class="custom-add-pic flex flex-col-center flex-row-center">
-            <div>
-              <div class="custom-img-box flex flex-col-center flex-row-center">
-                  <img data-bind="attr: {src: !!formData.showAuthurl() ? formData.showAuthurl() : '../../images/project/jia.png'}" id="img" src="../../images/project/jia.png" />                 
-              </div>
-              <p>点击上传</p>
-            </div>
-          </div>          
-        </div>
+        <input data-bind="value: formData.address, muiInput: formData.address" maxlength="100" type="text" class="mui-input-clear" placeholder="请输入居住地址">
       </div>
       <!-- ko if: formData.id() > 0 -->
       <div class="mui-input-row">
@@ -110,6 +107,21 @@
         <label><i class="form-required"></i>工作日期：</label>
         <p data-bind="text: !formData.jointime() ? '请选择' : formData.jointime,
           click: datePickerClick">请选择</p>
+      </div>
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>工作经验：</label>
+        <input data-bind="value: formData.workexperience, muiInput: formData.workexperience" maxlength="20" type="text" class="mui-input-clear" placeholder="请输入工作经验">
+      </div>
+      <h4>资格证书</h4>
+      <div class="profile-form-item">
+        <!--<div class="flow-box">
+          <div>2017.09至2019.07</div>
+          <div>护理师</div>
+          <div>公司公司公司</div>
+        </div>-->
+        <div data-bind="click: qualificationMaintain.bind(null, {})" class="flow-box">
+          <div class="mui-text-center"><i class="mui-icon mui-icon-plusempty"></i>添加资格证书</div>
+        </div>
       </div>
       <h4>工作经历</h4>
       <div class="profile-form-item">
@@ -161,9 +173,28 @@
         {
           id:'kz_profile_MyResume_educ',
           url: './my-resume-educ.html'
+        },
+        {
+          id:'kz_profile_MyResume_quali',
+          url: './my-resume-quali.html'
         }],
       });
       $.plusReady(function() {
+        
+        function CheckSave() {
+          return new Promise(function(resolve) {
+            ProfileResumeCheck().then(function(){
+              resolve()
+            }).catch(function(){
+              mui.toast('请先保存简历信息');
+            });
+          });
+        }
+        var birthdayPicker = new $.DtPicker({
+          type: 'date',
+          beginYear: '1950',
+          endYear: config.dateEnd
+        });
         // 初始化性别选择
         var sexPicker = new $.PopPicker({
         });
@@ -171,12 +202,15 @@
           { value: 1, text: '男'},
           { value: 2, text: '女'}
         ]);
+        // 初始化学历选择
+        var educationPicker = new $.PopPicker({
+        });
         // 初始化婚姻选择
         var marriagePicker = new $.PopPicker({
         });
         marriagePicker.setData([
-          { value: 1, text: '已婚'},
-          { value: 2, text: '未婚'}
+          { value: 2, text: '已婚'},
+          { value: 1, text: '未婚'}
         ]);
         // 初始化职位选择
         var intentpositionPicker = new $.PopPicker({
@@ -207,9 +241,19 @@
         });
         // 初始化日期选择
         var datepicer = new $.DtPicker({
-          type: 'date'
+          type: 'date',
+          beginYear: config.dateBegin,
+          endYear: config.dateEnd
         });
         Enums.getAll(function(){
+          educationPicker.setData(
+            _.map(_.cloneDeep(Enums.getEnums('education')), function(o) {
+              return {
+                value: o.dict_value,
+                text: o.dict_name
+              }
+            })
+          );
           intentpositionPicker.setData(
             _.map(_.cloneDeep(Enums.getEnums('positionType')), function(o) {
               return {
@@ -232,17 +276,18 @@
           vm.formData = {
             id: ko.observable(),
             personname: ko.observable(),
+            birthday: ko.observable(),
             telephone: ko.observable(),
             email: ko.observable(),
             sex: ko.observable(),
             sexText: ko.observable(''),
+            //学历
+            education: ko.observable(),
+            educationText: ko.observable(''),
             ethnic: ko.observable(),
             marriage: ko.observable(),
             marriageText: ko.observable(''),
             address: ko.observable(),
-            // 资格证书
-            authurl: ko.observable(),
-            showAuthurl: ko.observable(),
             // 求职职位
             intentposition: ko.observable(),
             intentpositionText: ko.observable(''),
@@ -258,7 +303,23 @@
             // 期望工资
             wages: ko.observable(),  
             wagesText: ko.observable(''),
-            jointime: ko.observable()
+            jointime: ko.observable(),
+            workexperience: ko.observable()
+          }
+          vm.birthdayClick = function(){
+            setTimeout(function() {
+              birthdayPicker.show(function(rs) {
+                viewModel.formData.birthday(rs.text);
+              });
+            }, 500);
+          }
+          vm.educationClick = function(){
+            setTimeout(function() {
+              educationPicker.show(function(items) {
+                vm.formData.education(items[0].value);
+                vm.formData.educationText(items[0].text);
+              });
+            }, 500);
           }
           vm.sexPickerClick = function(){
             setTimeout(function() {
@@ -307,17 +368,6 @@
               });
             }, 500);
           }
-          vm.addPic = function () {
-            setTimeout(function() {
-              upload.showImgActionSheet(function(data) {
-                var url = config.url + "Uploads/Files";
-                upload.uploadimge(url, data.divid, function(res) {
-                  vm.formData.authurl(res[0].saveUrl);
-                  vm.formData.showAuthurl(data.abspath);
-                });
-              });
-            }, 500);
-          }
           vm.intentpositionPickerClick = function () {
             setTimeout(function() {
               intentpositionPicker.show(function(items) {
@@ -350,41 +400,63 @@
               });
             }, 500);
           }
+          // 资格证书维护
+          vm.qualificationMaintain = function (data) {
+            var nextWebview = plus.webview.getWebviewById('kz_profile_MyResume_quali');
+            $.fire(nextWebview, 'kz_profile_MyResume_quali_Data', data);
+            $.openWindow({
+              id:'kz_profile_MyResume_quali',               
+            }); 
+            
+//          CheckSave().then(function(){
+//          });
+          }
           // 工作经历维护
           vm.workMaintain = function (data) {
-            var nextWebview = plus.webview.getWebviewById('kz_profile_MyResume_work');
-            $.fire(nextWebview, 'kz_profile_MyResume_work_Data', data);
-            $.openWindow({
-              id:'kz_profile_MyResume_work',               
-            }); 
+            CheckSave().then(function(){
+              var nextWebview = plus.webview.getWebviewById('kz_profile_MyResume_work');
+              $.fire(nextWebview, 'kz_profile_MyResume_work_Data', data);
+              $.openWindow({
+                id:'kz_profile_MyResume_work',               
+              }); 
+            });
           }
           // 教育经历维护
           vm.educMaintain = function(data) {
-            var nextWebview = plus.webview.getWebviewById('kz_profile_MyResume_educ');
-            $.fire(nextWebview, 'kz_profile_MyResume_educ_Data', data);
-            $.openWindow({
-              id:'kz_profile_MyResume_educ',               
-            }); 
+            CheckSave().then(function(){
+              var nextWebview = plus.webview.getWebviewById('kz_profile_MyResume_educ');
+              $.fire(nextWebview, 'kz_profile_MyResume_educ_Data', data);
+              $.openWindow({
+                id:'kz_profile_MyResume_educ',               
+              }); 
+            });
           }
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, document.getElementById('main-content'));  
         // 加载简历信息
         function loadPage () {
-          request.loginAjax('personalresume/getResumeDetail', {
+          request.loginAjax('personalresume/getPersonalResumeDetail', {
+            showMsg: false
           }, function(data,success) {     
-            if (success) {   
-              // TODO 
+            if (success) {
+              _.forEach(viewModel.formData, function(n, key) {
+                n(data[key]);
+              })
             }
           });
-          
         }
+        loadPage();
         //保存简历
         saveResume = function () {
           return new Promise(function(resolve){
             var postData = ko.mapping.toJS(viewModel.formData);
             if (!postData.personname) {
               mui.toast('请输入姓名')
+              return
+            }
+            if (!postData.birthday) {
+              mui.toast('请选择出生日期')
               return
             }
             if (!postData.telephone) {
@@ -399,10 +471,6 @@
               mui.toast('请选择性别')
               return
             }
-            if (!postData.authurl) {
-              mui.toast('请上传资格证书')
-              return
-            }
             if (!postData.intentpositionText) {
               mui.toast('请选择求职职位')
               return
@@ -413,6 +481,10 @@
             }
             if (!postData.jointime) {
               mui.toast('请选择工作日期')
+              return
+            }
+            if (!postData.workexperience) {
+              mui.toast('请输入工作经验')
               return
             }
             request.loginAjax('personalresume/savePersonalResume', {

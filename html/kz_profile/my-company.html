@@ -81,12 +81,6 @@
           </div>          
         </div>
       </div>
-      <!-- ko if: formData.id() > 0 -->
-      <div class="mui-input-row">
-        <label>状态：</label>
-        <p></p>
-      </div>
-      <!-- /ko -->
     </form>
   </div>
   <script src="../../third/bluebird.min.js"></script>
@@ -185,8 +179,13 @@
         ko.applyBindings(viewModel, document.getElementById('main-content'));  
         function loadPage () {
           ProfileCompany().then(function(res) {
-            console.log(JSON.stringify(res));
-          }); 
+            _.forEach(viewModel.formData, function(n, key) {
+              n(res[key]);
+            });
+            if (!!res.authurl) {
+              viewModel.formData.showAuthurl(config.serverUrl + res.authurl)
+            }
+          }).catch(function(){}); 
         }
         function saveServer() {
           return new Promise(function(resolve) {               
@@ -223,6 +222,9 @@
         
         doc.getElementById('saveBtn').addEventListener('tap', function(e) {
           saveServer().then(function(){
+            //通知首页刷新简历tab
+            var nextWebview = plus.webview.getWebviewById('Kz_profile');
+            $.fire(nextWebview, 'Kz_profile_home_company', {});
             loadPage();
           });
         });

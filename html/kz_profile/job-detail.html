@@ -31,18 +31,18 @@
   <div class="mui-content">
     <div class="jobs-detail">
       <div data-bind="text: detailData().professional" class="m-title t1"></div>
-      <span data-bind="text: detailData().wagesStr" class="jobs-price"></span>
+      <span data-bind="text: detailData().wagesText" class="jobs-price"></span>
       <div class="condition-box">
-        <span data-bind="text: detailData().positiontypeStr" class="c-box"></span>
+        <span data-bind="text: detailData().positiontypeText" class="c-box"></span>
         <span data-bind="text: detailData().nature == 2 ?'兼职' :'全职'" class="c-box"></span>
-        <span data-bind="text: detailData().experience" class="c-box"></span>
-        <span data-bind="text: detailData().educationStr" class="c-box"></span>
+        <span data-bind="text: detailData().experienceText" class="c-box"></span>
+        <span data-bind="text: detailData().educationText" class="c-box"></span>
       </div>
-      <div class="tj"><i class="iconfont icon-gongsixinxi1"></i>公司名称：</div>
+      <div class="tj"><i class="iconfont icon-gongsixinxi1"></i>公司名称：<span data-bind="text: detailData().name"></span></div>
       <div class="tj"><i class="iconfont icon-didian"></i>工作地点：<span data-bind="text:detailData().region"></span>-<span data-bind="text:detailData().address"></span></div>
       <div class="tj"><i class="iconfont icon-renshu"></i>招聘人数：<span data-bind="text:detailData().nums"></span>人</div>
-      <div class="tj"><i class="iconfont icon-lianxiren"></i>联系人：</div>
-      <div class="tel"><i class="iconfont icon-dianhua"></i></div>
+      <div class="tj"><i class="iconfont icon-lianxiren"></i>联系人：<span data-bind="text: detailData().contacts"></span></div>
+      <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: detailData().phone"></span></div>
     </div>
     
     <div class="jobs-description">
@@ -88,9 +88,10 @@
           }, function(data,success) {
             if (success) {   
               Enums.getAll(function(){
-                 data.wagesStr = Enums.getEnumText('salaryRange', data.wages);
-                 data.positiontypeStr = Enums.getEnumText('positionType', data.positiontype);
-                 data.educationStr = Enums.getEnumText('education', data.education);
+                 data.wagesText = Enums.getEnumText('salaryRange', data.wages);
+                 data.positiontypeText = Enums.getEnumText('positionType', data.positiontype);
+                 data.experienceText = Enums.getEnumText('workExperience', data.experience);
+                 data.educationText = Enums.getEnumText('education', data.education);
               })
               viewModel.detailData(ko.mapping.fromJS(data));
             }
@@ -100,14 +101,23 @@
         mui('#main-content').on('tap', '.mui-btn-blue', function(e) {
           ProfileResumeCheck().then(function(){
             //TODO
+          }).catch(function(){
+            mui.toast('请先维护简历信息');
+            $.openWindow({
+              id:'kz_profile_MyResume',
+              url: './my-resume.html',
+              show: {
+                aniShow: 'pop-in'
+              },
+              styles: {
+                popGesture: 'hide'
+              },
+              waiting: {
+                autoShow: false
+              }
+            });
           });
         })
-//      doc.getElementById('deliverBtn').addEventListener('tap', function (e) {
-//        ProfileResumeCheck().then(function(){
-//          //TODO
-//        });
-//      });
-        
         window.addEventListener('kz_profile_JobDetail_Data', function(e) {
           loadData(e.detail.id);
           viewModel.pageType(e.detail.type || 'show');
