@@ -269,8 +269,7 @@
       "splash": false,
       "push": false,
       "spot": false
-    },
-    "adid": ""
+    }
   },
   "dependencies": {
 		"pages": {
