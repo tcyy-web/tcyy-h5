@@ -102,12 +102,15 @@
 	       return o.dict_code == key;
 	     })
 	  }
-	  _that.getEnumText = function(key, value) {
+	  _that.getEnumText = function(key, value, defaultV) {
 	    var exist = _.find(_that.allEnums, function(o){
 	      return o.dict_code == key && o.dict_value == value
 	    })
 	    if (exist) {
 	      return exist.dict_name
+	    }
+	    if (defaultV == false) {
+	      return ''
 	    }
 	    return '-'
 	  }

@@ -45,9 +45,8 @@
           click: dimissiondateClick">请选择</p>
       </div>
       <div class="mui-input-row">
-        <label><i class="form-required"></i>职位类型：</label>
-        <p data-bind="text: !formData.positionsText() ? '请选择' : formData.positionsText, 
-          click: intentpositionPickerClick">请选择</p>
+        <label>工作职位：</label>
+        <input data-bind="value: formData.positions, muiInput: formData.positions" maxlength="50" type="text" class="mui-input-clear" placeholder="请输入工作职位">
       </div>      
     </form>
   </div>
@@ -71,32 +70,18 @@
     (function($, doc) {
       $.init();
       $.plusReady(function() {
-        // 初始化职位选择
-        var intentpositionPicker = new $.PopPicker({
-        });
         // 初始化日期选择
         var datepicer = new $.DtPicker({
           type: 'date',
           beginYear: config.dateBegin,
           endYear: config.dateEnd
         });
-        Enums.getAll(function(){
-          intentpositionPicker.setData(
-            _.map(_.cloneDeep(Enums.getEnums('positionType')), function(o) {
-              return {
-                value: o.dict_value,
-                text: o.dict_name
-              }
-            })
-          );
-        })
         var BaseView = function () {
           var vm = this;
           vm.formData = {
             id: ko.observable(),
             companyname: ko.observable(),
             positions: ko.observable(),
-            positionsText: ko.observable(''),
             entrancedate: ko.observable(),
             dimissiondate: ko.observable()
           }
@@ -126,23 +111,21 @@
               });
             }, 500);
           }
-          vm.intentpositionPickerClick = function () {
-            setTimeout(function() {
-              intentpositionPicker.show(function(items) {
-                vm.formData.positions(items[0].value);
-                vm.formData.positionsText(items[0].text);
-              });
-            }, 500);
-          }
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, document.getElementById('main-content'));  
         // 加载详情信息
         function loadPage (id) {
           request.loginAjax('personalexperience/getPersonalExperienceDetail', {
+            showMsg: false,
+            data: {
+              id: id
+            }
           }, function(data,success) {     
             if (success) {   
-              // TODO 
+               _.forEach(viewModel.formData, function(n, key){
+                n(data[key]);
+              });
             }
           });
           
@@ -163,10 +146,6 @@
               mui.toast('请选择结束日期')
               return
             }
-            if (!postData.positionsText) {
-              mui.toast('请选择职位类型')
-              return
-            }
             request.loginAjax('personalexperience/savePersonalExperience', {
               data: postData
             }, function(data,success) {     
@@ -185,16 +164,12 @@
         });
         
         window.addEventListener('kz_profile_MyResume_work_Data', function(e){
+          _.forEach(viewModel.formData, function(n, key){
+            n('');
+          })
           if (e.detail.id > 0) {
             loadPage(e.detail.id);
-          } else {
-            viewModel.formData.id('');
-            viewModel.formData.companyname('');
-            viewModel.formData.positions('');
-            viewModel.formData.positionsText('');
-            viewModel.formData.entrancedate('');
-            viewModel.formData.dimissiondate('');
-          }
+          } 
         });
       });
     }(mui, document));

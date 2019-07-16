@@ -244,6 +244,18 @@
   background: #f3f3f3;
   border-radius: 10px;
   padding: 10px 20px;
+  position: relative;
+  z-index: 1;
+}
+.flow-box .icon-shanchu-copy{
+  position: absolute;
+  z-index: 2;
+  right: 10px;
+  top: 10px;
+}
+.flow-box img{
+  max-width: 100%;
+  max-height: 100px;
 }
 .flow-box ~ .flow-box{
   margin-top: 10px;

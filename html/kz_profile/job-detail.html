@@ -82,6 +82,7 @@
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
         function loadData (id) {
           request.loginAjax('personalposition/getPositionDetail', {
+            showMsg: false,
             data: {
               id: id
             }

@@ -117,12 +117,15 @@
         // 加载详情信息
         function loadPage (id) {
           request.loginAjax('personaleducation/getPersonalEducationDetail', {
+            showMsg: false,
             data: {
-              id: 1
+              id: id
             }
           }, function(data,success) {     
             if (success) {   
-              // TODO 
+              _.forEach(viewModel.formData, function(n, key){
+                n(data[key]);
+              });
             }
           });
           
@@ -165,14 +168,11 @@
         });
         
         window.addEventListener('kz_profile_MyResume_educ_Data', function(e){
+          _.forEach(viewModel.formData, function(n, key){
+            n('');
+          })
           if (e.detail.id > 0) {
             loadPage(e.detail.id);
-          } else {
-            viewModel.formData.id('');
-            viewModel.formData.schoolname('');
-            viewModel.formData.profession('');
-            viewModel.formData.entrancedate('');
-            viewModel.formData.graduatedate('');
           }
         });
       });

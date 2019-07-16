@@ -25,7 +25,7 @@
 		      var timeDiff = currentTime - parseValue.times;
 		      var day = timeDiff / 1000 / 60 / 60 / 24;
 		      // 7天获取一次
-		      if (day < 7) {
+		      if (day < 1) {
 		        return;
 		      }
 		    }

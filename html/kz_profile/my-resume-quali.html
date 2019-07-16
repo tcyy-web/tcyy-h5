@@ -32,7 +32,7 @@
     <form class="mui-input-group profile-form-group">
       <div class="mui-input-row">
         <label><i class="form-required"></i>证书名称：</label>
-        <input data-bind="value: formData.qualifyname, muiInput: formData.qualifyname" maxlength="100" type="text" class="mui-input-clear" placeholder="请输入教育机构">
+        <input data-bind="value: formData.qualifyname, muiInput: formData.qualifyname" maxlength="100" type="text" class="mui-input-clear" placeholder="请输入证书名称">
       </div>
       <div class="mui-input-row auto">
         <label><i class="form-required"></i>资格证书：</label>
@@ -112,16 +112,19 @@
         ko.applyBindings(viewModel, document.getElementById('main-content'));  
         // 加载详情信息
         function loadPage (id) {
-          request.loginAjax('personaleducation/getPersonalEducationDetail', {
+          request.loginAjax('personalqualification/getPersonalQualificationDetail', {
+            showMsg: false,
             data: {
-              id: 1
+              id: id
             }
           }, function(data,success) {     
             if (success) {   
-              // TODO 
+              _.forEach(viewModel.formData, function(n, key){
+                n(data[key]);
+              });
+              viewModel.formData.qualifyurl_show(config.serverUrl + data.qualifyurl);
             }
           });
-          
         }
         //保存
         saveServer = function () {
@@ -139,7 +142,7 @@
               mui.toast('请选择获得日期')
               return
             }
-            request.loginAjax('personaleducation/savePersonEducationExp', {
+            request.loginAjax('personalqualification/savePersonalQualification', {
               data: postData
             }, function(data,success) {     
               if (success) {   
@@ -151,20 +154,17 @@
         doc.getElementById('saveBtn').addEventListener('tap', function(e) {
           saveServer().then(function(){
             var nextWebview = plus.webview.getWebviewById('kz_profile_MyResume');
-            $.fire(nextWebview, 'kz_profile_MyResume_educRefresh');
+            $.fire(nextWebview, 'kz_profile_MyResume_quali_Refresh');
             $.back(); 
           });
         });
         
-        window.addEventListener('kz_profile_MyResume_educ_Data', function(e){
+        window.addEventListener('kz_profile_MyResume_quali_Data', function(e){
+          _.forEach(viewModel.formData, function(n, key){
+            n('');
+          })
           if (e.detail.id > 0) {
             loadPage(e.detail.id);
-          } else {
-            viewModel.formData.id('');
-            viewModel.formData.schoolname('');
-            viewModel.formData.profession('');
-            viewModel.formData.entrancedate('');
-            viewModel.formData.graduatedate('');
           }
         });
       });

@@ -130,7 +130,10 @@
               areaPicker.show(function(items) {
                 if (items.length > 0) {
                   var result = _.reduce(items, function(a, b){                     
-                    return a + b.name
+                    if (b.id > 0) {
+                      return a + b.name
+                    }  
+                    return a;
                   }, '');
                   viewModel.searchRes.region(result);   
                   reloadPage();
