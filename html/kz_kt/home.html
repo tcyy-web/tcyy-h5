@@ -7,20 +7,21 @@
   <link href="../../fonts/iconfont.css" rel="stylesheet" />
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/kt-style.css" rel="stylesheet" />
 </head>
 
 <body>
-  <header class="mui-bar mui-bar-nav">
+  <header id="header" class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">课堂</h1>
+    <h1 class="mui-title" data-bind="text: headerText">课堂</h1>
   </header>
   <nav class="mui-bar mui-bar-tab">
-    <a href="#课堂" class="mui-tab-item mui-active" >
+    <a href="#home" class="mui-tab-item mui-active" >
       <div class="iconfontbox"><i class="iconfont icon-ketang"></i></div>
       <span class="mui-tab-label">课堂</span>
     </a>
-    <a href="#fabu" class="mui-tab-item" style="overflow:visible;">
+    <a class="mui-tab-item" style="overflow:visible;">
       <div class="center-circular">
         <div class="iconfontbox"><i class="iconfont icon-fabuketang"></i></div>
         <span class="mui-tab-label">发布</span>
@@ -31,184 +32,175 @@
       <span class="mui-tab-label">我的</span>
     </a>
   </nav>
-  <div class="mui-content home">
-    <div class="home-top-nav">
-      <a href="#" class="nav-item">
-        <div class="nav-iconbox" style="background-color: #BCABF5"><i class="iconfont icon-kouqiangzhongzhi"></i></div>
-        <p class="nav-label">口腔种植</p>
-      </a>
-      <a href="#" class="nav-item">
-        <div class="nav-iconbox" style="background-color: #EBABF5"><i class="iconfont icon-kouqiangzhengji"></i></div>
-        <p class="nav-label">口腔正畸</p>
-      </a>
-      <a href="#" class="nav-item">
-        <div class="nav-iconbox" style="background-color: #F5ABAB"><i class="iconfont icon-kouqiangxiufu"></i></div>
-        <p class="nav-label">口腔修复</p>
-      </a>
-      <a href="#" class="nav-item">
-        <div class="nav-iconbox" style="background-color: #F5C9AB"><i class="iconfont icon-kouqiangwaike"></i></div>
-        <p class="nav-label">口腔外科</p>
-      </a>
-      <a href="#" class="nav-item">
-        <div class="nav-iconbox" style="background-color: #B2DE8E"><i class="iconfont icon-kouqiangneike"></i></div>
-        <p class="nav-label">口腔内科</p>
-      </a>
-      <a href="#" class="nav-item">
-        <div class="nav-iconbox" style="background-color: #97E8C5"><i class="iconfont icon-kouqiangmeirong"></i></div>
-        <p class="nav-label">口腔美容</p>
-      </a>
-      <a href="#" class="nav-item">
-        <div class="nav-iconbox" style="background-color: #ABBBF5"><i class="iconfont icon-kouqiangbaojian"></i></div>
-        <p class="nav-label">口腔保健</p>
-      </a>
-      <a href="#" class="nav-item">
-        <div class="nav-iconbox" style="background-color: #D5A1F0"><i class="iconfont icon-icon"></i></div>
-        <p class="nav-label">儿童牙科</p>
-      </a>
-    </div>
-    <div class="home-newvideo">
-      <div class="title clear">
-        <p class="fl">最新视频</p>
-        <p class="fr font-small">更多</p>
+  <div class="mui-content ">
+    <div id="home" class="mui-control-content mui-active home">
+      <div class="home-top-nav">
+        <!-- ko foreach: categorys -->
+          <a class="nav-item">
+            <div class="nav-iconbox" 
+              data-bind="style: {'background-color' : color}"
+           ><i data-bind="attr: {class: icon}"></i></div>
+            <p class="nav-label" data-bind="text: title"></p>
+          </a>
+        <!-- /ko -->
       </div>
-      <div class="video">
-        <div class="video-item">
-          <div class="thumbnail">
-            <div class="img">
-              <img src="images/timg2.jpg" alt="">
-            </div>
-            <i class="iconfont icon-bofang"></i>
-            <p class="video-name text-ellipsis">
-              <span >视频名称名称名称名称名称名称</span>
-            </p>
-          </div>
-          <div class="info">
-            <p class="text-ellipsis font-bold curricu-name">
-              <span>课程名称课程名称名称名称名称</span>
-            </p>
-            <p class="clear">
-              <span class="fl font-bold">小漂亮</span>
-              <span class="fr price font-bold">免费</span>
-            </p>
-            <p class="clear other">
-              <span class="fl">
-                <i class="iconfont icon-liulanjilu"></i>
-                123
-              </span>
-              <span class="fr">2019.12.23</span>
-            </p>
-          </div>
+      <div class="home-newvideo">
+        <div class="title clear">
+          <p class="fl">最新视频</p>
+          <p class="fr font-small">更多</p>
         </div>
-        <div class="video-item">
-          <div class="thumbnail">
-            <div class="img">
-              <img src="images/timg.jpg" alt="">
+        <div class="video">
+          <div class="video-item">
+            <div class="thumbnail">
+              <div class="img">
+                <img src="images/timg2.jpg" alt="">
+              </div>
+              <i class="iconfont icon-bofang"></i>
+              <p class="video-name text-ellipsis">
+                <span >视频名称名称名称名称名称名称</span>
+              </p>
             </div>
-            <i class="iconfont icon-bofang"></i>
-            <p class="video-name text-ellipsis">
-              <span >视频名称名称名称名称名称名称</span>
-            </p>
-          </div>
-          <div class="info">
-            <p class="text-ellipsis font-bold curricu-name">
-              <span>课程名称课程名称名称名称名称</span>
-            </p>
-            <p class="clear">
-              <span class="fl font-bold">小漂亮</span>
-              <span class="fr price font-bold">免费</span>
-            </p>
-            <p class="clear other">
-              <span class="fl">
-                <i class="iconfont icon-liulanjilu"></i>
-                123
-              </span>
-              <span class="fr">2019.12.23</span>
-            </p>
-          </div>
-        </div>
-        <div class="video-item">
-          <div class="thumbnail">
-            <div class="img">
-              <img src="images/timg.jpg" alt="">
+            <div class="info">
+              <p class="text-ellipsis font-bold curricu-name">
+                <span>课程名称课程名称名称名称名称</span>
+              </p>
+              <p class="clear">
+                <span class="fl font-bold">小漂亮</span>
+                <span class="fr price font-bold">免费</span>
+              </p>
+              <p class="clear other">
+                <span class="fl">
+                  <i class="iconfont icon-liulanjilu"></i>
+                  123
+                </span>
+                <span class="fr">2019.12.23</span>
+              </p>
             </div>
-            <i class="iconfont icon-bofang"></i>
-            <p class="video-name text-ellipsis">
-              <span >视频名称名称名称名称名称名称</span>
-            </p>
-          </div>
-          <div class="info">
-            <p class="text-ellipsis font-bold curricu-name">
-              <span>课程名称课程名称名称名称名称</span>
-            </p>
-            <p class="clear">
-              <span class="fl font-bold">小漂亮</span>
-              <span class="fr price font-bold">免费</span>
-            </p>
-            <p class="clear other">
-              <span class="fl">
-                <i class="iconfont icon-liulanjilu"></i>
-                123
-              </span>
-              <span class="fr">2019.12.23</span>
-            </p>
-          </div>
-        </div>
-        <div class="video-item">
-          <div class="thumbnail">
-            <div class="img">
-              <img src="images/timg.jpg" alt="">
-            </div>
-            <i class="iconfont icon-bofang"></i>
-            <p class="video-name text-ellipsis">
-              <span >视频名称名称名称名称名称名称</span>
-            </p>
-          </div>
-          <div class="info">
-            <p class="text-ellipsis font-bold curricu-name">
-              <span>课程名称课程名称名称名称名称</span>
-            </p>
-            <p class="clear">
-              <span class="fl font-bold">小漂亮</span>
-              <span class="fr price font-bold">免费</span>
-            </p>
-            <p class="clear other">
-              <span class="fl">
-                <i class="iconfont icon-liulanjilu"></i>
-                123
-              </span>
-              <span class="fr">2019.12.23</span>
-            </p>
-          </div>
-        </div>
-        <div class="video-item">
-          <div class="thumbnail">
-            <div class="img">
-              <img src="images/timg.jpg" alt="">
-            </div>
-            <i class="iconfont icon-bofang"></i>
-            <p class="video-name text-ellipsis">
-              <span >视频名称名称名称名称名称名称</span>
-            </p>
-          </div>
-          <div class="info">
-            <p class="text-ellipsis font-bold curricu-name">
-              <span>课程名称课程名称名称名称名称</span>
-            </p>
-            <p class="clear">
-              <span class="fl font-bold">小漂亮</span>
-              <span class="fr price font-bold">免费</span>
-            </p>
-            <p class="clear other">
-              <span class="fl">
-                <i class="iconfont icon-liulanjilu"></i>
-                123
-              </span>
-              <span class="fr">2019.12.23</span>
-            </p>
           </div>
         </div>
       </div>
     </div>
+    <div id="wode" class="mui-control-content">
+      <ul class="mui-table-view custom-wode-list">
+        <li class="mui-table-view-cell">
+           <a id="my-kecheng" class="mui-navigate-right"><i class="iconfont icon-gongsi"></i>我的课程</a>
+        </li>
+        <li class="mui-table-view-cell">
+           <a id="my-goumai" class="mui-navigate-right"><i class="iconfont icon-gongsi"></i>我购买的</a>
+        </li>
+        <li class="mui-table-view-cell">
+           <a class="mui-navigate-right"><i class="iconfont icon-gongsi"></i>我看过的</a>
+        </li>
+         <li class="mui-table-view-cell">
+           <a class="mui-navigate-right"><i class="iconfont icon-gongsi"></i>我的订单</a>
+        </li>
+      </ul>
+    </div>
+    
+    
   </div>
+  <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.pullToRefresh.js"></script>
+  <script src="../../js/mui.pullToRefresh.material.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.category.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
+  <script src="js/kt-common.js" ></script>
+  <script>
+    (function($, doc) {
+      $.init({
+        beforeback: function() {
+　　      plus.navigator.setStatusBarBackground('#765fc3');
+          return true;
+        }
+      });
+      $.plusReady(function() {
+        plus.navigator.setStatusBarBackground('#8E78D6');
+        // 初始化头部
+        var HeaderView = function () {
+          var vm = this;
+          vm.headerText = ko.observable('课堂');
+        }
+        var headerView = new HeaderView();
+        ko.applyBindings(headerView, document.getElementById('header'));
+        // tab改变 
+        $.each(doc.querySelectorAll('.mui-bar-tab .mui-tab-item'), function(index, el) {
+          el.addEventListener('tap', function(e) {
+            var text = el.querySelector('.mui-tab-label').innerText;
+            if (text == '发布') {
+              
+            } else {
+              headerView.headerText(el.querySelector('.mui-tab-label').innerText);
+            }
+          });
+        });
+        /*首页业务*/
+        (function(){
+          var category = categorys.get();
+          var categoryColor = {
+            1: '#BCABF5',
+            2: '#F5ABAB',
+            3: '#F5C9AB',
+            4: '#B2DE8E',
+            5: '#97E8C5',
+            6: '#ABBBF5',
+            7: '#D5A1F0',
+            8: '#EBABF5'
+          }
+          var BaseView = function() {
+            var vm = this;
+            vm.categorys = ko.observableArray(_.map(category, function(o) {
+              o.icon = enums.category[o.id];
+              o.color = categoryColor[o.id];
+              return o;
+            }));
+          }
+          var viewModel = new BaseView();
+          ko.applyBindings(viewModel, doc.getElementById('home'));
+        })();
+        
+        doc.getElementById('my-kecheng').addEventListener('tap', function(){
+          mui.openWindow({
+            id:'kz_kt_MyVideo',
+            url: './my-video.html',
+            show: {
+              aniShow: 'pop-in'
+            },
+            styles: {
+              popGesture: 'hide'
+            },
+            waiting: {
+              autoShow: false
+            }
+          });
+        });
+        doc.getElementById('my-goumai').addEventListener('tap', function(){
+          mui.openWindow({
+            id:'kz_kt_MyBuy',
+            url: './my-buy.html',
+            show: {
+              aniShow: 'pop-in'
+            },
+            styles: {
+              popGesture: 'hide'
+            },
+            waiting: {
+              autoShow: false
+            }
+          });
+        });
+        
+      });
+    }(mui, document));
+  </script>
 </body>
 </html>

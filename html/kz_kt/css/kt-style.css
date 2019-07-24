@@ -306,9 +306,9 @@
   -webkit-align-items: center;
   align-items: center;
   font-weight: bold;
-  position: fixed;
   width: 100%;
   height: 44px;
+  margin-bottom: 10px;
   background-color: #ffffff;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -324,31 +324,33 @@
   display: none;
 }
 .search .top-sort .sort-item .button-label {
-  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .search .top-sort .sort-item .sort-icon {
+  margin-left: 10px;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   flex-direction: column;
   -webkit-flex-direction: column;
-  position: absolute;
-  top: 15%;
-  right: 44%;
-  line-height: 8px;
+  line-height: 10px;
 }
 .search .top-sort .sort-item .sort-icon .iconfont {
   font-size: 8px;
+  color: #999;
 }
 .search .top-sort > .active {
   color: #8E78D6;
 }
-.search .top-sort > .active .active {
+.search .top-sort > .sort-item .sort-icon .active {
   color: #8E78D6;
 }
 .search .video {
   background-color: #ffffff;
-  margin-top: 54px;
 }
 /* 搜索结果页 */
 .search-result .video {

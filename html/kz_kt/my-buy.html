@@ -7,6 +7,7 @@
   <link href="../../fonts/iconfont.css" rel="stylesheet" />
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/kt-style.css" rel="stylesheet" />
 </head>
 
@@ -16,11 +17,11 @@
     <h1 class="mui-title">我购买的</h1>
   </header>
   <div class="mui-content my-buy">
-    <div class="mui-control-content mui-active mui-fullscreen">
+    <div class="mui-fullscreen">
       <div class="mui-scroll-wrapper">
-        <div  class="mui-scroll">
-          <!-- <ul class="mui-table-view"></ul> -->
+        <div id="pullrefresh-list" class="mui-scroll">
           <div class="video">
+            <!-- ko foreach:  list -->
             <div class="video-item">
               <div class="thumbnail">
                 <div class="img">
@@ -41,70 +42,129 @@
                 </p>
               </div>
             </div>
-            <div class="video-item">
-              <div class="thumbnail">
-                <div class="img">
-                  <img src="images/timg2.jpg" alt="">
-                </div>
-                <i class="iconfont icon-bofang"></i>
-                <p class="video-name text-ellipsis">
-                  <span >共3集</span>
-                </p>
-              </div>
-              <div class="info">
-                <p class="text-ellipsis font-bold curricu-name">
-                  <span>课程名称课程名称名称名称名称</span>
-                </p>
-                <p class="clear">
-                  <span class="fl font-bold">小漂亮</span>
-                  <span class="fr time">2019.12.23</span>
-                </p>
-              </div>
-            </div>
-            <div class="video-item">
-              <div class="thumbnail">
-                <div class="img">
-                  <img src="images/timg2.jpg" alt="">
-                </div>
-                <i class="iconfont icon-bofang"></i>
-                <p class="video-name text-ellipsis">
-                  <span >共3集</span>
-                </p>
-              </div>
-              <div class="info">
-                <p class="text-ellipsis font-bold curricu-name">
-                  <span>课程名称课程名称名称名称名称</span>
-                </p>
-                <p class="clear">
-                  <span class="fl font-bold">小漂亮</span>
-                  <span class="fr time">2019.12.23</span>
-                </p>
-              </div>
-            </div>
-            <div class="video-item">
-              <div class="thumbnail">
-                <div class="img">
-                  <img src="images/timg2.jpg" alt="">
-                </div>
-                <i class="iconfont icon-bofang"></i>
-                <p class="video-name text-ellipsis">
-                  <span >共3集</span>
-                </p>
-              </div>
-              <div class="info">
-                <p class="text-ellipsis font-bold curricu-name">
-                  <span>课程名称课程名称名称名称名称</span>
-                </p>
-                <p class="clear">
-                  <span class="fl font-bold">小漂亮</span>
-                  <span class="fr time">2019.12.23</span>
-                </p>
-              </div>
-            </div>
+            <!-- /ko -->
           </div>
         </div>
       </div>
     </div>
   </div>
+  <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.pullToRefresh.js"></script>
+  <script src="../../js/mui.pullToRefresh.material.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.category.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
+  <script src="js/kt-common.js" ></script>
+  <script>
+    (function($, doc) {
+      $.init({
+      });
+      $.plusReady(function() {
+        // 分页参数
+        var page = 1;
+        var limit = 20;
+        var more = true;
+        //列表渲染
+        var BaseView = function () {
+          var vm = this;
+          vm.list = ko.observableArray([]);
+        }
+        var viewModel = new BaseView();
+        ko.applyBindings(viewModel, doc.getElementById('pullrefresh-list'));
+        // 查询
+        var queryList = function(callback) {
+          var _request = {
+            page: page,
+            limit: limit
+          }       
+          request.loginAjax('coursesuser/getUserPurchaseRecords',{
+            data: _request,
+            showMsg: false
+          },function(data, success) {
+             // 处理页面绑定
+             if (data && data.data) {
+               Enums.getAll(function(){
+                  $.each(data.data, function(index, item) {
+                     item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
+                  });
+                  if (page === 1) {                  
+                     viewModel.list(data.data);                  
+                  } else {
+                     $.each(data.data, function(index,i) {
+                       viewModel.list.push(i);
+                     });                  
+                  }  
+               })              
+             }
+             // 判断是否有下一页数据
+             if (data && data.data && data.data.length === limit) {
+               more = true;
+             } else {
+               more = false;
+             }
+             if (typeof callback === 'function') {
+               callback();
+             }
+          },function() {
+            if (typeof callback === 'function') {
+               callback();
+             }
+          });
+        }
+        queryList();
+        // 跳转详情
+        $('#pullrefresh-list').on('tap', '.mui-table-view > li .gotoedit', function(e){
+          var itemid = this.getAttribute('itemid');
+          var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
+          $.fire(nextWebview, 'kz_profile_JobPublish_Data', {
+            id: itemid
+          });
+          $.openWindow({
+            id:'kz_profile_JobPublish',               
+          }); 
+        });
+        function reloadPage () {
+          page = 1;
+          more = true;
+          $('#pullrefresh-list').pullToRefresh().refresh(true);
+          queryList();
+        }
+        $('#pullrefresh-list').pullToRefresh({
+          down: {
+            callback: function() {
+              page = 1;
+              var self = this;
+              queryList(function() {
+                self.endPullDownToRefresh();
+                $('#pullrefresh-list').pullToRefresh().refresh(true);
+              });                
+            }
+          },
+          up: {
+            callback: function() {
+              var self = this;
+              if (more) {
+                page = page + 1;
+                queryList(function() {
+                  self.endPullUpToRefresh(false);
+                });
+                return;
+              }
+              self.endPullUpToRefresh(true);
+            }
+          }
+        });
+      });
+    }(mui, document));
+  </script>
 </body>
 </html>
