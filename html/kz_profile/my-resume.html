@@ -116,11 +116,11 @@
       <div class="profile-form-item">
         <!-- ko foreach: qualificationList -->
         <div data-bind="click: $root.qualificationMaintain.bind(null, $data)" class="flow-box">
-          <i class="iconfont icon-shanchu-copy"></i>
+          <i data-bind="click: $root.qualificationDelete, clickBubble: false" class="iconfont icon-shanchu-copy"></i>
           <div data-bind="text: qualifyname"></div>
           <div>获得日期：<span data-bind="text: qualify_time"></span></div>
           <div>
-            <img data-bind="attr: {src: qualifyurl, 'data-preview-group': id}" data-preview-src="" />
+            <img data-bind="attr: {src: qualifyurl}" data-preview-src="" data-preview-group="1" />
           </div>
         </div>
         <!-- /ko -->
@@ -132,7 +132,7 @@
       <div class="profile-form-item">
         <!-- ko foreach: expList -->
         <div data-bind="click: $root.workMaintain.bind(null, $data)" class="flow-box">
-          <i class="iconfont icon-shanchu-copy"></i>
+          <i data-bind="click: $root.workDelete, clickBubble: false" class="iconfont icon-shanchu-copy"></i>
           <div><span data-bind="text: entrancedate"></span>至<span data-bind="text: dimissiondate"></span></div>
           <div data-bind="text: companyname"></div>
           <!-- ko if: !!positions -->
@@ -148,6 +148,7 @@
       <div class="profile-form-item">
         <!-- ko foreach: eduList -->
         <div data-bind="click: $root.educMaintain.bind(null, $data)" class="flow-box">
+          <i data-bind="click: $root.educDelete, clickBubble: false" class="iconfont icon-shanchu-copy"></i>
           <div><span data-bind="text: entrancedate"></span>至<span data-bind="text: graduatedate"></span></div>
           <div data-bind="text: schoolname"></div>
           <div data-bind="text: profession"></div>
@@ -442,6 +443,21 @@
               }); 
             });
           }
+          vm.qualificationDelete = function(data) {
+            mui.confirm('确定删除该资格证书？', function(ok){
+              if (ok.index == 0) {
+                request.loginAjax('personalresume/delQualification', {
+                  data: {
+                    id: data.id
+                  }
+                }, function(data,success) {     
+                  if (success) {
+                    loadList();
+                  }
+                });
+              }
+            })
+          }
           // 工作经历维护
           vm.workMaintain = function (data) {
             CheckSave().then(function(){
@@ -452,6 +468,21 @@
               }); 
             });
           }
+          vm.workDelete = function(data) {
+            mui.confirm('确定删除该工作经历？', function(ok){
+              if (ok.index == 0) {
+                request.loginAjax('personalresume/delWorkExperience', {
+                  data: {
+                    id: data.id
+                  }
+                }, function(data,success) {     
+                  if (success) {
+                    loadList();
+                  }
+                });
+              }
+            })
+          }
           // 教育经历维护
           vm.educMaintain = function(data) {
             CheckSave().then(function(){
@@ -461,6 +492,21 @@
                 id:'kz_profile_MyResume_educ',               
               }); 
             });
+          }
+          vm.educDelete = function(data){
+            mui.confirm('确定删除该教育培训经历？', function(ok){
+              if (ok.index == 0) {
+                request.loginAjax('personalresume/delEducation', {
+                  data: {
+                    id: data.id
+                  }
+                }, function(data,success) {     
+                  if (success) {
+                    loadList();
+                  }
+                });
+              }
+            })
           }
         }
         var viewModel = new BaseView();

@@ -92,60 +92,36 @@
         <div class="mui-scroll-wrapper">
           <div id="jianli-list" class="mui-scroll">
             <ul class="mui-table-view">
-              <!-- ko if: $root.tabType() == 1 -->
-                <li>
+              <!-- ko foreach : list -->
+                <li data-bind="attr: {itemid: id}">
                    <div class="resume-box">
                     <div class="m-title t1">
-                      <span>姓名</span> 
+                      <span data-bind="text: personname"></span> 
                       <span class="key-imp">
-                        <span>护理师</span> | 
-                        <span>大专</span> |
-                        <span>5-10年</span>
+                        <span data-bind="text: intentpositionText"></span> | 
+                        <span data-bind="text: educationText"></span> |
+                        <span data-bind="text: workexperience"></span>
                       </span>
                     </div>
+                    <!-- ko if: $root.tabType() == 1 -->
                     <div class="flex">
                       <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>投递日期：<span></span></div>
                       <div class="resume-jobs flex-item"><i class="mui-icon mui-icon-paperplane"></i>投递职位名称</div>
                     </div>
-                    <div class="tel"><i class="iconfont icon-dianhua"></i>133333333333</div>
-                  </div>
-                </li>
-              <!-- /ko -->
-              <!-- ko if: $root.tabType() == 2 -->
-                <li>
-                  <div class="resume-box">
-                    <div class="m-title t1">
-                      <span>姓名</span> 
-                      <span class="key-imp">
-                        <span>护理师</span> | 
-                        <span>大专</span> |
-                        <span>5-10年</span>
-                      </span>
-                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: $root.tabType() == 2 -->
                     <div class="flex">
                       <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>收藏日期：<span></span></div>
                     </div>
-                    <div class="tel"><i class="iconfont icon-dianhua"></i>133333333333</div>
-                  </div>
-                </li>
-              <!-- /ko -->
-              <!-- ko if: $root.tabType() == 3 -->
-                <li>
-                  <div class="resume-box">
-                    <div class="m-title t1">
-                      <span>姓名</span> 
-                      <span class="key-imp">
-                        <span>护理师</span> | 
-                        <span>大专</span> |
-                        <span>5-10年</span>
-                      </span>
-                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: $root.tabType() == 3 -->
                     <div class="flex">
                       <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>查看日期：<span></span></div>
                     </div>
-                    <div class="tel"><i class="iconfont icon-dianhua"></i>133333333333</div>
+                    <!-- /ko -->
+                    <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: telephone"></span></div>
                   </div>
-                </li>
+                </li>               
               <!-- /ko -->
             </ul>
           </div>
@@ -479,17 +455,17 @@
               return 'personalresume/queryPersonalResumeList'
             });
             vm.tabType.subscribe(function(){
+              viewModel.list([]);
               reloadPage();
             })
             vm.list = ko.observableArray([]);
           }
           var viewModel = new BaseView();
           ko.applyBindings(viewModel, doc.getElementById('jianli'));
-          
+          // 切换简历查询类型
           mui('#jianli').on('tap', '.nav-tabs .mui-tab-item', function(e) {
             viewModel.tabType(this.getAttribute('tabtype'));
           })
-          
           function queryJinliList (callback) {
             var _request = {
               page: page,
@@ -502,20 +478,19 @@
                // 处理页面绑定
                if (data && data.data) {
                  // 取字典显示值
-                 if (data.data.length > 0) {
-                   Enums.getAll(function(){
-                      $.each(data.data, function(index, item) {
-                         item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
-                      });
-                   })
-                 }                 
-                 if (page === 1) {                  
-                   viewModel.list(data.data);                  
-                 } else {
-                   $.each(data.data, function(index,i) {
-                     viewModel.list.push(i);
-                   });                  
-                 }                
+                 Enums.getAll(function(){
+                    $.each(data.data, function(index, item) {
+                       item.intentpositionText = Enums.getEnumText('positionType', item.intentposition);
+                       item.educationText = Enums.getEnumText('education', item.education);
+                    });
+                    if (page === 1) {                  
+                       viewModel.list(data.data);                  
+                     } else {
+                       $.each(data.data, function(index,i) {
+                         viewModel.list.push(i);
+                       });                  
+                     }     
+                 });               
                }
                // 判断是否有下一页数据
                if (data && data.data && data.data.length === limit) {
@@ -539,6 +514,18 @@
             $('#jianli-list').pullToRefresh().refresh(true);
             queryJinliList();
           }
+          // 跳转简历详情
+          $('#jianli-list').on('tap', '.mui-table-view > li', function(e){
+            var itemid = this.getAttribute('itemid');
+            var nextWebview = plus.webview.getWebviewById('kz_profile_ResumeDetail');
+            $.fire(nextWebview, 'kz_profile_ResumeDetail_Data', {
+              id: itemid
+            });
+            $.openWindow({
+              id:'kz_profile_ResumeDetail',               
+            }); 
+          });
+          // 简历下拉刷新
           $('#jianli-list').pullToRefresh({
             down: {
               callback: function() {

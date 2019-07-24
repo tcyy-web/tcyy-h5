@@ -94,8 +94,9 @@
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
+        // 加载简历详情
         function loadData (id) {
-          request.loginAjax('personalposition/getPositionDetail', {
+          request.loginAjax('personalresume/viewResumeDetail', {
             data: {
               id: id
             }
@@ -117,7 +118,7 @@
         })
         
         window.addEventListener('kz_profile_ResumeDetail_Data', function(e) {
-          loadData(e.detail.itemid);
+          loadData(e.detail.id);
         });
       });
     }(mui, document));
