@@ -93,15 +93,22 @@
                  data.positiontypeText = Enums.getEnumText('positionType', data.positiontype);
                  data.experienceText = Enums.getEnumText('workExperience', data.experience);
                  data.educationText = Enums.getEnumText('education', data.education);
+                 viewModel.detailData(ko.mapping.fromJS(data));
               })
-              viewModel.detailData(ko.mapping.fromJS(data));
             }
           });
         }
         //投递
         mui('#main-content').on('tap', '.mui-btn-blue', function(e) {
           ProfileResumeCheck().then(function(){
-            //TODO
+            request.loginAjax('personaldeliver/saveResumeDeliverInfo', {
+              data: {
+                jid: viewModel.detailData().id()
+              }
+            }, function(data,success) {
+              if (success) {   
+              }
+            });
           }).catch(function(){
             mui.toast('请先维护简历信息');
             $.openWindow({
@@ -119,9 +126,11 @@
             });
           });
         })
+        // 刷新数据
         window.addEventListener('kz_profile_JobDetail_Data', function(e) {
-          loadData(e.detail.id);
           viewModel.pageType(e.detail.type || 'show');
+          viewModel.detailData({});
+          loadData(e.detail.id);
         });
       });
     }(mui, document));

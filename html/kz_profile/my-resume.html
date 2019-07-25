@@ -526,18 +526,18 @@
                   if (data.sex > 0) {
                     viewModel.formData.sexText(data.sex == 1 ? '男' : '女');
                   }
-                  viewModel.formData.educationText(Enums.getEnumText('education', data.education));
+                  viewModel.formData.educationText(Enums.getEnumText('education', data.education, false));
                   if (data.marriage > 0) {
                     viewModel.formData.marriageText(data.marriage == 1 ? '未婚' : '已婚');
                   }
-                  viewModel.formData.intentpositionText(Enums.getEnumText('positionType', data.intentposition));
+                  viewModel.formData.intentpositionText(Enums.getEnumText('positionType', data.intentposition, false));
                   if (data.worknature > 0) {
                     viewModel.formData.worknatureText(data.worknature == 1 ? '全职' : '兼职');
                   }
                   if (data.jobstatus > 0) {
                     viewModel.formData.jobstatusText(data.jobstatus == 1 ? '在职' : '离职');
                   }
-                  viewModel.formData.wagesText(Enums.getEnumText('salaryRange', data.wages));
+                  viewModel.formData.wagesText(Enums.getEnumText('salaryRange', data.wages, false));
                 });
               }
             });

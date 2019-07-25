@@ -19,6 +19,12 @@
 		  1: '等待就诊',
 		  2: '未就诊',
 		  3: '已就诊'
+		},
+		// 职位状态
+		profile_position_status: {
+		  0: '待审核',
+      1: '审核通过',
+      2: '审核不通过'
 		}
 //		getEnumLabel: function(type, key) {
 //			var _this = this;

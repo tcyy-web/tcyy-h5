@@ -17,6 +17,7 @@
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">我发布的职位</h1>
+    <a id="publish" class="mui-pull-right">发布</a>
   </header>
   <div class="mui-content">
     <div class="mui-control-content mui-active mui-fullscreen">
@@ -26,18 +27,21 @@
               <!-- ko foreach: list -->
               <li>
                 <div class="publish-box">
-                  <div class="gotoedit" data-bind="attr: {itemid: id}" >
-                    <div data-bind="text: professional" class="m-title t2"></div>
+                  <div class="detailclick" data-bind="attr: {itemid: id}" >
                     <div class="flex">
-                      <div data-bind="text: positiontypeStr" class="c-box"></div> 
-                      <div class="publish-time">2012.12.12</div>
-                      <div class="publish-time">待审核</div>
+                      <div data-bind="text: professional" class="m-title t2 flex-1"></div>
+                      <div class="publish-time" data-bind="text: lasttime"></div>
+                    </div>
+                    <div class="flex">
+                      <div data-bind="text: positiontypeText" class="c-box"></div> 
+                      <div class="publish-time" data-bind="text: statusText"></div>
                     </div>
                   </div>
                   <div class="opt">
-                    <span class="opt-btn purple">开通</span>
-                    <span class="opt-btn ">删除</span>
-                    <!--<span class="opt-btn ">关闭</span>-->
+                    <!--<span class="opt-btn purple">开通</span>-->
+                    <!-- ko if: status != 1 -->
+                    <span data-bind="attr: {itemid: id}" class="opt-btn delclick">删除</span>
+                    <!-- /ko -->
                   </div>
                 </div>
               </li>
@@ -85,7 +89,7 @@
             page: page,
             limit: limit
           }       
-          request.loginAjax('personalposition/queryPositionByCondition',{
+          request.loginAjax('personalposition/getPositionsByCurrentUser',{
             data: _request,
             showMsg: false
           },function(data, success) {
@@ -93,7 +97,8 @@
              if (data && data.data) {
                Enums.getAll(function(){
                   $.each(data.data, function(index, item) {
-                     item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
+                     item.positiontypeText = Enums.getEnumText('positionType', item.positiontype);
+                     item.statusText = enums.profile_position_status[item.status];
                   });
                   if (page === 1) {                  
                      viewModel.list(data.data);                  
@@ -120,18 +125,8 @@
           });
         }
         queryList();
-        // 跳转详情
-        $('#pullrefresh-list').on('tap', '.mui-table-view > li .gotoedit', function(e){
-          var itemid = this.getAttribute('itemid');
-          var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
-          $.fire(nextWebview, 'kz_profile_JobPublish_Data', {
-            id: itemid
-          });
-          $.openWindow({
-            id:'kz_profile_JobPublish',               
-          }); 
-        });
-        function reloadPage () {
+        // 重新加载第一页
+        var reloadPage = function () {
           page = 1;
           more = true;
           $('#pullrefresh-list').pullToRefresh().refresh(true);
@@ -161,6 +156,46 @@
               self.endPullUpToRefresh(true);
             }
           }
+        });
+        // 跳转详情
+        $('#pullrefresh-list').on('tap', '.mui-table-view > li .detailclick', function(e){
+          var itemid = this.getAttribute('itemid');
+          var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
+          $.fire(nextWebview, 'kz_profile_JobPublish_Data', {
+            id: itemid
+          });
+          $.openWindow({
+            id:'kz_profile_JobPublish',               
+          }); 
+        });
+        // 删除
+        $('#pullrefresh-list').on('tap', '.mui-table-view > li .delclick', function(e){
+          var itemid = this.getAttribute('itemid');
+          mui.confirm('确定删除该职位？', function(ok){
+            if (ok.index == 0) {
+              request.loginAjax('personalposition/deletePosition', {
+                data: {
+                  id: itemid
+                }
+              }, function(data,success) {     
+                if (success) {
+                  reloadPage();
+                }
+              });
+            }
+          })
+        });
+        // 发布
+        doc.getElementById('publish').addEventListener('tap', function(){
+          ProfileCompany().then(function(){
+            var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
+            $.fire(nextWebview, 'kz_profile_JobPublish_Data');
+            $.openWindow({
+              id:'kz_profile_JobPublish',               
+            }); 
+          }).catch(function(){
+            mui.toast('请先维护公司信息');
+          });
         });
       });
     }(mui, document));

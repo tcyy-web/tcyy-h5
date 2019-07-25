@@ -23,11 +23,13 @@
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">职位维护</h1>
   </header>
+  <!-- ko if: formData.status() != 1 -->
   <nav class="mui-bar mui-bar-tab custom-tab">
     <div class="mui-tab-item">
       <button id="saveBtn" class="mui-btn mui-btn-blue">保存</button>
     </div>  
   </nav>
+  <!-- /ko -->
   <div class="mui-content">
     <form class="mui-input-group profile-form-group">
       <div class="mui-input-row">
@@ -81,7 +83,7 @@
       <!-- ko if: formData.id() > 0 -->
       <div class="mui-input-row">
         <label>状态：</label>
-        <p></p>
+        <p data-bind="text: formData.statusText"></p>
       </div>
       <!-- /ko -->
     </form>
@@ -192,7 +194,9 @@
             //学历
             education: ko.observable(),
             educationText: ko.observable(''),
-            descriptions: ko.observable()
+            descriptions: ko.observable(),
+            status: ko.observable(),
+            statusText: ko.observable('')
           }
           vm.intentpositionPickerClick = function () {
             setTimeout(function() {
@@ -264,20 +268,23 @@
         // 加载信息
         function loadData (id) {
           request.loginAjax('personalposition/getPositionDetail', {
+            showMsg: false,
             data: {
               id: id
             }
           }, function(data,success) {
             if (success) {   
               Enums.getAll(function(){
-                 data.positiontypeText = Enums.getEnumText('positionType', data.positiontype);
-                 data.wagesText = Enums.getEnumText('salaryRange', data.wages);
-                 data.educationText = Enums.getEnumText('education', data.education);
+                 data.positiontypeText = Enums.getEnumText('positionType', data.positiontype, false);
+                 data.wagesText = Enums.getEnumText('salaryRange', data.wages, false);
+                 data.educationText = Enums.getEnumText('education', data.education, false);
                  data.natureText = data.nature == 2 ? '兼职' : '全职';
+                 data.experienceText = Enums.getEnumText('workExperience', data.experience, false);
+                 data.statusText = enums.profile_position_status[data.status];
+                 _.forEach(viewModel.formData, function(n, key){
+                  n(data[key]);
+                });
               })
-              _.forEach(viewModel.formData, function(n, key){
-                n(data[key]);
-              });
             }
           });
         }
@@ -334,11 +341,12 @@
             });
           });
         }
-        doc.getElementById('saveBtn').addEventListener('tap', function(e) {
+        // 点击保存
+        $('body').on('tap', '#saveBtn', function(){
           saveServer().then(function(){
+            $.back();
           });
-        });
-        
+        })
         window.addEventListener('kz_profile_JobPublish_Data', function(e) {
           _.forEach(viewModel.formData, function(n , key) {
             n('');

@@ -275,7 +275,8 @@
   color: #666;
   padding-left: 10px;
 }
-.resume-box .flex {
+.resume-box .flex,
+.resume-box .mui-row {
   color: #999;
 }
 .resume-box > div {
