@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title></title>
+  <link href="../../fonts/iconfont.css" rel="stylesheet" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/mui.picker.min.css">
+  <link rel="stylesheet" href="../../css/mui.poppicker.css">
+  <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/style-custom.css" rel="stylesheet" />
+  <link href="css/kt-style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">视频发布</h1>
+  </header>
+  <div class="mui-content ">
+    <form class="mui-input-group kt-form-group">
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>视频类型：</label>
+        <p data-bind="text: !formData.ctypeText() ? '请选择' : formData.ctypeText, 
+          click: ctypeClick">请选择</p>
+      </div>
+    </form>
+  </div>
+  <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.picker.min.js"></script>
+  <script src="../../js/mui.poppicker.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.category.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
+  <script src="js/kt-common.js" ></script>
+  <script>
+    (function($, doc) {
+      $.init();
+      $.plusReady(function() {
+        // 视频类型选择
+        var ctypePicker = new $.PopPicker({
+        });
+        ctypePicker.setData([
+          { value: 1, text: '单集'},
+          { value: 2, text: '多集'}
+        ]);
+        var BaseView = function () {
+          var vm = this;
+          vm.formData = {
+            id: ko.observable(),
+            ctype: ko.observable(),
+            ctypeText: ko.observable(''),
+          }
+          vm.ctypeClick = function(){
+            setTimeout(function() {
+              ctypePicker.show(function(items) {
+                vm.formData.ctype(items[0].value);
+                vm.formData.ctypeText(items[0].text);
+              });
+            }, 500);
+          }
+        }
+        var viewModel = new BaseView();
+        ko.applyBindings(viewModel, document.getElementById('main-content'));  
+      });
+    }(mui, document));
+  </script>
+</body>
+</html>

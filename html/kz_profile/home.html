@@ -93,7 +93,7 @@
           <div id="jianli-list" class="mui-scroll">
             <ul class="mui-table-view">
               <!-- ko foreach : list -->
-                <li data-bind="attr: {itemid: id}">
+                <li data-bind="attr: {rid: rid}">
                    <div class="resume-box">
                     <div class="m-title t1">
                       <span data-bind="text: personname"></span> 
@@ -105,18 +105,18 @@
                     </div>
                     <!-- ko if: $root.tabType() == 1 -->
                     <div class="flex">
-                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>投递日期：<span></span></div>
-                      <div class="resume-jobs flex-item"><i class="mui-icon mui-icon-paperplane"></i>投递职位名称</div>
+                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>投递日期：<span data-bind="text: delivertime"></span></div>
+                      <div data-bind="attr: {jid: jid}" class="resume-jobs flex-item jobclick"><i class="mui-icon mui-icon-paperplane"></i>投递职位：<span data-bind="text: professional"></span></div>
                     </div>
                     <!-- /ko -->
                     <!-- ko if: $root.tabType() == 2 -->
                     <div class="flex">
-                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>收藏日期：<span></span></div>
+                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>收藏日期：<span data-bind="text: viewtime"></span></div>
                     </div>
                     <!-- /ko -->
                     <!-- ko if: $root.tabType() == 3 -->
                     <div class="flex">
-                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>查看日期：<span></span></div>
+                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>查看日期：<span data-bind="text: viewtime"></span></div>
                     </div>
                     <!-- /ko -->
                     <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: telephone"></span></div>
@@ -516,15 +516,28 @@
           }
           // 跳转简历详情
           $('#jianli-list').on('tap', '.mui-table-view > li', function(e){
-            var itemid = this.getAttribute('itemid');
+            var itemid = this.getAttribute('rid');
             var nextWebview = plus.webview.getWebviewById('kz_profile_ResumeDetail');
             $.fire(nextWebview, 'kz_profile_ResumeDetail_Data', {
-              id: itemid
+              id: itemid,
+              type: viewModel.tabType() != '2' ? 'show' : 'preview'
             });
             $.openWindow({
               id:'kz_profile_ResumeDetail',               
             }); 
           });
+          // 跳转职位详情
+           $('#jianli-list').on('tap', '.mui-table-view > li .jobclick', function(e){
+              e.stopPropagation();
+              var itemid = this.getAttribute('jid');
+              var nextWebview = plus.webview.getWebviewById('kz_profile_JobDetail');
+              $.fire(nextWebview, 'kz_profile_JobDetail_Data', {
+                id: itemid
+              });
+              $.openWindow({
+                id:'kz_profile_JobDetail',               
+              }); 
+           });
           // 简历下拉刷新
           $('#jianli-list').pullToRefresh({
             down: {

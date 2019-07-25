@@ -48,6 +48,24 @@
 .mui-bar-tab .mui-tab-item .center-circular .iconfont {
   margin-right: -8px;
 }
+/*表单*/
+.kt-form-group .mui-input-row label{
+  width: 100px;
+  text-align: right;
+}
+.kt-form-group .mui-input-row label~input {
+  width: calc(100% - 100px);
+  width: -webkit-calc(100% - 100px);
+}
+.kt-form-group .mui-input-row label~p {
+  width: calc(100% - 100px);
+  width: -webkit-calc(100% - 100px);
+}
+.kt-form-group .mui-input-row label~div {
+  width: calc(100% - 100px);
+  width: -webkit-calc(100% - 100px);
+  float: right;
+}
 /* 定义 */
 .flex {
   display: -webkit-box;

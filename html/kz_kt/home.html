@@ -96,8 +96,6 @@
         </li>
       </ul>
     </div>
-    
-    
   </div>
   <script src="../../third/bluebird.min.js"></script>
   <script src="../../third/loadash.3.10.1.js"></script>
@@ -137,7 +135,7 @@
           el.addEventListener('tap', function(e) {
             var text = el.querySelector('.mui-tab-label').innerText;
             if (text == '发布') {
-              
+              PublishPage();
             } else {
               headerView.headerText(el.querySelector('.mui-tab-label').innerText);
             }
