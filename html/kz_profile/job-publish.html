@@ -48,7 +48,9 @@
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>详细地址：</label>
-        <input data-bind="value: formData.address, muiInput: formData.address" type="text" class="mui-input-clear" placeholder="请输入详细地址">
+        <input data-bind="value: formData.address, muiInput: formData.address"
+           maxlength="100"
+           type="text" class="mui-input-clear" placeholder="请输入详细地址">
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>工资待遇：</label>
@@ -57,7 +59,8 @@
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>招聘人数：</label>
-        <input data-bind="value: formData.nums, muiInput: formData.nums" type="number" class="mui-input-clear" maxlength="8" placeholder="请输入招聘人数">
+        <input data-bind="value: formData.nums, muiInput: formData.nums" 
+          type="text" class="mui-input-clear" maxlength="8" placeholder="请输入招聘人数">
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>招聘类型：</label>

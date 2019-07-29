@@ -555,9 +555,6 @@
             if (success) {
               viewModel.eduList(data.eduList);
               viewModel.expList(data.expList);
-              _.map(data.qualificationList, function(item){
-                item.qualifyurl = config.serverUrl + item.qualifyurl;
-              });
               viewModel.qualificationList(data.qualificationList);
             }
           });

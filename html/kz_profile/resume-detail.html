@@ -184,9 +184,6 @@
                  data.jobstatusText = data.jobstatus == 1 ? '在职' : '离职';
                  viewModel.eduList(data.eduList);
                  viewModel.expList(data.expList);
-                 _.map(data.qualificationList, function(item){
-                   item.qualifyurl = config.serverUrl + item.qualifyurl;
-                 })
                  viewModel.qualificationList(data.qualificationList);
                  viewModel.detailData(ko.mapping.fromJS(data));
               })

@@ -67,6 +67,7 @@
   line-height: 22px;
   color: #999;
   display: inline-block;
+  margin-bottom: 4px;
 }
 /*职位列表*/
 .zhiwei-pullrefresh{
@@ -250,7 +251,7 @@
 .flow-box .icon-shanchu-copy{
   position: absolute;
   z-index: 2;
-  right: 10px;
+  right: 6px;
   top: 10px;
   color: #dd524d;
 }
