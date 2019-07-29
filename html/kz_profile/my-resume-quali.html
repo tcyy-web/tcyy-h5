@@ -101,7 +101,7 @@
               upload.showImgActionSheet(function(data) {
                 var url = config.url + "Uploads/Files";
                 upload.uploadimge(url, data.divid, function(res) {
-                  vm.formData.qualifyurl(res[0].saveUrl);
+                  vm.formData.qualifyurl(res[0].showUrl);
                   vm.formData.qualifyurl_show(data.abspath);
                 });
               });
@@ -122,7 +122,7 @@
               _.forEach(viewModel.formData, function(n, key){
                 n(data[key]);
               });
-              viewModel.formData.qualifyurl_show(config.serverUrl + data.qualifyurl);
+              viewModel.formData.qualifyurl_show(data.qualifyurl);
             }
           });
         }

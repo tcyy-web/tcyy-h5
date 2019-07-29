@@ -113,7 +113,9 @@
         });
         // 初始化日期选择
         var datepicer = new $.DtPicker({
-          type: 'date'
+          type: 'date',
+          beginYear: config.dateBegin,
+          endYear: config.dateEnd
         });
         var BaseView = function () {
           var vm = this;
@@ -168,7 +170,7 @@
               upload.showImgActionSheet(function(data) {
                 var url = config.url + "Uploads/Files";
                 upload.uploadimge(url, data.divid, function(res) {
-                  vm.formData.authurl(res[0].saveUrl);
+                  vm.formData.authurl(res[0].showUrl);
                   vm.formData.showAuthurl(data.abspath);
                 });
               });
@@ -182,9 +184,7 @@
             _.forEach(viewModel.formData, function(n, key) {
               n(res[key]);
             });
-            if (!!res.authurl) {
-              viewModel.formData.showAuthurl(config.serverUrl + res.authurl)
-            }
+            viewModel.formData.showAuthurl(res.authurl);
           }).catch(function(){}); 
         }
         function saveServer() {
