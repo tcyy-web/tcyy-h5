@@ -9,105 +9,94 @@
 	<link rel="stylesheet" href="../../css/mui.poppicker.css">
 	<link href="../../css/style.css" rel="stylesheet" />
 <style>
-
+  .mui-content{
+    height: auto;
+  }
 	.mui-input-row .mui-pull-right1{ font-style: normal; color: #333; text-align: right;  height: 100%; display: block; －webkit－user-select ：none ; border:none!important;}
 	.mui-input-row i.mui-pull-right1{ padding-right: 35px;}
 	.mui-input-row input.mui-pull-right1{ padding-right: 35px;}
 	#headurl img{ width: 40px; height: 40px;}
 	.btn-box{ margin:20px 10px;}
 </style>
-
 </head>
-
 <body>
-<header class="mui-bar mui-bar-nav">
-	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	<h1 class="mui-title">个人资料</h1>
-</header>
-<div class="mui-content">
-<form class="mui-input-group">
-	<div class="mui-input-row">
-		<label>头像：</label>
-
-		<a href="">
-			<i id="headurl" class="mui-pull-right1"> <img src="" alt="" /></i>
-		</a>
-	</div>
-	
-	<div class="mui-input-row">
-		<label>昵称：</label>
-		<input id="nickname" type="text" class="mui-input-clear mui-pull-right1" placeholder="请输入昵称">
-
-	</div>
-	
-	<div class="mui-input-row">
-		<label>性别：</label>
-		<i id="sex" class="mui-pull-right1">男</i>
-	</div>
-	
-	<div class="mui-input-row">
-		<label>电话：</label>
-		<input id="phone" type="text" class="mui-input-clear mui-pull-right1" placeholder="请输入电话">
-		
-	</div>
-	
-	<div class="mui-input-row">
-		<label>所在地：</label>
-		<input id="province" type="text" class="mui-input-clear mui-pull-right1" placeholder="请输入所在地">
-
-	</div>
-	
-	<div class="mui-input-row">
-		<label>微信：</label>
-		<input id="weixin" type="text" class="mui-input-clear mui-pull-right1" placeholder="请输入微信">
-
-	</div>
-	<div class="mui-input-row">
-		<label>QQ：</label>
-		<input id="qq" type="text" class="mui-input-clear mui-pull-right1" placeholder="请输入QQ">
-
-	</div>
-	<div class="mui-input-row">
-		<label>Email：</label>
-		<input id="email" type="text" class="mui-input-clear mui-pull-right1" placeholder="请输入Email">
-
-	</div>
-</form>
-<!--<ul class="mui-table-view mui-table-view-chevron">
-	
-	<li class="mui-table-view-cell">
-		<a class="mui-navigate-right"><span>头像</span> <i id="headurl" class="mui-pull-right1">
-			<img src="" alt="" />
-		</i></a>
-	</li>
-	<li class="mui-table-view-cell">
-		<a class="mui-navigate-right"><span>昵称 </span><input type="text" id="nickname"  class="mui-pull-right1"></a>
-	</li>
-	<li class="mui-table-view-cell">
-		<a class="mui-navigate-right"><span>性别 </span><i id="sex" class="mui-pull-right1">男</i></a>
-	</li>
-	<li class="mui-table-view-cell">
-		<a class="mui-navigate-right"><span>电话 </span><input type="text" id="phone" class="mui-pull-right1" ></a>
-	</li>
-	<li class="mui-table-view-cell">
-		<a class="mui-navigate-right"><span>所在地 </span><input type="text" id="province" class="mui-pull-right1" ></a>
-	</li>
-	<li class="mui-table-view-cell">
-		<a class="mui-navigate-right"><span>微信 </span><input type="text" id="weixin" class="mui-pull-right1" ></a>
-	</li>
-	<li class="mui-table-view-cell">
-		<a class="mui-navigate-right"><span>QQ </span><input type="text" id="qq" class="mui-pull-right1" ></a>
-	</li>
-	<li class="mui-table-view-cell">
-		<a class="mui-navigate-right"><span>Email </span><input type="text" id="email" class="mui-pull-right1" ></a>
-	</li>
-</ul>-->
-
-<div class="btn-box">
-	<button id="queding" class="mui-btn-block mui-btn-purple">确定</button>
+  <header class="mui-bar mui-bar-nav">
+    	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    	<h1 class="mui-title">个人资料</h1>
+  </header>
+  <div id="main-content" class="mui-content">
+    <form class="mui-input-group">
+      	<div class="mui-input-row">
+      		<label>头像：</label>
+    			<i id="headurl" 
+    			  data-bind="click: imgageClick"
+    			  class="mui-pull-right1"> 
+    			  <img data-bind="attr: {src: formData.headurlShow}" src="../../images/tab-wode/user_default.png" alt="" />
+    			</i>
+      	</div>
+      	
+      	<div class="mui-input-row">
+      		<label>昵称：</label>
+      		<input
+    		      data-bind="value: formData.nickname, muiInput: formData.nickname"
+      		   type="text" class="mui-input-clear mui-pull-right1" placeholder="请输入昵称">
+      	</div>
+      	
+      	<div class="mui-input-row">
+      		<label>性别：</label>
+      		<i 
+      		  data-bind="text: !formData.sexText() ? '请选择' : formData.sexText, 
+          click: sexClick"
+      		   class="mui-pull-right1">请选择</i>
+      	</div>
+      	
+      	<div class="mui-input-row">
+      		<label>电话：</label>
+      		<i data-bind="text: formData.phone" class="mui-pull-right1"></i>
+      	</div>
+      	
+      	<div class="mui-input-row">
+      		<label>所在地：</label>
+      		<input 
+      		  data-bind="value: formData.province, muiInput: formData.province"
+      		  maxlength="100"
+      		  type="text" class="mui-input-clear mui-pull-right1" placeholder="请输入所在地">
+      	</div>
+      	
+      	<div class="mui-input-row">
+      		<label>微信：</label>
+      		<input 
+      		  data-bind="value: formData.weixin, muiInput: formData.weixin"
+      		  maxlength="30"
+      		  type="text" class="mui-input-clear mui-pull-right1" placeholder="请输入微信">
+      	</div>
+      	<div class="mui-input-row">
+      		<label>QQ：</label>
+      		<input 
+      		  data-bind="value: formData.qq, muiInput: formData.qq"
+      		  maxlength="30"
+      		  type="text" class="mui-input-clear mui-pull-right1" placeholder="请输入QQ">
+      
+      	</div>
+      	<div class="mui-input-row">
+      		<label>Email：</label>
+      		<input 
+      		  data-bind="value: formData.email, muiInput: formData.email"
+      		  maxlength="200"
+      		  type="text" class="mui-input-clear mui-pull-right1" placeholder="请输入Email">
+      	</div>
+    </form>
+    <div class="btn-box">
+    	  <button 
+    	    data-bind="click: sureClick"
+    	     class="mui-btn-block mui-btn-purple">确定</button>
+    </div>
 </div>
-</div>
+<script src="../../third/loadash.3.10.1.js"></script>
 <script src="../../js/mui.min.js"></script>
+<script src="../../third/knockout.js"></script>
+<script src="../../third/knockout.extend.js"></script>
+<script src="../../third/ko.mapping.js"></script>
 <script src="../../js/mui.picker.min.js"></script>
 <script src="../../js/mui.poppicker.js"></script>
 <script src="../../js/utils.enums.js"></script>
@@ -117,202 +106,122 @@
 <script src="../../js/utils.upload.js"></script>
 <script src="../../js/utils.request.js" ></script>
 
-<script>(function($, doc) {
-	
-
-	$.init();
-	$.plusReady(function() {
-		var postData = {}
-		
-		addEvent();
-		ajaxData();
-    window.addEventListener('WDINFO', function(e){
-      ajaxData();
-    });
-		//性别
-		var gender = [];
-		for(var key in enums.sex) {
-			gender.push({
-				value: key,
-				text: enums.sex[key]
-			})
-		}
-		var genderPicker = new $.PopPicker();
-		genderPicker.setData(gender);
-
-		function selectSex() {
-
-			var _this = this;
-
-			genderPicker.show(function(items) {
-				sex = items[0].value;
-				_this.innerText = items[0].text;
-				setData("sex", sex);
-			});
-
-		}
-
-		var user = authManage.getUser();
-
-		doc.getElementById("queding").addEventListener("tap", function() {
-			
-			if( JSON.stringify(postData) == "{}"){
-			  console.log(JSON.stringify(postData));
-				return;
-			}
-
-			request.loginAjax('User/saveDataByFiled', {
-
-				data: {
-					"field": postData
-				}
-
-			}, function(data, success) {
-
-				if(success) {
-					postData["header"] && (user.header = postData["header"]);
-					postData["nickname"] && (user.nickname = postData["nickname"]);
-					postData["sex"] && (user.sex = postData["sex"]);
-					postData["phone"] && (user.phone = postData["phone"]);
-					authManage.saveUser(user);
-					bb();
-					
-				}
-			});
-		});
-		
-		function bb(){
-			var parent = plus.webview.currentWebview().opener();
-			$.fire(parent, 'info-edit-success', {});
-			mui.back();
-		}
-
-		function ajaxData() {
-			request.loginAjax('User/getInfo', {
-				showMsg: false
-			}, function(data, success) {
-
-				if(success) {
-
-					render(data);
-				}
-			});
-		}
-
-		function setData(name, value, callback) {
-
-			postData[name] = value;
-
-			callback && callback();
-
-		}
-
-		function render(obj) {
-			var arr = doc.querySelectorAll(".mui-pull-right1");
-			$.each(arr, function() {
-				var name = this.getAttribute("id");
-				if(name == "headurl") {
-					this.innerHTML = "<img src=" + obj["headurl"] + ">";
-				} else if(name == "sex") {
-					this.value = enums.sex[obj[name]];
-				} else {
-					this.value = obj[name];
-				}
-			});
-		}
-		var imageurl = null;
-
-		function uploadImage(target) {
-			setTimeout(function() {
-				upload.showImgActionSheet(function(data) {
-					var url = config.url + "Uploads/Files";
-					upload.uploadimge(url, data.divid, function(res) {
-
-						imageurl = res[0].showUrl;
-						target.innerHTML = "<img src=" + imageurl + ">"
-						imageurl && setData("headurl", imageurl, function() {
-							imageurl = null;
-
-						});
-
-					});
-				});
-			}, 500);
-		}
-
-		function addEvent() {
-			var oTableCell = doc.querySelectorAll(".mui-input-row .mui-pull-right1");
-
-			$.each(oTableCell, function() {
-
-				this.addEventListener("tap", function() {
-					this._text = this.value;
-					var name = this.getAttribute("id");
-					if(name == "headurl") {
-						uploadImage(this);
-
-					} else if(name == "sex") {
-						selectSex.call(this);
-					} else if(name == "phone") {
-						if(this.value == "") {
-							$.openWindow({
-								url: '../my/validate-phone.html',
-								id: 'MY-VALIDATA-PHONE',
-								show: {
-									aniShow: 'pop-in'
-								},
-								styles: {
-									popGesture: 'close'
-								},
-								waiting: {
-									autoShow: false
-								}
-							});
-						} else {
-							$.openWindow({
-								url: '../my/validate-phone-cancel.html',
-								id: 'MY-VALIDATA-PHONE-CANCEL',
-								show: {
-									aniShow: 'pop-in'
-								},
-								styles: {
-									popGesture: 'close'
-								},
-								waiting: {
-									autoShow: false
-								}
-							});
-						}
-					}
-
-				});
-				this.addEventListener("blur", function() {
-					if(this._text != this.value) {
-						var name = this.getAttribute("id");
-						var txt = this.value;
-
-						var callback = function(data, sucess) {
-							if(!sucess) {
-								this.value = this._text;
-							}
-						}
-						if(name == "headurl") {
-
-						} else if(name == "sex") {
-							//							txt =="男"?"1":"2";
-							//							setData( name , txt ,callback );
-						} else {
-							setData(name, txt, callback);
-						}
-					};
-
-				});
-			})
-		}
-
-	});
-
-}(mui, document));
+<script>
+  (function($, doc) {
+    	$.init();
+    	$.plusReady(function() {
+    	  //性别
+      var gender = [];
+      for(var key in enums.sex) {
+        gender.push({
+          value: key,
+          text: enums.sex[key]
+        })
+      }
+      var genderPicker = new $.PopPicker();
+      genderPicker.setData(gender);
+    	  var BaseView = function(){
+    	    var vm = this;
+    	    vm.formData = {
+    	      nickname: ko.observable(''),
+    	      sex: ko.observable(),
+    	      sexText: ko.observable(''),
+    	      phone: ko.observable(),
+    	      province: ko.observable(''),
+    	      weixin: ko.observable(''),
+    	      qq: ko.observable(''),
+    	      email: ko.observable(),
+  	        headurl: ko.observable(''),
+          headurlShow: ko.observable('')
+    	    }
+    	    vm.sexClick = function(){
+    	      setTimeout(function() {
+            genderPicker.show(function(items) {
+              vm.formData.sex(items[0].value);
+              vm.formData.sexText(items[0].text);
+            });
+          }, 500);
+    	    }
+    	    
+    	    vm.phoneClick = function(){
+    	      var url = '../my/validate-phone-cancel.html';
+          var id = 'MY-VALIDATA-PHONE-CANCEL';
+    	      if (!vm.formData.phone()) {
+    	        url = '../my/validate-phone.html';
+            id = 'MY-VALIDATA-PHONE';
+    	      }
+    	      $.openWindow({
+            url: url,
+            id: id,
+            show: {
+              aniShow: 'pop-in'
+            },
+            styles: {
+              popGesture: 'close'
+            },
+            waiting: {
+              autoShow: false
+            }
+          });
+    	    }
+    	    
+    	    vm.imgageClick = function(){
+    	      setTimeout(function() {
+            upload.showImgActionSheet(function(data) {
+              var url = config.url + "Uploads/Files";
+              upload.uploadimge(url, data.divid, function(res) {
+                vm.formData.headurl(res[0].showUrl);
+                vm.formData.headurlShow(data.abspath)
+              });
+            });
+          }, 500);
+    	    }
+    	    
+    	    vm.sureClick = function(){
+    	      var postData = ko.mapping.toJS(vm.formData);
+    	      delete postData.sexText
+    	      delete postData.headurlShow
+    	      delete postData.phone
+    	      request.loginAjax('User/saveDataByFiled', {
+            data: {
+              "field": postData
+            }
+          }, function(data, success) {
+            if(success) {
+              var user = authManage.getUser();
+              user.nickname = viewModel.formData.nickname();
+              user.header = viewModel.formData.headurlShow();
+              user.sex = viewModel.formData.sex();
+              authManage.saveUser(user);
+              var parent = plus.webview.currentWebview().opener();
+              $.fire(parent, 'info-edit-success', {});
+              mui.back();
+            }
+          });
+    	    }
+    	  }
+    	  var viewModel = new BaseView();
+    	  ko.applyBindings(viewModel, doc.getElementById('main-content'));
+    	  
+    	  function ajaxData() {
+        request.loginAjax('User/getInfo', {
+          showMsg: false
+        }, function(data, success) {
+          if(success) {
+            _.forEach(viewModel.formData, function(n, key){
+              n(data[key]);
+            });
+            viewModel.formData.sexText(enums.sex[data.sex]);
+            viewModel.formData.headurlShow(data.headurl);
+          }
+        });
+      }
+    		ajaxData();
+      window.addEventListener('WDINFO', function(e){
+        ajaxData();
+      });
+    	});
+  }(mui, document));
 </script>
 </body>
 
