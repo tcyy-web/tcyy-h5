@@ -42,7 +42,9 @@
     <div class="resume-box">
       <div class="flex">
         <div class="resume-img">
-          <img data-bind="attr: {src: detailData().headurl}" src="../../images/tab-wode/user_default.png" />
+          <img
+            data-bind="attr: {src: !headurl() ? '../../images/tab-wode/user_default.png' : headurl}"
+            src="../../images/tab-wode/user_default.png" />
         </div>
         <div class="flex-1 flex flex-row-center">
           <div class="m-title t1">
@@ -57,7 +59,7 @@
       </div>
       <div class="mui-row">
         <div class="mui-col-xs-6">
-          <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: detailData().telephone"></span></div>
+          <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: detailData().telephone,click: dialTelClick"></span></div>
         </div>
         <div class="mui-col-xs-6">
           <div class="tel"><i class="iconfont icon-youxiang"></i><span data-bind="text: detailData().email"></span></div>
@@ -162,6 +164,7 @@
         var BaseView = function () {
           var vm = this;
           vm.detailData = ko.observable({});
+          vm.headurl = ko.observable('');
            // 教育经历
           vm.eduList = ko.observableArray([]);
           // 工作经历
@@ -172,6 +175,10 @@
           vm.pageType = ko.observable('');
           vm.previewClick = function(index){
             muiPreview.open(index, 'preview');
+          }
+          
+          vm.dialTelClick = function(){
+            plus.device.dial(vm.detailData().telephone(), true);
           }
         }
         var viewModel = new BaseView();
@@ -193,6 +200,7 @@
                  data.marriageText = data.marriage == 1 ? '未婚' : '已婚';
                  data.worknatureText = data.worknature == 1 ? '全职' : '兼职';
                  data.jobstatusText = data.jobstatus == 1 ? '在职' : '离职';
+                 viewModel.headurl(data.headurl);
                  viewModel.eduList(data.eduList);
                  viewModel.expList(data.expList);
                  viewModel.qualificationList(data.qualificationList);
@@ -213,6 +221,7 @@
         window.addEventListener('kz_profile_ResumeDetail_Data', function(e) {
           viewModel.pageType(e.detail.type || 'show');
           viewModel.detailData({});
+          viewModel.headurl('')
           viewModel.eduList([]);
           viewModel.expList([]);
           viewModel.qualificationList([]);

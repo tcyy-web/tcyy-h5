@@ -31,7 +31,7 @@
       <div class="tj" style="padding-right: 130px;">联系人：<span data-bind="text: detailData().contacts"></span></div>
       <div class="mui-row" style="margin-top: 5px;">
         <div class="mui-col-xs-6">
-          <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: detailData().phone"></span></div>
+          <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: detailData().phone,click: dialTelClick"></span></div>
         </div>
         <div class="mui-col-xs-6">
           <div class="tel"><i class="iconfont icon-youxiang"></i><span data-bind="text: detailData().email"></span></div>
@@ -63,6 +63,10 @@
         var BaseView = function () {
           var vm = this;
           vm.detailData = ko.observable({});
+          
+          vm.dialTelClick = function(){
+            plus.device.dial(vm.detailData().phone(), true);
+          }
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));

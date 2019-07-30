@@ -46,7 +46,7 @@
                 <div class="resume-box">
                   <div class="flex">
                     <div class="resume-img">
-                        <img data-bind="attr: {src: user_info.headurl}" src="../../images/tab-wode/user_default.png" />
+                        <img data-bind="attr: {src: !headurl ? '../../images/tab-wode/user_default.png' : headurl}" src="../../images/tab-wode/user_default.png" />
                     </div>
                     <div class="flex-1 flex flex-row-center">
                       <div class="m-title t1">

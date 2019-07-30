@@ -13,6 +13,9 @@
     .mui-content{
       height: auto;
     }
+    .jobs-detail a{
+      color: #8E78D6;
+    }
   </style>
 </head>
 
@@ -38,13 +41,13 @@
         <span data-bind="text: detailData().experienceText" class="c-box"></span>
         <span data-bind="text: detailData().educationText" class="c-box"></span>
       </div>
-      <div data-bind="click: ShowCompany" class="tj"><i class="iconfont icon-gongsixinxi1"></i>公司名称：<span data-bind="text: detailData().name"></span></div>
+      <div data-bind="click: ShowCompany" class="tj clearFix"><i class="iconfont icon-gongsixinxi1"></i>公司名称：<span data-bind="text: detailData().name"></span><a style="float: right;">查看</a></div>
       <div class="tj"><i class="iconfont icon-didian"></i>工作地点：<span data-bind="text:detailData().region"></span>-<span data-bind="text:detailData().address"></span></div>
       <div class="tj"><i class="iconfont icon-renshu"></i>招聘人数：<span data-bind="text:detailData().nums"></span>人</div>
       <div class="tj" style="padding-right: 130px;"><i class="iconfont icon-lianxiren"></i>联系人：<span data-bind="text: detailData().contacts"></span></div>
       <div class="mui-row" style="margin-top: 5px;">
         <div class="mui-col-xs-6">
-          <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: detailData().phone"></span></div>
+          <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: detailData().phone, click: dialTelClick"></span></div>
         </div>
         <div class="mui-col-xs-6">
           <div class="tel"><i class="iconfont icon-youxiang"></i><span data-bind="text: detailData().email"></span></div>
@@ -92,6 +95,10 @@
             $.openWindow({
               id:'kz_profile_CompanyDetail'            
             }); 
+          }
+          
+          vm.dialTelClick = function(){
+            plus.device.dial(vm.detailData().phone(), true);
           }
         }
         var viewModel = new BaseView();
