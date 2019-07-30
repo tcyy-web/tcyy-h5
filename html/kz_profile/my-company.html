@@ -172,7 +172,7 @@
                 upload.uploadimge(url, data.divid, function(res) {
                   vm.formData.authurl(res[0].showUrl);
                   vm.formData.showAuthurl(data.abspath);
-                });
+                },{ type: '5' });
               });
             }, 500);
           }
