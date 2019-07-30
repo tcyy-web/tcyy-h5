@@ -88,6 +88,9 @@
           vm.detailData = ko.observable({});
           
           vm.ShowCompany = function(){
+            if (!vm.detailData().cid) {
+              return
+            }
             var nextWebview = plus.webview.getWebviewById('kz_profile_CompanyDetail');
             $.fire(nextWebview, 'kz_profile_CompanyDetail_Data', {
               id:  vm.detailData().cid()
