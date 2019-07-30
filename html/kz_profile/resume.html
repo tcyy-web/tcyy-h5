@@ -44,16 +44,23 @@
               <!-- ko foreach: list -->
               <li data-bind="attr: {itemid: id}" >
                 <div class="resume-box">
-                  <div class="m-title t1">
-                    <span data-bind="text: personname"></span> 
-                    <span class="key-imp">
-                      <span data-bind="text: intentpositionText"></span> | 
-                      <span data-bind="text: educationText"></span> |
-                      <span data-bind="text: workexperience"></span>
-                    </span>
+                  <div class="flex">
+                    <div class="resume-img">
+                        <img data-bind="attr: {src: user_info.headurl}" src="../../images/tab-wode/user_default.png" />
+                    </div>
+                    <div class="flex-1 flex flex-row-center">
+                      <div class="m-title t1">
+                        <span data-bind="text: personname"></span> 
+                        <span class="key-imp">
+                          <span data-bind="text: intentpositionText"></span> | 
+                          <span data-bind="text: educationText"></span> |
+                          <span data-bind="text: workexperience"></span>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   <div class="flex">
-                    <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>期望地区：<span data-bind="text: expectregion"></span></div>
+                    <div class="resume-time flex-item"><i class="iconfont icon-didian"></i>期望地区：<span data-bind="text: expectregion"></span></div>
                   </div>
                   <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: telephone"></span></div>
                 </div>

@@ -28,9 +28,15 @@
       <div class="tj">公司地址：<span data-bind="text:detailData().region"></span>-<span data-bind="text:detailData().address"></span></div>
       <div class="tj">注册资金：<span data-bind="text:detailData().registermoney"></span></div>
       <div class="tj">人员规模：<span data-bind="text: detailData().people"></span>人</div>
-      <div class="tj">邮箱：<span data-bind="text: detailData().email"></span></div>
       <div class="tj" style="padding-right: 130px;">联系人：<span data-bind="text: detailData().contacts"></span></div>
-      <div class="tel"><span data-bind="text: detailData().phone"></span></div>
+      <div class="mui-row" style="margin-top: 5px;">
+        <div class="mui-col-xs-6">
+          <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: detailData().phone"></span></div>
+        </div>
+        <div class="mui-col-xs-6">
+          <div class="tel"><i class="iconfont icon-youxiang"></i><span data-bind="text: detailData().email"></span></div>
+        </div>
+      </div>
     </div>
   </div>
   <script src="../../third/bluebird.min.js"></script>

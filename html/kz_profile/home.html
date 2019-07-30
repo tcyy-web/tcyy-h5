@@ -95,31 +95,38 @@
               <!-- ko foreach : list -->
                 <li data-bind="attr: {rid: rid}">
                    <div class="resume-box">
-                    <div class="m-title t1">
-                      <span data-bind="text: personname"></span> 
-                      <span class="key-imp">
-                        <span data-bind="text: intentpositionText"></span> | 
-                        <span data-bind="text: educationText"></span> |
-                        <span data-bind="text: workexperience"></span>
-                      </span>
-                    </div>
-                    <!-- ko if: $root.tabType() == 1 -->
-                    <div class="flex">
-                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>投递日期：<span data-bind="text: delivertime"></span></div>
-                      <div data-bind="attr: {jid: jid}" class="resume-jobs flex-item jobclick"><i class="mui-icon mui-icon-paperplane"></i>投递职位：<span data-bind="text: professional"></span></div>
-                    </div>
-                    <!-- /ko -->
-                    <!-- ko if: $root.tabType() == 2 -->
-                    <div class="flex">
-                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>收藏日期：<span data-bind="text: viewtime"></span></div>
-                    </div>
-                    <!-- /ko -->
-                    <!-- ko if: $root.tabType() == 3 -->
-                    <div class="flex">
-                      <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>查看日期：<span data-bind="text: viewtime"></span></div>
-                    </div>
-                    <!-- /ko -->
-                    <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: telephone"></span></div>
+                     <div class="flex">
+                       <div class="resume-img">
+                        <img data-bind="attr: {src: headurl}" src="../../images/tab-wode/user_default.png" />
+                       </div>
+                       <div class="flex-1 flex flex-row-center">
+                         <div class="m-title t1">
+                          <span data-bind="text: personname"></span> 
+                          <span class="key-imp">
+                            <span data-bind="text: intentpositionText"></span> | 
+                            <span data-bind="text: educationText"></span> |
+                            <span data-bind="text: workexperience"></span>
+                          </span>
+                        </div>
+                       </div>
+                     </div>
+                      <!-- ko if: $root.tabType() == 1 -->
+                      <div class="flex">
+                        <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>投递日期：<span data-bind="text: delivertime"></span></div>
+                        <div data-bind="attr: {jid: jid}" class="resume-jobs flex-item jobclick"><i class="mui-icon mui-icon-paperplane"></i>投递职位：<span data-bind="text: professional"></span></div>
+                      </div>
+                      <!-- /ko -->
+                      <!-- ko if: $root.tabType() == 2 -->
+                      <div class="flex">
+                        <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>收藏日期：<span data-bind="text: viewtime"></span></div>
+                      </div>
+                      <!-- /ko -->
+                      <!-- ko if: $root.tabType() == 3 -->
+                      <div class="flex">
+                        <div class="resume-time flex-item"><i class="iconfont icon-riliriqi"></i>查看日期：<span data-bind="text: viewtime"></span></div>
+                      </div>
+                      <!-- /ko -->
+                      <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: telephone"></span></div>
                   </div>
                 </li>               
               <!-- /ko -->

@@ -210,13 +210,12 @@
   margin-right: 5px;
 }
 .jobs-detail .tel {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
   border: 1px solid #f1f1f1;
   padding: 3px 10px;
   border-radius: 30px;
+  background: #f6f3ff;
   color: #765fc3;
+  display: inline-block;
 }
 .jobs-detail .tel .iconfont {
   margin-right: 6px;
@@ -303,3 +302,22 @@
 .publish-box .opt { text-align:right; padding:5px 0;}
 .publish-box .opt .opt-btn{ background:#ccc; color:#333; padding:4px 15px; border-radius:3px;}
 .publish-box .opt .opt-btn.purple{ background:#8E78D6; color:#fff;}
+/*带头像的*/
+.resume-img{
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  align-items: center;
+  -webkit-align-items: center;
+}
+.resume-img img{
+  max-width: 100%;
+  max-height: 100%;
+}

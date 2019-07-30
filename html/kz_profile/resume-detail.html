@@ -40,21 +40,32 @@
   <!-- /ko -->
   <div class="mui-content">
     <div class="resume-box">
-      <div class="m-title t1">
-        <span data-bind="text: detailData().personname"></span>
-        <span class="key-imp">
-          <span data-bind="text: detailData().intentpositionText"></span> | 
-          <span data-bind="text: detailData().educationText"></span> | 
-          <span data-bind="text: detailData().workexperience"></span>
-        </span>
+      <div class="flex">
+        <div class="resume-img">
+          <img data-bind="attr: {src: detailData().headurl}" src="../../images/tab-wode/user_default.png" />
+        </div>
+        <div class="flex-1 flex flex-row-center">
+          <div class="m-title t1">
+            <span data-bind="text: detailData().personname"></span>
+            <span class="key-imp">
+              <span data-bind="text: detailData().intentpositionText"></span> | 
+              <span data-bind="text: detailData().educationText"></span> | 
+              <span data-bind="text: detailData().workexperience"></span>
+            </span>
+          </div>         
+        </div>
+      </div>
+      <div class="mui-row">
+        <div class="mui-col-xs-6">
+          <div class="tel"><i class="iconfont icon-dianhua"></i><span data-bind="text: detailData().telephone"></span></div>
+        </div>
+        <div class="mui-col-xs-6">
+          <div class="tel"><i class="iconfont icon-youxiang"></i><span data-bind="text: detailData().email"></span></div>
+        </div>
       </div>
       <div class="mui-row">
         <div class="mui-col-xs-6">性别：<span data-bind="text: detailData().sexText"></span></div>
         <div class="mui-col-xs-6">出生日期：<span data-bind="text: detailData().birthday"></span></div>
-      </div>
-      <div class="mui-row">
-        <div class="mui-col-xs-6">电话：<span data-bind="text: detailData().telephone"></span></div>
-        <div class="mui-col-xs-6">邮箱：<span data-bind="text: detailData().email"></span></div>
       </div>
       <div class="mui-row">
         <div class="mui-col-xs-6">民族：<span data-bind="text: detailData().ethnic"></span></div>
