@@ -393,8 +393,20 @@
                 } else {
                   authManage.toLogin();
                 }   
-              } else if (_type === 6) { // 购物中心类
-                
+              } else if (_type === 6) { // 在线商城类
+                $.openWindow({
+                    url: '../kz_zxsc/home.html',
+                    id: 'Kz_zxsc_home',
+                    show: {
+                      aniShow: 'pop-in'
+                    },
+                    styles: {
+                      popGesture: 'hide'
+                    },
+                    waiting: {
+                      autoShow: false
+                    }
+                  });
               } else if (_type === 7) { // 积分商城类
                 
               } else if (_type === 8) { // 口腔招聘类
