@@ -151,7 +151,6 @@
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('zhiwei'));
-        // 查询
         var queryList = function(callback) {
           var _request = {
             page: page,
@@ -202,7 +201,12 @@
              }
           });
         }
-        queryList();
+        // 获取当前用户地址
+        new ProfileUserAddress().getFromCache().then(function(res) {
+          viewModel.searchRes.region(res.region);
+        }).finally(function(){
+          queryList();
+        });
         // 跳转详情
         $('#pullrefresh-list').on('tap', '.mui-table-view > li', function(e){
           var itemid = this.getAttribute('itemid');

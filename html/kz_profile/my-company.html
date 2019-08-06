@@ -214,6 +214,7 @@
               data: postData
             }, function(data,success) {     
               if (success) {   
+                new ProfileUserAddress().getFromServer();
                 resolve()
               }
             });

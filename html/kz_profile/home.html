@@ -398,7 +398,12 @@
                }
             });
           }
-          queryList();
+          // 获取当前用户地址
+          new ProfileUserAddress().getFromServer().then(function(res) {
+            viewModel.searchRes.region(res.expectregion);  
+          }).finally(function(){
+            queryList();
+          });
           // 跳转详情
           $('#zhiwei-list').on('tap', '.mui-table-view > li', function(e){
             var itemid = this.getAttribute('itemid');
