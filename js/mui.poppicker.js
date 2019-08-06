@@ -59,6 +59,10 @@
 			self.cancel.innerText = self.options.buttons[0];
 			self.ok.innerText = self.options.buttons[1];
 			self.cancel.addEventListener('tap', function(event) {
+			  // 增加取消回调
+			  if (self.cancelCallback) {
+			    self.cancelCallback();
+			  }
 				self.hide();
 			}, false);
 			self.ok.addEventListener('tap', function(event) {
@@ -121,9 +125,11 @@
 			return items;
 		},
 		//显示
-		show: function(callback) {
+		show: function(callback, cancelCallback) {
 			var self = this;
 			self.callback = callback;
+			// 取消回调
+			self.cancelCallback = cancelCallback;
 			self.mask.show();
 			document.body.classList.add($.className('poppicker-active-for-page'));
 			self.panel.classList.add($.className('active'));

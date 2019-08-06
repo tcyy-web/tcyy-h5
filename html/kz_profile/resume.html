@@ -145,6 +145,9 @@
                   viewModel.searchRes.region(result);   
                   reloadPage();
                 }                                 
+              }, function(){
+                viewModel.searchRes.region('');   
+                reloadPage();
               });
             }, 300);
           }
