@@ -9,46 +9,70 @@
   <link href="../../css/style.css" rel="stylesheet" />
   <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/kt-style.css" rel="stylesheet" />
+  <style>
+    .pullrefresh-list{
+      height: calc(100% - 54px);
+      height: -webkit-calc(100% - 54px);
+      position: relative;
+    }
+  </style>
 </head>
 
 <body id="main-content">
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <div class="header-search-box">
-        <input type="text" placeholder="请输入关键字">
-        <span>搜索</span>
-    </div>
+    <h1 class="mui-title" data-bind="text: headTitle"></h1>
+    <i data-bind="click: searchFn" class="iconfont icon-sousuo mui-pull-right"></i>
   </header>
-  <div class="mui-content search search-result">
+  <div class="mui-content search">
     <div class="mui-fullscreen">
-      <div class="mui-scroll-wrapper">
-        <div id="pullrefresh-list" class="mui-scroll">
-          <div class="video">
-            <div class="video-item">
-              <div class="thumbnail">
-                <div class="img">
-                  <img src="images/timg2.jpg" alt="">
+      <div class="top-sort">
+        <a href="#zuixin" class="sort-item">
+          <span>最新</span>
+        </a>
+        <a href="#zuixin" class="sort-item">
+          <span>免费</span>
+        </a>
+        <a href="#zuixin" class="sort-item active">
+          <p class="button-label">
+              <span>价格</span>
+              <span class="sort-icon">
+                <i class="iconfont icon-paixu-shang-copy active"></i>
+                <i class="iconfont icon-paixu-xia-copy"></i>
+              </span>
+          </p>
+        </a>
+      </div>
+      <div class="pullrefresh-list">
+        <div class="mui-scroll-wrapper">
+          <div id="pullrefresh-list" class="mui-scroll">
+            <div class="video">
+              <div class="video-item">
+                <div class="thumbnail">
+                  <div class="img">
+                    <img src="images/timg2.jpg" alt="">
+                  </div>
+                  <i class="iconfont icon-bofang"></i>
+                  <p class="video-name text-ellipsis">
+                    <span >视频名称名称名称名称名称名称</span>
+                  </p>
                 </div>
-                <i class="iconfont icon-bofang"></i>
-                <p class="video-name text-ellipsis">
-                  <span >视频名称名称名称名称名称名称</span>
-                </p>
-              </div>
-              <div class="info">
-                <p class="text-ellipsis font-bold curricu-name">
-                  <span>课程名称课程名称名称名称名称</span>
-                </p>
-                <p class="clear">
-                  <span class="fl font-bold">小漂亮</span>
-                  <span class="fr price font-bold">免费</span>
-                </p>
-                <p class="clear other">
-                  <span class="fl">
-                    <i class="iconfont icon-liulanjilu"></i>
-                    123
-                  </span>
-                  <span class="fr">2019.12.23</span>
-                </p>
+                <div class="info">
+                  <p class="text-ellipsis font-bold curricu-name">
+                    <span>课程名称课程名称名称名称名称</span>
+                  </p>
+                  <p class="clear">
+                    <span class="fl font-bold">小漂亮</span>
+                    <span class="fr price font-bold">免费</span>
+                  </p>
+                  <p class="clear other">
+                    <span class="fl">
+                      <i class="iconfont icon-liulanjilu"></i>
+                      123
+                    </span>
+                    <span class="fr">2019.12.23</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>

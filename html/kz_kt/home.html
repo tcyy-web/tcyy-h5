@@ -38,8 +38,9 @@
         <!-- ko foreach: categorys -->
           <a class="nav-item">
             <div class="nav-iconbox" 
-              data-bind="style: {'background-color' : color}"
-           ><i data-bind="attr: {class: icon}"></i></div>
+              data-bind="style: {'background-color' : color},
+              click: $root.listFn"
+            ><i data-bind="attr: {class: icon}"></i></div>
             <p class="nav-label" data-bind="text: title"></p>
           </a>
         <!-- /ko -->
@@ -47,7 +48,7 @@
       <div class="home-newvideo">
         <div class="title clear">
           <p class="fl">最新视频</p>
-          <p class="fr font-small">更多</p>
+          <p data-bind="click: moreFn" class="fr font-small">更多</p>
         </div>
         <div class="video">
           <div class="video-item">
@@ -116,6 +117,10 @@
   <script>
     (function($, doc) {
       $.init({
+        preloadPages:[{
+          id:'KZ_KT_Detail',
+          url: './details.html'
+        }],
         beforeback: function() {
 　　      plus.navigator.setStatusBarBackground('#765fc3');
           return true;
@@ -141,7 +146,7 @@
             }
           });
         });
-        /*首页业务*/
+        /*课堂*/
         (function(){
           var category = categorys.get();
           var categoryColor = {
@@ -156,16 +161,63 @@
           }
           var BaseView = function() {
             var vm = this;
+            // 分类
             vm.categorys = ko.observableArray(_.map(category, function(o) {
               o.icon = enums.category[o.id];
               o.color = categoryColor[o.id];
               return o;
             }));
+            // 跳转列表
+            vm.listFn = function (data) {
+              mui.openWindow({
+                id:'KZ_KT_CategoryList',
+                url: './list.html',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                },
+                extras: {
+                  catergoryid: data.id,
+                  headtitle: data.title
+                }
+              });
+            }
+            // 跳转更多
+            vm.moreFn = function (){
+              mui.openWindow({
+                id:'KZ_KT_MoreList',
+                url: './list.html',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+            }
+            // 最新列表
+            vm.newestList = ko.observableArray([]);
           }
           var viewModel = new BaseView();
           ko.applyBindings(viewModel, doc.getElementById('home'));
+          
+          VideoSearch({
+            page: 1,
+            limit: 10,
+            ctime: 'desc'
+          }).then(function(reslist){
+            console.log('aa', reslist);
+          })
         })();
-        
+        /*我的*/
         doc.getElementById('my-kecheng').addEventListener('tap', function(){
           mui.openWindow({
             id:'kz_kt_MyVideo',
@@ -195,8 +247,7 @@
               autoShow: false
             }
           });
-        });
-        
+        });        
       });
     }(mui, document));
   </script>
