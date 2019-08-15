@@ -13,20 +13,79 @@
   <link href="css/kt-style.css" rel="stylesheet" />
 </head>
 
-<body id="main-content">
+<body>
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">视频发布</h1>
   </header>
-  <div class="mui-content ">
+  <nav id="saveBtnBox" class="mui-bar mui-bar-tab custom-tab">
+    <div class="mui-tab-item">
+      <button id="saveBtn" class="mui-btn mui-btn-blue">保存</button>
+    </div>  
+  </nav>
+  <div class="mui-content" id="main-content">
     <form class="mui-input-group kt-form-group">
       <div class="mui-input-row">
         <label><i class="form-required"></i>视频类型：</label>
         <p data-bind="text: !formData.ctypeText() ? '请选择' : formData.ctypeText, 
           click: ctypeClick">请选择</p>
       </div>
+      
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>课程分类：</label>
+        <p data-bind="text: !formData.gidText() ? '请选择' : formData.gidText, 
+          click: gidClick">请选择</p>
+      </div>
+      
+      
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>课程标题：</label>
+        <input data-bind="value: formData.ctitle, muiInput: formData.ctitle" maxlength="50" type="text" class="mui-input-clear" placeholder="请输入课程标题">
+      </div> 
+      
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>课程描述：</label>
+        <input data-bind="value: formData.ccontents, muiInput: formData.ccontents" maxlength="50" type="text" class="mui-input-clear" placeholder="请输入课程描述">
+      </div> 
+      
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>课程售价：</label>
+        <input data-bind="value: formData.oneprice, muiInput: formData.oneprice" maxlength="5" type="text" class="mui-input-clear" placeholder="请输入课程售价">
+      </div>
+      <div data-bind="show:!formData.urls()" class="btn-box">
+			  <button id="uploadVideo" type="button" class="mui-btn mui-btn-blue">上传视频</button>
+			</div>
+			<div data-bind="show:formData.urls()" class="upload-img-box">
+				<img data-bind="src:formData.urls" />
+			</div>
     </form>
   </div>
+  
+  <!--上传视频后弹出层-->
+	<div id="showVideoDetail" class="my-popover">
+		
+		<div class="my-popover-content kt-form-group">
+			
+			<div class="mui-input-row">
+        <label><i class="form-required"></i>视频标题：</label>
+        <input data-bind="value: formData.vtitle, muiInput: formData.vtitle" maxlength="5" type="text" class="mui-input-clear" placeholder="请输入视频标题">
+      </div>
+      
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>视频描述：</label>
+        <input data-bind="value: formData.vcontents, muiInput: formData.vcontents" maxlength="5" type="text" class="mui-input-clear" placeholder="请输入视频描述">
+      </div>
+      
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>视频价格：</label>
+        <input data-bind="value: formData.price, muiInput: formData.price" maxlength="5" type="text" class="mui-input-clear" placeholder="请输入视频价格">
+      </div>
+      <div class="btn-box">
+			  <button id="saveVideo" type="button" class="mui-btn mui-btn-blue">确定</button>
+			</div>
+		</div>
+
+	</div>
   <script src="../../third/bluebird.min.js"></script>
   <script src="../../third/loadash.3.10.1.js"></script>
   <script src="../../js/mui.min.js"></script>
@@ -54,13 +113,35 @@
           { value: 1, text: '单集'},
           { value: 2, text: '多集'}
         ]);
+        
+        var gidPicker = new $.PopPicker();
+        var caList = categorys.get(),gList = [];
+        for( var i = 0 ; i< caList.length ; i++ ){
+        	gList.push({
+        		value:caList[i].id,
+        		text:caList[i].title
+        	})
+        }
+        gidPicker.setData( gList );
+        
         var BaseView = function () {
           var vm = this;
-          vm.formData = {
-            id: ko.observable(),
-            ctype: ko.observable(),
-            ctypeText: ko.observable(''),
+          vm.formData = { 
+          	
+          	gid: ko.observable(),
+          	gidText: ko.observable(''),
+          	ctype: ko.observable(), 
+          	ctypeText: ko.observable(''), 
+          	ctitle: ko.observable(''), 
+          	ccontents: ko.observable(''),
+						oneprice:ko.observable(),
+          	price: ko.observable(),
+          	vtitle:ko.observable(),
+          	vcontents:ko.observable(),
+          	urls:ko.observable(),
+						episodes:1 
           }
+          
           vm.ctypeClick = function(){
             setTimeout(function() {
               ctypePicker.show(function(items) {
@@ -69,9 +150,101 @@
               });
             }, 500);
           }
+          
+          vm.gidClick = function(){
+            setTimeout(function() {
+              gidPicker.show(function(items) {
+                vm.formData.gid(items[0].value);
+                vm.formData.gidText(items[0].text);
+              });
+            }, 500);
+          }
+          
         }
         var viewModel = new BaseView();
-        ko.applyBindings(viewModel, document.getElementById('main-content'));  
+        ko.applyBindings(viewModel, document.getElementById('main-content')); 
+          //保存简历
+        saveVedioInfo = function () {
+          return new Promise(function(resolve){
+          	
+            var postData = ko.mapping.toJS(viewModel.formData);
+            
+            console.log( JSON.stringify( postData ) )
+
+            
+            if (!postData.ctype) {
+              mui.toast('请选择视频类型')
+              return;
+            }
+            if (!postData.ctitle) {
+              mui.toast('请输入课程标题')
+              return;
+            }
+            if (!postData.ccontents) {
+              mui.toast('请输入课程描述')
+              return;
+            }
+            if (!postData.gid) {
+              mui.toast('请输入课程分类')
+              return;
+            }
+            if (!postData.oneprice) {
+              mui.toast('请输入售价')
+              return;
+            }
+            if (!postData.urls) {
+              mui.toast('请上传视频')
+              return;
+            }
+    
+            request.loginAjax('courses/saveCourseAndVideos', {
+              data: postData
+            }, function(data,success) {     
+              if (success) {   
+                
+                resolve()
+              }
+            });
+          });
+        }
+        
+        doc.getElementById('saveBtn').addEventListener('tap', function(e) {
+          saveVedioInfo().then(function(){
+            mui.toast('保存成功')
+          });
+        });
+
+
+        doc.getElementById('uploadVideo').addEventListener('tap', function(e) {
+
+					upload.showVedioActionSheet( function( res ){
+						viewModel.urls( res.url );
+						
+						mui("#showVideoDetail")[0].classList.add( "show");
+					});
+        });
+        
+        doc.getElementById('saveVideo').addEventListener('tap', function(e) {
+        	
+	    	  if (!postData.vtitle) {
+	          mui.toast('请输入视频标题')
+	          return;
+	        }
+	        if (!postData.vcontents) {
+	          mui.toast('请输入视频描述')
+	          return;
+	        }
+	        
+	        if (!postData.price) {
+	          mui.toast('请输入价格')
+	          return;
+	        }
+        	
+        	mui("#showVideoDetail")[0].classList.remove( "show");
+
+        });
+               
+        
       });
     }(mui, document));
   </script>

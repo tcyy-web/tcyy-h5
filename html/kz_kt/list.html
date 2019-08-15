@@ -47,6 +47,7 @@
         <div class="mui-scroll-wrapper">
           <div id="pullrefresh-list" class="mui-scroll">
             <div class="video">
+            	<!-- ko foreach: list -->
               <div class="video-item">
                 <div class="thumbnail">
                   <div class="img">
@@ -74,6 +75,7 @@
                   </p>
                 </div>
               </div>
+              <!-- /ko -->
             </div>
           </div>
         </div>
@@ -106,10 +108,12 @@
         var page = 1;
         var limit = 10;
         var more = true;
+        var catergoryid = currentWebview.catergoryid; 
         //列表渲染
         var BaseView = function () {
           var vm = this;
           vm.headTitle = ko.observable(currentWebview.headtitle);
+
           vm.list = ko.observableArray([]);
           
           vm.searchFn = function () {
@@ -134,13 +138,16 @@
         var queryList = function(callback) {
           var _request = {
             page: page,
-            limit: limit
+            limit: limit,
+//          gid: catergoryid
           }       
           request.loginAjax('courses/getCoursesList',{
             data: _request,
             showMsg: false
           },function(data, success) {
              // 处理页面绑定
+             viewModel.list( data );
+             return;
              if (data && data.data) {
                Enums.getAll(function(){
                   $.each(data.data, function(index, item) {
@@ -213,9 +220,23 @@
             }
           }
         });
-        
-        window.addEventListener('', function(){
-          
+        function loadData (cid) {
+          request.loginAjax('courses/coursesDetails', {
+            showMsg: false,
+            data: {
+              cid: cid
+            }
+          }, function(data,success) {
+            if (success) { 
+					
+//							vm.list( data )
+            }
+          });
+        }
+        window.addEventListener('KZ_KT_CategoryList', function( e ){
+          var cid = e.target.catergoryid;
+        	console.log("cid:"+cid)
+//        loadData(e.detail.cid);
         });
       });
     }(mui, document));

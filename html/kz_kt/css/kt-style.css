@@ -1,3 +1,4 @@
+
 .mui-bar.mui-bar-nav {
   background-color: #8E78D6;
   -webkit-box-shadow: none;
@@ -106,6 +107,12 @@
 }
 .font-small {
   font-size: 12px;
+}
+
+.btn-box{ padding: 0 10px;}
+#uploadVideo{
+	display: block;
+	width: 100%;
 }
 /* 图片居中 Start */
 .img {
@@ -600,4 +607,32 @@
 .my-sell .video .video-item .info {
   padding-bottom: 20px;
   border-bottom: 1px solid #EEEEEE;
+}
+.upload-img-box img{ width: 100%;}
+.my-popover{
+	position: fixed;
+	z-index: 998;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	
+	background-color: rgba(0,0,0,.3);
+	align-items:center;
+  justify-content:center;
+	visibility: hidden;
+}
+.my-popover.show{
+	visibility: visible;
+}
+.my-popover .my-popover-content{
+	position: absolute;
+	top:50%;
+	left:50%;
+	-webkit-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+	width: 100%;
+	border-radius: 5px;
+	background: #fff;
+	padding: 10px 0;
 }

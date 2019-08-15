@@ -14,10 +14,38 @@ function PublishPage () {
     }
   });
 }
+
 // 视频搜索
 function VideoSearch (postData) {
   return new Promise(function(resolve) {
     request.loginAjax('courses/search', {
+      showMsg: false,
+      data: postData
+    }, function(data,success) {
+      if (success) {
+        resolve(data || []);
+      }
+    });
+  })
+}
+// 查看课程列表
+function CourseList (postData) {
+  return new Promise(function(resolve) {
+    request.loginAjax('courses/getCoursesList', {
+      showMsg: false,
+      data: postData
+    }, function(data,success) {
+      if (success) {
+        resolve(data || []);
+      }
+    });
+  })
+}
+
+// 查看课程详情
+function CourseDetail (postData) {
+  return new Promise(function(resolve) {
+    request.loginAjax('courses/coursesDetails', {
       showMsg: false,
       data: postData
     }, function(data,success) {
