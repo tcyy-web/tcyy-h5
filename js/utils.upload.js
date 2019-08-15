@@ -1,10 +1,15 @@
 ;
+
+var tcyy_base_file_root = "_doc/camera/";
 (function(w){
+
 w.upload = {
+	init:function(){
+		initCamera();
+	},
 	//选取图片的来源，拍照和相册 
 	showImgActionSheet:function(fnend) {
-		var date = new Date();
-		var divid = date.getTime();
+		var divid =  Date.now();
 		var actionbuttons = [{
 			title: "拍照"
 		}, {
@@ -25,28 +30,33 @@ w.upload = {
 		});
 	},
 	//视频选择
-	showVedioActionSheet:function(fnend) {
-		var date = new Date();
-		var divid = date.getTime();
+	showVedioActionSheet:function( callback ) {
+		
+		if(mui.os.plus){
+			var divid = Date.now();
+	
+			var actionbuttons = [{
+				title: "录像"
+			}, {
+				title: "本地选取"
+			}];
+			var actionstyle = {
+				title: "选择视频",
+				cancel: "取消",
+				buttons: actionbuttons
+			};
 
-		var actionbuttons = [{
-			title: "录像"
-		}, {
-			title: "本地选取"
-		}];
-		var actionstyle = {
-			title: "选择视频",
-			cancel: "取消",
-			buttons: actionbuttons
-		};
-		var _this = this;
-		plus.nativeUI.actionSheet(actionstyle, function(e) {
-			if(e.index == 1) {
-				_this.getImage(divid , fnend);
-			} else if(e.index == 2) {
-				_this.galleryVedio(divid , fnend);
-			}
-		});
+			var _this = this;
+			plus.nativeUI.actionSheet(actionstyle, function(e) {
+				console.log( e.index );
+				
+				if(e.index == 1) {
+					getVideo( callback );
+				} else if(e.index == 2) {
+					galleryVideo( callback );
+				}
+			});
+		}
 	},
 	//相册选取图片
 	galleryImg:function(divid , fnend) {
@@ -61,22 +71,22 @@ w.upload = {
 		}, function(e) {
 		  console.log('打开相册失败：'+e.message);
 		}, {
-			filename: "_doc/tcyy/camera/",
+			filename: tcyy_base_file_root,
 			filter: "image",
 			multiple: false
 		});
 	},
-	//相册选取图片
+	//选取视频
 	galleryVedio:function(divid , fnend) {
 		var _this = this;
 		plus.gallery.pick(function(p) {
-//		  _this.compressImage(p, divid , fnend);
+
 
 		}, function(e) {
 		  console.log('打开视频库失败：'+e.message);
 		}, {
-			filename: "_doc/tcyy/camera/",
-			filter: "vedio",
+
+			filter: "video",
 			multiple: false
 		});
 	},
@@ -93,7 +103,7 @@ w.upload = {
 //			});
 		}, function(e) {
 		}, {
-			filename: "_doc/tcyy/camera/",
+			filename: tcyy_base_file_root,
 			index: 1
 		});
 	},
@@ -258,4 +268,92 @@ w.upload = {
 		task.start();
 	}
 }
+
+
+
 })(window);
+
+function initCamera(){
+	// 获取摄像头目录对象
+	plus.io.resolveLocalFileSystemURL( '_doc/' , function(entry){
+		entry.getDirectory('camera', {create:true}, function(dir){
+			gentry = dir;
+			
+		}, function(e){
+			console.log('Get directory "camera" failed: '+e.message);
+		} );
+	}, function(e){
+		console.log('Resolve '+ tcyy_base_file_root +' failed: '+e.message);
+	});
+}
+/*这是打开录像的事件*/ 
+function getVideo( callback ) {
+	var cmr = plus.camera.getCamera();
+	var res = cmr.supportedVideoResolutions[0]; //获取支持的分辨率，拿默认的第一个
+	
+	var fmt = cmr.supportedVideoFormats[0]; //获取支持的录像文件格式，拿默认的第一个
+	console.log("getVideo")
+	cmr.startVideoCapture(function(e) { //录像成功后会返回一个路径到e这里
+		console.log("startVideoCapture"+ e)
+	
+		plus.io.resolveLocalFileSystemURL(e, function(entry) { //这个是根据路径读取文件信息，其实这步可以省略。
+			console.log("resolveLocalFileSystemURL")
+			uploadVideo(e,callback);
+		}, function(e) {
+			console.log("读取录像文件错误：" + e.message);
+		});
+	}, function(error) {
+		mui.toast("取消录制");
+	},  {
+		resolution: res,
+		format: fmt
+	});
+}
+function uploadVideo(file, callback) { //第二个参数一定要有，然后把文件路径扔进来
+	var wa = plus.nativeUI.showWaiting();
+	var task = plus.uploader.createUpload( config.url + "Uploads/Files" , {
+		processData: false,
+		contentType: "multipart/form-data"
+	}, function(t, status) {
+		if(status == 200) {
+			wa.close();
+		    console.log('***********上传返回:'+t.responseText);
+			if(t.state === 4 && status == 200) {
+			  var res = JSON.parse(t.responseText);
+			  if (res.header.status === 2001) {
+			    typeof callback =="function" && callback( res.body );
+			  } else {
+			    console.log('上传失败，失败原因：'+res.header.msg);
+			  }
+			} else {
+				console.log("上传失败");
+			}
+
+		} else {
+			mui.toast("上传失败了。sorry，请重新来一遍");
+		}
+	});
+	task.addFile(file, {
+		key: "file"
+	}); //这里是根据文件路径找到对应的文件,然后以file的参数名字扔给后台
+	
+	task.addData("type", saveType); //这里是其他参数
+	
+	task.start(); //开始上传
+	
+} //本地相册选择
+
+function galleryVideo( callback ) { // 从相册中选择图片
+	
+	plus.gallery.pick(function(e) { //打开相册后，回调的文件路径e
+		
+		uploadVideo( e ,callback); //选择视频
+		
+	}, function(e) {
+		mui.toast("您取消了选择录像");
+	}, {
+		filter: "video", //只打开视频，但是不知道为什么有其他选项
+		system: false,//不用系统自带的打开相册功能
+		
+	});
+}
