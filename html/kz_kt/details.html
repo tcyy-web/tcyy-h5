@@ -89,10 +89,7 @@
         var BaseView = function () {
           var vm = this;
           vm.detailData = ko.observable({});
-          
-//        vm.dialTelClick = function(){
-//          plus.device.dial(vm.detailData().phone(), true);
-//        }
+
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
@@ -114,6 +111,8 @@
 						
 							data.priceText = data.price == 0? data.price :'免费';
 							data.ctypeText = Enums.getEnumText('ctype', data.ctype);
+							
+							viewModel.detailData( data );
             }
           });
         }
