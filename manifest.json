@@ -1674,7 +1674,8 @@
 					"html/my/my.html",
 					"html/kz_cysj/list.html",
 					"html/kz_blx/blx-list.html",
-					"html/login/login.html"
+					"html/login/login.html",
+					"html/kz_kt/home.html"
 				],
 				"priority": 2
 			},
@@ -1702,6 +1703,14 @@
 					"html/login/login.html",
 					"html/my/my-message.html",
 					"html/home/index.html"
+				],
+				"priority": 0
+			},
+			"html/kz_kt/home.html": {
+				"resources": [],
+				"refer": [
+					"html/kz_kt/publish.html",
+					"html/kz_kt/details.html"
 				],
 				"priority": 0
 			}

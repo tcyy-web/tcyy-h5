@@ -63,7 +63,7 @@
       }
     },
     // 转换格式
-    arrayToTree (opts) {
+    arrayToTree: function(opts) {
       var defaults = {
         arrays: [],
         id: 'id',
