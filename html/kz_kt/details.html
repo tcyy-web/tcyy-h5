@@ -10,12 +10,12 @@
   <link href="css/kt-style.css" rel="stylesheet" />
 </head>
 
-<body>
+<body id="main-content">
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title" data-bind="text:viewModel().title">视频名称</h1>
   </header>
-  <div id="main-content" class="mui-content details">
+  <div class="mui-content details">
       <div class="video">
         <div class="video-item">
           <div class="thumbnail">
@@ -85,7 +85,7 @@
     (function($, doc) {
       $.init();
       $.plusReady(function() {
-        
+        var currentWebview = plus.webview.currentWebview();
         var BaseView = function () {
           var vm = this;
           vm.detailData = ko.observable({});
@@ -93,11 +93,13 @@
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
-        function loadData (cid) {
+        
+        function loadData () {
+        	console.log( currentWebview.catergoryid ); 
           request.loginAjax('courses/coursesDetails', {
             showMsg: false,
             data: {
-              cid: cid
+              cid: currentWebview.catergoryid
             }
           }, function(data,success) {
             if (success) { 
@@ -108,18 +110,17 @@
 //               data.educationText = Enums.getEnumText('education', data.education);
 //               viewModel.detailData(ko.mapping.fromJS(data));
 //            })
-						
+					
 							data.priceText = data.price == 0? data.price :'免费';
 							data.ctypeText = Enums.getEnumText('ctype', data.ctype);
-							
-							viewModel.detailData( data );
+							console.log( JSON.stringify( data ) );
+							viewModel.detailData( data|| {} );
             }
           });
         }
-        window.addEventListener('kz_profile_CompanyDetail_Data', function(e) {
-          viewModel.detailData({});
-          loadData(e.detail.cid);
-        });
+        viewModel.detailData({});
+        loadData();
+   
       });
     }(mui, document));
   </script>

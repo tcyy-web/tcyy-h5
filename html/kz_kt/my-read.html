@@ -53,5 +53,123 @@
       </div>
     </div>
   </div>
+ <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.pullToRefresh.js"></script>
+  <script src="../../js/mui.pullToRefresh.material.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.category.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
+  <script src="js/kt-common.js" ></script>
+  <script>
+    (function($, doc) {
+      $.init({
+      });
+      $.plusReady(function() {
+        // 分页参数
+        var page = 1;
+        var limit = 20;
+        var more = true;
+        //列表渲染
+        var BaseView = function () {
+          var vm = this;
+          vm.list = ko.observableArray([]);
+        }
+        var viewModel = new BaseView();
+        ko.applyBindings(viewModel, doc.getElementById('pullrefresh-list'));
+        // 查询
+        var queryList = function(callback) {
+          var _request = {
+            page: page,
+            limit: limit
+          }       
+          request.loginAjax('coursesvideos/queryViewVideoRecords',{
+            data: _request,
+            showMsg: false
+          },function(data, success) {
+             // 处理页面绑定
+             if (data && data.data) {
+               Enums.getAll(function(){
+                  $.each(data.data, function(index, item) {
+                     item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
+                  });
+                  if (page === 1) {                  
+                     viewModel.list(data.data);                  
+                  } else {
+                     $.each(data.data, function(index,i) {
+                       viewModel.list.push(i);
+                     });                  
+                  }  
+               })              
+             }
+             // 判断是否有下一页数据
+             if (data && data.data && data.data.length === limit) {
+               more = true;
+             } else {
+               more = false;
+             }
+             if (typeof callback === 'function') {
+               callback();
+             }
+          },function() {
+            if (typeof callback === 'function') {
+               callback();
+             }
+          });
+        }
+        queryList();
+        // 跳转详情
+        $('#pullrefresh-list').on('tap', '.mui-table-view > li .gotoedit', function(e){
+          var itemid = this.getAttribute('itemid');
+          var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
+          $.fire(nextWebview, 'kz_profile_JobPublish_Data', {
+            id: itemid
+          });
+          $.openWindow({
+            id:'kz_profile_JobPublish',               
+          }); 
+        });
+        function reloadPage () {
+          page = 1;
+          more = true;
+          $('#pullrefresh-list').pullToRefresh().refresh(true);
+          queryList();
+        }
+        $('#pullrefresh-list').pullToRefresh({
+          down: {
+            callback: function() {
+              page = 1;
+              var self = this;
+              queryList(function() {
+                self.endPullDownToRefresh();
+                $('#pullrefresh-list').pullToRefresh().refresh(true);
+              });                
+            }
+          },
+          up: {
+            callback: function() {
+              var self = this;
+              if (more) {
+                page = page + 1;
+                queryList(function() {
+                  self.endPullUpToRefresh(false);
+                });
+                return;
+              }
+              self.endPullUpToRefresh(true);
+            }
+          }
+        });
+      });
+    }(mui, document));
+  </script>
 </body>
 </html>

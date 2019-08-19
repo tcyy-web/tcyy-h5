@@ -52,7 +52,7 @@
         </div>
         <div class="video">
         	<!-- ko foreach: newestList -->
-          <div class="video-item">
+          <div class="video-item" data-bind="click: $root.toDetail">
             <div class="thumbnail">
               <div class="img">
                 <img src="images/timg2.jpg" alt="">
@@ -119,10 +119,10 @@
   <script>
     (function($, doc) {
       $.init({
-        preloadPages:[{
-          id:'KZ_KT_Detail',
-          url: './details.html'
-        }],
+//      preloadPages:[{
+//        id:'KZ_KT_Detail',
+//        url: './details.html'
+//      }],
         beforeback: function() {
 　　   			  plus.navigator.setStatusBarBackground('#765fc3');
           return true;
@@ -204,6 +204,28 @@
                 },
                 waiting: {
                   autoShow: false
+                }
+              });
+            }
+            
+            // 跳转更多
+            vm.toDetail = function ( data ){
+            	console.log(JSON.stringify(data))
+              mui.openWindow({
+                id:'KZ_KT_Detail',
+                url: './details.html',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                },
+                extras: {
+                  catergoryid: data.id,
+                  headtitle: data.title
                 }
               });
             }
