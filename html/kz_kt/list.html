@@ -138,31 +138,20 @@
         var queryList = function(callback) {
           var _request = {
             page: page,
-            limit: limit,
-//          gid: catergoryid
-//ctime
-//price
-          }       
-          request.loginAjax('courses/getCoursesList',{
+            limit: limit
+          } 
+          request.loginAjax('courses/search',{
             data: _request,
             showMsg: false
           },function(data, success) {
-             // 处理页面绑定
-             viewModel.list( data );
-             return;
              if (data && data.data) {
-               Enums.getAll(function(){
-                  $.each(data.data, function(index, item) {
-                     item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
-                  });
-                  if (page === 1) {                  
-                     viewModel.list(data.data);                  
-                  } else {
-                     $.each(data.data, function(index,i) {
-                       viewModel.list.push(i);
-                     });                  
-                  }  
-               })              
+              if (page === 1) {                  
+                 viewModel.list(data.data);                  
+              } else {
+                 $.each(data.data, function(index,i) {
+                   viewModel.list.push(i);
+                 });                  
+              }           
              }
              // 判断是否有下一页数据
              if (data && data.data && data.data.length === limit) {
@@ -221,24 +210,6 @@
               self.endPullUpToRefresh(true);
             }
           }
-        });
-        function loadData (cid) {
-          request.loginAjax('courses/coursesDetails', {
-            showMsg: false,
-            data: {
-              cid: cid
-            }
-          }, function(data,success) {
-            if (success) { 
-					
-//							vm.list( data )
-            }
-          });
-        }
-        window.addEventListener('KZ_KT_CategoryList', function( e ){
-          var cid = e.target.catergoryid;
-        	console.log("cid:"+cid)
-//        loadData(e.detail.cid);
         });
       });
     }(mui, document));

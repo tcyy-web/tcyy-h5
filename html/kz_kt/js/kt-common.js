@@ -28,7 +28,7 @@ function VideoSearch (postData) {
     });
   })
 }
-// 查看课程列表
+// 我发布的课程列表
 function CourseList (postData) {
   return new Promise(function(resolve) {
     request.loginAjax('courses/getCoursesList', {

@@ -208,7 +208,7 @@
               });
             }
             
-            // 跳转更多
+            // 跳转详情
             vm.toDetail = function ( data ){
             	console.log(JSON.stringify(data))
               mui.openWindow({
@@ -231,18 +231,16 @@
             }
             // 最新列表
             vm.newestList = ko.observableArray([]);
-            
-            CourseList({
-	            page: 1,
-	            limit: 10,
-	            ctime: 'desc'
-	          }).then(function( reslist ){
-							vm.newestList( reslist );
-	          });
           }
           var viewModel = new BaseView();
           ko.applyBindings(viewModel, doc.getElementById('home'));
-
+          VideoSearch({
+            page: 1,
+            limit: 10,
+            ctime: 'desc'
+          }).then(function(reslist){
+            viewModel.newestList(reslist);
+          });
         })();
         /*我的*/
         var wodeWebview = {

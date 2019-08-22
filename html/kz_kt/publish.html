@@ -113,32 +113,31 @@
           { value: 1, text: '单集'},
           { value: 2, text: '多集'}
         ]);
-        
+        // 分类选择
         var gidPicker = new $.PopPicker();
         var caList = categorys.get(),gList = [];
         for( var i = 0 ; i< caList.length ; i++ ){
-        	gList.push({
-        		value:caList[i].id,
-        		text:caList[i].title
-        	})
+          	gList.push({
+          		value:caList[i].id,
+          		text:caList[i].title
+          	})
         }
         gidPicker.setData( gList );
         
         var BaseView = function () {
           var vm = this;
           vm.formData = { 
-          	
-          	gid: ko.observable(),
-          	gidText: ko.observable(''),
-          	ctype: ko.observable(), 
-          	ctypeText: ko.observable(''), 
-          	ctitle: ko.observable(''), 
-          	ccontents: ko.observable(''),
+            	gid: ko.observable(),
+            	gidText: ko.observable(''),
+            	ctype: ko.observable(), 
+            	ctypeText: ko.observable(''), 
+            	ctitle: ko.observable(''), 
+            	ccontents: ko.observable(''),
 						oneprice:ko.observable(),
-          	price: ko.observable(),
-          	vtitle:ko.observable(),
-          	vcontents:ko.observable(),
-          	urls:ko.observable(),
+            	price: ko.observable(),
+            	vtitle:ko.observable(),
+            	vcontents:ko.observable(),
+            	urls:ko.observable(),
 						episodes:1 
           }
           
@@ -163,7 +162,7 @@
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, document.getElementById('main-content')); 
-          //保存简历
+        //保存简历
         saveVedioInfo = function () {
           return new Promise(function(resolve){
           	
@@ -219,7 +218,6 @@
 
 					upload.showVedioActionSheet( function( res ){
 						viewModel.urls( res.url );
-						
 						mui("#showVideoDetail")[0].classList.add( "show");
 					});
         });
