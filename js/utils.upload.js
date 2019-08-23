@@ -63,7 +63,7 @@
     	galleryVideo:function(fnend) {
     		var _this = this;
       plus.gallery.pick(function(file) { //打开相册后，回调的文件路径e
-        _this.uploadMedia(file, fnend); //选择视频
+        fnend(file);
       }, function(e) {
       }, {
         filename: tcyy_base_file_root,
@@ -89,15 +89,15 @@
     	  var cmr = plus.camera.getCamera();
       var res = cmr.supportedVideoResolutions[0]; //获取支持的分辨率，拿默认的第一个
       var fmt = cmr.supportedVideoFormats[0]; //获取支持的录像文件格式，拿默认的第一个
-      cmr.startVideoCapture(function(e) { //录像成功后会返回一个路径到e这里
+      cmr.startVideoCapture(function(file) { //录像成功后会返回一个路径到e这里
         plus.io.resolveLocalFileSystemURL(file, function(entry) { //这个是根据路径读取文件信息，其实这步可以省略。
-          _this.uploadMedia(file, fnend); //选择视频
+          fnend(file);
         }, function(e) {
-          console.log("读取录像文件错误：" + e.message);
+          mui.toast('读取录像文件出错');
         });
       }, function(error) {
-        mui.toast("取消录制");
       },  {
+        filename: tcyy_base_file_root,
         resolution: res,
         format: fmt
       });
@@ -164,14 +164,14 @@
     		})
     	},
   		//上传Media
-    	uploadMedia: function(url,back, data) {
+    	uploadMedia: function(url, back, data) {
       var code = '';
       if (w.authManage) {
         var user = w.authManage.getUser();
         code = user.code || '';
       }
     		var defaults = {
-    		  type: '1', 
+    		  type: '6', 
     		  filetype: '2', //视频
     		  code: code
     		};
@@ -181,22 +181,31 @@
     		var opt = {
     			url:url,
     			data: defaults,
-    			divid:divid,
     			back:back
     		}
+  		  console.log('***********上传地址:'+opt.url);
+        console.log('***********上传参数:'+JSON.stringify(opt.data));
+    		var wa = plus.nativeUI.showWaiting();
     		var task = plus.uploader.createUpload(opt.url , {
     			method: "POST"
     		},function(t, status) {
+    		  wa.close();
     		  console.log('***********上传返回:'+t.responseText);
     			if(t.state === 4 && status == 200) {
-    			  var res = JSON.parse(t.responseText);
-    			  if (res.header.status === 2001) {
-    			    typeof opt.back =="function" && opt.back( res.body );
-    			  } else {
-    			    console.log('上传失败，失败原因：'+res.header.msg);
+    			  try{
+    			    var res = JSON.parse(t.responseText);
+              if (res.header.status === 2001) {
+                typeof opt.back =="function" && opt.back( res.body );
+              } else {
+                mui.toast('上传失败，失败原因：'+res.header.msg);
+                console.log('上传失败，失败原因：'+res.header.msg);
+              }
+    			  }catch(e){
+    			    mui.toast('上传失败, 文件过大或不符合要求');
     			  }
+    			  
     			} else {
-    				console.log("上传失败");
+  			    mui.toast('上传失败');
     			}
     		});
     		var fileurl = data.abspath;
@@ -224,15 +233,23 @@
     		},function(t, status) {
     		  wa.close();
     		  console.log('***********上传返回:'+t.responseText);
+    		  console.log(status);
+          console.log(JSON.stringify(t));
     			if(t.state === 4 && status == 200) {
-    			  var res = JSON.parse(t.responseText);
-    			  if (res.header.status === 2001) {
-    			    typeof opt.back =="function" && opt.back( res.body );
-    			  } else {
-    			    console.log('上传失败，失败原因：'+res.header.msg);
+    			  try{
+    			    var res = JSON.parse(t.responseText);
+              if (res.header.status === 2001) {
+                typeof opt.back =="function" && opt.back( res.body );
+              } else {
+                mui.toast('上传失败，失败原因：'+res.header.msg);
+                console.log('上传失败，失败原因：'+res.header.msg);
+              }
+    			  } catch(e){
+    			    mui.toast('上传失败, 文件过大或不符合要求');
     			  }
+    			 
     			} else {
-    				console.log("上传失败");
+    				 mui.toast('上传失败');
     			}
     		});
     		var _itemvalue = JSON.parse(itemvalue);

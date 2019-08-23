@@ -216,9 +216,11 @@
 
         doc.getElementById('uploadVideo').addEventListener('tap', function(e) {
 
-					upload.showVedioActionSheet( function( res ){
-						viewModel.urls( res.url );
-						mui("#showVideoDetail")[0].classList.add( "show");
+					upload.showVedioActionSheet( function(file){
+					  var url = config.url + "Uploads/Files";
+					  upload.uploadMedia(url, function(res) {
+					    
+            }, { abspath: file, type: '5' });
 					});
         });
         

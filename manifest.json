@@ -1675,7 +1675,8 @@
 					"html/kz_cysj/list.html",
 					"html/kz_blx/blx-list.html",
 					"html/login/login.html",
-					"html/kz_kt/home.html"
+					"html/kz_kt/home.html",
+					"html/kz_profile/home.html"
 				],
 				"priority": 2
 			},
@@ -1710,7 +1711,19 @@
 				"resources": [],
 				"refer": [
 					"html/kz_kt/publish.html",
-					"html/kz_kt/details.html"
+					"html/kz_kt/details.html",
+					"html/login/login.html"
+				],
+				"priority": 0
+			},
+			"html/kz_profile/home.html": {
+				"resources": [],
+				"refer": [
+					"html/kz_profile/job-publish.html",
+					"html/kz_profile/job-condition.html",
+					"html/kz_profile/resume-detail.html",
+					"html/kz_profile/job-detail.html",
+					"html/kz_profile/company-detail.html"
 				],
 				"priority": 0
 			}
