@@ -1,0 +1,64 @@
+.show{ display: block;}
+
+.line{ white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+.line2{ display: -webkit-box; text-overflow: ellipsis; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+
+.header-search-box {
+  float: right;
+  width: calc(100% - 40px);
+  width: -webkit-calc(100% - 40px);
+  padding: 7px 10px 7px 0;
+  position: relative;
+}
+
+.header-search-box input {
+  width: 100%;
+  height: 31px;
+  margin: 0;
+  background-color: #ffffff;
+  border-radius: 70px;
+  border: none;
+  padding-right: 70px;
+  font-size: 13px;
+}
+.header-search-box input::-webkit-input-placeholder {
+  color: #999999;
+  font-size: 13px;
+}
+.menu-list{ overflow: hidden; padding: 15px 10px 5px;}
+.menu-list h2{ font-size: 18px; font-weight: bold; float: left;}
+.menu-list a{ float: right; font-size: 14px; color: #999;}
+
+.banner-box:after{ content: ''; display: block; clear: both; }
+.banner-box img{ width: 100%; }
+
+.product-list{}
+.product-list .item{
+	width: 50%;
+	box-sizing: border-box;
+	padding: 10px;
+	float: left;
+	border-radius: 10px;
+}
+.product-list .item img{
+	width: 100%;
+}
+.product-list .item .name{ font-size: 14px; padding-top:5px;}
+.product-list .item .price{ font-size: 14px; padding: 5px 0;}
+.product-list .item .price>span{ color: #ff5757; }
+.product-list .item .price>del{ float: right; color: #999;}
+
+.brand-list { overflow: hidden; }
+.brand-list .item{ width: 33.3%; box-sizing: border-box; padding: 10px; float: left; border-radius: 8px;}
+.brand-list .item img{ width: 100%;}
+
+.product-detial .product-prev img{ width: 100%;}
+.product-detial .product-name{ padding: 10px 10px 0 10px; line-height: 24px;}
+.product-detial .price{ padding: 10px;}
+.product-detial .price span{ color:#FF5757; font-size: 18px; }
+.product-detial .price i{ font-style: normal; background: #FF5757; border-radius: 5px; padding:0 10px; color: #fff; position: relative; margin-left: 10px; }
+.product-detial .price i::before{ content: ''; border: 5px solid #333; border-color:transparent #FF5757 transparent transparent; position: absolute; z-index: 2; left:-10px; margin-top: 5px;}
+.product-detial .price .sprice{ color: #999; padding: 4px 0;}
+
+.product-detail-title{ text-align: center; line-height: 50px; font-size: 16px; color: #666; background: #f7f7f7;}
+.product-detail-viewmore{text-align: center; line-height: 40px; font-size: 16px; color: #666; clear: both; margin-bottom: 20px;}
