@@ -11,6 +11,48 @@
   <link href="../../css/style.css" rel="stylesheet" />
   <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/kt-style.css" rel="stylesheet" />
+  <style>
+    .mui-content{
+      height: auto;
+      padding-bottom: 100px;
+    }
+    .publish-btn{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      font-size: 16px;
+    }
+    .publish-btn > div{
+      position: relative;
+      background-color: #8E78D6;
+      height: 50px;
+      line-height: 50px;
+    }
+    .publish-btn .iconfont{
+      font-size: 30px;
+      vertical-align: middle;
+      margin-right: 8px;
+      position: relative;
+      top: -2px;
+    }
+    .publish-btn > div:before{
+      position: absolute;
+      left: 0;
+      right: 0;
+      top:0;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.5);
+      z-index: 2;
+      content: '';
+    }
+    .publish-btn > div:first-child:before{
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -18,74 +60,46 @@
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">视频发布</h1>
   </header>
-  <nav id="saveBtnBox" class="mui-bar mui-bar-tab custom-tab">
-    <div class="mui-tab-item">
-      <button id="saveBtn" class="mui-btn mui-btn-blue">保存</button>
-    </div>  
-  </nav>
+  <div class="publish-btn">
+    <div id="startVideo"><i class="iconfont icon-luxiangji"></i><span>开始录像</span></div>
+    <div id="startPick"><i class="iconfont icon-congxiangcedaoru"></i><span>从手机中选择</span></div>
+  </div>
   <div class="mui-content" id="main-content">
     <form class="mui-input-group kt-form-group">
       <div class="mui-input-row">
-        <label><i class="form-required"></i>视频类型：</label>
+        <label><i class="form-required"></i>课程类型：</label>
         <p data-bind="text: !formData.ctypeText() ? '请选择' : formData.ctypeText, 
           click: ctypeClick">请选择</p>
       </div>
-      
       <div class="mui-input-row">
         <label><i class="form-required"></i>课程分类：</label>
         <p data-bind="text: !formData.gidText() ? '请选择' : formData.gidText, 
           click: gidClick">请选择</p>
       </div>
-      
-      
       <div class="mui-input-row">
         <label><i class="form-required"></i>课程标题：</label>
-        <input data-bind="value: formData.ctitle, muiInput: formData.ctitle" maxlength="50" type="text" class="mui-input-clear" placeholder="请输入课程标题">
+        <input data-bind="value: formData.ctitle, muiInput: formData.ctitle" maxlength="30" type="text" class="mui-input-clear" placeholder="课程标题">
       </div> 
-      
-      <div class="mui-input-row">
+      <div class="mui-input-row auto">
         <label><i class="form-required"></i>课程描述：</label>
-        <input data-bind="value: formData.ccontents, muiInput: formData.ccontents" maxlength="50" type="text" class="mui-input-clear" placeholder="请输入课程描述">
+        <div>
+          <textarea data-bind="textInput: formData.ccontents" rows="5" maxlength="200" placeholder="请简单描述课程"></textarea>
+        </div>
       </div> 
-      
       <div class="mui-input-row">
-        <label><i class="form-required"></i>课程售价：</label>
-        <input data-bind="value: formData.oneprice, muiInput: formData.oneprice" maxlength="5" type="text" class="mui-input-clear" placeholder="请输入课程售价">
+        <label><i class="form-required"></i>课程单价：</label>
+        <input data-bind="value: formData.price, muiInput: formData.price" maxlength="9" type="text" class="mui-input-clear" placeholder="课程单集视频售价">
       </div>
-      <div data-bind="show:!formData.urls()" class="btn-box">
-			  <button id="uploadVideo" type="button" class="mui-btn mui-btn-blue">上传视频</button>
-			</div>
-			<div data-bind="show:formData.urls()" class="upload-img-box">
-				<img data-bind="src:formData.urls" />
-			</div>
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>买断价：</label>
+        <input data-bind="value: formData.oneprice, muiInput: formData.oneprice" maxlength="9" type="text" class="mui-input-clear" placeholder="买断课程视频价格">
+      </div>
+      <div class="mui-input-row">
+        <label>视频标题：</label>
+        <input data-bind="value: formData.vtitle, muiInput: formData.vtitle" maxlength="10" type="text" class="mui-input-clear" placeholder="单个视频显示标题">
+      </div> 
     </form>
   </div>
-  
-  <!--上传视频后弹出层-->
-	<div id="showVideoDetail" class="my-popover">
-		
-		<div class="my-popover-content kt-form-group">
-			
-			<div class="mui-input-row">
-        <label><i class="form-required"></i>视频标题：</label>
-        <input data-bind="value: formData.vtitle, muiInput: formData.vtitle" maxlength="5" type="text" class="mui-input-clear" placeholder="请输入视频标题">
-      </div>
-      
-      <div class="mui-input-row">
-        <label><i class="form-required"></i>视频描述：</label>
-        <input data-bind="value: formData.vcontents, muiInput: formData.vcontents" maxlength="5" type="text" class="mui-input-clear" placeholder="请输入视频描述">
-      </div>
-      
-      <div class="mui-input-row">
-        <label><i class="form-required"></i>视频价格：</label>
-        <input data-bind="value: formData.price, muiInput: formData.price" maxlength="5" type="text" class="mui-input-clear" placeholder="请输入视频价格">
-      </div>
-      <div class="btn-box">
-			  <button id="saveVideo" type="button" class="mui-btn mui-btn-blue">确定</button>
-			</div>
-		</div>
-
-	</div>
   <script src="../../third/bluebird.min.js"></script>
   <script src="../../third/loadash.3.10.1.js"></script>
   <script src="../../js/mui.min.js"></script>
@@ -127,16 +141,15 @@
         var BaseView = function () {
           var vm = this;
           vm.formData = { 
+            ctype: ko.observable(), 
+            ctypeText: ko.observable(''), 
             	gid: ko.observable(),
             	gidText: ko.observable(''),
-            	ctype: ko.observable(), 
-            	ctypeText: ko.observable(''), 
             	ctitle: ko.observable(''), 
             	ccontents: ko.observable(''),
-						oneprice:ko.observable(),
             	price: ko.observable(),
+						oneprice:ko.observable(),
             	vtitle:ko.observable(),
-            	vcontents:ko.observable(),
             	urls:ko.observable(),
 						episodes:1 
           }
@@ -162,17 +175,16 @@
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, document.getElementById('main-content')); 
-        //保存简历
-        saveVedioInfo = function () {
+        function checkData () {
           return new Promise(function(resolve){
-          	
+            
             var postData = ko.mapping.toJS(viewModel.formData);
-            
-            console.log( JSON.stringify( postData ) )
-
-            
             if (!postData.ctype) {
-              mui.toast('请选择视频类型')
+              mui.toast('请选择课程类型')
+              return;
+            }
+            if (!postData.gid) {
+              mui.toast('请选择课程分类')
               return;
             }
             if (!postData.ctitle) {
@@ -183,68 +195,55 @@
               mui.toast('请输入课程描述')
               return;
             }
-            if (!postData.gid) {
-              mui.toast('请输入课程分类')
+            if (!postData.price) {
+              mui.toast('请输入课程单价')
               return;
             }
             if (!postData.oneprice) {
-              mui.toast('请输入售价')
+              mui.toast('请输入买断价')
               return;
             }
-            if (!postData.urls) {
-              mui.toast('请上传视频')
-              return;
-            }
-    
+            resolve();
+          })
+        }
+        //发布课程
+        var saveVedioInfo = function (videourl) {
+          return new Promise(function(resolve){
+            var postData = ko.mapping.toJS(viewModel.formData);
+            postData.urls = videourl;
+            // 暂时写死地址测试
+            postData.urls = 'http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4';
             request.loginAjax('courses/saveCourseAndVideos', {
               data: postData
             }, function(data,success) {     
               if (success) {   
-                
                 resolve()
               }
             });
           });
         }
         
-        doc.getElementById('saveBtn').addEventListener('tap', function(e) {
-          saveVedioInfo().then(function(){
-            mui.toast('保存成功')
-          });
+        doc.getElementById('startVideo').addEventListener('tap', function(e) {
+          checkData().then(function(){
+            upload.getVideo(function(file){
+              var url = config.url + "Uploads/Files";
+              upload.uploadMedia(url, function(res) {
+                saveVedioInfo(res[0].showUrl)
+              }, { abspath: file, type: '5' });
+            })
+          })
         });
-
-
-        doc.getElementById('uploadVideo').addEventListener('tap', function(e) {
-
-					upload.showVedioActionSheet( function(file){
-					  var url = config.url + "Uploads/Files";
-					  upload.uploadMedia(url, function(res) {
-					    
-            }, { abspath: file, type: '5' });
-					});
+                
+        doc.getElementById('startPick').addEventListener('tap', function(e) {
+          checkData().then(function(){
+            upload.galleryVideo(function(file){
+              var url = config.url + "Uploads/Files";
+              upload.uploadMedia(url, function(res) {
+                saveVedioInfo(res[0].showUrl)
+              }, { abspath: file, type: '5' });
+            })
+          })
         });
-        
-        doc.getElementById('saveVideo').addEventListener('tap', function(e) {
-        	
-	    	  if (!postData.vtitle) {
-	          mui.toast('请输入视频标题')
-	          return;
-	        }
-	        if (!postData.vcontents) {
-	          mui.toast('请输入视频描述')
-	          return;
-	        }
-	        
-	        if (!postData.price) {
-	          mui.toast('请输入价格')
-	          return;
-	        }
-        	
-        	mui("#showVideoDetail")[0].classList.remove( "show");
-
-        });
-               
-        
       });
     }(mui, document));
   </script>

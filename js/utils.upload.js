@@ -93,7 +93,7 @@
         plus.io.resolveLocalFileSystemURL(file, function(entry) { //这个是根据路径读取文件信息，其实这步可以省略。
           fnend(file);
         }, function(e) {
-          mui.toast('读取录像文件出错');
+          mui.toast('读取不到拍摄的文件');
         });
       }, function(error) {
       },  {

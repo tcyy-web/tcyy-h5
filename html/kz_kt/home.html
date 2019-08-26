@@ -16,16 +16,19 @@
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title" data-bind="text: headerText">课堂</h1>
   </header>
+  <div id="publish" class="center-circular">
+    <div>
+      <div><i class="iconfont icon-fabuketang"></i></div>
+      <span>发布</span>
+    </div>
+  </div>
   <nav class="mui-bar mui-bar-tab">
     <a href="#home" class="mui-tab-item mui-active" >
       <div class="iconfontbox"><i class="iconfont icon-ketang"></i></div>
       <span class="mui-tab-label">课堂</span>
     </a>
     <a class="mui-tab-item" style="overflow:visible;">
-      <div class="center-circular">
-        <div class="iconfontbox"><i class="iconfont icon-fabuketang"></i></div>
-        <span class="mui-tab-label">发布</span>
-      </div>
+      <span class="mui-tab-label"></span>
     </a>
     <a href="#wode" class="mui-tab-item">
       <div class="iconfontbox"><i class="iconfont icon-wode"></i></div>
@@ -142,12 +145,14 @@
         $.each(doc.querySelectorAll('.mui-bar-tab .mui-tab-item'), function( index, el ) {
           el.addEventListener('tap', function( e ) {
             var text = el.querySelector('.mui-tab-label').innerText;
-            if (text == '发布') {
-              PublishPage();
-            } else {
-              headerView.headerText( el.querySelector('.mui-tab-label').innerText );
+            if (!text ) {
+              return
             }
+            headerView.headerText( el.querySelector('.mui-tab-label').innerText );
           });
+        });
+        doc.getElementById('publish').addEventListener('tap', function(){
+          PublishPage();
         });
         /*课堂*/
         (function(){
@@ -172,7 +177,6 @@
             }));
             // 跳转列表
             vm.listFn = function (data) {
-            	console.log("data:"+data.title)
               mui.openWindow({
                 id:'KZ_KT_CategoryList',
                 url: './list.html',
@@ -210,7 +214,6 @@
             
             // 跳转详情
             vm.toDetail = function ( data ){
-            	console.log(JSON.stringify(data))
               mui.openWindow({
                 id:'KZ_KT_Detail',
                 url: './details.html',
@@ -250,9 +253,7 @@
           MyView: './my-read.html'
         }
         mui('body').on('tap', '#wode a', function(){
-          console.log('click');
           var webviewId = this.getAttribute('id');
-          console.log(webviewId)
           mui.openWindow({
             id:'KZ_KT_'+ webviewId,
             url: wodeWebview[webviewId],
