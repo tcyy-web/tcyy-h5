@@ -9,6 +9,11 @@
   <link href="../../css/style.css" rel="stylesheet" />
   <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/kt-style.css" rel="stylesheet" />
+  <style>
+    .mui-content{
+      height: auto;
+    }
+  </style>
 </head>
 
 <body>
@@ -58,27 +63,27 @@
           <div class="video-item" data-bind="click: $root.toDetail">
             <div class="thumbnail">
               <div class="img">
-                <img src="images/timg2.jpg" alt="">
+                <!--<img src="images/timg2.jpg" alt=""> />-->
               </div>
               <i class="iconfont icon-bofang"></i>
               <p class="video-name text-ellipsis">
-                <span data-bind="text:title">视频名称名称名称名称名称名称</span>
+                <span data-bind="text:ctitle"></span>
               </p>
             </div>
             <div class="info">
               <p class="text-ellipsis font-bold curricu-name">
-                <span  data-bind="text:title">课程名称课程名称名称名称名称</span>
+                <span  data-bind="text:vtitle"></span>
               </p>
               <p class="clear">
-                <span class="fl font-bold">小漂亮</span>
+                <span class="fl font-bold" data-bind="text: nickname"></span>
                 <span class="fr price font-bold">免费</span>
               </p>
               <p class="clear other">
                 <span class="fl">
                   <i class="iconfont icon-liulanjilu"></i>
-                  123
+                  <span data-bind="text: views"></span>
                 </span>
-                <span class="fr">2019.12.23</span>
+                <span class="fr" data-bind="text: ctime"></span>
               </p>
             </div>
           </div>
@@ -122,12 +127,8 @@
   <script>
     (function($, doc) {
       $.init({
-//      preloadPages:[{
-//        id:'KZ_KT_Detail',
-//        url: './details.html'
-//      }],
         beforeback: function() {
-　　   			  plus.navigator.setStatusBarBackground('#765fc3');
+　　   	  plus.navigator.setStatusBarBackground('#765fc3');
           return true;
         }
       });

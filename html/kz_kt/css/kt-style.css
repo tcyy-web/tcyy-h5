@@ -43,6 +43,7 @@
   color: #ffffff;
   text-align: center;
   font-size: 12px;
+  background-color: #fff;
 }
 .center-circular:before{
   content: '';
@@ -185,8 +186,12 @@
   flex-wrap: wrap;
 }
 .video .video-item {
-  width: 50%;
+  width: -calc(50% - 10px);
+  width: -webkit-calc(50% - 10px);
+  margin: 5px;
   padding: 10px;
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.1);
 }
 .video .video-item .font-small-gray {
   font-size: 12px !important;
@@ -240,7 +245,8 @@
 }
 @media screen and (max-width: 750px) {
   .video .video-item {
-    width: 50%;
+    width: -calc(50% - 10px);
+    width: -webkit-calc(50% - 10px);
   }
   .video .video-item .thumbnail {
     height: 120px;
@@ -248,7 +254,8 @@
 }
 @media screen and (min-width: 751px) and (max-width: 1125px) {
   .video .video-item {
-    width: 33.33333333%;
+    width: -calc(33.33333333% - 10px);
+    width: -webkit-calc(33.33333333% - 10px);
   }
   .video .video-item .thumbnail {
     height: 150px;
@@ -256,7 +263,8 @@
 }
 @media screen and (min-width: 1126px) {
   .video .video-item {
-    width: 25%;
+    width: -calc(25% - 10px);
+    width: -webkit-calc(25% - 10px);
   }
   .video .video-item .thumbnail {
     height: 180px;
@@ -559,7 +567,8 @@
   background-color: #ffffff;
 }
 .my-manage .video .video-item {
-  width: 33%;
+  width: -calc(33.33333333% - 10px);
+  width: -webkit-calc(33.33333333% - 10px);
 }
 .my-manage .video .video-item .thumbnail .iconfont {
   left: auto;
@@ -571,7 +580,8 @@
 }
 @media screen and (max-width: 750px) {
   .my-manage .video .video-item {
-    width: 33.33333333%;
+    width: -calc(33.33333333% - 10px);
+    width: -webkit-calc(33.33333333% - 10px);
   }
   .my-manage .video .video-item .thumbnail {
     height: 75px;
@@ -579,7 +589,8 @@
 }
 @media screen and (min-width: 751px) and (max-width: 1125px) {
   .my-manage .video .video-item {
-    width: 25%;
+    width: -calc(25% - 10px);
+    width: -webkit-calc(25% - 10px);
   }
   .my-manage .video .video-item .thumbnail {
     height: 100px;
@@ -587,7 +598,8 @@
 }
 @media screen and (min-width: 1126px) {
   .my-manage .video .video-item {
-    width: 14.28571428%;
+    width: -calc(14.28571428% - 10px);
+    width: -webkit-calc(14.28571428% - 10px);
   }
   .my-manage .video .video-item .thumbnail {
     height: 120px;
@@ -664,4 +676,40 @@
 	border-radius: 5px;
 	background: #fff;
 	padding: 10px 0;
+}
+.publish-btn{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+}
+.publish-btn > div{
+  position: relative;
+  background-color: #8E78D6;
+  height: 50px;
+  line-height: 50px;
+}
+.publish-btn .iconfont{
+  font-size: 30px;
+  vertical-align: middle;
+  margin-right: 8px;
+  position: relative;
+  top: -2px;
+}
+.publish-btn > div:before{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top:0;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 2;
+  content: '';
+}
+.publish-btn > div:first-child:before{
+  display: none;
 }

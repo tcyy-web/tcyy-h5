@@ -23,7 +23,7 @@ function VideoSearch (postData) {
       data: postData
     }, function(data,success) {
       if (success) {
-        resolve(data || []);
+        resolve(data.data || []);
       }
     });
   })

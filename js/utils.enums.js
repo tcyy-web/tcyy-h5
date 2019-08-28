@@ -25,6 +25,11 @@
 		  0: '待审核',
       1: '审核通过',
       2: '审核不通过'
+		},
+		// 课程类型
+		kc_type: {
+		  1: '单集',
+		  2: '多集'
 		}
 //		getEnumLabel: function(type, key) {
 //			var _this = this;

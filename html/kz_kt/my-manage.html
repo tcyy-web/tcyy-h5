@@ -8,67 +8,110 @@
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/style.css" rel="stylesheet" />
   <link href="css/kt-style.css" rel="stylesheet" />
+  <style>
+    .mui-content{
+      height: auto;
+    }
+  </style>
 </head>
 
-<body>
+<body id="main-content">
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">视频管理</h1>
-    <a class="mui-pull-right">上传</a>
+    <a data-bind="click: $root.uploadVideo" class="mui-pull-right">上传</a>
   </header>
   <div class="mui-content my-manage">
-    <div class="mui-control-content mui-active mui-fullscreen">
-      <div class="mui-scroll-wrapper">
-        <div  class="mui-scroll">
-          <div class="video">
-            <div class="video-item">
-              <div class="thumbnail">
-                <div class="img">
-                  <img src="images/timg2.jpg" alt="">
-                </div>
-                <i class="iconfont icon-shanchu-copy"></i>
-                <p class="video-name text-ellipsis">
-                  <span >视频名称视频名称名称</span>
-                </p>
-              </div>
-            </div>
-            <div class="video-item">
-              <div class="thumbnail">
-                <div class="img">
-                  <img src="images/timg2.jpg" alt="">
-                </div>
-                <i class="iconfont icon-shanchu-copy"></i>
-                <p class="video-name text-ellipsis">
-                  <span >视频名称</span>
-                </p>
-              </div>
-            </div>
-            <div class="video-item">
-              <div class="thumbnail">
-                <div class="img">
-                  <img src="images/timg2.jpg" alt="">
-                </div>
-                <i class="iconfont icon-shanchu-copy"></i>
-                <p class="video-name text-ellipsis">
-                  <span >视频名称名</span>
-                </p>
-              </div>
-            </div>
-            <div class="video-item">
-              <div class="thumbnail">
-                <div class="img">
-                  <img src="images/timg2.jpg" alt="">
-                </div>
-                <i class="iconfont icon-shanchu-copy"></i>
-                <p class="video-name text-ellipsis">
-                  <span >视频名称名称视频称</span>
-                </p>
-              </div>
-            </div>
+    <div class="video">
+      <div class="video-item">
+        <div class="thumbnail">
+          <div class="img">
+            <img src="images/timg2.jpg" alt="">
           </div>
+          <i class="iconfont icon-shanchu-copy"></i>
+          <p class="video-name text-ellipsis">
+            <span >视频名称视频名称名称</span>
+          </p>
+        </div>
+      </div>
+      <div class="video-item">
+        <div class="thumbnail">
+          <div class="img">
+            <img src="images/timg2.jpg" alt="">
+          </div>
+          <i class="iconfont icon-shanchu-copy"></i>
+          <p class="video-name text-ellipsis">
+            <span >视频名称</span>
+          </p>
+        </div>
+      </div>
+      <div class="video-item">
+        <div class="thumbnail">
+          <div class="img">
+            <img src="images/timg2.jpg" alt="">
+          </div>
+          <i class="iconfont icon-shanchu-copy"></i>
+          <p class="video-name text-ellipsis">
+            <span >视频名称名</span>
+          </p>
+        </div>
+      </div>
+      <div class="video-item">
+        <div class="thumbnail">
+          <div class="img">
+            <img src="images/timg2.jpg" alt="">
+          </div>
+          <i class="iconfont icon-shanchu-copy"></i>
+          <p class="video-name text-ellipsis">
+            <span >视频名称名称视频称</span>
+          </p>
         </div>
       </div>
     </div>
   </div>
+  <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.pullToRefresh.js"></script>
+  <script src="../../js/mui.pullToRefresh.material.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.category.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
+  <script src="js/kt-common.js" ></script>
+  <script>
+    (function($, doc) {
+      $.init({
+      });
+      $.plusReady(function() {
+        var BaseView = function () {
+          var vm = this;
+          vm.uploadVideo = function(){
+              mui.openWindow({
+                id:'KZ_KT_publishVideo',
+                url: '/html/kz_kt/publish-video.html',
+                show: {
+                  aniShow: 'pop-in'
+                },
+                styles: {
+                  popGesture: 'hide'
+                },
+                waiting: {
+                  autoShow: false
+                }
+              });
+          }
+        }
+        var viewModel = new BaseView();
+        ko.applyBindings(viewModel, doc.getElementById('main-content'));
+      });
+    }(mui, document));
+  </script>
 </body>
 </html>
