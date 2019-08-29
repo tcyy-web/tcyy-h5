@@ -74,6 +74,9 @@ ol {
   flex-wrap: wrap;
 }
 .flex .flex-item {
+  flex-grow: 0;
+}
+.flex .flex-item.flex-main {
   flex-grow: 1;
 }
 .flex .flex-item .iconfont {

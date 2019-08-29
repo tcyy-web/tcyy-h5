@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title></title>
+  <link href="../../fonts/iconfont.css" rel="stylesheet" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../css/style.css" rel="stylesheet" />
+  <link href="css/shop.css" rel="stylesheet" />
+</head>
+
+<body id="main-content">
+  <header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title" >品牌列表</h1>
+  </header>
+
+  <div class="mui-content">
+    <div class="brand-img">
+      <img src="images/banner.png" alt="" />
+    </div>
+    <div class="product-list">
+       <div class="item product-item">
+        <div class="item-box">
+          <img src="images/product.png" alt="" />
+        </div>
+        <div class="name line2">长沙天天 粘接型MBT直丝颊面管0.022″7牙位 上一下一 （新老包装随机发货）</div>
+        <div class="price">
+          <span>$44.44</span>
+          <del>$55.55</del>
+        </div>
+      </div>
+      
+      <div class="item product-item">
+        <div class="item-box">
+          <img src="images/product.png" alt="" />
+        </div>
+        <div class="name line2">长沙天天 粘接型MBT直丝颊面管0.022″7牙位 上一下一 （新老包装随机发货）</div>
+        <div class="price">
+          <span>$44.44</span>
+          <del>$55.55</del>
+        </div>
+      </div>
+      
+      <div class="item product-item">
+        <div class="item-box">
+          <img src="images/product.png" alt="" />
+        </div>
+        <div class="name line2">长沙天天 粘接型MBT直丝颊面管0.022″7牙位 上一下一 （新老包装随机发货）</div>
+        <div class="price">
+          <span>$44.44</span>
+          <del>$55.55</del>
+        </div>
+      </div>
+      
+      <div class="item product-item">
+        <div class="item-box">
+          <img src="images/product.png" alt="" />
+        </div>
+        <div class="name line2">长沙天天 粘接型MBT直丝颊面管0.022″7牙位 上一下一 （新老包装随机发货）</div>
+        <div class="price">
+          <span>$44.44</span>
+          <del>$55.55</del>
+        </div>
+      </div>
+      
+      <div class="item product-item">
+        <div class="item-box">
+          <img src="images/product.png" alt="" />
+        </div>
+        <div class="name line2">长沙天天 粘接型MBT直丝颊面管0.022″7牙位 上一下一 （新老包装随机发货）</div>
+        <div class="price">
+          <span>$44.44</span>
+          <del>$55.55</del>
+        </div>
+      </div>
+      
+      <div class="item product-item">
+        <div class="item-box">
+          <img src="images/product.png" alt="" />
+        </div>
+        <div class="name line2">长沙天天 粘接型MBT直丝颊面管0.022″7牙位 上一下一 （新老包装随机发货）</div>
+        <div class="price">
+          <span>$44.44</span>
+          <del>$55.55</del>
+        </div>
+      </div>
+      
+      <div class="item product-item">
+        <div class="item-box">
+          <img src="images/product.png" alt="" />
+        </div>
+        <div class="name line2">长沙天天 粘接型MBT直丝颊面管0.022″7牙位 上一下一 （新老包装随机发货）</div>
+        <div class="price">
+          <span>$44.44</span>
+          <del>$55.55</del>
+        </div>
+      </div>
+    
+       <div class="item product-item">
+        <div class="item-box">
+          <img src="images/product.png" alt="" />
+        </div>
+        <div class="name line2">长沙天天 粘接型MBT直丝颊面管0.022″7牙位 上一下一 （新老包装随机发货）</div>
+        <div class="price">
+          <span>$44.44</span>
+          <del>$55.55</del>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../../third/bluebird.min.js"></script>
+  <script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../third/knockout.js"></script>
+  <script src="../../third/knockout.extend.js"></script>
+  <script src="../../third/ko.mapping.js"></script>
+  <script src="../../js/mui.picker.min.js"></script>
+  <script src="../../js/mui.poppicker.js"></script>
+  <script src="../../js/utils.enums.js"></script>
+  <script src="../../js/utils.config.js"></script>
+  <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.auth.js"></script>
+  <script src="../../js/utils.upload.js"></script>
+  <script src="../../js/utils.request.js" ></script>
+  <script src="../../js/utils.common.js" ></script>
+  <script src="js/kt-common.js" ></script>
+  <script>
+    (function($, doc) {
+      $.init();
+      $.plusReady(function() {
+        var currentWebview = plus.webview.currentWebview();
+        var BaseView = function () {
+          var vm = this;
+          vm.detailData = ko.observable({});
+
+        }
+        var viewModel = new BaseView();
+        ko.applyBindings(viewModel, doc.getElementById('main-content'));
+        
+        function loadData () {
+        	console.log( currentWebview.catergoryid ); 
+          request.loginAjax('courses/coursesDetails', {
+            showMsg: false,
+            data: {
+              cid: currentWebview.catergoryid
+            }
+          }, function(data,success) {
+            if (success) { 
+//            Enums.getAll(function(){
+//               data.wagesText = Enums.getEnumText('salaryRange', data.wages);
+//               data.positiontypeText = Enums.getEnumText('positionType', data.positiontype);
+//               data.experienceText = Enums.getEnumText('workExperience', data.experience);
+//               data.educationText = Enums.getEnumText('education', data.education);
+//               viewModel.detailData(ko.mapping.fromJS(data));
+//            })
+					
+				data.priceText = data.price == 0? data.price :'免费';
+				data.ctypeText = Enums.getEnumText('ctype', data.ctype);
+				console.log( JSON.stringify( data ) );
+				viewModel.detailData( data|| {} );
+            }
+          });
+        }
+        viewModel.detailData({});
+        loadData();
+   
+      });
+    }(mui, document));
+  </script>
+</body>
+</html>
