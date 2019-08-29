@@ -23,6 +23,7 @@
   </header>
   <div class="mui-content my-manage">
     <div class="video">
+      <!-- ko foreach: videoList -->
       <div class="video-item">
         <div class="thumbnail">
           <div class="img">
@@ -34,39 +35,7 @@
           </p>
         </div>
       </div>
-      <div class="video-item">
-        <div class="thumbnail">
-          <div class="img">
-            <img src="images/timg2.jpg" alt="">
-          </div>
-          <i class="iconfont icon-shanchu-copy"></i>
-          <p class="video-name text-ellipsis">
-            <span >视频名称</span>
-          </p>
-        </div>
-      </div>
-      <div class="video-item">
-        <div class="thumbnail">
-          <div class="img">
-            <img src="images/timg2.jpg" alt="">
-          </div>
-          <i class="iconfont icon-shanchu-copy"></i>
-          <p class="video-name text-ellipsis">
-            <span >视频名称名</span>
-          </p>
-        </div>
-      </div>
-      <div class="video-item">
-        <div class="thumbnail">
-          <div class="img">
-            <img src="images/timg2.jpg" alt="">
-          </div>
-          <i class="iconfont icon-shanchu-copy"></i>
-          <p class="video-name text-ellipsis">
-            <span >视频名称名称视频称</span>
-          </p>
-        </div>
-      </div>
+      <!-- /ko -->
     </div>
   </div>
   <script src="../../third/bluebird.min.js"></script>
@@ -90,8 +59,11 @@
       $.init({
       });
       $.plusReady(function() {
+        var currentWebview = plus.webview.currentWebview();
+        var cid = currentWebview.cid; 
         var BaseView = function () {
           var vm = this;
+          vm.videoList = ko.observableArray([]);
           vm.uploadVideo = function(){
               mui.openWindow({
                 id:'KZ_KT_publishVideo',
@@ -104,12 +76,29 @@
                 },
                 waiting: {
                   autoShow: false
+                },
+                extras: {
+                  cid: cid
                 }
               });
           }
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
+        
+        function loadData () {
+          request.loginAjax('courses/coursesDetails', {
+            showMsg: false,
+            data: {
+              cid: cid
+            }
+          }, function(data,success) {
+            if (success) { 
+            }
+          });
+        }
+        
+        loadData();
       });
     }(mui, document));
   </script>

@@ -92,18 +92,13 @@
           },function(data, success) {
              // 处理页面绑定
              if (data && data.data) {
-               Enums.getAll(function(){
-                  $.each(data.data, function(index, item) {
-                     item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
-                  });
-                  if (page === 1) {                  
-                     viewModel.list(data.data);                  
-                  } else {
-                     $.each(data.data, function(index,i) {
-                       viewModel.list.push(i);
-                     });                  
-                  }  
-               })              
+              if (page === 1) {                  
+                 viewModel.list(data.data);                  
+              } else {
+                 $.each(data.data, function(index,i) {
+                   viewModel.list.push(i);
+                 });                  
+              }            
              }
              // 判断是否有下一页数据
              if (data && data.data && data.data.length === limit) {
@@ -122,15 +117,7 @@
         }
         queryList();
         // 跳转详情
-        $('#pullrefresh-list').on('tap', '.mui-table-view > li .gotoedit', function(e){
-          var itemid = this.getAttribute('itemid');
-          var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
-          $.fire(nextWebview, 'kz_profile_JobPublish_Data', {
-            id: itemid
-          });
-          $.openWindow({
-            id:'kz_profile_JobPublish',               
-          }); 
+        $('#pullrefresh-list').on('tap', '.video-item', function(e){
         });
         function reloadPage () {
           page = 1;

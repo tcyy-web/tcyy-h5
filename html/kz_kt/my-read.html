@@ -18,9 +18,9 @@
   <div class="mui-content my-read">
     <div class="mui-control-content mui-active mui-fullscreen">
       <div class="mui-scroll-wrapper">
-        <div  class="mui-scroll">
-          <!-- <ul class="mui-table-view"></ul> -->
+        <div id="pullrefresh-list" class="mui-scroll">
           <div class="video">
+            <!-- ko foreach:  list -->
             <div class="video-item">
               <div class="thumbnail">
                 <div class="img">
@@ -48,6 +48,7 @@
                 </p>
               </div>
             </div>
+            <!-- /ko -->
           </div>
         </div>
       </div>
@@ -122,15 +123,7 @@
         }
         queryList();
         // 跳转详情
-        $('#pullrefresh-list').on('tap', '.mui-table-view > li .gotoedit', function(e){
-          var itemid = this.getAttribute('itemid');
-          var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
-          $.fire(nextWebview, 'kz_profile_JobPublish_Data', {
-            id: itemid
-          });
-          $.openWindow({
-            id:'kz_profile_JobPublish',               
-          }); 
+        $('#pullrefresh-list').on('tap', '.video-item', function(e){
         });
         function reloadPage () {
           page = 1;

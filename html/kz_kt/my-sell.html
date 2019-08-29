@@ -7,7 +7,19 @@
   <link href="../../fonts/iconfont.css" rel="stylesheet" />
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/kt-style.css" rel="stylesheet" />
+  <style>
+    .video .video-item{
+      box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+    .pullrefresh-list{
+      height: calc(100% - 84px);
+      height: -webkit-calc(100% - 84px);
+      position: relative;
+    }
+  </style>
 </head>
 
 <body>
@@ -27,29 +39,23 @@
         <p>￥900</p>
       </div>
     </div>
-    <div class="video">
-      <div class="video-item">
-        <div class="info">
-          <p class="clear curricu-name">
-            <span class="fl font-bold text-ellipsis">课程名称课程名称名称名称名称</span>
-            <span class="fr font-bold">￥900</span>
-          </p>
-          <p class="clearFix">
-            <span class="fl font-bold">已提现</span>
-            <span class="fr font-small-gray">2019/01/02</span>
-          </p>
-        </div>
-      </div>
-      <div class="video-item">
-        <div class="info">
-          <p class="clear curricu-name">
-            <span class="fl font-bold text-ellipsis">课程名称课程名称名称名称名称</span>
-            <span class="fr font-bold">￥900</span>
-          </p>
-          <p class="clearFix">
-            <span class="fl font-bold">已提现</span>
-            <span class="fr font-small-gray">2019/01/02</span>
-          </p>
+    <div class="pullrefresh-list">
+      <div class="mui-scroll-wrapper">
+        <div id="pullrefresh-list" class="mui-scroll">
+          <div class="video">
+            <div class="video-item">
+              <div class="info">
+                <p class="clear curricu-name">
+                  <span class="fl font-bold text-ellipsis">课程名称课程名称名称名称名称</span>
+                  <span class="fr font-bold">￥900</span>
+                </p>
+                <p class="clearFix">
+                  <span class="fl font-bold">已提现</span>
+                  <span class="fr font-small-gray">2019/01/02</span>
+                </p>
+              </div>
+            </div>
+          </div>          
         </div>
       </div>
     </div>
@@ -98,18 +104,13 @@
           },function(data, success) {
              // 处理页面绑定
              if (data && data.data) {
-               Enums.getAll(function(){
-                  $.each(data.data, function(index, item) {
-                     item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
-                  });
-                  if (page === 1) {                  
-                     viewModel.list(data.data);                  
-                  } else {
-                     $.each(data.data, function(index,i) {
-                       viewModel.list.push(i);
-                     });                  
-                  }  
-               })              
+              if (page === 1) {                  
+                 viewModel.list(data.data);                  
+              } else {
+                 $.each(data.data, function(index,i) {
+                   viewModel.list.push(i);
+                 });                  
+              }  
              }
              // 判断是否有下一页数据
              if (data && data.data && data.data.length === limit) {
