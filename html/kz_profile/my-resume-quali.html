@@ -50,7 +50,8 @@
       <div class="mui-input-row">
         <label><i class="form-required"></i>获得日期：</label>
         <p data-bind="text: !formData.qualify_time() ? '请选择' : formData.qualify_time,
-          click: dateClick">请选择</p>
+          click: dateClick,
+          css: {'custom-tip' : !formData.qualify_time()}">请选择</p>
       </div>
     </form>
   </div>

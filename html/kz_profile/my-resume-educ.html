@@ -41,12 +41,14 @@
       <div class="mui-input-row">
         <label><i class="form-required"></i>开始日期：</label>
         <p data-bind="text: !formData.entrancedate() ? '请选择' : formData.entrancedate,
-          click: entrancedateClick">请选择</p>
+          click: entrancedateClick,
+          css: {'custom-tip' : !formData.entrancedate()}">请选择</p>
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>结束日期：</label>
         <p data-bind="text: !formData.graduatedate() ? '请选择' : formData.graduatedate,
-          click: dimissiondateClick">请选择</p>
+          click: dimissiondateClick,
+          css: {'custom-tip' : !formData.graduatedate()}">请选择</p>
       </div>
     </form>
   </div>

@@ -39,12 +39,14 @@
       <div class="mui-input-row">
         <label><i class="form-required"></i>招聘职位：</label>
         <p data-bind="text: !formData.positiontypeText() ? '请选择' : formData.positiontypeText, 
-          click: intentpositionPickerClick">请选择</p>
+          click: intentpositionPickerClick,
+          css: {'custom-tip' : !formData.positiontypeText()}">请选择</p>
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>工作地区：</label>
         <p data-bind="text: !formData.region() ? '请选择' : formData.region, 
-          click: regionPickerClick">请选择</p>
+          click: regionPickerClick,
+          css: {'custom-tip' : !formData.region()}">请选择</p>
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>详细地址：</label>
@@ -55,7 +57,8 @@
       <div class="mui-input-row">
         <label><i class="form-required"></i>工资待遇：</label>
         <p data-bind="text: !formData.wagesText() ? '请选择' : formData.wagesText, 
-          click: wagesPickerClick">请选择</p>
+          click: wagesPickerClick,
+          css: {'custom-tip' : !formData.wagesText()}">请选择</p>
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>招聘人数：</label>
@@ -65,17 +68,20 @@
       <div class="mui-input-row">
         <label><i class="form-required"></i>招聘类型：</label>
         <p data-bind="text: !formData.natureText() ? '请选择' : formData.natureText, 
-          click: worknaturePickerClick">请选择</p>
+          click: worknaturePickerClick,
+          css: {'custom-tip' : !formData.natureText()}">请选择</p>
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>工作经验：</label>
         <p data-bind="text: !formData.experienceText() ? '请选择' : formData.experienceText, 
-          click: experienceClick">请选择</p>
+          click: experienceClick,
+          css: {'custom-tip' : !formData.experienceText()}">请选择</p>
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>学历要求：</label>
         <p data-bind="text: !formData.educationText() ? '请选择' : formData.educationText, 
-          click: educationClick">请选择</p>
+          click: educationClick,
+          css: {'custom-tip' : !formData.educationText()}">请选择</p>
       </div>
       <div class="mui-input-row auto">
         <label><i class="form-required"></i>职位描述：</label>

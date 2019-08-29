@@ -33,12 +33,14 @@
       <div class="mui-input-row">
         <label><i class="form-required"></i>课程类型：</label>
         <p data-bind="text: !formData.ctypeText() ? '请选择' : formData.ctypeText, 
-          click: ctypeClick">请选择</p>
+          click: ctypeClick,
+          css: {'custom-tip' : !formData.ctypeText()}">请选择</p>
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>课程分类：</label>
         <p data-bind="text: !formData.gidText() ? '请选择' : formData.gidText, 
-          click: gidClick">请选择</p>
+          click: gidClick,
+          css: {'custom-tip' : !formData.gidText()}">请选择</p>
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>课程标题：</label>
@@ -52,7 +54,9 @@
       </div> 
       <div class="mui-input-row">
         <label><i class="form-required"></i>课程单价：</label>
-        <input data-bind="value: formData.price, muiInput: formData.price" maxlength="9" type="text" class="mui-input-clear" placeholder="课程单集视频售价">
+        <input data-bind="value: formData.price, muiInput: formData.price" 
+          maxlength="9" type="text" class="mui-input-clear" 
+          placeholder="课程单集视频售价,0则课程免费">
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>买断价：</label>

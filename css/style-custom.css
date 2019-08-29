@@ -2,6 +2,13 @@
 .mui-pull-top-tips{
   z-index: 100;
 }
+textarea::-webkit-input-placeholder,
+input::-webkit-input-placeholder{
+  color: #999;
+}
+.custom-tip{
+  color: #999 !important;
+}
 /*公共底部*/
 .custom-tab{
   background-color: #ffffff;

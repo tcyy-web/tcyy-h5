@@ -37,12 +37,14 @@
       <div class="mui-input-row">
         <label><i class="form-required"></i>成立日期：</label>
         <p data-bind="text: !formData.createrdate() ? '请选择' : formData.createrdate,
-          click: datePickerClick">请选择</p>
+          click: datePickerClick,
+          css: {'custom-tip' : !formData.createrdate()}">请选择</p>
       </div>
       <div class="mui-input-row">
         <label><i class="form-required"></i>所在地区：</label>
         <p data-bind="text: !formData.region() ? '请选择' : formData.region, 
-          click: regionPickerClick">请选择</p>
+          click: regionPickerClick,
+          css: {'custom-tip' : !formData.region()}">请选择</p>
       </div>
       <div class="mui-input-row">
         <label>详细地址：</label>
