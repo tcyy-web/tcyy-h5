@@ -63,7 +63,7 @@
           <div class="video-item" data-bind="click: $root.toDetail">
             <div class="thumbnail">
               <div class="img">
-                <!--<img src="images/timg2.jpg" alt=""> />-->
+                <img data-bind="attr: {src: thumbImg}" alt="" />
               </div>
               <i class="iconfont icon-bofang"></i>
               <p class="video-name text-ellipsis">
@@ -75,8 +75,8 @@
                 <span  data-bind="text:vtitle"></span>
               </p>
               <p class="clear">
-                <span class="fl font-bold" data-bind="text: nickname"></span>
-                <span class="fr price font-bold">免费</span>
+                <span class="fl font-bold" data-bind="text: nicknameText"></span>
+                <span class="fr price font-bold" data-bind="text: priceText"></span>
               </p>
               <p class="clear other">
                 <span class="fl">
@@ -215,22 +215,9 @@
             
             // 跳转详情
             vm.toDetail = function ( data ){
-              mui.openWindow({
-                id:'KZ_KT_Detail',
-                url: './details.html',
-                show: {
-                  aniShow: 'pop-in'
-                },
-                styles: {
-                  popGesture: 'hide'
-                },
-                waiting: {
-                  autoShow: false
-                },
-                extras: {
-                  catergoryid: data.id,
-                  headtitle: data.title
-                }
+              DetailPage({
+                cid: data.cid,
+                vid: data.vid
               });
             }
             // 最新列表
@@ -243,7 +230,7 @@
             limit: 10,
             ctime: 'desc'
           }).then(function(reslist){
-            viewModel.newestList(reslist);
+            viewModel.newestList(trimSearchResult(reslist));
           });
         })();
         /*我的*/

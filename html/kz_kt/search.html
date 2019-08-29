@@ -15,8 +15,8 @@
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <div class="header-search-box">
-        <input type="text" placeholder="请输入关键字">
-        <span>搜索</span>
+        <input data-bind="value: keywords" type="text" maxlength="40" placeholder="请输入关键字">
+        <span data-bind="click: searchFn">搜索</span>
     </div>
   </header>
   <div class="mui-content search search-result">
@@ -25,30 +25,30 @@
         <div id="pullrefresh-list" class="mui-scroll">
           <div class="video">
             <!-- ko foreach: list -->
-            <div class="video-item">
+            <div data-bind="attr: {cid: cid, vid: vid}" class="video-item">
               <div class="thumbnail">
                 <div class="img">
-                  <img src="images/timg2.jpg" alt="">
+                  <img data-bind="attr: {src: thumbImg}" alt="">
                 </div>
                 <i class="iconfont icon-bofang"></i>
                 <p class="video-name text-ellipsis">
-                  <span>视频名称名称名称名称名称名称</span>
+                  <span data-bind="text: vtitle"></span>
                 </p>
               </div>
               <div class="info">
                 <p class="text-ellipsis font-bold curricu-name">
-                  <span>课程名称课程名称名称名称名称</span>
+                  <span data-bind="text: ctitle"></span>
                 </p>
                 <p class="clear">
-                  <span class="fl font-bold">小漂亮</span>
-                  <span class="fr price font-bold">免费</span>
+                  <span class="fl font-bold" data-bind="text: nicknameText"></span>
+                  <span class="fr price font-bold" data-bind="text: priceText"></span>
                 </p>
                 <p class="clear other">
                   <span class="fl">
                     <i class="iconfont icon-liulanjilu"></i>
-                    123
+                    <span data-bind="text: views"></span>
                   </span>
-                  <span class="fr">2019.12.23</span>
+                  <span class="fr" data-bind="text: ctime"></span>
                 </p>
               </div>
             </div>
@@ -86,7 +86,11 @@
         //列表渲染
         var BaseView = function () {
           var vm = this;
+          vm.keywords = ko.observable();
           vm.list = ko.observableArray([]);
+          vm.searchFn = function(){
+            reloadPage();
+          }
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
@@ -96,12 +100,16 @@
             page: page,
             limit: limit
           }       
+          if (!!viewModel.keywords()) {
+            _request.keywords = viewModel.keywords();
+          }
           request.loginAjax('courses/search',{
             data: _request,
             showMsg: false
           },function(data, success) {
              // 处理页面绑定
              if (data && data.data) {
+               data.data = trimSearchResult(data.data);
                if (page === 1) {                  
                    viewModel.list(data.data);                  
                 } else {
@@ -127,14 +135,12 @@
         }
         queryList();
         // 跳转详情
-        $('#pullrefresh-list').on('tap', '.mui-table-view > li .gotoedit', function(e){
-          var itemid = this.getAttribute('itemid');
-          var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
-          $.fire(nextWebview, 'kz_profile_JobPublish_Data', {
-            id: itemid
-          });
-          $.openWindow({
-            id:'kz_profile_JobPublish',               
+        $('#pullrefresh-list').on('tap', '.video-item', function(e){
+          var cid = this.getAttribute('cid');
+          var vid = this.getAttribute('vid');
+          DetailPage({
+            cid: cid,
+            vid: vid
           }); 
         });
         function reloadPage () {

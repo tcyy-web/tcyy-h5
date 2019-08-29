@@ -27,18 +27,21 @@
   <div class="mui-content search">
     <div class="mui-fullscreen">
       <div class="top-sort">
-        <a href="#zuixin" class="sort-item">
+        <a data-bind="click: mostNew,
+          css:{active: searchType() == 1}" class="sort-item">
           <span>最新</span>
         </a>
-        <a href="#zuixin" class="sort-item">
+        <a data-bind="click: freeSort,
+          css:{active: searchType() == 2}"class="sort-item">
           <span>免费</span>
         </a>
-        <a href="#zuixin" class="sort-item active">
+        <a data-bind="click: priceSort,
+          css:{active: searchType() > 2}" class="sort-item active">
           <p class="button-label">
               <span>价格</span>
               <span class="sort-icon">
-                <i class="iconfont icon-paixu-shang-copy active"></i>
-                <i class="iconfont icon-paixu-xia-copy"></i>
+                <i data-bind="css:{active: searchType() == 3}" class="iconfont icon-paixu-shang-copy"></i>
+                <i data-bind="css:{active: searchType() == 4}" class="iconfont icon-paixu-xia-copy"></i>
               </span>
           </p>
         </a>
@@ -48,30 +51,30 @@
           <div id="pullrefresh-list" class="mui-scroll">
             <div class="video">
             	<!-- ko foreach: list -->
-              <div class="video-item">
+              <div data-bind="attr: {cid: cid, vid: vid}" class="video-item">
                 <div class="thumbnail">
                   <div class="img">
-                    <img src="images/timg2.jpg" alt="">
+                    <img data-bind="attr: {src: thumbImg}" alt="">
                   </div>
                   <i class="iconfont icon-bofang"></i>
                   <p class="video-name text-ellipsis">
-                    <span >视频名称名称名称名称名称名称</span>
+                    <span data-bind="text: vtitle"></span>
                   </p>
                 </div>
                 <div class="info">
                   <p class="text-ellipsis font-bold curricu-name">
-                    <span>课程名称课程名称名称名称名称</span>
+                    <span data-bind="text: ctitle"></span>
                   </p>
                   <p class="clear">
-                    <span class="fl font-bold">小漂亮</span>
-                    <span class="fr price font-bold">免费</span>
+                    <span class="fl font-bold" data-bind="text: nicknameText"></span>
+                    <span class="fr price font-bold" data-bind="text: priceText"></span>
                   </p>
                   <p class="clear other">
                     <span class="fl">
                       <i class="iconfont icon-liulanjilu"></i>
-                      123
+                      <span data-bind="text: views"></span>
                     </span>
-                    <span class="fr">2019.12.23</span>
+                    <span class="fr" data-bind="text: ctime"></span>
                   </p>
                 </div>
               </div>
@@ -104,32 +107,41 @@
       });
       $.plusReady(function() {
         var currentWebview = plus.webview.currentWebview();
+        var catergoryid = currentWebview.catergoryid; 
         // 分页参数
         var page = 1;
         var limit = 10;
         var more = true;
-        var catergoryid = currentWebview.catergoryid; 
         //列表渲染
         var BaseView = function () {
           var vm = this;
+          // 1 最新  2 免费 3价格升序  4 价格降序
+          vm.searchType = ko.observable();
           vm.headTitle = ko.observable(currentWebview.headtitle);
 
           vm.list = ko.observableArray([]);
-          
+          // 最新
+          vm.mostNew = function(){
+            vm.searchType(1);
+            reloadPage();
+          }
+          // 免费
+          vm.freeSort = function(){
+            vm.searchType(2);
+            reloadPage();
+          }
+          // 价格排序
+          vm.priceSort = function(){
+            if (vm.searchType() == 3) {
+              vm.searchType(4)
+            } else {
+              vm.searchType(3);
+            }
+            reloadPage();
+          }
+          // 
           vm.searchFn = function () {
-            mui.openWindow({
-              id:'KZ_KT_SearchList',
-              url: './search.html',
-              show: {
-                aniShow: 'pop-in'
-              },
-              styles: {
-                popGesture: 'hide'
-              },
-              waiting: {
-                autoShow: false
-              }
-            });
+            SearchPage();
           }
         }
         var viewModel = new BaseView();
@@ -138,13 +150,29 @@
         var queryList = function(callback) {
           var _request = {
             page: page,
-            limit: limit
+            limit: limit,
+            gid: catergoryid
           } 
+          switch(viewModel.searchType()){
+            case 1:
+              _request.ctime = 'desc';
+              break;
+            case 2:
+              _request.isFree = true;
+              break;
+            case 3:
+              _request.prices = 'desc';
+              break;
+            case 4:
+              _request.prices = 'asc';
+              break;
+          }
           request.loginAjax('courses/search',{
             data: _request,
             showMsg: false
           },function(data, success) {
              if (data && data.data) {
+              data.data = trimSearchResult(data.data);
               if (page === 1) {                  
                  viewModel.list(data.data);                  
               } else {
@@ -170,15 +198,13 @@
         }
         queryList();
         // 跳转详情
-        $('#pullrefresh-list').on('tap', '.mui-table-view > li .gotoedit', function(e){
-          var itemid = this.getAttribute('itemid');
-          var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
-          $.fire(nextWebview, 'kz_profile_JobPublish_Data', {
-            id: itemid
+        $('#pullrefresh-list').on('tap', '.video-item', function(e){
+          var cid = this.getAttribute('cid');
+          var vid = this.getAttribute('vid');
+          DetailPage({
+            cid: cid,
+            vid: vid
           });
-          $.openWindow({
-            id:'kz_profile_JobPublish',               
-          }); 
         });
         function reloadPage () {
           page = 1;

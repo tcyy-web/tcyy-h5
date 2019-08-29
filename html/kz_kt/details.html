@@ -8,12 +8,17 @@
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/style.css" rel="stylesheet" />
   <link href="css/kt-style.css" rel="stylesheet" />
+  <style>
+    .mui-content{
+      height: auto;
+    }
+  </style>
 </head>
 
 <body id="main-content">
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title" data-bind="text:viewModel().title">视频名称</h1>
+    <h1 class="mui-title" data-bind="text:detailData().title"></h1>
   </header>
   <div class="mui-content details">
       <div class="video">
@@ -26,14 +31,14 @@
           </div>
           <div class="info">
             <p class="clear curricu-name">
-              <span class="fl font-bold text-ellipsis"  data-bind="text:viewModel().title">课程名称课程名称名称名称名称</span>
-              <span class="fr"  data-bind="text:viewModel().ctypeText">口腔种植</span>
+              <span class="fl font-bold text-ellipsis"  data-bind="text:detailData().title">课程名称课程名称名称名称名称</span>
+              <span class="fr"  data-bind="text:detailData().ctypeText">口腔种植</span>
             </p>
             <p class="clear curricu-desc">
-              <span class="fl font-bold"  data-bind="text:viewModel().contents">描述文字描述文字文字描述</span>
+              <span class="fl font-bold"  data-bind="text:detailData().contents">描述文字描述文字文字描述</span>
             </p>
             <p>
-              <span class="price font-bold"  data-bind="text:viewModel().priceText">免费</span>
+              <span class="price font-bold"  data-bind="text:detailData().priceText">免费</span>
             </p>
             <p class="clear other">
               <span class="fr">
@@ -86,41 +91,29 @@
       $.init();
       $.plusReady(function() {
         var currentWebview = plus.webview.currentWebview();
+        var cid = currentWebview.cid;
+        var vid = currentWebview.vid;
         var BaseView = function () {
           var vm = this;
           vm.detailData = ko.observable({});
-
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
         
         function loadData () {
-        	console.log( currentWebview.catergoryid ); 
           request.loginAjax('courses/coursesDetails', {
             showMsg: false,
             data: {
-              cid: currentWebview.catergoryid
+              cid: cid
             }
           }, function(data,success) {
             if (success) { 
-//            Enums.getAll(function(){
-//               data.wagesText = Enums.getEnumText('salaryRange', data.wages);
-//               data.positiontypeText = Enums.getEnumText('positionType', data.positiontype);
-//               data.experienceText = Enums.getEnumText('workExperience', data.experience);
-//               data.educationText = Enums.getEnumText('education', data.education);
-//               viewModel.detailData(ko.mapping.fromJS(data));
-//            })
-					
-							data.priceText = data.price == 0? data.price :'免费';
-							data.ctypeText = Enums.getEnumText('ctype', data.ctype);
-							console.log( JSON.stringify( data ) );
-							viewModel.detailData( data|| {} );
+              viewModel.detailData(ko.mapping.fromJS(data));
             }
           });
         }
         viewModel.detailData({});
         loadData();
-   
       });
     }(mui, document));
   </script>

@@ -97,18 +97,13 @@
           },function(data, success) {
              // 处理页面绑定
              if (data && data.data) {
-               Enums.getAll(function(){
-                  $.each(data.data, function(index, item) {
-                     item.positiontypeStr = Enums.getEnumText('positionType', item.positiontype);
-                  });
-                  if (page === 1) {                  
-                     viewModel.list(data.data);                  
-                  } else {
-                     $.each(data.data, function(index,i) {
-                       viewModel.list.push(i);
-                     });                  
-                  }  
-               })              
+              if (page === 1) {                  
+                 viewModel.list(data.data);                  
+              } else {
+                 $.each(data.data, function(index,i) {
+                   viewModel.list.push(i);
+                 });                  
+              }  
              }
              // 判断是否有下一页数据
              if (data && data.data && data.data.length === limit) {

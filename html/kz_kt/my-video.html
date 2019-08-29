@@ -32,10 +32,10 @@
               <div class="info">
                 <p class="clear curricu-name">
                   <span class="fl font-bold text-ellipsis" data-bind="text: title"></span>
-                  <span class="fr">口腔种植</span>
+                  <span class="fr" data-bind="text: gidText"></span>
                 </p>
                 <p class="clearFix">
-                  <span class="price font-bold fl" data-bind="text: priceText">免费</span>
+                  <span class="price font-bold fl" data-bind="text: priceText"></span>
                   <span class="fr font-small-gray" data-bind="text: ctypeText"></span>
                 </p>
                 <p class="clear other">
@@ -137,14 +137,9 @@
         // 跳转详情
         $('#pullrefresh-list').on('tap', '.video-item', function(e){
           var itemid = this.getAttribute('itemid');
-          console.log(itemid);
-//        var nextWebview = plus.webview.getWebviewById('kz_profile_JobPublish');
-//        $.fire(nextWebview, 'kz_profile_JobPublish_Data', {
-//          id: itemid
-//        });
-//        $.openWindow({
-//          id:'kz_profile_JobPublish',               
-//        }); 
+          DetailPage({
+            cid: itemid
+          })
         });
         // 视频管理
         $('#pullrefresh-list').on('tap', '.upload-btn', function(e){

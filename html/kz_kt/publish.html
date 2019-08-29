@@ -166,8 +166,16 @@
               mui.toast('请输入课程单价')
               return;
             }
+            if (!/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/.test(postData.price)) {
+              mui.toast('课程单价只能为数字且只能为两位小数');
+              return;
+            }
             if (!postData.oneprice) {
               mui.toast('请输入买断价')
+              return;
+            }
+             if (!/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/.test(postData.oneprice)) {
+              mui.toast('买断价只能为数字且只能为两位小数');
               return;
             }
             resolve();
@@ -179,7 +187,7 @@
             var postData = ko.mapping.toJS(viewModel.formData);
             postData.urls = videourl;
             // 暂时写死地址测试
-            postData.urls = 'http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4';
+//          postData.urls = 'http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4';
             request.loginAjax('courses/saveCourseAndVideos', {
               data: postData
             }, function(data,success) {     
@@ -204,26 +212,25 @@
         }
         
         doc.getElementById('startVideo').addEventListener('tap', function(e) {
-          checkData().then(function(){
-            saveVedioInfo();
+          upload.getVideo(function(file){});
+//        checkData().then(function(){
 //          upload.getVideo(function(file){
 //            var url = config.url + "Uploads/Files";
 //            upload.uploadMedia(url, function(res) {
 //              saveVedioInfo(res[0].showUrl);
 //            }, { abspath: file, type: '5' });
 //          });
-          })
+//        })
         });
                 
         doc.getElementById('startPick').addEventListener('tap', function(e) {
           checkData().then(function(){
-            saveVedioInfo( );
-//          upload.galleryVideo(function(file){
-//            var url = config.url + "Uploads/Files";
-//            upload.uploadMedia(url, function(res) {
-//              saveVedioInfo(res[0].showUrl);
-//            }, { abspath: file, type: '5' });
-//          });
+            upload.galleryVideo(function(file){
+              var url = config.url + "Uploads/Files";
+              upload.uploadMedia(url, function(res) {
+                saveVedioInfo(res[0].showUrl);
+              }, { abspath: file, type: '5' });
+            });
           })
         });
       });

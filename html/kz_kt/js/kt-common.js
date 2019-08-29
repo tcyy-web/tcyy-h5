@@ -14,6 +14,39 @@ function PublishPage () {
     }
   });
 }
+// 跳转搜索页
+function SearchPage () {
+  mui.openWindow({
+    id:'KZ_KT_SearchList',
+    url: '/html/kz_kt/search.html',
+    show: {
+      aniShow: 'pop-in'
+    },
+    styles: {
+      popGesture: 'hide'
+    },
+    waiting: {
+      autoShow: false
+    }
+  });
+}
+// 跳转详情页
+function DetailPage (extras) {
+  mui.openWindow({
+    id:'KZ_KT_Detail',
+    url: '/html/kz_kt/details.html',
+    show: {
+      aniShow: 'pop-in'
+    },
+    styles: {
+      popGesture: 'hide'
+    },
+    waiting: {
+      autoShow: false
+    },
+    extras: extras
+  });
+}
 
 // 视频搜索
 function VideoSearch (postData) {
@@ -54,4 +87,13 @@ function CourseDetail (postData) {
       }
     });
   })
+}
+// 处理列表结果
+function trimSearchResult(list){
+  _.forEach(list || [], function(o){
+    o.priceText = o.price > 0 ? o.price : '免费';
+    o.nicknameText = JSON.parse(o.nickname);
+    o.thumbImg = o.urls.replace('.mp4', '.jpg');
+  });
+  return list;
 }

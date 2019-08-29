@@ -296,6 +296,7 @@
   position: absolute;
   right: 30px;
   top: 12px;
+  z-index: 10;
   padding-left: 12px;
   border-left: 1px solid #DDDDDD;
 }
@@ -396,7 +397,7 @@
   align-items: center;
 }
 .search .top-sort .sort-item .sort-icon {
-  margin-left: 10px;
+  margin-left: 6px;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -405,14 +406,15 @@
   line-height: 10px;
 }
 .search .top-sort .sort-item .sort-icon .iconfont {
-  font-size: 8px;
+  font-size: 12px;
   color: #999;
+  display: inline-block;
 }
 .search .top-sort > .active {
   color: #8E78D6;
 }
 .search .top-sort > .sort-item .sort-icon .active {
-  color: #8E78D6;
+  color: #765fc3;
 }
 .search .video {
   background-color: #ffffff;
