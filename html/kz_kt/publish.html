@@ -212,15 +212,14 @@
         }
         
         doc.getElementById('startVideo').addEventListener('tap', function(e) {
-          upload.getVideo(function(file){});
-//        checkData().then(function(){
-//          upload.getVideo(function(file){
-//            var url = config.url + "Uploads/Files";
-//            upload.uploadMedia(url, function(res) {
-//              saveVedioInfo(res[0].showUrl);
-//            }, { abspath: file, type: '5' });
-//          });
-//        })
+          checkData().then(function(){
+            upload.getVideo(function(file){
+              var url = config.url + "Uploads/Files";
+              upload.uploadMedia(url, function(res) {
+                saveVedioInfo(res[0].showUrl);
+              }, { abspath: file, type: '5' });
+            });
+          })
         });
                 
         doc.getElementById('startPick').addEventListener('tap', function(e) {

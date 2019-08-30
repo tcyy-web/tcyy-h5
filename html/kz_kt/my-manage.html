@@ -12,6 +12,14 @@
     .mui-content{
       height: auto;
     }
+    .episodes{
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      color: #fff;
+      font-size: 16px;
+      z-index: 20;
+    }
   </style>
 </head>
 
@@ -26,6 +34,7 @@
       <!-- ko foreach: videoList -->
       <div class="video-item">
         <div class="thumbnail">
+          <span class="episodes" data-bind="text: episodes"></span>
           <div class="img">
             <img src="images/timg2.jpg" alt="">
           </div>
@@ -61,6 +70,37 @@
       $.plusReady(function() {
         var currentWebview = plus.webview.currentWebview();
         var cid = currentWebview.cid; 
+        
+        function loadData () {
+          return new Promise(function(resolve){
+            request.loginAjax('courses/coursesDetails', {
+              showMsg: false,
+              data: {
+                cid: cid
+              }
+            }, function(data,success) {
+              if (success) { 
+                resolve(data);
+                
+              }
+            });
+          });
+        }
+        
+        function DelVideo (id) {
+          return new Promise(function(resolve){
+            request.loginAjax('coursesvideos/deleteVideoInfos', {
+              showMsg: false,
+              data: {
+                ids: id
+              }
+            }, function(data,success) {
+              if (success) { 
+                resolve();
+              }
+            });
+          });
+        }
         var BaseView = function () {
           var vm = this;
           vm.videoList = ko.observableArray([]);
@@ -85,6 +125,11 @@
           vm.delVideo = function(data){
             $.confirm('确定删除该视频？','删除视频','',function(ok){
               if (ok.index === 1) {
+                DelVideo(data.id).then(function(){
+                  loadData().then(function(data){
+                    viewModel.videoList(data.videosList);
+                  });
+                });
               }
             }, 'div');
           }
@@ -92,20 +137,15 @@
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
         
-        function loadData () {
-          request.loginAjax('courses/coursesDetails', {
-            showMsg: false,
-            data: {
-              cid: cid
-            }
-          }, function(data,success) {
-            if (success) { 
-              viewModel.videoList(data.videosList);
-            }
-          });
-        }
+        loadData().then(function(data){
+          viewModel.videoList(data.videosList);
+        });
         
-        loadData();
+        window.addEventListener('KZ_KT_ManageBack', function(){
+          loadData().then(function(data){
+            viewModel.videoList(data.videosList);
+          });
+        });
       });
     }(mui, document));
   </script>

@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      <div class="number-box">
+      <div class="number-box" style="height: 800px;">
         <div class="number">
             <div class="title clearFix">
               <span class="fl">剧集</span>
@@ -93,12 +93,26 @@
         var currentWebview = plus.webview.currentWebview();
         var cid = currentWebview.cid;
         var vid = currentWebview.vid;
+        
+        console.log(cid, vid);
         var BaseView = function () {
           var vm = this;
           vm.detailData = ko.observable({});
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
+        
+        function loadBuy () {
+          request.loginAjax('courses/purchaseCoursesDetailsByCid', {
+            showMsg: false,
+            data: {
+              cid: cid
+            }
+          }, function(data,success) {
+            if (success) { 
+            }
+          });
+        }
         
         function loadData () {
           request.loginAjax('courses/coursesDetails', {
@@ -114,6 +128,19 @@
         }
         viewModel.detailData({});
         loadData();
+//      loadBuy();
+        
+        player = plus.video.createVideoPlayer('videoplayer', {
+//        src:'http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4',
+          src: 'https://vdn1.vzuu.com/SD/3789734c-bcb9-11e9-af29-0a580a4b688f.mp4?disable_local_cache=1&bu=com&expiration=1565708880&auth_key=1565708880-0-0-a21b8e777961f2a66800273581b1d061&f=mp4&v=hw',
+          top:'44px',
+          left:'0',
+          width: '100%',
+          height: '200px',
+          position: 'static',
+          autoplay: false
+        });
+        plus.webview.currentWebview().append(player);
       });
     }(mui, document));
   </script>

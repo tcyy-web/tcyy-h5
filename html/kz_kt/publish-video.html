@@ -77,6 +77,7 @@
         function checkData () {
           return new Promise(function(resolve){
             var postData = ko.mapping.toJS(viewModel.formData);
+            console.log(JSON.stringify(postData));
             if (!postData.episodes) {
               mui.toast('请输入视频集数')
               return;
@@ -93,12 +94,14 @@
           return new Promise(function(resolve){
             var postData = ko.mapping.toJS(viewModel.formData);
             postData.urls = videourl;
-            // 暂时写死地址测试
-            postData.urls = 'http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4';
             request.loginAjax('courses/saveCourseAndVideos', {
               data: postData
             }, function(data,success) {     
               if (success) {  
+                var openWindow = plus.webview.currentWebview().opener();
+                if (openWindow) {
+                  $.fire(openWindow, 'KZ_KT_ManageBack');
+                }
                 mui.back();
                 resolve();
               }
