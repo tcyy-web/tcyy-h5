@@ -34,6 +34,10 @@
         <label>视频标题：</label>
         <input data-bind="value: formData.vtitle, muiInput: formData.vtitle" maxlength="10" type="text" class="mui-input-clear" placeholder="单个视频显示标题">
       </div> 
+      <div class="mui-input-row">
+        <label><i class="form-required"></i>视频集数：</label>
+        <input data-bind="value: formData.episodes, muiInput: formData.episodes" maxlength="6" type="text" class="mui-input-clear" placeholder="视频集数">
+      </div> 
     </form>
   </div>
   <script src="../../third/bluebird.min.js"></script>
@@ -58,18 +62,32 @@
       $.plusReady(function() {
         var currentWebview = plus.webview.currentWebview();
         var cid = currentWebview.cid; 
-        console.log(cid);
         var BaseView = function () {
           var vm = this;
           vm.formData = { 
             cid: cid,
             	vtitle:ko.observable(),
             	urls:ko.observable(),
-						episodes:1 
+						episodes: ko.observable()
           }
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, document.getElementById('main-content')); 
+        
+        function checkData () {
+          return new Promise(function(resolve){
+            var postData = ko.mapping.toJS(viewModel.formData);
+            if (!postData.episodes) {
+              mui.toast('请输入视频集数')
+              return;
+            }
+            if (!/^[1-9]\d*$/.test(postData.episodes)) {
+              mui.toast('视频集数只能为正整数');
+              return;
+            }
+            resolve();
+          })
+        }
         //发布课程
         var saveVedioInfo = function (videourl) {
           return new Promise(function(resolve){
@@ -90,25 +108,23 @@
         
         doc.getElementById('startVideo').addEventListener('tap', function(e) {
           checkData().then(function(){
-            saveVedioInfo();
-//          upload.getVideo(function(file){
-//            var url = config.url + "Uploads/Files";
-//            upload.uploadMedia(url, function(res) {
-//              saveVedioInfo(res[0].showUrl);
-//            }, { abspath: file, type: '5' });
-//          });
+            upload.getVideo(function(file){
+              var url = config.url + "Uploads/Files";
+              upload.uploadMedia(url, function(res) {
+                saveVedioInfo(res[0].showUrl);
+              }, { abspath: file, type: '5' });
+            });
           })
         });
                 
         doc.getElementById('startPick').addEventListener('tap', function(e) {
           checkData().then(function(){
-            saveVedioInfo( );
-//          upload.galleryVideo(function(file){
-//            var url = config.url + "Uploads/Files";
-//            upload.uploadMedia(url, function(res) {
-//              saveVedioInfo(res[0].showUrl);
-//            }, { abspath: file, type: '5' });
-//          });
+            upload.galleryVideo(function(file){
+              var url = config.url + "Uploads/Files";
+              upload.uploadMedia(url, function(res) {
+                saveVedioInfo(res[0].showUrl);
+              }, { abspath: file, type: '5' });
+            });
           })
         });
       });

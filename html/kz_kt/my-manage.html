@@ -29,9 +29,9 @@
           <div class="img">
             <img src="images/timg2.jpg" alt="">
           </div>
-          <i class="iconfont icon-shanchu-copy"></i>
+          <i data-bind="click: $root.delVideo,clickBubble: false" class="iconfont icon-shanchu-copy"></i>
           <p class="video-name text-ellipsis">
-            <span >视频名称视频名称名称</span>
+            <span data-bind="text: title"></span>
           </p>
         </div>
       </div>
@@ -82,6 +82,12 @@
                 }
               });
           }
+          vm.delVideo = function(data){
+            $.confirm('确定删除该视频？','删除视频','',function(ok){
+              if (ok.index === 1) {
+              }
+            }, 'div');
+          }
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
@@ -94,6 +100,7 @@
             }
           }, function(data,success) {
             if (success) { 
+              viewModel.videoList(data.videosList);
             }
           });
         }
