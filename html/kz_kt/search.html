@@ -48,7 +48,7 @@
                     <i class="iconfont icon-liulanjilu"></i>
                     <span data-bind="text: views"></span>
                   </span>
-                  <span class="fr" data-bind="text: ctime"></span>
+                  <span class="fr" data-bind="text: ctimes"></span>
                 </p>
               </div>
             </div>
@@ -146,8 +146,10 @@
         function reloadPage () {
           page = 1;
           more = true;
-          $('#pullrefresh-list').pullToRefresh().refresh(true);
-          queryList();
+          queryList(function(){
+            $('#pullrefresh-list').pullToRefresh().refresh(true);
+            $('#pullrefresh-list').pullToRefresh().endPullUpToRefresh();
+          });
         }
         $('#pullrefresh-list').pullToRefresh({
           down: {

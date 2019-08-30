@@ -12,40 +12,49 @@
     .mui-content{
       height: auto;
     }
+    .video .video-item{
+      box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+    .place-area{
+      padding-top: 40%;
+      margin-top: 132px;
+    }
   </style>
 </head>
 
 <body id="main-content">
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title" data-bind="text:detailData().title"></h1>
+    <h1 class="mui-title" data-bind="text:currentVideo().title"></h1>
   </header>
   <div class="mui-content details">
+      <div class="place-area"></div>
       <div class="video">
         <div class="video-item">
-          <div class="thumbnail">
+          <!--<div class="thumbnail">
             <div class="img">
               <img src="images/timg2.jpg" alt="">
             </div>
             <i class="iconfont icon-bofang"></i>
-          </div>
+          </div>-->
           <div class="info">
             <p class="clear curricu-name">
               <span class="fl font-bold text-ellipsis"  data-bind="text:detailData().title"></span>
-              <span class="fr"  data-bind="text:detailData().ctypeText">口腔种植</span>
+              <span class="fr"  data-bind="text:detailData().gidText"></span>
             </p>
             <p class="clear curricu-desc">
               <span class="fl font-bold"  data-bind="text:detailData().contents"></span>
             </p>
             <p>
-              <span class="price font-bold"  data-bind="text:detailData().priceText">免费</span>
+              <span class="price font-bold"  data-bind="text:detailData().priceText"></span>
             </p>
             <p class="clear other">
               <span class="fr">
                 <i class="iconfont icon-liulanjilu"></i>
                 123
               </span>
-              <span class="fl">2019.12.23</span>
+              <span class="fl" data-bind="text: detailData().creattime"></span>
             </p>
           </div>
         </div>
@@ -65,7 +74,6 @@
                 <img src="images/yigou.png" alt="">
                 <span>2</span>
               </p>
-            
             </div>
         </div>
       </div>
@@ -81,6 +89,7 @@
   <script src="../../js/utils.enums.js"></script>
   <script src="../../js/utils.config.js"></script>
   <script src="../../js/utils.storages.js"></script>
+  <script src="../../js/utils.category.js"></script>
   <script src="../../js/utils.auth.js"></script>
   <script src="../../js/utils.upload.js"></script>
   <script src="../../js/utils.request.js" ></script>
@@ -91,29 +100,51 @@
       $.init();
       $.plusReady(function() {
         var currentWebview = plus.webview.currentWebview();
+        // 课程id
         var cid = currentWebview.cid;
+        // 当前要播放的视频id
         var vid = currentWebview.vid;
+        // 视频播放
+        var player = null;
+        // 课程分类
+        var category = categorys.get();
         
-        console.log(cid, vid);
+        function createVideoPlayer(url){
+          if (!player) {
+            player = plus.video.createVideoPlayer('videoplayer', {
+              src: url,
+              top:'44px',
+              left:'0',
+              width: '100%',
+              height: '40%',
+              position: 'static',
+              autoplay: false
+            });
+          }
+          plus.webview.currentWebview().append(player);
+        }
+        
         var BaseView = function () {
           var vm = this;
           vm.detailData = ko.observable({});
+          vm.videoList = ko.observableArray([]);
+          vm.currentVideo = ko.observable({});
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
         
-        function loadBuy () {
-          request.loginAjax('courses/purchaseCoursesDetailsByCid', {
-            showMsg: false,
-            data: {
-              cid: cid
-            }
-          }, function(data,success) {
-            if (success) { 
-            }
-          });
-        }
-        
+//      function loadBuy () {
+//        request.loginAjax('courses/purchaseCoursesDetailsByCid', {
+//          showMsg: false,
+//          data: {
+//            cid: cid
+//          }
+//        }, function(data,success) {
+//          if (success) { 
+//          }
+//        });
+//      }
+        // 加载课程
         function loadData () {
           request.loginAjax('courses/coursesDetails', {
             showMsg: false,
@@ -122,25 +153,25 @@
             }
           }, function(data,success) {
             if (success) { 
+              data.gidText = '';
+              _.find(category, function(c) {
+                if (c.id == data.gid) {
+                  data.gidText = c.title;
+                  return true;
+                }
+                return false;
+              });
+              data.priceText = data.price > 0 ? data.price : '免费';
               viewModel.detailData(ko.mapping.fromJS(data));
+              viewModel.videoList(data.videosList);
             }
           });
         }
         viewModel.detailData({});
         loadData();
-//      loadBuy();
         
-        player = plus.video.createVideoPlayer('videoplayer', {
-//        src:'http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4',
-          src: 'https://vdn1.vzuu.com/SD/3789734c-bcb9-11e9-af29-0a580a4b688f.mp4?disable_local_cache=1&bu=com&expiration=1565708880&auth_key=1565708880-0-0-a21b8e777961f2a66800273581b1d061&f=mp4&v=hw',
-          top:'44px',
-          left:'0',
-          width: '100%',
-          height: '200px',
-          position: 'static',
-          autoplay: false
-        });
-        plus.webview.currentWebview().append(player);
+        createVideoPlayer('http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4');
+        
       });
     }(mui, document));
   </script>
