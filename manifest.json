@@ -1712,7 +1712,8 @@
 				"refer": [
 					"html/kz_kt/publish.html",
 					"html/kz_kt/details.html",
-					"html/login/login.html"
+					"html/login/login.html",
+					"html/kz_kt/my-video.html"
 				],
 				"priority": 0
 			},
@@ -1724,6 +1725,20 @@
 					"html/kz_profile/resume-detail.html",
 					"html/kz_profile/job-detail.html",
 					"html/kz_profile/company-detail.html"
+				],
+				"priority": 0
+			},
+			"html/kz_kt/publish.html": {
+				"resources": [],
+				"refer": [
+					"html/kz_kt/my-video.html"
+				],
+				"priority": 0
+			},
+			"html/kz_kt/my-video.html": {
+				"resources": [],
+				"refer": [
+					"html/kz_kt/details.html"
 				],
 				"priority": 0
 			}
