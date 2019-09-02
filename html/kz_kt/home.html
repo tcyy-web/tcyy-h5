@@ -227,7 +227,7 @@
           ko.applyBindings(viewModel, doc.getElementById('home'));
           VideoSearch({
             page: 1,
-            limit: 10,
+            limit: 12,
             ctime: 'desc'
           }).then(function(reslist){
             viewModel.newestList(trimSearchResult(reslist));
