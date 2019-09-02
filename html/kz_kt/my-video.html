@@ -39,9 +39,10 @@
                   <span class="fr font-small-gray" data-bind="text: ctypeText"></span>
                 </p>
                 <p class="clear other">
-                  <span class="fl" data-bind="text: creattime"></span>
+                  <span class="fl" data-bind="text: creattime">sd</span>
+                  <a data-bind="attr: {itemid: id}" class="fr upload-btn del"><i class="iconfont icon-shanchu-copy"></i></a>
                   <!-- ko if: ctype == 2 -->
-                  <a data-bind="attr: {itemid: id}" class="fr btn upload-btn">继续上传</a>
+                  <a data-bind="attr: {itemid: id}" class="fr upload-btn upload">继续上传</a>
                   <!-- /ko -->
                 </p>
               </div>
@@ -141,8 +142,17 @@
             cid: itemid
           })
         });
+        // 课程删除
+        $('#pullrefresh-list').on('tap', '.upload-btn.del', function(e){
+          e.stopPropagation();
+          var itemid = this.getAttribute('itemid');
+          $.confirm('确定删除该课程？','删除课程','',function(ok){
+            if (ok.index === 1) {
+            }
+          }, 'div');
+        });
         // 视频管理
-        $('#pullrefresh-list').on('tap', '.upload-btn', function(e){
+        $('#pullrefresh-list').on('tap', '.upload-btn.upload', function(e){
           e.stopPropagation();
           var itemid = this.getAttribute('itemid');
           mui.openWindow({

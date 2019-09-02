@@ -553,12 +553,24 @@
   font-size: 13px;
 }
 .my-video .video .video-item .upload-btn {
-  width: 30%;
+  width: auto;
   height: 30px;
   color: #ffffff;
   line-height: 30px;
-  padding:0 5px;
+  padding:0 10px;
   font-size: 14px;
+  background-color: #8E78D6;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+.my-video .video .video-item .upload-btn.del{
+  line-height: 28px;
+  background-color: #fff;
+  color: #8E78D6;
+  border: 1px solid #8E78D6;
+}
+.my-video .video .video-item .upload-btn ~ .upload-btn{
+  margin-right: 10px;
 }
 /* 我的-视频管理 */
 .my-manage {

@@ -17,6 +17,7 @@
       -webkit-box-shadow: none;
     }
     .place-area{
+      position: relative;
       padding-top: 40%;
       margin-top: 132px;
     }
@@ -50,33 +51,33 @@
               <span class="price font-bold"  data-bind="text:detailData().priceText"></span>
             </p>
             <p class="clear other">
+              <span class="fl" data-bind="text: currentVideo().ctime"></span>
               <span class="fr">
                 <i class="iconfont icon-liulanjilu"></i>
-                123
+                <span data-bind="text: currentVideo().views"></span>
               </span>
-              <span class="fl" data-bind="text: detailData().creattime"></span>
             </p>
           </div>
         </div>
       </div>
+      <!-- ko if: ctype() == 2  -->
       <div class="number-box" style="height: 800px;">
         <div class="number">
             <div class="title clearFix">
               <span class="fl">剧集</span>
-              <span class="fr">共9集</span>
+              <span class="fr">共<span data-bind="text: videoList().length"></span>集</span>
             </div>
             <div class="detailed">
-              <p class="buy">
-                <img src="images/yigou.png" alt="">
-                <span>1</span>
+              <!-- ko foreach: videoList  -->
+              <p class="buy" data-bind="css: {active: $root.currentVideoId() == id}">
+                <!--<img src="images/yigou.png" alt="">-->
+                <span data-bind="text: episodes"></span>
               </p>
-              <p class="buy">
-                <img src="images/yigou.png" alt="">
-                <span>2</span>
-              </p>
+              <!-- /ko -->
             </div>
         </div>
       </div>
+      <!-- /ko -->
   </div>
   <script src="../../third/bluebird.min.js"></script>
   <script src="../../third/loadash.3.10.1.js"></script>
@@ -108,17 +109,21 @@
         var player = null;
         // 课程分类
         var category = categorys.get();
-        
+        // 创建播放区域
         function createVideoPlayer(url){
           if (!player) {
             player = plus.video.createVideoPlayer('videoplayer', {
               src: url,
+              poster: 'http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg',
               top:'44px',
               left:'0',
               width: '100%',
               height: '40%',
               position: 'static',
-              autoplay: false
+              autoplay: false,
+              controls: true,
+              'show-center-play-btn': true,
+              'show-fullscreen-btn': true
             });
           }
           plus.webview.currentWebview().append(player);
@@ -127,8 +132,10 @@
         var BaseView = function () {
           var vm = this;
           vm.detailData = ko.observable({});
+          vm.ctype = ko.observable();
           vm.videoList = ko.observableArray([]);
           vm.currentVideo = ko.observable({});
+          vm.currentVideoId = ko.observable();
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
@@ -153,6 +160,7 @@
             }
           }, function(data,success) {
             if (success) { 
+              viewModel.ctype(data.ctype);
               data.gidText = '';
               _.find(category, function(c) {
                 if (c.id == data.gid) {
@@ -164,13 +172,25 @@
               data.priceText = data.price > 0 ? data.price : '免费';
               viewModel.detailData(ko.mapping.fromJS(data));
               viewModel.videoList(data.videosList);
+              // 查找要播放的视频
+              if (data.videosList && data.videosList.length > 0) {
+                var curVideo = _.find(data.videosList, function(o){
+                  return o.id == vid;
+                });
+                if (curVideo) {
+                  
+                } else {
+                  curVideo = data.videosList[0];
+                }
+                viewModel.currentVideo(ko.mapping.fromJS(curVideo));
+                viewModel.currentVideoId(curVideo.id);
+//              createVideoPlayer('http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4');
+                createVideoPlayer(curVideo.urls);
+              }
             }
           });
         }
-        viewModel.detailData({});
         loadData();
-        
-        createVideoPlayer('http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4');
         
       });
     }(mui, document));
