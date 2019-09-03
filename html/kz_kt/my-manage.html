@@ -86,13 +86,14 @@
             });
           });
         }
-        
-        function DelVideo (id) {
+        // 删除视频
+        function DelVideo (videoid) {
           return new Promise(function(resolve){
-            request.loginAjax('coursesvideos/deleteVideoInfos', {
+            request.loginAjax('coursesvideos/deleteVideoInfo', {
               showMsg: false,
               data: {
-                ids: id
+                cid: cid,
+                vid: videoid
               }
             }, function(data,success) {
               if (success) { 

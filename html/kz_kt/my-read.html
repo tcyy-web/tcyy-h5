@@ -128,8 +128,10 @@
         function reloadPage () {
           page = 1;
           more = true;
-          $('#pullrefresh-list').pullToRefresh().refresh(true);
-          queryList();
+          queryList(function(){
+            $('#pullrefresh-list').pullToRefresh().refresh(true);
+            $('#pullrefresh-list').pullToRefresh().endPullUpToRefresh();
+          });
         }
         $('#pullrefresh-list').pullToRefresh({
           down: {

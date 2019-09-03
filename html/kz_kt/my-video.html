@@ -79,6 +79,21 @@
         var limit = 10;
         var more = true;
         var category = categorys.get();
+        // 删除课程
+        function DelCurr (currid) {
+          return new Promise(function(resolve){
+            request.loginAjax('courses/delCoursesById', {
+              showMsg: false,
+              data: {
+                cid: currid
+              }
+            }, function(data,success) {
+              if (success) { 
+                resolve();
+              }
+            });
+          });
+        }
         //列表渲染
         var BaseView = function () {
           var vm = this;
@@ -134,6 +149,14 @@
              }
           });
         }
+        function reloadPage () {
+          page = 1;
+          more = true;
+          queryList(function(){
+            $('#pullrefresh-list').pullToRefresh().refresh(true);
+            $('#pullrefresh-list').pullToRefresh().endPullUpToRefresh();
+          });
+        }
         queryList();
         // 跳转详情
         $('#pullrefresh-list').on('tap', '.video-item', function(e){
@@ -148,6 +171,9 @@
           var itemid = this.getAttribute('itemid');
           $.confirm('确定删除该课程？','删除课程','',function(ok){
             if (ok.index === 1) {
+              DelCurr(itemid).then(function(){
+                reloadPage();
+              });
             }
           }, 'div');
         });

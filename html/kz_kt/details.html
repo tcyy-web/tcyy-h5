@@ -30,15 +30,15 @@
     <h1 class="mui-title" data-bind="text:currentVideo().title"></h1>
   </header>
   <div class="mui-content details">
-      <div class="place-area"></div>
+      <!--<div class="place-area"></div>-->
       <div class="video">
         <div class="video-item">
-          <!--<div class="thumbnail">
+          <div id="videoplayer" class="thumbnail">
             <div class="img">
               <img src="images/timg2.jpg" alt="">
             </div>
             <i class="iconfont icon-bofang"></i>
-          </div>-->
+          </div>
           <div class="info">
             <p class="clear curricu-name">
               <span class="fl font-bold text-ellipsis"  data-bind="text:detailData().title"></span>
@@ -112,18 +112,18 @@
         // 创建播放区域
         function createVideoPlayer(url){
           if (!player) {
-            player = plus.video.createVideoPlayer('videoplayer', {
+            player = new plus.video.VideoPlayer('videoplayer', {
               src: url,
               poster: 'http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg',
-              top:'44px',
-              left:'0',
-              width: '100%',
-              height: '40%',
-              position: 'static',
-              autoplay: false,
-              controls: true,
-              'show-center-play-btn': true,
-              'show-fullscreen-btn': true
+//            top:'44px',
+//            left:'0',
+//            width: '100%',
+//            height: '40%',
+//            position: 'static',
+//            autoplay: false,
+//            controls: true,
+//            'show-center-play-btn': true,
+//            'show-fullscreen-btn': true
             });
           }
           plus.webview.currentWebview().append(player);
@@ -151,6 +151,17 @@
 //          }
 //        });
 //      }
+        // 视频观看记录
+        function readVideo (videoid) {
+          request.loginAjax('coursesvideos/storageViewVideoRecord', {
+            showMsg: false,
+            data: {
+              vid: videoid
+            }
+          }, function(data,success) {
+            
+          });
+        }
         // 加载课程
         function loadData () {
           request.loginAjax('courses/coursesDetails', {
@@ -186,6 +197,7 @@
                 viewModel.currentVideoId(curVideo.id);
 //              createVideoPlayer('http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4');
                 createVideoPlayer(curVideo.urls);
+                readVideo(curVideo.id);
               }
             }
           });
