@@ -35,7 +35,7 @@
         <div class="video-item">
           <div id="videoplayer" class="thumbnail">
             <div class="img">
-              <img src="images/timg2.jpg" alt="">
+              <img src="images/1024x1024.png" alt="">
             </div>
             <i class="iconfont icon-bofang"></i>
           </div>
@@ -69,7 +69,8 @@
             </div>
             <div class="detailed">
               <!-- ko foreach: videoList  -->
-              <p class="buy" data-bind="css: {active: $root.currentVideoId() == id}">
+              <p class="buy" data-bind="css: {active: $root.currentVideoId() == id},
+                click: $root.playVideo">
                 <!--<img src="images/yigou.png" alt="">-->
                 <span data-bind="text: episodes"></span>
               </p>
@@ -111,31 +112,37 @@
         var category = categorys.get();
         // 创建播放区域
         function createVideoPlayer(url){
-          if (!player) {
-            player = new plus.video.VideoPlayer('videoplayer', {
-              src: url,
-              poster: 'http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg',
-//            top:'44px',
-//            left:'0',
-//            width: '100%',
-//            height: '40%',
-//            position: 'static',
-//            autoplay: false,
-//            controls: true,
-//            'show-center-play-btn': true,
-//            'show-fullscreen-btn': true
-            });
+          if (player != null) {
+            player.close();
           }
+          player = new plus.video.VideoPlayer('videoplayer', {
+            src: url,
+            poster: 'http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg',
+            'show-center-play-btn': false,
+            'show-fullscreen-btn': true,
+            'show-play-btn': false,
+            'show-progress': false,
+            autoplay: true
+          });
           plus.webview.currentWebview().append(player);
         }
         
         var BaseView = function () {
           var vm = this;
           vm.detailData = ko.observable({});
+          // 课程类型
           vm.ctype = ko.observable();
+          // 视频列表
           vm.videoList = ko.observableArray([]);
+          // 当前正在播放的视频
           vm.currentVideo = ko.observable({});
           vm.currentVideoId = ko.observable();
+          // 播放当前视频
+          vm.playVideo = function(data){
+            vm.currentVideo(ko.mapping.fromJS(data));
+            vm.currentVideoId(data.id);
+            createVideoPlayer(data.urls);
+          }
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
@@ -203,7 +210,7 @@
           });
         }
         loadData();
-        
+//      createVideoPlayer('http://m.tianchiyueya.com:1888/Public/plug/editor/attached/file/20161122/20161122084359_80166.mp4');
       });
     }(mui, document));
   </script>

@@ -88,7 +88,12 @@
     	  var _this = this;
     	  var cmr = plus.camera.getCamera();
       var res = cmr.supportedVideoResolutions[0]; //获取支持的分辨率，拿默认的第一个
-      var fmt = cmr.supportedVideoFormats[0]; //获取支持的录像文件格式，拿默认的第一个
+      var fmtStr = cmr.supportedVideoFormats.join(',');
+      console.log(fmtStr);
+      if (fmtStr.indexOf('mp4') < 0) {
+        mui.toast('您的手机不支持mp4格式的录像。')
+        return;
+      }
       cmr.startVideoCapture(function(file) { //录像成功后会返回一个路径到e这里
         plus.io.resolveLocalFileSystemURL(file, function(entry) { //这个是根据路径读取文件信息，其实这步可以省略。
           fnend(file);
@@ -99,7 +104,7 @@
       },  {
         filename: tcyy_base_file_root,
         resolution: res,
-        format: fmt
+        format: 'mp4'
       });
     	},
     	//压缩图片

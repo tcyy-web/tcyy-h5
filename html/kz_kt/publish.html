@@ -72,6 +72,7 @@
   <script src="../../third/loadash.3.10.1.js"></script>
   <script src="../../js/mui.min.js"></script>
   <script src="../../third/knockout.js"></script>
+  <script src="../../third/knockout.extend.js"></script>
   <script src="../../third/ko.mapping.js"></script>
   <script src="../../js/mui.picker.min.js"></script>
   <script src="../../js/mui.poppicker.js"></script>
@@ -146,6 +147,7 @@
         function checkData () {
           return new Promise(function(resolve){
             var postData = ko.mapping.toJS(viewModel.formData);
+            console.log(JSON.stringify(postData));
             if (!postData.ctype) {
               mui.toast('请选择课程类型')
               return;
@@ -187,7 +189,7 @@
             var postData = ko.mapping.toJS(viewModel.formData);
             postData.urls = videourl;
             // 暂时写死地址测试
-//          postData.urls = 'http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4';
+					  postData.urls = 'http://m.tianchiyueya.com:1888/Public/plug/editor/attached/file/20161122/20161122084359_80166.mp4';
             request.loginAjax('courses/saveCourseAndVideos', {
               data: postData
             }, function(data,success) {     
@@ -213,12 +215,13 @@
         
         doc.getElementById('startVideo').addEventListener('tap', function(e) {
           checkData().then(function(){
-            upload.getVideo(function(file){
-              var url = config.url + "Uploads/Files";
-              upload.uploadMedia(url, function(res) {
-                saveVedioInfo(res[0].showUrl);
-              }, { abspath: file, type: '5' });
-            });
+						saveVedioInfo();
+            // upload.getVideo(function(file){
+            //   var url = config.url + "Uploads/Files";
+            //   upload.uploadMedia(url, function(res) {
+            //     saveVedioInfo(res[0].showUrl);
+            //   }, { abspath: file, type: '5' });
+            // });
           })
         });
                 

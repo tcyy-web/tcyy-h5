@@ -31,7 +31,7 @@
   <div class="mui-content" id="main-content">
     <form class="mui-input-group kt-form-group">
       <div class="mui-input-row">
-        <label>视频标题：</label>
+        <label><i class="form-required"></i>视频标题：</label>
         <input data-bind="value: formData.vtitle, muiInput: formData.vtitle" maxlength="10" type="text" class="mui-input-clear" placeholder="单个视频显示标题">
       </div> 
       <div class="mui-input-row">
@@ -44,6 +44,7 @@
   <script src="../../third/loadash.3.10.1.js"></script>
   <script src="../../js/mui.min.js"></script>
   <script src="../../third/knockout.js"></script>
+  <script src="../../third/knockout.extend.js"></script>
   <script src="../../third/ko.mapping.js"></script>
   <script src="../../js/mui.picker.min.js"></script>
   <script src="../../js/mui.poppicker.js"></script>
@@ -77,7 +78,10 @@
         function checkData () {
           return new Promise(function(resolve){
             var postData = ko.mapping.toJS(viewModel.formData);
-            console.log(JSON.stringify(postData));
+            if (!postData.vtitle) {
+              mui.toast('请输入视频标题')
+              return;
+            }
             if (!postData.episodes) {
               mui.toast('请输入视频集数')
               return;
@@ -94,6 +98,8 @@
           return new Promise(function(resolve){
             var postData = ko.mapping.toJS(viewModel.formData);
             postData.urls = videourl;
+            // 暂时写死地址测试
+            postData.urls = 'http://m.tianchiyueya.com:1888/Public/plug/editor/attached/file/20161122/20161122091746_89692.mp4';
             request.loginAjax('courses/saveCourseAndVideos', {
               data: postData
             }, function(data,success) {     
@@ -111,12 +117,13 @@
         
         doc.getElementById('startVideo').addEventListener('tap', function(e) {
           checkData().then(function(){
-            upload.getVideo(function(file){
-              var url = config.url + "Uploads/Files";
-              upload.uploadMedia(url, function(res) {
-                saveVedioInfo(res[0].showUrl);
-              }, { abspath: file, type: '5' });
-            });
+            saveVedioInfo();
+//          upload.getVideo(function(file){
+//            var url = config.url + "Uploads/Files";
+//            upload.uploadMedia(url, function(res) {
+//              saveVedioInfo(res[0].showUrl);
+//            }, { abspath: file, type: '5' });
+//          });
           })
         });
                 
