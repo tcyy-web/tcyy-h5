@@ -38,6 +38,19 @@
         <label><i class="form-required"></i>视频集数：</label>
         <input data-bind="value: formData.episodes, muiInput: formData.episodes" maxlength="6" type="text" class="mui-input-clear" placeholder="视频集数">
       </div> 
+      <div class="mui-input-row auto">
+        <label><i class="form-required"></i>视频封面：</label>
+        <div>
+          <div data-bind="click: addPic" class="custom-add-pic flex flex-col-center flex-row-center">
+            <div>
+              <div class="custom-img-box flex flex-col-center flex-row-center">
+                  <img data-bind="attr: {src: !!formData.qualifyurl_show() ? formData.qualifyurl_show() : '../../images/project/jia.png'}" id="img" src="../../images/project/jia.png" />                 
+              </div>
+              <p>点击上传</p>
+            </div>
+          </div>          
+        </div>
+      </div>
     </form>
   </div>
   <script src="../../third/bluebird.min.js"></script>
@@ -69,7 +82,22 @@
             cid: cid,
             	vtitle:ko.observable(),
             	urls:ko.observable(),
-						episodes: ko.observable()
+						episodes: ko.observable(),
+						qualifyurl: ko.observable(),
+						qualifyurl_show: ko.observable()
+          }
+          
+          // 上传预览图
+          vm.addPic = function(){
+            setTimeout(function() {
+              upload.showImgActionSheet(function(data) {
+                var url = config.url + "Uploads/Files";
+                upload.uploadimge(url, data.divid, function(res) {
+                  vm.formData.qualifyurl(res[0].showUrl);
+                  vm.formData.qualifyurl_show(data.abspath);
+                }, { type: '5' });
+              });
+            }, 500);
           }
         }
         var viewModel = new BaseView();

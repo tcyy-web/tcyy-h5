@@ -92,10 +92,9 @@ function CourseDetail (postData) {
 function trimSearchResult(list){
   _.forEach(list || [], function(o){
     o.priceText = o.price > 0 ? o.price : '免费';
-    o.nicknameText = JSON.parse(o.nickname);
-    o.thumbImg = '';
-    if (!!o.urls) {
-      o.thumbImg = o.urls.replace('.mp4', '.jpg');
+    o.nicknameText = '';
+    if (!!o.nickname) {
+      JSON.parse(o.nickname);
     }
   });
   return list;

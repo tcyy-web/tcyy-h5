@@ -154,7 +154,7 @@
         code = user.code || '';
       }
     		var defaults = {
-    		  type: '1', // 默认项目图片 1 ，头像 2， 病例秀 3 ，患者图片 4， 在线课堂 5 ，图片库 6
+    		  type: '1', // 默认项目图片 1 ，头像 2， 病例秀 3 ，患者图片 4， 在线课堂 5 ，图片库 6 ，招聘 7
     		  filetype: '1', // 图片
     		  code: code
     		};
@@ -176,7 +176,7 @@
         code = user.code || '';
       }
     		var defaults = {
-    		  type: '6', 
+    		  type: '5',  //默认在线课程 5 。病例秀 3
     		  filetype: '2', //视频
     		  code: code
     		};
@@ -189,13 +189,14 @@
     			back:back
     		}
   		  console.log('***********上传地址:'+opt.url);
-        console.log('***********上传参数:'+JSON.stringify(opt.data));
+      console.log('***********上传参数:'+JSON.stringify(opt.data));
     		var wa = plus.nativeUI.showWaiting();
     		var task = plus.uploader.createUpload(opt.url , {
     			method: "POST"
     		},function(t, status) {
     		  wa.close();
     		  console.log('***********上传返回:'+t.responseText);
+    		  console.log(JSON.stringify(t));
     			if(t.state === 4 && status == 200) {
     			  try{
     			    var res = JSON.parse(t.responseText);
@@ -238,8 +239,7 @@
     		},function(t, status) {
     		  wa.close();
     		  console.log('***********上传返回:'+t.responseText);
-    		  console.log(status);
-          console.log(JSON.stringify(t));
+        console.log(JSON.stringify(t));
     			if(t.state === 4 && status == 200) {
     			  try{
     			    var res = JSON.parse(t.responseText);
