@@ -63,9 +63,22 @@
         <input data-bind="value: formData.oneprice, muiInput: formData.oneprice" maxlength="9" type="text" class="mui-input-clear" placeholder="买断课程视频价格">
       </div>
       <div class="mui-input-row">
-        <label>视频标题：</label>
+        <label><i class="form-required"></i>视频标题：</label>
         <input data-bind="value: formData.vtitle, muiInput: formData.vtitle" maxlength="10" type="text" class="mui-input-clear" placeholder="单个视频显示标题">
       </div> 
+      <div class="mui-input-row auto">
+        <label><i class="form-required"></i>视频封面：</label>
+        <div>
+          <div data-bind="click: addPic" class="custom-add-pic flex flex-col-center flex-row-center">
+            <div>
+              <div class="custom-img-box flex flex-col-center flex-row-center">
+                  <img data-bind="attr: {src: !!formData.qualifyurl_show() ? formData.qualifyurl_show() : '../../images/project/jia.png'}" id="img" src="../../images/project/jia.png" />                 
+              </div>
+              <p>点击上传</p>
+            </div>
+          </div>          
+        </div>
+      </div>
     </form>
   </div>
   <script src="../../third/bluebird.min.js"></script>
@@ -120,6 +133,7 @@
 						oneprice:ko.observable(),
             	vtitle:ko.observable(),
             	urls:ko.observable(),
+            	qualifyurl_show: ko.observable(),
 						episodes:1 
           }
           
@@ -140,7 +154,18 @@
               });
             }, 500);
           }
-          
+          // 上传预览图
+          vm.addPic = function(){
+            setTimeout(function() {
+              upload.showImgActionSheet(function(data) {
+                var url = config.url + "Uploads/Files";
+                upload.uploadimge(url, data.divid, function(res) {
+                  vm.formData.qualifyurl(res[0].showUrl);
+                  vm.formData.qualifyurl_show(data.abspath);
+                }, { type: '5' });
+              });
+            }, 500);
+          }
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, document.getElementById('main-content')); 
@@ -176,8 +201,12 @@
               mui.toast('请输入买断价')
               return;
             }
-             if (!/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/.test(postData.oneprice)) {
+            if (!/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/.test(postData.oneprice)) {
               mui.toast('买断价只能为数字且只能为两位小数');
+              return;
+            }
+            if (!postData.vtitle) {
+              mui.toast('请输入视频标题')
               return;
             }
             resolve();
