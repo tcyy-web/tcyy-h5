@@ -155,6 +155,7 @@
         
       var xhr=new XMLHttpRequest();
       xhr.onreadystatechange=function(){
+        console.log(xhr.responseText)
         switch(xhr.readyState){
           case 4:
             if(xhr.status==200){

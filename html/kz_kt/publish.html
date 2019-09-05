@@ -210,7 +210,6 @@
               mui.toast('买断价只能为数字且只能为两位小数');
               return;
             }
-            console.log(JSON.stringify(postData));
             if (!postData.vtitle) {
               mui.toast('请输入视频标题')
               return;
@@ -219,7 +218,6 @@
               mui.toast('请上传视频封面图')
               return;
             }
-            return;
             resolve();
           })
         }

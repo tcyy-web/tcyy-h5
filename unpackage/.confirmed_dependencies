@@ -1156,7 +1156,10 @@
       "html/kz_kt/publish.html",
       "html/kz_kt/details.html",
       "html/login/login.html",
-      "html/kz_kt/my-video.html"
+      "html/kz_kt/my-video.html",
+      "html/kz_kt/my-sell.html",
+      "html/kz_kt/my-read.html",
+      "html/kz_kt/my-buy.html"
     ]
   },
   "html/kz_profile/home.html": {
@@ -1174,6 +1177,11 @@
     ]
   },
   "html/kz_kt/my-video.html": {
+    "refer": [
+      "html/kz_kt/details.html"
+    ]
+  },
+  "html/kz_kt/my-buy.html": {
     "refer": [
       "html/kz_kt/details.html"
     ]
