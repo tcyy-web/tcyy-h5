@@ -474,15 +474,12 @@
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
 }
-.details .number-box .number .detailed > * {
-  width: 39px;
+.details .number-box .number .detailed > p {
+  white-space: nowrap;
   height: 39px;
   border: 1px solid #E1E1E1;
   padding: 9px 15px;
   margin: 3px;
-}
-.details .number-box .number .detailed > * img {
-  display: none;
 }
 .details .number-box .number .detailed .active {
   border: 1px solid #AFA3D6;

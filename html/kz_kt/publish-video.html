@@ -44,7 +44,7 @@
           <div data-bind="click: addPic" class="custom-add-pic flex flex-col-center flex-row-center">
             <div>
               <div class="custom-img-box flex flex-col-center flex-row-center">
-                  <img data-bind="attr: {src: !!formData.qualifyurl_show() ? formData.qualifyurl_show() : '../../images/project/jia.png'}" id="img" src="../../images/project/jia.png" />                 
+                  <img data-bind="attr: {src: !!formData.previews_show() ? formData.previews_show() : '../../images/project/jia.png'}" id="img" src="../../images/project/jia.png" />                 
               </div>
               <p>点击上传</p>
             </div>
@@ -83,8 +83,8 @@
             	vtitle:ko.observable(),
             	urls:ko.observable(),
 						episodes: ko.observable(),
-						qualifyurl: ko.observable(),
-						qualifyurl_show: ko.observable()
+						previews: ko.observable(),
+						previews_show: ko.observable()
           }
           
           // 上传预览图
@@ -93,8 +93,8 @@
               upload.showImgActionSheet(function(data) {
                 var url = config.url + "Uploads/Files";
                 upload.uploadimge(url, data.divid, function(res) {
-                  vm.formData.qualifyurl(res[0].showUrl);
-                  vm.formData.qualifyurl_show(data.abspath);
+                  vm.formData.previews(res[0].showUrl);
+                  vm.formData.previews_show(data.abspath);
                 }, { type: '5' });
               });
             }, 500);
@@ -116,6 +116,10 @@
             }
             if (!/^[1-9]\d*$/.test(postData.episodes)) {
               mui.toast('视频集数只能为正整数');
+              return;
+            }
+            if (!postData.previews) {
+              mui.toast('请上传视频封面')
               return;
             }
             resolve();

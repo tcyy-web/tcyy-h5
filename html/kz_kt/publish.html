@@ -134,8 +134,7 @@
             	vtitle:ko.observable(),
             	urls:ko.observable(),
             	previews: ko.observable(),
-            	previews_show: ko.observable(),
-						episodes:1 
+            	previews_show: ko.observable()
           }
           
           vm.ctypeClick = function(){
@@ -221,6 +220,7 @@
         var saveVedioInfo = function (videourl) {
           return new Promise(function(resolve){
             var postData = ko.mapping.toJS(viewModel.formData);
+            postData.episodes = 1;
             postData.urls = videourl;
             // 暂时写死地址测试
 					  postData.urls = 'http://m.tianchiyueya.com:1888/Public/plug/editor/attached/file/20161122/20161122084359_80166.mp4';
@@ -228,6 +228,9 @@
               data: postData
             }, function(data,success) {     
               if (success) {  
+                _.forEach(viewModel.formData, function(n){
+                  n('');
+                });
                 mui.openWindow({
                   id:'KZ_KT_MyVideo',
                   url: './my-video.html',

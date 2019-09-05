@@ -7,6 +7,7 @@
   <link href="../../fonts/iconfont.css" rel="stylesheet" />
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/kt-style.css" rel="stylesheet" />
 </head>
 
@@ -21,30 +22,22 @@
         <div id="pullrefresh-list" class="mui-scroll">
           <div class="video">
             <!-- ko foreach:  list -->
-            <div class="video-item">
+            <div data-bind="attr: {vid: vid, cid: cid}" class="video-item">
               <div class="thumbnail">
                 <div class="img">
-                  <img src="images/timg2.jpg" alt="">
+                  <img data-bind="attr: {src: previews}" src="" alt="">
                 </div>
                 <i class="iconfont icon-bofang"></i>
                 <p class="video-name text-ellipsis">
-                  <span >视频名称名称名称名称名称名称</span>
+                  <span data-bind="text: vtitle"></span>
                 </p>
               </div>
               <div class="info">
                 <p class="text-ellipsis font-bold curricu-name">
-                  <span>课程名称课程名称名称名称名称</span>
-                </p>
-                <p class="clear">
-                  <span class="fl font-bold">小漂亮</span>
-                  <span class="fr price font-bold">免费</span>
+                  <span data-bind="text: ctitle"></span>
                 </p>
                 <p class="clear other">
-                  <span class="fl">
-                    <i class="iconfont icon-liulanjilu"></i>
-                    123
-                  </span>
-                  <span class="fr">2019.12.23</span>
+                  <span class="fr" data-bind="text: vtime"></span>
                 </p>
               </div>
             </div>
@@ -124,6 +117,12 @@
         queryList();
         // 跳转详情
         $('#pullrefresh-list').on('tap', '.video-item', function(e){
+          var vid = this.getAttribute('vid');
+          var cid = this.getAttribute('cid');
+          DetailPage({
+            cid: cid,
+            vid: vid
+          })
         });
         function reloadPage () {
           page = 1;

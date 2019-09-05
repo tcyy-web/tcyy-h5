@@ -21,6 +21,18 @@
       padding-top: 40%;
       margin-top: 132px;
     }
+    .buynow{
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      z-index: 3;
+      width: auto;
+      line-height: 30px;
+      font-size: 14px;
+      padding: 0 10px;
+      border-color: #8E78D6;
+      background-color: #8E78D6!important;
+    }
   </style>
 </head>
 
@@ -35,9 +47,12 @@
         <div class="video-item">
           <div  class="thumbnail">
             <div id="videoplayer" class="img">
-              <img src="images/1024x1024.png" alt="">
+              <img data-bind="attr: {src: !currentVideoPreview() ? 'images/video_default.jpg': currentVideoPreview}" src="images/video_default.jpg" alt="">
             </div>
-            <i class="iconfont icon-bofang"></i>
+            <!-- ko if: !isMine() && !isFree() -->
+            <button data-bind="click: buyNow" class="btn buynow">立即购买</button>
+            <!-- /ko -->
+            <i data-bind="click: playVideo" class="iconfont icon-bofang"></i>
           </div>
           <div class="info">
             <p class="clear curricu-name">
@@ -61,7 +76,7 @@
         </div>
       </div>
       <!-- ko if: ctype() == 2  -->
-      <div class="number-box" style="height: 800px;">
+      <div class="number-box">
         <div class="number">
             <div class="title clearFix">
               <span class="fl">剧集</span>
@@ -70,7 +85,7 @@
             <div class="detailed">
               <!-- ko foreach: videoList  -->
               <p class="buy" data-bind="css: {active: $root.currentVideoId() == id},
-                click: $root.playVideo">
+                click: $root.toggleVideo">
                 <!--<img src="images/yigou.png" alt="">-->
                 <span data-bind="text: episodes"></span>
               </p>
@@ -113,18 +128,18 @@
         // 课程分类
         var category = categorys.get();
         // 创建播放区域
-        function createVideoPlayer(url){
+        function createVideoPlayer(videourl, poster){
           if (player != null) {
             player.close();
           }
           player = new plus.video.VideoPlayer('videoplayer', {
-            src: url,
-            poster: 'http://pic25.nipic.com/20121112/9252150_150552938000_2.jpg',
+            src: videourl,
+            poster: poster,
             'show-center-play-btn': false,
             'show-fullscreen-btn': true,
             'show-play-btn': false,
             'show-progress': false,
-            autoplay: false
+            autoplay: true
           });
           plus.webview.currentWebview().append(player);
         }
@@ -132,40 +147,93 @@
         var BaseView = function () {
           var vm = this;
           vm.detailData = ko.observable({});
+          // 是否当前用户发布的
+          vm.isMine = ko.observable(false);
+          // 是否免费
+          vm.isFree = ko.observable(false);
           // 课程类型
           vm.ctype = ko.observable();
           // 视频列表
           vm.videoList = ko.observableArray([]);
+          // 已购买视频列表
+          vm.buyList = ko.observableArray([]);
           // 当前正在播放的视频
           vm.currentVideo = ko.observable({});
           vm.currentVideoId = ko.observable();
-          // 播放当前视频
-          vm.playVideo = function(data){
+          vm.currentVideoPreview = ko.observable();
+          //  播放视频
+          vm.playVideo = function () {
+            //非本人发布的
+            if (!vm.isMine()) {
+              // 非免费的，验证是否已购买，未购买则提示购买
+              if (!vm.isFree()) {
+                return;
+              }
+            }
+            if (vm.currentVideoId() > 0) {
+              readVideo(vm.currentVideoId());
+              createVideoPlayer(vm.currentVideo().urls(), vm.currentVideoPreview());
+            }
+          }
+          // 多集切换播放视频
+          vm.toggleVideo = function(data){
+            if (player != null) {
+              player.close();
+            }
             vm.currentVideo(ko.mapping.fromJS(data));
             vm.currentVideoId(data.id);
-            createVideoPlayer(data.urls);
+            vm.currentVideoPreview(data.previews);
+          }
+          // 立即购买
+          vm.buyNow = function () {
+            mui.openWindow({
+              id:'KZ_KT_Buy',
+              url: './details-buy.html',
+              show: {
+                aniShow: 'pop-in'
+              },
+              styles: {
+                popGesture: 'hide'
+              },
+              waiting: {
+                autoShow: false
+              },
+              extras: {
+                cid: cid
+              }
+            });
           }
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
-        
-//      function loadBuy () {
-//        request.loginAjax('courses/purchaseCoursesDetailsByCid', {
-//          showMsg: false,
-//          data: {
-//            cid: cid
-//          }
-//        }, function(data,success) {
-//          if (success) { 
-//          }
-//        });
-//      }
-        // 视频观看记录
+        // 加载已购买记录
+        function loadBuy (callback) {
+          request.loginAjax('courses/purchaseCoursesDetailsByCid', {
+            showMsg: false,
+            data: {
+              cid: cid
+            }
+          }, function(data,success) {
+            if (success) { 
+              var buyIds = [];
+              if (!!data.multiinfo) {
+              }
+              callback([])
+            }
+          }, function(){
+            callback([]);
+          });
+        }
+        // 存储视频观看记录
         function readVideo (videoid) {
+          if (viewModel.isMine()) {
+            return;
+          }
           request.loginAjax('coursesvideos/storageViewVideoRecord', {
             showMsg: false,
             data: {
-              vid: videoid
+              vid: videoid,
+              cid: cid
             }
           }, function(data,success) {
             
@@ -180,6 +248,7 @@
             }
           }, function(data,success) {
             if (success) { 
+              viewModel.isMine(data.uid == curuserid);
               viewModel.ctype(data.ctype);
               data.gidText = '';
               _.find(category, function(c) {
@@ -190,9 +259,12 @@
                 return false;
               });
               data.priceText = data.price > 0 ? data.price : '免费';
+              if (!(data.price > 0)) {
+                viewModel.isFree(true);
+              }
               viewModel.detailData(ko.mapping.fromJS(data));
-              viewModel.videoList(data.videosList);
-              // 查找要播放的视频
+              
+              // 查找要播放的视频, 未传入集数默认播放第一个视频
               if (data.videosList && data.videosList.length > 0) {
                 var curVideo = _.find(data.videosList, function(o){
                   return o.id == vid;
@@ -204,15 +276,20 @@
                 }
                 viewModel.currentVideo(ko.mapping.fromJS(curVideo));
                 viewModel.currentVideoId(curVideo.id);
-//              createVideoPlayer('http://m.tianchiyueya.com:1888//curriculum//videos//20190823//b32788362c13094ff60144233284687c.mp4');
-//              createVideoPlayer(curVideo.urls);
-                readVideo(curVideo.id);
+                viewModel.currentVideoPreview(curVideo.previews);
+              }
+              // 非自己的且付费的则查询是否已购买视频
+              if (!viewModel.isMine() && !viewModel.isFree()) {
+                loadBuy(function(){
+                  
+                });
+              } else {
+                viewModel.videoList(data.videosList);
               }
             }
           });
         }
         loadData();
-//      createVideoPlayer('http://m.tianchiyueya.com:1888/Public/plug/editor/attached/file/20161122/20161122084359_80166.mp4');
       });
     }(mui, document));
   </script>

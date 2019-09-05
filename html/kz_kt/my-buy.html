@@ -9,6 +9,12 @@
   <link href="../../css/style.css" rel="stylesheet" />
   <link href="../../css/style-custom.css" rel="stylesheet" />
   <link href="css/kt-style.css" rel="stylesheet" />
+  <style>
+    .video .video-item{
+      box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -19,26 +25,13 @@
   <div class="mui-content my-buy">
     <div class="mui-fullscreen">
       <div class="mui-scroll-wrapper">
-        <div id="pullrefresh-list" class="mui-scroll">
+        <div id="pullrefresh-list" class="mui-scroll my-video">
           <div class="video">
             <!-- ko foreach:  list -->
-            <div class="video-item">
-              <div class="thumbnail">
-                <div class="img">
-                  <img src="images/timg2.jpg" alt="">
-                </div>
-                <i class="iconfont icon-bofang"></i>
-                <p class="video-name text-ellipsis">
-                  <span >共3集</span>
-                </p>
-              </div>
+            <div data-bind="attr: {cid: cid, vids: multiinfo }" class="video-item">
               <div class="info">
-                <p class="text-ellipsis font-bold curricu-name">
-                  <span>课程名称课程名称名称名称名称</span>
-                </p>
-                <p class="clear">
-                  <span class="fl font-bold">小漂亮</span>
-                  <span class="fr time">2019.12.23</span>
+                <p class="clear curricu-name" >
+                  <span class="fl font-bold" data-bind="text: title" style="width: 100%;"></span>
                 </p>
               </div>
             </div>
@@ -118,6 +111,17 @@
         queryList();
         // 跳转详情
         $('#pullrefresh-list').on('tap', '.video-item', function(e){
+          var cid = this.getAttribute('cid');
+          var vids = this.getAttribute('vids');
+          var extras = {
+            cid: cid
+          }
+          // 如果非买断则默认播放第一个
+          if (!!vids && vids.indexOf('egg') < 0) {
+            var _ids = vids.split(',');
+            extras.vid = _ids[0];
+          }
+          DetailPage(extras)
         });
         function reloadPage () {
           page = 1;
