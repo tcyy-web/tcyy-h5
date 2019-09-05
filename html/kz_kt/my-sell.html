@@ -32,11 +32,11 @@
     <div class="sell-info">
       <div class="sub border-right-line">
         <p>已提现</p>
-        <p>￥900</p>
+        <p>￥<span data-bind="text: withdrawed">0</span></p>
       </div>
       <div class="sub">
         <p>未提现</p>
-        <p>￥900</p>
+        <p>￥<span data-bind="text: nonwithdraw">0</span></p>
       </div>
     </div>
     <div class="pullrefresh-list">
@@ -90,10 +90,23 @@
         //列表渲染
         var BaseView = function () {
           var vm = this;
+          vm.nonwithdraw = ko.observable(0);
+          vm.withdrawed = ko.observable(0);
           vm.list = ko.observableArray([]);
         }
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('pullrefresh-list'));
+        // 获取订单统计
+        function getStatic () {
+          request.loginAjax('coursesuser/getWithdrawStatByCurrentUser',{
+            showMsg: false
+          },function(data, success) {
+            if (success) {
+              viewModel.withdrawed(data.withdrawed);
+              viewModel.nonwithdraw(data.nonwithdraw);
+            }
+          })
+        }
         // 查询
         var queryList = function(callback) {
           var _request = {
@@ -129,10 +142,12 @@
              }
           });
         }
+        getStatic();
         queryList();
         function reloadPage () {
           page = 1;
           more = true;
+          getStatic();
           queryList(function(){
             $('#pullrefresh-list').pullToRefresh().refresh(true);
             $('#pullrefresh-list').pullToRefresh().endPullUpToRefresh();

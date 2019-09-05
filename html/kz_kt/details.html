@@ -86,7 +86,9 @@
               <!-- ko foreach: videoList  -->
               <p class="buy" data-bind="css: {active: $root.currentVideoId() == id},
                 click: $root.toggleVideo">
-                <!--<img src="images/yigou.png" alt="">-->
+                <!-- ko if: !$root.buyOut() && _buy -->
+                <img src="images/yigou.png" alt="">
+                <!-- /ko -->
                 <span data-bind="text: episodes"></span>
               </p>
               <!-- /ko -->
@@ -155,6 +157,8 @@
           vm.ctype = ko.observable();
           // 视频列表
           vm.videoList = ko.observableArray([]);
+          // 是否已买断
+          vm.buyOut = ko.observable(false);
           // 已购买视频列表
           vm.buyList = ko.observableArray([]);
           // 当前正在播放的视频
@@ -167,7 +171,12 @@
             if (!vm.isMine()) {
               // 非免费的，验证是否已购买，未购买则提示购买
               if (!vm.isFree()) {
-                return;
+                var exist = _.findIndex(vm.buyList(), function (item){
+                  return item == vm.currentVideoId();
+                })
+                if (exist < 0) {
+                  return;
+                }
               }
             }
             if (vm.currentVideoId() > 0) {
@@ -207,21 +216,39 @@
         var viewModel = new BaseView();
         ko.applyBindings(viewModel, doc.getElementById('main-content'));
         // 加载已购买记录
-        function loadBuy (callback) {
+        function loadBuy (videoList, callback) {
           request.loginAjax('courses/purchaseCoursesDetailsByCid', {
             showMsg: false,
             data: {
               cid: cid
             }
           }, function(data,success) {
-            if (success) { 
-              var buyIds = [];
+            if (success) {
               if (!!data.multiinfo) {
+                // 买断则全部已购买
+                if (data.multiinfo.indexOf('egg') >= 0) {
+                  viewModel.buyOut(true);
+                  _.forEach(videoList, function(item){
+                    item._buy = true;
+                  });
+                } else {
+                  // 查找已购买课程
+                  var ids = data.multiinfo.split(',');
+                  viewModel.buyList(ids);
+                  _.forEach(videoList, function(item){
+                    var exist = _.find(ids, function(_id){
+                      return _id == item.id;
+                    })
+                    if (exist) {
+                      item._buy = true;
+                    }
+                  });
+                }
               }
-              callback([])
             }
+            callback(videoList);
           }, function(){
-            callback([]);
+            callback(videoList);
           });
         }
         // 存储视频观看记录
@@ -263,7 +290,6 @@
                 viewModel.isFree(true);
               }
               viewModel.detailData(ko.mapping.fromJS(data));
-              
               // 查找要播放的视频, 未传入集数默认播放第一个视频
               if (data.videosList && data.videosList.length > 0) {
                 var curVideo = _.find(data.videosList, function(o){
@@ -278,10 +304,14 @@
                 viewModel.currentVideoId(curVideo.id);
                 viewModel.currentVideoPreview(curVideo.previews);
               }
+              
+              _.forEach(data.videosList, function(item){
+                item._buy = false;
+              });
               // 非自己的且付费的则查询是否已购买视频
               if (!viewModel.isMine() && !viewModel.isFree()) {
-                loadBuy(function(){
-                  
+                loadBuy(data.videosList, function(result){
+                  viewModel.videoList(result);
                 });
               } else {
                 viewModel.videoList(data.videosList);
@@ -290,6 +320,10 @@
           });
         }
         loadData();
+        // 支付返回
+        window.addEventListener('KZ_KT_BuyBack', function (){
+          
+        })
       });
     }(mui, document));
   </script>

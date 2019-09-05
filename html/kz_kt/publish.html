@@ -58,10 +58,12 @@
           maxlength="9" type="text" class="mui-input-clear" 
           placeholder="课程单集视频售价,0则课程免费">
       </div>
+      <!-- ko if: formData.ctype() == 2 -->
       <div class="mui-input-row">
         <label><i class="form-required"></i>买断价：</label>
         <input data-bind="value: formData.oneprice, muiInput: formData.oneprice" maxlength="9" type="text" class="mui-input-clear" placeholder="买断课程视频价格">
       </div>
+      <!-- /ko -->
       <div class="mui-input-row">
         <label><i class="form-required"></i>视频标题：</label>
         <input data-bind="value: formData.vtitle, muiInput: formData.vtitle" maxlength="10" type="text" class="mui-input-clear" placeholder="单个视频显示标题">
@@ -172,7 +174,6 @@
         function checkData () {
           return new Promise(function(resolve){
             var postData = ko.mapping.toJS(viewModel.formData);
-            console.log(JSON.stringify(postData));
             if (!postData.ctype) {
               mui.toast('请选择课程类型')
               return;
@@ -197,6 +198,10 @@
               mui.toast('课程单价只能为数字且只能为两位小数');
               return;
             }
+            // 单集时或 课程单价为0 时 强制买断价 = 单价
+            if (postData.price == 0 || postData.ctype == 1) {
+              postData.oneprice = postData.price;   
+            }
             if (!postData.oneprice) {
               mui.toast('请输入买断价')
               return;
@@ -205,6 +210,7 @@
               mui.toast('买断价只能为数字且只能为两位小数');
               return;
             }
+            console.log(JSON.stringify(postData));
             if (!postData.vtitle) {
               mui.toast('请输入视频标题')
               return;
@@ -213,6 +219,7 @@
               mui.toast('请上传视频封面图')
               return;
             }
+            return;
             resolve();
           })
         }
@@ -223,7 +230,7 @@
             postData.episodes = 1;
             postData.urls = videourl;
             // 暂时写死地址测试
-					  postData.urls = 'http://m.tianchiyueya.com:1888/Public/plug/editor/attached/file/20161122/20161122084359_80166.mp4';
+//					  postData.urls = 'http://m.tianchiyueya.com:1888/Public/plug/editor/attached/file/20161122/20161122084359_80166.mp4';
             request.loginAjax('courses/saveCourseAndVideos', {
               data: postData
             }, function(data,success) {     
@@ -252,13 +259,12 @@
         
         doc.getElementById('startVideo').addEventListener('tap', function(e) {
           checkData().then(function(){
-						saveVedioInfo();
-            // upload.getVideo(function(file){
-            //   var url = config.url + "Uploads/Files";
-            //   upload.uploadMedia(url, function(res) {
-            //     saveVedioInfo(res[0].showUrl);
-            //   }, { abspath: file, type: '5' });
-            // });
+             upload.getVideo(function(file){
+               var url = config.url + "Uploads/Files";
+               upload.uploadMedia(url, function(res) {
+                 saveVedioInfo(res[0].showUrl);
+               }, { abspath: file, type: '5' });
+             });
           })
         });
                 

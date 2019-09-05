@@ -131,7 +131,7 @@
             var postData = ko.mapping.toJS(viewModel.formData);
             postData.urls = videourl;
             // 暂时写死地址测试
-            postData.urls = 'http://m.tianchiyueya.com:1888/Public/plug/editor/attached/file/20161122/20161122091746_89692.mp4';
+//          postData.urls = 'http://m.tianchiyueya.com:1888/Public/plug/editor/attached/file/20161122/20161122091746_89692.mp4';
             request.loginAjax('courses/saveCourseAndVideos', {
               data: postData
             }, function(data,success) {     
@@ -149,13 +149,12 @@
         
         doc.getElementById('startVideo').addEventListener('tap', function(e) {
           checkData().then(function(){
-            saveVedioInfo();
-//          upload.getVideo(function(file){
-//            var url = config.url + "Uploads/Files";
-//            upload.uploadMedia(url, function(res) {
-//              saveVedioInfo(res[0].showUrl);
-//            }, { abspath: file, type: '5' });
-//          });
+            upload.getVideo(function(file){
+              var url = config.url + "Uploads/Files";
+              upload.uploadMedia(url, function(res) {
+                saveVedioInfo(res[0].showUrl);
+              }, { abspath: file, type: '5' });
+            });
           })
         });
                 

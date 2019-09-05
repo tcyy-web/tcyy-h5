@@ -183,9 +183,14 @@
             }
             _.forEach(vm.videoList(), function(item){
               item._choose(false);
-            })
-            vm.multiinfo('egg');
-            vm.buyAmount(vm.oneprice);
+            });
+            if (vm.multiinfo() == 'egg') {
+              vm.multiinfo('');
+              vm.buyAmount(0);
+            } else {
+              vm.multiinfo('egg');
+              vm.buyAmount(vm.oneprice);
+            }
           }
           // 选择购买
           vm.choose = function (data) {
