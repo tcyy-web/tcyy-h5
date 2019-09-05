@@ -86,7 +86,7 @@
               <!-- ko foreach: videoList  -->
               <p class="buy" data-bind="css: {active: $root.currentVideoId() == id},
                 click: $root.toggleVideo">
-                <!-- ko if: !$root.buyOut() && _buy -->
+                <!-- ko if: $root.buyOut() || _buy -->
                 <img src="images/yigou.png" alt="">
                 <!-- /ko -->
                 <span data-bind="text: episodes"></span>
@@ -170,7 +170,7 @@
             //非本人发布的
             if (!vm.isMine()) {
               // 非免费的，验证是否已购买，未购买则提示购买
-              if (!vm.isFree()) {
+              if (!vm.isFree() && !vm.buyOut()) {
                 var exist = _.findIndex(vm.buyList(), function (item){
                   return item == vm.currentVideoId();
                 })
