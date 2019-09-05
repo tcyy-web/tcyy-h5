@@ -94,7 +94,7 @@ function trimSearchResult(list){
     o.priceText = o.price > 0 ? o.price : '免费';
     o.nicknameText = '';
     if (!!o.nickname) {
-      JSON.parse(o.nickname);
+      o.nicknameText = JSON.parse(o.nickname);
     }
   });
   return list;

@@ -29,6 +29,14 @@
       border-color: #8E78D6;
       background-color: #8E78D6!important;
     }
+    .bottom-buy .flex-1{
+      padding: 0 15px;
+    }
+    .bottom-buy .flex-1 p span{
+      font-size: 18px;
+      margin-left: 5px;
+      color: #8E78D6;
+    }
   </style>
 </head>
 
@@ -38,10 +46,10 @@
     <h1 class="mui-title">立即购买</h1>
   </header>
   <div class="bottom-buy flex">
-    <div class="flex-1">
-      
+    <div class="flex-1 flex flex-row-center">
+      <p>合计：¥<span data-bind="text: buyAmount"></span></p>
     </div>
-    <button data-bind="click: buyNow" class="btn">立即购买</button>
+    <button data-bind="click: buyNow,enable: !buyOut()" class="btn" disabled>立即购买</button>
   </div>
   <div class="mui-content details">
     <div class="number-box">
@@ -51,15 +59,17 @@
             <span class="fr">共<span data-bind="text: videoList().length"></span>集</span>
           </div>
           <div class="detailed">
-            <p class="buy" data-bind="click: $root.chooseAll">
+            <p class="buy" data-bind="click: $root.chooseAll,
+              css: {active: multiinfo() == 'egg'}">
               <!-- ko if: buyOut() -->
               <img src="images/yigou.png" alt="">
               <!-- /ko -->
               <span>全套</span>
             </p>
             <!-- ko foreach: videoList  -->
-            <p class="buy" data-bind="click: $root.choose">
-              <!-- ko if: _buy -->
+            <p class="buy" data-bind="click: $root.choose,
+              css: {active: _choose()}">
+              <!-- ko if: !$root.buyOut() && _buy -->
               <img src="images/yigou.png" alt="">
               <!-- /ko -->
               <span data-bind="text: episodes"></span>
@@ -71,6 +81,7 @@
   </div>
   <script src="../../third/bluebird.min.js"></script>
   <script src="../../third/loadash.3.10.1.js"></script>
+  <script src="../../third/big.min.js"></script>
   <script src="../../js/mui.min.js"></script>
   <script src="../../third/knockout.js"></script>
   <script src="../../third/knockout.extend.js"></script>
@@ -114,26 +125,79 @@
           vm.isFree = ko.observable(false);
           // 是否买断
           vm.buyOut = ko.observable(false);
+          // 单价
+          vm.price = 0;
+          // 买断价
+          vm.oneprice = 0;
           // 视频列表
           vm.videoList = ko.observableArray([]);
-          
+          // 购买标记 egg = 买断
+          vm.multiinfo = ko.observable();
+          //  合计金额
+          vm.buyAmount = ko.observable(0);
+          // 计算金额
+          vm.calcMoney = function(){
+            var chooseLen = _.filter(vm.videoList(), function(item){
+              return item._choose() == true
+            });
+            var total = Big(vm.price).times(Big(chooseLen.length)).toString();
+            vm.buyAmount(total);
+          }
           // 立即购买
           vm.buyNow = function() {
-            BuyServer({
+            // 没有视频直接返回
+            if (vm.videoList().length < 1) {
+              return;
+            }
+            // 金额为0直接返回
+            if (!(vm.buyAmount() > 0)) {
+              mui.toast('请选择需要购买的视频');
+              return
+            }
+            var postData = {
               cid: cid,
-              multiinfo: 'egg',
-              amounts: 0.1
-            }, function(){
-              
+              amounts: vm.buyAmount()
+            }
+            if (vm.multiinfo() == 'egg') {
+              postData.multiinfo = 'egg';
+            } else {
+              postData.multiinfo =  _.map(_.filter(vm.videoList(), function(fi){
+                return fi._choose() == true;
+              }), function(ma){
+                return ma.id
+              }).join(',');
+            }
+            // TODO 调用微信支付
+            BuyServer(postData, function(){
+              var openWindow = plus.webview.currentWebview().opener();
+              if (openWindow) {
+                $.fire(openWindow, 'KZ_KT_BuyBack');
+              }
+              mui.back();
             })
           }
           // 选择买断
           vm.chooseAll = function () {
-            
+            if (vm.buyOut()) {
+              return;
+            }
+            _.forEach(vm.videoList(), function(item){
+              item._choose(false);
+            })
+            vm.multiinfo('egg');
+            vm.buyAmount(vm.oneprice);
           }
           // 选择购买
-          vm.choose = function () {
-            
+          vm.choose = function (data) {
+            if (vm.buyOut()) {
+              return;
+            }
+            if (data._buy) {
+              return;
+            }
+            data._choose(!data._choose());
+            vm.multiinfo('');
+            vm.calcMoney();
           }
         }
         var viewModel = new BaseView();
@@ -182,11 +246,14 @@
             }
           }, function(data,success) {
             if (success) { 
+              viewModel.price = parseFloat(data.price);
+              viewModel.oneprice = parseFloat(data.oneprice);
               viewModel.isMine(data.uid == curuserid);
               if (!(data.price > 0)) {
                 viewModel.isFree(true);
               }
               _.forEach(data.videosList, function(item){
+                item._choose = ko.observable(false);
                 item._buy = false;
               });
               // 非自己的且付费的则查询是否已购买视频
