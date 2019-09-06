@@ -1704,7 +1704,8 @@
 			"html/kz_kt/my-video.html": {
 				"resources": [],
 				"refer": [
-					"html/kz_kt/details.html"
+					"html/kz_kt/details.html",
+					"html/kz_kt/my-manage.html"
 				],
 				"priority": 0
 			},
@@ -1712,6 +1713,13 @@
 				"resources": [],
 				"refer": [
 					"html/kz_kt/details.html"
+				],
+				"priority": 0
+			},
+			"html/kz_kt/my-manage.html": {
+				"resources": [],
+				"refer": [
+					"html/kz_kt/publish-video.html"
 				],
 				"priority": 0
 			}
