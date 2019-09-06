@@ -28,7 +28,7 @@
     <h1 class="mui-title">我的售卖记录</h1>
     <a id="getCash" class="mui-pull-right">提现</a>
   </header>
-  <div class="mui-content my-sell">
+  <div id="main-content" class="mui-content my-sell">
     <div class="sell-info">
       <div class="sub border-right-line">
         <p>已提现</p>
@@ -47,11 +47,11 @@
             <div class="video-item">
               <div class="info">
                 <p class="clear curricu-name">
-                  <span class="fl font-bold text-ellipsis">课程名称课程名称名称名称名称</span>
+                  <span class="fl font-bold text-ellipsis" data-bind="text: title"></span>
                   <span class="fr font-bold">￥<span data-bind="text: amounts"></span></span>
                 </p>
                 <p class="clearFix">
-                  <span class="fl font-bold">已提现</span>
+                  <span class="fl font-bold" data-bind="text: withdrawText"></span>
                   <span class="fr font-small-gray" data-bind="text: btimes"></span>
                 </p>
               </div>
@@ -95,7 +95,7 @@
           vm.list = ko.observableArray([]);
         }
         var viewModel = new BaseView();
-        ko.applyBindings(viewModel, doc.getElementById('pullrefresh-list'));
+        ko.applyBindings(viewModel, doc.getElementById('main-content'));
         // 获取订单统计
         function getStatic () {
           request.loginAjax('coursesuser/getWithdrawStatByCurrentUser',{
@@ -119,6 +119,14 @@
           },function(data, success) {
              // 处理页面绑定
              if (data && data.data) {
+              _.forEach(data.data, function(item){
+                item.withdrawText = '';
+                if (item.withdraw == 0) {
+                  item.withdrawText = '未提现';
+                } else if (item.withdraw == 1){
+                  item.withdrawText = '已提现';
+                }
+              });
               if (page === 1) {                  
                  viewModel.list(data.data);                  
               } else {

@@ -149,7 +149,7 @@
     //       plus.nativeUI.alert( PAYSERVER );
     //      PAYSERVER ="http://demo.dcloud.net.cn/payment/wxpayv3.HBuilder/?total=0.01"
       }else{
-        plus.nativeUI.alert("不支持此支付通道！",null,"捐赠");
+        plus.nativeUI.alert("不支持此支付通道");
         return;
       }
         
@@ -164,10 +164,10 @@
                    mui.back();
                 });
               },function(error){
-//                  plus.nativeUI.alert("支付失败：" + error.message);
+                plus.nativeUI.alert("支付失败：" + error.message);
               });
             }else{
-              plus.nativeUI.alert("获取订单信息失败！");
+              plus.nativeUI.alert("获取订单信息失败");
             }
             break;
           default:
