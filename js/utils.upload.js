@@ -203,15 +203,15 @@
               if (res.header.status === 2001) {
                 typeof opt.back =="function" && opt.back( res.body );
               } else {
-                mui.toast('上传失败，失败原因：'+res.header.msg);
+                mui.alert('上传失败，失败原因：'+res.header.msg);
                 console.log('上传失败，失败原因：'+res.header.msg);
               }
     			  }catch(e){
-    			    mui.toast('上传失败, 文件过大或不符合要求');
+    			    mui.alert('上传失败, 文件过大或不符合要求');
     			  }
     			  
     			} else {
-  			    mui.toast('上传失败');
+  			    mui.alert('上传失败');
     			}
     		});
     		var fileurl = data.abspath;
