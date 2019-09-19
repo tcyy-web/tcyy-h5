@@ -169,11 +169,12 @@
       plus.io.resolveLocalFileSystemURL(data.abspath, function(fileEntry){
         if (fileEntry.isFile) {
           fileEntry.file(function(fileInfo){
+            console.log(JSON.stringify(fileInfo));
             if (fileInfo.type != 'video/mp4') {
               mui.alert('视频必须是mp4格式');
               return
             }
-            if (fileInfo.size > 1 * 1024 * 1024) {
+            if (fileInfo.size >= 500 * 1024 * 1024) {
               mui.alert('文件过大，仅支持500M以内文件');
               return
             }
@@ -208,7 +209,7 @@
       }
       console.log('***********上传地址:'+opt.url);
       console.log('***********上传参数:'+JSON.stringify(opt.data));
-      var wa = plus.nativeUI.showWaiting();
+      var wa = plus.nativeUI.showWaiting('文件上传中，请稍候...');
       var task = plus.uploader.createUpload(opt.url , {
         method: "POST"
       },function(t, status) {
@@ -242,6 +243,12 @@
         }
       }
       task.start();
+      task.addEventListener( "statechanged", function(uploadInfo, status){
+        if (uploadInfo.uploadedSize > 0 && uploadInfo.totalSize > 0) {
+          var percent = (uploadInfo.uploadedSize / uploadInfo.totalSize * 100).toFixed(0);
+          wa = plus.nativeUI.showWaiting('文件上传中('+percent+'%/100%)，请稍候...');
+        }
+      }, false );
     	},
     	// 上传图片
     	uploadfile : function ( opt ){
