@@ -167,69 +167,85 @@
     			back:back
     		})
     	},
-  		//上传Media
-    	uploadMedia: function(url, back, data) {
-    	  if (!data.abspath) {
-    	    mui.alert('请选择视频');
-    	    return 
-    	  }
-    	  var fileType = data.abspath.substring(data.abspath.lastIndexOf('.') + 1, data.abspath.length)
-    	  if (fileType.toLocaleLowerCase() != 'mp4') {
-    	    mui.alert('视频必须为mp4格式');
-    	    return
-    	  }
-      var code = '';
+    	//上传视频前验证
+    uploadMedia: function(url, back, data) {
+      var _this = this;
+      plus.io.resolveLocalFileSystemURL(data.abspath, function(fileEntry){
+        if (fileEntry.isFile) {
+          fileEntry.file(function(fileInfo){
+            if (fileInfo.type != 'video/mp4') {
+              mui.alert('视频必须是mp4格式');
+              return
+            }
+            if (fileInfo.size > 1 * 1024 * 1024) {
+              mui.alert('文件过大，仅支持500M以内文件');
+              return
+            }
+            _this.uploadMediaServer(url, back, data);
+          }, function(){
+            mui.alert('读取不到需要上传的文件')
+          })
+        }
+      }, function() {
+        mui.alert('读取不到需要上传的文件')
+      });
+    },
+    	// 上传视频到服务器
+    	uploadMediaServer: function (url, back, data) {
+    	  var code = '';
       if (w.authManage) {
         var user = w.authManage.getUser();
         code = user.code || '';
       }
-    		var defaults = {
-    		  type: '5',  //默认在线课程 5 。病例秀 3
-    		  filetype: '2', //视频
-    		  code: code
-    		};
-    		if(data) {
-    		  mui.extend(true, defaults, data);
-    		}
-    		var opt = {
-    			url:url,
-    			data: defaults,
-    			back:back
-    		}
-  		  console.log('***********上传地址:'+opt.url);
+      var defaults = {
+        type: '5',  //默认在线课程 5 。病例秀 3
+        filetype: '2', //视频
+        code: code
+      };
+      if(data) {
+        mui.extend(true, defaults, data);
+      }
+      var opt = {
+        url:url,
+        data: defaults,
+        back:back
+      }
+      console.log('***********上传地址:'+opt.url);
       console.log('***********上传参数:'+JSON.stringify(opt.data));
-    		var wa = plus.nativeUI.showWaiting();
-    		var task = plus.uploader.createUpload(opt.url , {
-    			method: "POST"
-    		},function(t, status) {
-    		  wa.close();
-    		  console.log('***********上传返回:'+t.responseText);
-    		  console.log(JSON.stringify(t));
-    			if(t.state === 4 && status == 200) {
-    			  try{
-    			    var res = JSON.parse(t.responseText);
-              if (res.header.status === 2001) {
-                typeof opt.back =="function" && opt.back( res.body );
-              } else {
-                mui.alert('上传失败，失败原因：'+res.header.msg);
-                console.log('上传失败，失败原因：'+res.header.msg);
-              }
-    			  }catch(e){
-    			    mui.alert('上传失败, 文件过大或不符合要求');
-    			  }
-    			  
-    			} else {
-  			    mui.alert('上传失败');
-    			}
-    		});
-    		var fileurl = data.abspath;
-      task.addFile(fileurl, {});
-    		if (opt.data) {
+      var wa = plus.nativeUI.showWaiting();
+      var task = plus.uploader.createUpload(opt.url , {
+        method: "POST"
+      },function(t, status) {
+        wa.close();
+        console.log('***********上传返回:'+t.responseText);
+        console.log(JSON.stringify(t));
+        if(t.state === 4 && status == 200) {
+          try{
+            var res = JSON.parse(t.responseText);
+            if (res.header.status === 2001) {
+              typeof opt.back =="function" && opt.back( res.body );
+            } else {
+              mui.alert('上传失败，失败原因：'+res.header.msg);
+              console.log('上传失败，失败原因：'+res.header.msg);
+            }
+          }catch(e){
+            mui.alert('上传失败, 文件过大或不符合要求');
+          }
+          
+        } else {
+          mui.alert('上传失败，服务器发生错误');
+        }
+      });
+      var fileurl = data.abspath;
+      task.addFile(fileurl, {
+        key: new Date().getTime()
+      });
+      if (opt.data) {
         for (var key in  opt.data) {
           task.addData(key, opt.data[key]);
         }
-    		}
-    		task.start();
+      }
+      task.start();
     	},
     	// 上传图片
     	uploadfile : function ( opt ){
@@ -237,7 +253,7 @@
       console.log('***********上传参数:'+JSON.stringify(opt.data));
       var itemkey = "img-" + opt.divid;
       var itemvalue = plus.storage.getItem(itemkey);
-      if (itemvalue === null) {
+      if (itemvalue == null) {
         console.log('请选择文件');
         return;
       }
@@ -260,19 +276,19 @@
     			  } catch(e){
     			    mui.toast('上传失败, 文件过大或不符合要求');
     			  }
-    			 
     			} else {
-    				 mui.toast('上传失败');
+    				mui.toast('上传失败，服务器发生错误');
     			}
     		});
     		var _itemvalue = JSON.parse(itemvalue);
     		var fileurl = _itemvalue.abspath;
       task.addFile(fileurl, {
+        key: itemkey
       });
     		if (opt.data) {
-    	      for (var key in  opt.data) {
-    	        task.addData(key, opt.data[key]);
-    	      }
+  	      for (var key in  opt.data) {
+  	        task.addData(key, opt.data[key]);
+  	      }
     		}
     		task.start();
     	}
