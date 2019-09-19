@@ -89,7 +89,6 @@
     	  var cmr = plus.camera.getCamera();
       var res = cmr.supportedVideoResolutions[0]; //获取支持的分辨率，拿默认的第一个
       var fmtStr = cmr.supportedVideoFormats.join(',');
-      console.log(fmtStr);
       if (fmtStr.indexOf('mp4') < 0) {
         mui.toast('您的手机不支持mp4格式的录像。')
         return;
@@ -170,6 +169,15 @@
     	},
   		//上传Media
     	uploadMedia: function(url, back, data) {
+    	  if (!data.abspath) {
+    	    mui.alert('请选择视频');
+    	    return 
+    	  }
+    	  var fileType = data.abspath.substring(data.abspath.lastIndexOf('.') + 1, data.abspath.length)
+    	  if (fileType.toLocaleLowerCase() != 'mp4') {
+    	    mui.alert('视频必须为mp4格式');
+    	    return
+    	  }
       var code = '';
       if (w.authManage) {
         var user = w.authManage.getUser();
