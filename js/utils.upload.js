@@ -94,11 +94,7 @@
         return;
       }
       cmr.startVideoCapture(function(file) { //录像成功后会返回一个路径到e这里
-        plus.io.resolveLocalFileSystemURL(file, function(entry) { //这个是根据路径读取文件信息，其实这步可以省略。
-          fnend(file);
-        }, function(e) {
-          mui.toast('读取不到拍摄的文件');
-        });
+        fnend(file);
       }, function(error) {
       },  {
         filename: tcyy_base_file_root,
