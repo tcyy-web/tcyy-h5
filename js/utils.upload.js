@@ -170,10 +170,10 @@
         if (fileEntry.isFile) {
           fileEntry.file(function(fileInfo){
             console.log(JSON.stringify(fileInfo));
-//          if (fileInfo.type != 'video/mp4') {
-//            mui.alert('视频必须是mp4格式');
-//            return
-//          }
+            if (fileInfo.type != 'video/mp4') {
+              mui.alert('视频必须是mp4格式');
+              return
+            }
             if (fileInfo.size >= 500 * 1024 * 1024) {
               mui.alert('文件过大，仅支持500M以内文件');
               return
