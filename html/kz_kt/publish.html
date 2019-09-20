@@ -218,13 +218,17 @@
               mui.toast('请上传视频封面图')
               return;
             }
-            resolve();
+            resolve(postData);
           })
         }
         //发布课程
         var saveVedioInfo = function (videourl) {
           return new Promise(function(resolve){
             var postData = ko.mapping.toJS(viewModel.formData);
+            // 单集时或 课程单价为0 时 强制买断价 = 单价
+            if (postData.price == 0 || postData.ctype == 1) {
+              postData.oneprice = postData.price;   
+            }
             postData.episodes = 1;
             postData.urls = videourl;
             // 暂时写死地址测试
