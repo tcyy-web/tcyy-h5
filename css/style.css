@@ -644,3 +644,30 @@ input[type=submit]:enabled:active {
   border-color: #765fc3;
   background-color: #765fc3;
 }
+/* 大文件公共进度条 */
+.file-mask-box{
+  position: fixed;
+  top: 0;left: 0;right: 0;bottom: 0;
+  z-index: 100000;
+  background-color: rgba(0,0,0,0.3);
+}
+.file-mask-box.hide{
+  display: none;
+}
+.file-mask-box .file-text{
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  background-color: #fff;
+  width: 200px;
+  text-align: center;
+  padding: 20px 10px;
+}
+.file-mask-box .file-text .file-t{
+  font-size: 16px;
+  color: #333;
+}
+.file-mask-box .file-text .file-progress{
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}

@@ -90,6 +90,20 @@
         }
       });
       return result;
+    },
+    createDom:function(str){
+      if (typeof(str) !== 'string') {
+        if ((str instanceof Array) || (str[0] && str.length)) {
+          return [].slice.call(str);
+        } else {
+          return [str];
+        }
+      }
+      if (!mui.__create_dom_div__) {
+        mui.__create_dom_div__ = document.createElement('div');
+      }
+      mui.__create_dom_div__.innerHTML = str;
+      return [].slice.call(mui.__create_dom_div__.childNodes);
     }
 	}
 	

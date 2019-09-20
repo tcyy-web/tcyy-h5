@@ -164,21 +164,21 @@
     		})
     	},
     	//上传视频前验证
-    uploadMedia: function(url, back, data) {
+    uploadMedia: function(url, back, data, progess) {
       var _this = this;
       plus.io.resolveLocalFileSystemURL(data.abspath, function(fileEntry){
         if (fileEntry.isFile) {
           fileEntry.file(function(fileInfo){
             console.log(JSON.stringify(fileInfo));
-            if (fileInfo.type != 'video/mp4') {
-              mui.alert('视频必须是mp4格式');
-              return
-            }
+//          if (fileInfo.type != 'video/mp4') {
+//            mui.alert('视频必须是mp4格式');
+//            return
+//          }
             if (fileInfo.size >= 500 * 1024 * 1024) {
               mui.alert('文件过大，仅支持500M以内文件');
               return
             }
-            _this.uploadMediaServer(url, back, data);
+            _this.uploadMediaServer(url, back, data, progess);
           }, function(){
             mui.alert('读取不到需要上传的文件')
           })
@@ -189,6 +189,7 @@
     },
     	// 上传视频到服务器
     	uploadMediaServer: function (url, back, data) {
+    	  // 默认上传参数
     	  var code = '';
       if (w.authManage) {
         var user = w.authManage.getUser();
@@ -202,25 +203,29 @@
       if(data) {
         mui.extend(true, defaults, data);
       }
-      var opt = {
-        url:url,
-        data: defaults,
-        back:back
+      console.log('***********上传地址:'+url);
+      console.log('***********上传参数:'+JSON.stringify(defaults));
+      // 遮罩层
+      var $fileDom = mui('.file-mask-box')[0];
+      if (!$fileDom) {
+        $fileDom = utils.createDom('<div class="file-mask-box flex flex-col-center flex-row-center hide"><div class="file-text">\
+                      <p class="file-t">文件正在上传，请稍候...</p>\
+                      <p class="file-progress"></p></div></div>')[0];
+        document.body.appendChild($fileDom);
       }
-      console.log('***********上传地址:'+opt.url);
-      console.log('***********上传参数:'+JSON.stringify(opt.data));
-      var wa = plus.nativeUI.showWaiting('文件上传中，请稍候...');
-      var task = plus.uploader.createUpload(opt.url , {
+      var $fileProgress = mui('.file-mask-box .file-progress')[0];
+      $fileDom.classList.remove('hide');
+      var task = plus.uploader.createUpload(url , {
         method: "POST"
       },function(t, status) {
-        wa.close();
+        $fileDom.classList.add('hide');
         console.log('***********上传返回:'+t.responseText);
         console.log(JSON.stringify(t));
         if(t.state === 4 && status == 200) {
           try{
             var res = JSON.parse(t.responseText);
             if (res.header.status === 2001) {
-              typeof opt.back =="function" && opt.back( res.body );
+              typeof back =="function" && back(res.body);
             } else {
               mui.alert('上传失败，失败原因：'+res.header.msg);
               console.log('上传失败，失败原因：'+res.header.msg);
@@ -233,22 +238,21 @@
           mui.alert('上传失败，服务器发生错误');
         }
       });
-      var fileurl = data.abspath;
+      var fileurl = defaults.abspath;
       task.addFile(fileurl, {
-        key: new Date().getTime()
+        key: 'video' + new Date().getTime()
       });
-      if (opt.data) {
-        for (var key in  opt.data) {
-          task.addData(key, opt.data[key]);
-        }
+      for (var key in  defaults) {
+        task.addData(key, defaults[key]);
       }
-      task.start();
-      task.addEventListener( "statechanged", function(uploadInfo, status){
-        if (uploadInfo.uploadedSize > 0 && uploadInfo.totalSize > 0) {
+      task.addEventListener('statechanged', function(uploadInfo, status){
+        if (uploadInfo.state == 3) {
+//        console.log(uploadInfo.uploadedSize+'-----'+uploadInfo.totalSize)
           var percent = (uploadInfo.uploadedSize / uploadInfo.totalSize * 100).toFixed(0);
-          wa = plus.nativeUI.showWaiting('文件上传中('+percent+'%/100%)，请稍候...');
+          $fileProgress.innerText = percent + '/100%';
         }
-      }, false );
+      },false);
+      task.start();
     	},
     	// 上传图片
     	uploadfile : function ( opt ){
