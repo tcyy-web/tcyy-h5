@@ -96,27 +96,38 @@
   <script src="../../js/utils.upload.js"></script>
   <script src="../../js/utils.request.js" ></script>
   <script src="../../js/utils.common.js" ></script>
+  <script src="../../js/utils.pay.js" ></script>
   <script src="js/kt-common.js" ></script>
   <script>
     (function($, doc) {
       $.init();
       $.plusReady(function() {
+        var wxPayChannel = null;
+        // 获取微信支付通道
+        plus.payment.getChannels(function(channels){
+          for(var i=0;i<channels.length;i++){
+            var channel=channels[i];
+            if(channel.id =="wxpay"){
+              wxPayChannel = channel;
+            }          
+          }
+        },function(e){
+          mui.toast("获取支付通道失败："+e.message);
+        });
+        // 支付成功跳转
+        function JumpBack () {
+          var openWindow = plus.webview.currentWebview().opener();
+          if (openWindow) {
+            $.fire(openWindow, 'KZ_KT_BuyPaySuccuess');
+          }
+          mui.back();
+        }
+        
         // 当前用户id
         var curuserid = authManage.getUser().id;
         var currentWebview = plus.webview.currentWebview();
         // 课程id
         var cid = currentWebview.cid;
-        // 存储购买记录
-        function BuyServer (postData, callback) {
-          request.loginAjax('coursesuser/storagePaidCourseInfo', {
-            showMsg: false,
-            data: postData
-          }, function(data,success) {
-            if (success) { 
-              callback()
-            }
-          });
-        }
         var BaseView = function () {
           var vm = this;
           // 是否当前用户发布的
@@ -155,8 +166,10 @@
               return
             }
             var postData = {
+              userid: curuserid,
+              type: 2,
               cid: cid,
-              amounts: vm.buyAmount()
+              price: vm.buyAmount()
             }
             if (vm.multiinfo() == 'egg') {
               postData.multiinfo = 'egg';
@@ -167,14 +180,30 @@
                 return ma.id
               }).join(',');
             }
-            // TODO 调用微信支付
-            BuyServer(postData, function(){
-              var openWindow = plus.webview.currentWebview().opener();
-              if (openWindow) {
-                $.fire(openWindow, 'KZ_KT_BuyBack');
+            var payUrl = 'http://m.tianchiyueya.com:1888/tcyy/pay/wxpay'+
+            '?userid='+postData.userid+
+            '&appid='+plus.runtime.appid+
+            '&type=2'+
+            '&cid='+postData.cid+
+            '&price='+postData.price+
+            '&multiinfo='+postData.multiinfo;               
+            if (wxPayChannel) {
+              if (!wxPayChannel.serviceReady) {
+                plus.nativeUI.alert("微信支付不可用");
+                return
               }
-              mui.back();
-            })
+              payApi.getWxPayParams(payUrl, function(result){
+                plus.payment.request(wxPayChannel,result,function(result){
+                  plus.nativeUI.alert("支付成功",function(){
+                     JumpBack();
+                  });
+                },function(error){
+                  plus.nativeUI.alert("支付失败：" + error.message);
+                });
+              })
+            } else {
+               plus.nativeUI.alert("未安装微信");
+            }
           }
           // 选择买断
           vm.chooseAll = function () {
